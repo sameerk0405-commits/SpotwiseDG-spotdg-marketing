@@ -72,15 +72,22 @@
         <label for="package">Package interested in</label>
         <select id="package" name="package">
           <option value="">Select a package…</option>
-          <option value="Targeted ($750–$1,500)">Targeted — $750–$1,500</option>
-          <option value="Comparative ($2,000–$4,000)">Comparative — $2,000–$4,000</option>
-          <option value="Portfolio ($4,500–$7,500)">Portfolio — $4,500–$7,500</option>
+          <option value="Targeted">Targeted — 1 Market Signal Report</option>
+          <option value="Comparative">Comparative — 3 Market Signal Reports</option>
+          <option value="Portfolio">Portfolio — 5 Market Signal Reports</option>
           <option value="Not sure yet">Not sure yet</option>
         </select>
       </div>
       <div class="field-group">
         <label for="message">Message</label>
         <textarea id="message" name="message" placeholder="Anything else we should know?"></textarea>
+      </div>
+      <div class="nda-block">
+        <p><strong>Mutual Confidentiality</strong> — SpotWise will keep the information you submit confidential and use it only to prepare your Market Signal Report. In turn, you agree to keep the contents of any report you receive — including its data, scoring, and analysis — confidential and for your own internal use only. Neither party will disclose this information to third parties without the other's consent.</p>
+        <label class="nda-checkbox">
+          <input type="checkbox" id="nda" name="nda" required />
+          <span>I agree to keep the contents of any Market Signal Report confidential.<span class="req">*</span></span>
+        </label>
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14.5px;">Submit Request →</button>
       <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>

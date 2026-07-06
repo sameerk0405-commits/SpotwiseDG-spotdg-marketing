@@ -51,3 +51,10 @@ section{position:relative;}
 .field-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236E8B84' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:36px;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media (max-width:560px){.field-row{grid-template-columns:1fr;}}
+
+/* ---------- NDA acknowledgment (shared by /request and /founding-program) ---------- */
+.nda-block{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
+.nda-block p{font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 12px;}
+.nda-checkbox{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--ink-soft);font-weight:500;cursor:pointer;}
+.nda-checkbox input[type="checkbox"]{width:auto;flex-shrink:0;margin-top:3px;accent-color:var(--teal);cursor:pointer;}
+.nda-checkbox .req{color:var(--gold);margin-left:3px;}
