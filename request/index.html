@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Request a Market Signal Report — SpotWise Data Group</title>
+<meta name="description" content="Request a tri-state Market Signal Report from SpotWise Data Group — forward-looking, zip-level real estate momentum intelligence." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0A1512" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="../shared.css" rel="stylesheet" />
+<style>
+  header{padding:24px 32px;border-bottom:1px solid var(--line);}
+  .back-link{font-size:13px;color:var(--muted);font-weight:600;margin-left:auto;}
+  .back-link:hover{color:var(--teal-bright);}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;}
+  main{padding:64px 20px 100px;background:radial-gradient(900px 460px at 50% -12%,rgba(20,184,166,.13) 0%,var(--paper) 60%);min-height:calc(100vh - 88px);}
+  .form-card{max-width:600px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:44px 40px;}
+  .form-card h1{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(24px,3.4vw,32px);letter-spacing:-.02em;margin-top:14px;}
+  .form-card .sub{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
+  form{margin-top:32px;}
+  #form-success{display:none;text-align:center;padding:24px 0;}
+  #form-success h2{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--teal-bright);}
+  #form-success p{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
+  @media (max-width:640px){.form-card{padding:32px 22px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark">SD</div>
+      <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
+    </a>
+    <a class="back-link" href="../index.html">← Back to spotdg.com</a>
+  </div>
+</header>
+
+<main>
+  <div class="form-card">
+    <div class="eyebrow">Market Signal Report</div>
+    <h1>Request your report.</h1>
+    <p class="sub">Tell us your target geography and investment thesis — we'll follow up to scope the right package for you.</p>
+
+    <form id="request-form">
+      <div class="field-group">
+        <label for="name">Name<span class="req">*</span></label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label for="email">Email<span class="req">*</span></label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="field-group">
+          <label for="company">Company<span class="req">*</span></label>
+          <input type="text" id="company" name="company" required />
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="role">Role / Title</label>
+        <input type="text" id="role" name="role" placeholder="e.g. Acquisitions Manager" />
+      </div>
+      <div class="field-group">
+        <label for="geography">Geography of interest</label>
+        <input type="text" id="geography" name="geography" placeholder="e.g. Bergen County NJ, or zip codes 07030 / 07302" />
+      </div>
+      <div class="field-group">
+        <label for="package">Package interested in</label>
+        <select id="package" name="package">
+          <option value="">Select a package…</option>
+          <option value="Targeted ($750–$1,500)">Targeted — $750–$1,500</option>
+          <option value="Comparative ($2,000–$4,000)">Comparative — $2,000–$4,000</option>
+          <option value="Portfolio ($4,500–$7,500)">Portfolio — $4,500–$7,500</option>
+          <option value="Not sure yet">Not sure yet</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Anything else we should know?"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14.5px;">Submit Request →</button>
+      <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
+    </form>
+
+    <div id="form-success">
+      <h2>Request received.</h2>
+      <p>Thanks — we'll be in touch shortly to scope your Market Signal Report.</p>
+    </div>
+  </div>
+</main>
+
+<script src="../shared.js"></script>
+<script>
+  // TODO: replace with your real Formspree/Tally endpoint, e.g. https://formspree.io/f/abcdwxyz
+  var FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  spotwiseHandleForm(document.getElementById('request-form'), {
+    endpoint: FORM_ENDPOINT,
+    subject: 'Market Signal Report Request',
+    submitLabel: 'Submit Request →',
+    fields: [
+      { name: 'name', label: 'Name' },
+      { name: 'email', label: 'Email' },
+      { name: 'company', label: 'Company' },
+      { name: 'role', label: 'Role / Title' },
+      { name: 'geography', label: 'Geography of interest' },
+      { name: 'package', label: 'Package interested in' },
+      { name: 'message', label: 'Message' }
+    ]
+  });
+</script>
+
+</body>
+</html>
