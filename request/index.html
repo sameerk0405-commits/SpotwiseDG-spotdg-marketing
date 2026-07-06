@@ -83,10 +83,21 @@
         <textarea id="message" name="message" placeholder="Anything else we should know?"></textarea>
       </div>
       <div class="nda-block">
-        <p><strong>Mutual Confidentiality</strong> — SpotWise will keep the information you submit confidential and use it only to prepare your Market Signal Report. In turn, you agree to keep the contents of any report you receive — including its data, scoring, and analysis — confidential and for your own internal use only. Neither party will disclose this information to third parties without the other's consent.</p>
+        <div class="nda-heading">Mutual Non-Disclosure Agreement</div>
+        <div class="nda-note">This is a standard mutual confidentiality agreement. Contact us with any questions.</div>
+        <div class="nda-scroll" tabindex="0">
+          <p>This agreement is entered into between SpotWise Data Group LLC ("SpotWise") and the individual or entity submitting this request ("Recipient") as of the date of submission below.</p>
+          <p class="nda-date-line">Date of submission: <span id="nda-date">—</span></p>
+          <p><strong>1. Confidential Information.</strong> In connection with this engagement, SpotWise may disclose to Recipient certain proprietary information, including but not limited to Market Signal Reports, scoring methodology, data outputs, and platform functionality ("Confidential Information"). Recipient may also disclose feedback, business context, or investment criteria to SpotWise in connection with this engagement.</p>
+          <p><strong>2. Obligations.</strong> Each party agrees to: (a) hold the other party's Confidential Information in strict confidence; (b) not disclose Confidential Information to any third party without prior written consent; (c) use Confidential Information solely for the purpose of evaluating and engaging with SpotWise's services; and (d) protect Confidential Information with at least the same degree of care used to protect its own confidential information, but no less than reasonable care.</p>
+          <p><strong>3. Exclusions.</strong> Confidential Information does not include information that: (a) is or becomes publicly available through no fault of the receiving party; (b) was already known to the receiving party prior to disclosure; (c) is independently developed without use of the disclosing party's Confidential Information; or (d) is required to be disclosed by law or court order, provided reasonable notice is given where legally permissible.</p>
+          <p><strong>4. Term.</strong> This agreement remains in effect for two (2) years from the date of acceptance below, or until superseded by a separate written agreement between the parties.</p>
+          <p><strong>5. No License or Obligation.</strong> Nothing in this agreement obligates either party to proceed with any business relationship, purchase, or transaction.</p>
+          <p>By checking the box below, you acknowledge that you have read, understood, and agree to be bound by the terms of this Mutual Non-Disclosure Agreement.</p>
+        </div>
         <label class="nda-checkbox">
           <input type="checkbox" id="nda" name="nda" required />
-          <span>I agree to keep the contents of any Market Signal Report confidential.<span class="req">*</span></span>
+          <span>I have read, understood, and agree to be bound by the terms of this Mutual Non-Disclosure Agreement.<span class="req">*</span></span>
         </label>
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14.5px;">Submit Request →</button>
@@ -104,6 +115,11 @@
 <script>
   // TODO: replace with your real Formspree/Tally endpoint, e.g. https://formspree.io/f/abcdwxyz
   var FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  var _ndaDate = document.getElementById('nda-date');
+  if (_ndaDate) {
+    _ndaDate.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
 
   spotwiseHandleForm(document.getElementById('request-form'), {
     endpoint: FORM_ENDPOINT,
