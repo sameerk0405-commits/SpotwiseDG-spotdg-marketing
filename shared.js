@@ -1,9 +1,9 @@
 // Shared submit handler for SpotWise marketing forms (/request, /founding-program).
 // Attempts POST to a form backend (Formspree/Tally); falls back to a pre-filled
-// mailto: to sameer@spotdg.com if no backend endpoint has been configured yet,
+// mailto: to all three founders if no backend endpoint has been configured yet,
 // or if the POST fails for any reason.
 function spotwiseHandleForm(form, opts) {
-  var MAILTO = 'sameer@spotdg.com';
+  var MAILTO = 'sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com';
 
   function buildMailtoUrl(data) {
     var lines = [];
