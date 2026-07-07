@@ -63,6 +63,27 @@
   .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(30px,4vw,40px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 32px rgba(45,212,196,.45);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:9px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.09em;}
 
+  /* ---------- Hero: momentum visualization ---------- */
+  .momentum-viz{position:relative;width:100%;max-width:560px;min-width:0;margin:64px auto 0;}
+  .momentum-viz svg{display:block;width:100%;height:auto;}
+  .momentum-viz .viz-grey{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:vizGreyLine 5s ease-in-out infinite;}
+  .momentum-viz .viz-teal{fill:none;stroke:var(--teal-bright);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(45,212,196,.5));stroke-dasharray:1;animation:vizTealDraw 5s ease-in-out infinite;}
+  .momentum-viz .viz-band{animation:vizBand 5s ease-in-out infinite;}
+  .momentum-viz .band-stop-a{stop-color:#14B8A6;stop-opacity:0;}
+  .momentum-viz .band-stop-b{stop-color:#14B8A6;stop-opacity:.14;}
+  .momentum-badge{position:absolute;top:0;right:4%;transform:translateY(-55%);animation:vizBadge 5s ease-in-out infinite;}
+  @keyframes vizGreyLine{0%{opacity:0;}6%{opacity:.5;}46%{opacity:.5;}60%{opacity:0;}100%{opacity:0;}}
+  @keyframes vizTealDraw{0%{stroke-dashoffset:1;opacity:0;}8%{stroke-dashoffset:1;opacity:1;}60%{stroke-dashoffset:0;opacity:1;}90%{stroke-dashoffset:0;opacity:1;}97%{stroke-dashoffset:0;opacity:0;}100%{stroke-dashoffset:1;opacity:0;}}
+  @keyframes vizBand{0%,55%{opacity:0;}68%{opacity:1;}90%{opacity:1;}97%{opacity:0;}100%{opacity:0;}}
+  @keyframes vizBadge{0%,62%{opacity:0;transform:translateY(-55%) translateY(6px) scale(.92);}74%{opacity:1;transform:translateY(-55%) translateY(0) scale(1);}90%{opacity:1;transform:translateY(-55%);}97%{opacity:0;transform:translateY(-55%) translateY(4px) scale(.96);}100%{opacity:0;transform:translateY(-55%) translateY(6px) scale(.92);}}
+  @media (prefers-reduced-motion:reduce){
+    .momentum-viz .viz-grey,.momentum-viz .viz-teal,.momentum-viz .viz-band,.momentum-badge{animation:none;}
+    .momentum-viz .viz-grey{opacity:0;}
+    .momentum-viz .viz-teal{stroke-dashoffset:0;opacity:1;}
+    .momentum-viz .viz-band{opacity:1;}
+    .momentum-badge{opacity:1;transform:translateY(-55%);}
+  }
+
   /* ---------- Intelligence Card ---------- */
   .card-section{padding:20px 32px 96px;}
   .sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);}
@@ -199,6 +220,8 @@
     .stat-row{gap:28px;}
     .stat b{font-size:26px;}
     h1{font-size:clamp(32px,9vw,44px);}
+    .momentum-viz{margin-top:44px;}
+    .momentum-badge{font-size:10px;padding:6px 11px;}
   }
 </style>
 </head>
@@ -239,6 +262,20 @@
         <div class="stat"><b data-target="28.4" data-prefix="+" data-suffix="%">+28.4%</b><span>avg outperformance vs metro</span></div>
         <div class="stat"><b data-target="94" data-suffix="%">94%</b><span>backtest hit rate</span></div>
         <div class="stat"><b data-target="1213" data-format="comma">1,213</b><span>zip codes scored — and growing</span></div>
+      </div>
+      <div class="momentum-viz" aria-hidden="true">
+        <svg viewBox="0 0 600 200" width="600" height="200" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="bandGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop class="band-stop-a" offset="0%"></stop>
+              <stop class="band-stop-b" offset="100%"></stop>
+            </linearGradient>
+          </defs>
+          <rect class="viz-band" x="330" y="34" width="260" height="140" fill="url(#bandGrad)"></rect>
+          <polyline class="viz-grey" points="10,150 50,142 90,155 130,136 170,148 210,127 250,143 290,122 330,138 370,118 410,132 450,115 490,126 530,110 570,118"></polyline>
+          <path class="viz-teal" pathLength="1" d="M10,152 C90,146 170,140 250,130 C320,122 340,110 380,90 C420,70 460,55 500,40 C530,30 555,24 580,18"></path>
+        </svg>
+        <div class="sig-badge momentum-badge"><span class="pulse-dot"></span>Peak Momentum</div>
       </div>
     </div>
   </section>
