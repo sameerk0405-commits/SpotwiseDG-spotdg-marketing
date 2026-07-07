@@ -70,6 +70,7 @@
   .sample-overlay{position:absolute;inset:0;background:rgba(9,18,16,.62);backdrop-filter:blur(1.5px);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;}
   .sample-overlay-inner{max-width:300px;display:flex;flex-direction:column;align-items:center;gap:16px;}
   .sample-overlay-inner .msg{font-family:'Sora',sans-serif;font-weight:700;font-size:16.5px;letter-spacing:-.01em;line-height:1.4;color:var(--ink);}
+  .sample-icon{width:32px;height:32px;object-fit:contain;}
   .sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line);}
   .sig-head-label{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
   .sig-head-title{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;}
@@ -275,6 +276,7 @@
       </div>
       <div class="sample-overlay">
         <div class="sample-overlay-inner">
+          <img class="sample-icon" src="assets/spot-icon.png" alt="" />
           <div class="msg">Sample data — Request your report for full analysis</div>
           <a class="btn btn-primary" href="request/index.html">Request a Report →</a>
         </div>
