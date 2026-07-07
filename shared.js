@@ -35,7 +35,11 @@ function spotwiseHandleForm(form, opts) {
         if (res.ok) {
           form.style.display = 'none';
           var success = document.getElementById('form-success');
-          if (success) success.style.display = 'block';
+          if (success) {
+            success.style.display = 'block';
+            var iconWrap = success.querySelector('.success-icon-wrap');
+            if (iconWrap) iconWrap.classList.add('celebrate');
+          }
         } else {
           window.location.href = buildMailtoUrl(data);
         }
