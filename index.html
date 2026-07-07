@@ -195,7 +195,21 @@
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);padding:56px 32px 40px;background:var(--surface);}
   .footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;}
-  .footer-tag{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:240px;line-height:1.6;}
+  .footer-tag-row{display:flex;align-items:center;gap:9px;margin-top:14px;max-width:240px;}
+  .footer-tag{font-size:13.5px;color:var(--muted);line-height:1.6;}
+  .spot-interactive{position:relative;width:26px;height:26px;flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+  .spot-interactive:hover{transform:rotate(-14deg);}
+  .spot-interactive:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:50%;}
+  .spot-face{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .16s ease;}
+  .spot-face-blink{opacity:0;}
+  .spot-interactive:hover .spot-face-open,.spot-interactive.blinking .spot-face-open{opacity:0;}
+  .spot-interactive:hover .spot-face-blink,.spot-interactive.blinking .spot-face-blink{opacity:1;}
+  @keyframes spotWag{0%,100%{transform:rotate(0deg);}20%{transform:rotate(-20deg);}40%{transform:rotate(15deg);}60%{transform:rotate(-11deg);}80%{transform:rotate(6deg);}}
+  .spot-interactive.wagging{animation:spotWag .6s ease-in-out;}
+  @media (prefers-reduced-motion:reduce){
+    .spot-interactive,.spot-interactive.wagging{animation:none;transition:none;}
+    .spot-interactive:hover{transform:none;}
+  }
   .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
   .footer-links a{font-size:13.5px;color:var(--ink-soft);font-weight:600;transition:color .15s;}
   .footer-links a:hover{color:var(--teal-bright);}
@@ -490,7 +504,13 @@
         <img class="logo-mark" src="assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
         <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
       </a>
-      <div class="footer-tag">Before the market moves.</div>
+      <div class="footer-tag-row">
+        <div class="footer-tag">Before the market moves.</div>
+        <button class="spot-interactive" type="button" aria-label="Say hi to Spot">
+          <img class="spot-face spot-face-open" src="assets/spot-icon.png" alt="" />
+          <img class="spot-face spot-face-blink" src="assets/spot-icon-blink.png" alt="" />
+        </button>
+      </div>
     </div>
     <div class="footer-links">
       <a href="#intelligence">Intelligence</a>
@@ -581,6 +601,21 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     els.forEach(function(el){ obs.observe(el); });
+  })();
+</script>
+
+<script>
+  (function(){
+    var spot = document.querySelector('.spot-interactive');
+    if (!spot) return;
+    var timer = null;
+    spot.addEventListener('click', function(){
+      spot.classList.remove('wagging');
+      void spot.offsetWidth;
+      spot.classList.add('wagging', 'blinking');
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(function(){ spot.classList.remove('wagging', 'blinking'); }, 650);
+    });
   })();
 </script>
 
