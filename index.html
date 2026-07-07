@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  // Only ever hides .reveal sections (via the html.js CSS scope below) when we've
+  // confirmed both prefers-reduced-motion is off AND IntersectionObserver exists --
+  // otherwise this class is never added, so .reveal content stays at its normal,
+  // fully-visible state with zero dependency on any script running later.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+  }
+</script>
 <title>SpotWise Data Group — Tri-State Real Estate Intelligence</title>
 <meta name="description" content="SpotWise identifies which tri-state neighborhoods are entering the next appreciation window — packaged into investor-ready Market Signal Reports. Forward-looking, walk-forward validated, zip-level precision." />
 <meta name="robots" content="index, follow" />
@@ -15,6 +24,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="shared.css" rel="stylesheet" />
 <style>
+  /* ---------- Motion: scroll reveal (progressive enhancement, see head script) ---------- */
+  html.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+  html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- Motion: hero on-load (pure CSS, no JS dependency) ---------- */
+  @keyframes heroIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .hero-inner{animation:heroIn .9s cubic-bezier(.16,1,.3,1) both;}
+  @media (prefers-reduced-motion:reduce){.hero-inner{animation:none;}}
+
   /* ---------- Nav ---------- */
   header{position:sticky;top:0;z-index:100;background:rgba(10,21,18,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
   nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:var(--max);margin:0 auto;}
@@ -35,7 +53,8 @@
   .hero-sub{font-size:clamp(15.5px,1.6vw,18.5px);color:var(--ink-soft);max-width:640px;margin:26px auto 0;line-height:1.65;}
   .hero-ctas{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap;justify-content:center;}
   .hero-ctas .btn{padding:15px 26px;font-size:14.5px;}
-  .stat-row{display:flex;margin-top:74px;flex-wrap:wrap;justify-content:center;}
+  .stat-row{display:flex;margin-top:74px;flex-wrap:wrap;justify-content:center;position:relative;}
+  .stat-row::before{content:"";position:absolute;inset:-40px -20px;background:radial-gradient(600px 140px at 50% 50%,rgba(20,184,166,.09) 0%,transparent 70%);z-index:-1;pointer-events:none;}
   .stat{text-align:center;padding:0 32px;position:relative;}
   .stat:not(:first-child){border-left:1px solid var(--line);}
   .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(30px,4vw,40px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 32px rgba(45,212,196,.45);font-variant-numeric:tabular-nums;}
@@ -82,9 +101,11 @@
 
   /* ---------- Problem section ---------- */
   .compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--max);margin:0 auto;}
-  .compare-card{border-radius:16px;padding:32px;border:1px solid var(--line);}
+  .compare-card{border-radius:16px;padding:32px;border:1px solid var(--line);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
+  .compare-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);}
   .compare-card.bad{background:rgba(255,255,255,.015);}
   .compare-card.good{background:linear-gradient(180deg,rgba(20,184,166,.08) 0%,rgba(20,184,166,.02) 100%);border-color:rgba(20,184,166,.25);}
+  .compare-card.good:hover{border-color:rgba(20,184,166,.45);box-shadow:0 16px 40px -16px rgba(20,184,166,.2),0 16px 40px -16px rgba(0,0,0,.4);}
   .compare-card h3{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;margin-bottom:20px;letter-spacing:-.01em;}
   .compare-card li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft);padding:11px 0;border-top:1px solid var(--line);line-height:1.5;}
   .compare-card li:first-of-type{border-top:none;}
@@ -97,9 +118,10 @@
   .report-list li{display:flex;gap:13px;align-items:flex-start;font-size:15px;color:var(--ink-soft);padding:13px 0;border-top:1px solid var(--line);}
   .report-list li:first-child{border-top:none;}
   .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:stretch;}
-  .price-card{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;transition:border-color .15s,transform .15s;}
+  .price-card{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1);}
   .price-card.feat{border-color:rgba(20,184,166,.4);position:relative;background:linear-gradient(180deg,rgba(20,184,166,.06) 0%,var(--surface-2) 60%);}
-  .price-card:hover{transform:translateY(-3px);}
+  .price-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.3);}
+  .price-card.feat:hover{box-shadow:0 16px 44px -14px rgba(20,184,166,.28),0 16px 40px -16px rgba(0,0,0,.4);border-color:rgba(20,184,166,.55);}
   .price-tag{position:absolute;top:-11px;left:26px;background:var(--teal);color:#031A17;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:100px;}
   .price-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;}
   .price-card .count{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:18px;}
@@ -117,7 +139,8 @@
 
   /* ---------- Who it's for ---------- */
   .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;}
-  .aud-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px;}
+  .aud-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
+  .aud-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
   .aud-card .tag{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
   .aud-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em;}
   .aud-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
@@ -129,7 +152,8 @@
 
   /* ---------- Founders ---------- */
   .founders-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto 40px;}
-  .founder-card{text-align:center;padding:30px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
+  .founder-card{text-align:center;padding:30px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
+  .founder-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
   .founder-avatar{width:56px;height:56px;border-radius:50%;background:rgba(20,184,166,.12);border:1px solid rgba(20,184,166,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:var(--teal-bright);}
   .founder-card h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;letter-spacing:-.01em;}
   .founder-card .role{font-size:13px;color:var(--teal);font-weight:600;margin-top:6px;}
@@ -216,7 +240,7 @@
   </section>
 
   <!-- LIVE INTELLIGENCE CARD -->
-  <section class="card-section" id="intelligence">
+  <section class="card-section reveal" id="intelligence">
     <div class="sig-card" id="sample-report">
       <div class="sig-head">
         <div>
@@ -256,7 +280,7 @@
   </section>
 
   <!-- PROBLEM -->
-  <section class="sec sec-alt">
+  <section class="sec sec-alt reveal">
     <div class="sec-head">
       <h2>Real estate decisions are made on instinct and lagging data.</h2>
     </div>
@@ -283,7 +307,7 @@
   </section>
 
   <!-- MARKET SIGNAL REPORT / PRICING -->
-  <section class="sec" id="reports">
+  <section class="sec reveal" id="reports">
     <div class="sec-head">
       <h2>Decision intelligence, packaged for action.</h2>
       <p>Lead with the answer. Then provide the analytics.</p>
@@ -323,7 +347,7 @@
   </section>
 
   <!-- FOUNDING PROGRAM -->
-  <section class="sec sec-alt">
+  <section class="sec sec-alt reveal">
     <div class="founding">
       <div class="eyebrow">Founding Market Intelligence Program</div>
       <h2>25 invitations. Complimentary report. Structured feedback.</h2>
@@ -334,7 +358,7 @@
   </section>
 
   <!-- WHO IT'S FOR -->
-  <section class="sec">
+  <section class="sec reveal">
     <div class="sec-head">
       <h2>Built for operators making real capital decisions.</h2>
     </div>
@@ -358,7 +382,7 @@
   </section>
 
   <!-- METHODOLOGY -->
-  <section class="sec sec-alt" id="methodology">
+  <section class="sec sec-alt reveal" id="methodology">
     <div class="method">
       <div class="eyebrow">Methodology</div>
       <h2 class="display" style="font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;margin-top:16px;">How we build the signal.</h2>
@@ -369,7 +393,7 @@
   </section>
 
   <!-- FOUNDERS -->
-  <section class="sec">
+  <section class="sec reveal">
     <div class="sec-head">
       <h2>Built by founders who understand data and how the market moves.</h2>
     </div>
@@ -394,7 +418,7 @@
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta" id="contact">
+  <section class="sec final-cta reveal" id="contact">
     <h2>Your next market signal is already forming.</h2>
     <p>Request a Market Signal Report or apply for the Founding Program.</p>
     <div class="final-ctas">
@@ -482,6 +506,29 @@
       });
     }, { threshold: 0.4 });
     obs.observe(row);
+  })();
+</script>
+
+<script>
+  // Fades/slides in each major section once as it scrolls into view. Safe by
+  // construction: the CSS that hides .reveal elements is scoped under
+  // html.js (see the capability-check script in <head>), which is only ever
+  // added when prefers-reduced-motion is off AND IntersectionObserver exists
+  // -- so this script either runs correctly, or the elements were never
+  // hidden in the first place. Nothing here can leave content stuck invisible.
+  (function(){
+    if (!document.documentElement.classList.contains('js')) return;
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    els.forEach(function(el){ obs.observe(el); });
   })();
 </script>
 
