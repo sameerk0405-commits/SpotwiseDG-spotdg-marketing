@@ -46,6 +46,7 @@
   .nav-login{font-size:13.5px;font-weight:600;color:var(--ink-soft);transition:color .15s;}
   .nav-login:hover{color:var(--teal-bright);}
   .nav-cta{padding:10px 18px;font-size:13px;}
+  .nav-cta-short{display:none;}
 
   /* ---------- Hero ---------- */
   .hero{padding:108px 32px 90px;background:radial-gradient(1100px 560px at 50% -12%,rgba(20,184,166,.16) 0%,rgba(20,184,166,.04) 45%,var(--paper) 72%);}
@@ -211,7 +212,12 @@
   }
   @media (max-width:640px){
     .nav-links{display:none;}
-    nav{padding:14px 20px;}
+    nav{padding:14px 16px;}
+    .nav-right{gap:10px;}
+    .nav-cta-full{display:none;}
+    .nav-cta-short{display:inline;}
+    .nav-cta{padding:9px 14px;font-size:12.5px;}
+    .nav-login{font-size:12.5px;}
     .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
     .hero{padding-top:80px;}
     .sig-card{padding:24px 20px;}
@@ -241,7 +247,7 @@
     </div>
     <div class="nav-right">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="request/index.html">Request a Report →</a>
+      <a class="btn btn-primary nav-cta" href="request/index.html"><span class="nav-cta-full">Request a Report →</span><span class="nav-cta-short">Request →</span></a>
     </div>
   </nav>
 </header>
