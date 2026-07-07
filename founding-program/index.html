@@ -13,8 +13,9 @@
 <link href="../shared.css" rel="stylesheet" />
 <style>
   header{padding:24px 32px;border-bottom:1px solid var(--line);}
-  .back-link{font-size:13px;color:var(--muted);font-weight:600;margin-left:auto;}
-  .back-link:hover{color:var(--teal-bright);}
+  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;color:var(--muted);margin-left:auto;}
+  .back-link:hover{color:var(--teal-bright);background:var(--surface);}
+  .back-link svg{width:20px;height:20px;}
   header .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;}
   main{padding:64px 20px 100px;background:radial-gradient(900px 460px at 50% -12%,rgba(245,158,11,.1) 0%,var(--paper) 60%);min-height:calc(100vh - 88px);}
   .form-card{max-width:600px;margin:0 auto;background:var(--surface);border:1px solid rgba(245,158,11,.22);border-radius:20px;padding:44px 40px;}
@@ -37,7 +38,9 @@
       <div class="logo-mark">SD</div>
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
-    <a class="back-link" href="../index.html">← Back to spotdg.com</a>
+    <a class="back-link" href="../index.html" aria-label="Back to spotdg.com" title="Back to spotdg.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/></svg>
+    </a>
   </div>
 </header>
 
@@ -45,7 +48,7 @@
   <div class="form-card">
     <div class="eyebrow gold">Founding Market Intelligence Program</div>
     <h1>Apply for an invitation.</h1>
-    <p class="sub">25 invitations. Complimentary Market Signal Report for a selected geography, in exchange for a 30-minute feedback session.</p>
+    <p class="sub">25 invitations. Complimentary Market Signal Report for a selected geography, in exchange for a feedback session.</p>
 
     <form id="founding-form">
       <div class="field-group">
