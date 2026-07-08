@@ -16,6 +16,9 @@ img{max-width:100%;display:block;}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 32px;}
 section{position:relative;}
 .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);}
+.mark{flex-shrink:0;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
+.mark.x{background:rgba(255,255,255,.06);color:var(--faint);}
+.mark.check{background:rgba(20,184,166,.16);color:var(--teal-bright);}
 .disclaimer{font-size:12.5px;color:var(--faint);line-height:1.6;border-top:1px solid var(--line);padding-top:14px;margin-top:22px;}
 
 /* ---------- Logo ---------- */
@@ -95,3 +98,83 @@ section{position:relative;}
 .nda-checkbox input[type="checkbox"]{width:auto;flex-shrink:0;margin-top:3px;accent-color:var(--teal);cursor:pointer;}
 .nda-checkbox input[type="checkbox"]:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;border-radius:3px;}
 .nda-checkbox .req{color:var(--gold);margin-left:3px;}
+
+/* ---------- Nav (shared across all top-level pages) ---------- */
+header{position:sticky;top:0;z-index:100;background:rgba(10,21,18,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:var(--max);margin:0 auto;}
+.nav-links{display:flex;align-items:center;gap:34px;}
+.nav-links a{font-size:13.5px;font-weight:600;color:var(--ink-soft);transition:color .15s;}
+.nav-links a:hover{color:var(--teal-bright);}
+.nav-links a.active{color:var(--teal-bright);}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-login{font-size:13.5px;font-weight:600;color:var(--ink-soft);transition:color .15s;}
+.nav-login:hover{color:var(--teal-bright);}
+.nav-cta{padding:10px 18px;font-size:13px;}
+.nav-cta-short{display:none;}
+
+/* ---------- Motion: scroll reveal (progressive enhancement, see html.js head script) ---------- */
+html.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+/* ---------- Generic section shell (shared across all top-level pages) ---------- */
+.sec{padding:96px 32px;}
+.sec-alt{background:var(--surface);}
+.sec-head{max-width:680px;margin:0 auto 56px;text-align:center;}
+.sec-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;line-height:1.15;}
+.sec-head p{font-size:16px;color:var(--ink-soft);margin-top:16px;line-height:1.6;}
+
+/* ---------- Founding program (shared: condensed teaser on Home, full section on Reports) ---------- */
+.founding{max-width:760px;margin:0 auto;text-align:center;background:linear-gradient(180deg,rgba(245,158,11,.07) 0%,rgba(245,158,11,.015) 100%);border:1px solid rgba(245,158,11,.22);border-radius:20px;padding:56px 48px;}
+.founding .eyebrow{color:var(--gold);}
+.founding h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3.6vw,36px);letter-spacing:-.02em;margin-top:16px;}
+.founding .sub{font-size:16px;color:var(--gold);font-weight:600;margin-top:10px;}
+.founding p{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:560px;margin:22px auto 0;}
+.founding .btn{margin-top:28px;}
+.founding .note{font-size:12.5px;color:var(--faint);margin-top:16px;}
+
+/* ---------- Final CTA (shared, repeated near the bottom of every page) ---------- */
+.final-cta{text-align:center;background:radial-gradient(900px 420px at 50% 120%,rgba(20,184,166,.14) 0%,var(--paper) 65%);}
+.final-cta h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,48px);letter-spacing:-.02em;max-width:760px;margin:0 auto;line-height:1.15;}
+.final-cta p{font-size:16px;color:var(--ink-soft);margin-top:18px;}
+.final-ctas{display:flex;gap:16px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
+.final-ctas .btn{padding:15px 26px;font-size:14.5px;}
+
+/* ---------- Footer (shared across all top-level pages) ---------- */
+footer{border-top:1px solid var(--line);padding:56px 32px 40px;background:var(--surface);}
+.footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;}
+.footer-tag-row{display:flex;align-items:center;gap:9px;margin-top:14px;max-width:240px;}
+.footer-tag{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.footer-contact{font-size:12.5px;color:var(--faint);margin-top:14px;max-width:260px;line-height:1.7;}
+.footer-contact a{color:var(--teal-bright);font-weight:600;}
+.footer-contact .emails{display:block;margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);}
+.spot-interactive{position:relative;width:26px;height:26px;flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.spot-interactive:hover{transform:rotate(-14deg);}
+.spot-interactive:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:50%;}
+.spot-face{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .16s ease;}
+.spot-face-blink{opacity:0;}
+.spot-interactive:hover .spot-face-open,.spot-interactive.blinking .spot-face-open{opacity:0;}
+.spot-interactive:hover .spot-face-blink,.spot-interactive.blinking .spot-face-blink{opacity:1;}
+@keyframes spotWag{0%,100%{transform:rotate(0deg);}20%{transform:rotate(-20deg);}40%{transform:rotate(15deg);}60%{transform:rotate(-11deg);}80%{transform:rotate(6deg);}}
+.spot-interactive.wagging{animation:spotWag .6s ease-in-out;}
+@media (prefers-reduced-motion:reduce){
+  .spot-interactive,.spot-interactive.wagging{animation:none;transition:none;}
+  .spot-interactive:hover{transform:none;}
+}
+.footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+.footer-links a{font-size:13.5px;color:var(--ink-soft);font-weight:600;transition:color .15s;}
+.footer-links a:hover{color:var(--teal-bright);}
+.footer-bottom{max-width:var(--max);margin:44px auto 0;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);line-height:1.7;}
+
+/* ---------- Responsive: nav + footer (shared across all top-level pages) ---------- */
+@media (max-width:900px){
+  .footer-inner{flex-direction:column;}
+}
+@media (max-width:640px){
+  .nav-links{display:none;}
+  nav{padding:14px 16px;}
+  .nav-right{gap:10px;}
+  .nav-cta-full{display:none;}
+  .nav-cta-short{display:inline;}
+  .nav-cta{padding:9px 14px;font-size:12.5px;}
+  .nav-login{font-size:12.5px;}
+}

@@ -27,26 +27,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Motion: scroll reveal (progressive enhancement, see head script) ---------- */
-  html.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
-  html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
-
   /* ---------- Motion: hero on-load (pure CSS, no JS dependency) ---------- */
   @keyframes heroIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
   .hero-inner{animation:heroIn .9s cubic-bezier(.16,1,.3,1) both;}
   @media (prefers-reduced-motion:reduce){.hero-inner{animation:none;}}
-
-  /* ---------- Nav ---------- */
-  header{position:sticky;top:0;z-index:100;background:rgba(10,21,18,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:var(--max);margin:0 auto;}
-  .nav-links{display:flex;align-items:center;gap:34px;}
-  .nav-links a{font-size:13.5px;font-weight:600;color:var(--ink-soft);transition:color .15s;}
-  .nav-links a:hover{color:var(--teal-bright);}
-  .nav-right{display:flex;align-items:center;gap:20px;}
-  .nav-login{font-size:13.5px;font-weight:600;color:var(--ink-soft);transition:color .15s;}
-  .nav-login:hover{color:var(--teal-bright);}
-  .nav-cta{padding:10px 18px;font-size:13px;}
-  .nav-cta-short{display:none;}
 
   /* ---------- Hero ---------- */
   .hero{padding:108px 32px 90px;background:radial-gradient(1100px 560px at 50% -12%,rgba(20,184,166,.16) 0%,rgba(20,184,166,.04) 45%,var(--paper) 72%);}
@@ -85,7 +69,7 @@
     .momentum-badge{opacity:1;transform:translateY(-55%);}
   }
 
-  /* ---------- Intelligence Card ---------- */
+  /* ---------- Intelligence Card (live sample report) ---------- */
   .card-section{padding:20px 32px 96px;}
   .sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);}
   .blur-val{filter:blur(6px);user-select:none;}
@@ -118,120 +102,11 @@
   .sig-footer .ts{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;}
   .sig-disclaimer{font-size:11.5px;color:var(--faint);margin-top:14px;font-style:italic;}
 
-  /* ---------- generic section ---------- */
-  .sec{padding:96px 32px;}
-  .sec-alt{background:var(--surface);}
-  .sec-head{max-width:680px;margin:0 auto 56px;text-align:center;}
-  .sec-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;line-height:1.15;}
-  .sec-head p{font-size:16px;color:var(--ink-soft);margin-top:16px;line-height:1.6;}
-
-  /* ---------- Problem section ---------- */
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--max);margin:0 auto;}
-  .compare-card{border-radius:16px;padding:32px;border:1px solid var(--line);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .compare-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);}
-  .compare-card.bad{background:rgba(255,255,255,.015);}
-  .compare-card.good{background:linear-gradient(180deg,rgba(20,184,166,.08) 0%,rgba(20,184,166,.02) 100%);border-color:rgba(20,184,166,.25);}
-  .compare-card.good:hover{border-color:rgba(20,184,166,.45);box-shadow:0 16px 40px -16px rgba(20,184,166,.2),0 16px 40px -16px rgba(0,0,0,.4);}
-  .compare-card h3{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;margin-bottom:20px;letter-spacing:-.01em;}
-  .compare-card li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft);padding:11px 0;border-top:1px solid var(--line);line-height:1.5;}
-  .compare-card li:first-of-type{border-top:none;}
-  .mark{flex-shrink:0;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
-  .mark.x{background:rgba(255,255,255,.06);color:var(--faint);}
-  .mark.check{background:rgba(20,184,166,.16);color:var(--teal-bright);}
-
-  /* ---------- Reports / pricing ---------- */
-  .report-list{max-width:640px;margin:0 auto 64px;}
-  .report-list li{display:flex;gap:13px;align-items:flex-start;font-size:15px;color:var(--ink-soft);padding:13px 0;border-top:1px solid var(--line);}
-  .report-list li:first-child{border-top:none;}
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:stretch;}
-  .price-card{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1);}
-  .price-card.feat{border-color:rgba(20,184,166,.4);position:relative;background:linear-gradient(180deg,rgba(20,184,166,.06) 0%,var(--surface-2) 60%);}
-  .price-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.3);}
-  .price-card.feat:hover{box-shadow:0 16px 44px -14px rgba(20,184,166,.28),0 16px 40px -16px rgba(0,0,0,.4);border-color:rgba(20,184,166,.55);}
-  .price-tag{position:absolute;top:-11px;left:26px;background:var(--teal);color:#031A17;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:100px;}
-  .price-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;}
-  .price-card .count{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:18px;}
-  .price-card .amount{font-family:'JetBrains Mono',monospace;font-size:27px;font-weight:700;color:var(--teal-bright);letter-spacing:-.02em;margin-bottom:16px;}
-  .price-card .best{font-size:13.5px;color:var(--ink-soft);line-height:1.55;flex:1;}
-
-  /* ---------- Founding program ---------- */
-  .founding{max-width:760px;margin:0 auto;text-align:center;background:linear-gradient(180deg,rgba(245,158,11,.07) 0%,rgba(245,158,11,.015) 100%);border:1px solid rgba(245,158,11,.22);border-radius:20px;padding:56px 48px;}
-  .founding .eyebrow{color:var(--gold);}
-  .founding h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3.6vw,36px);letter-spacing:-.02em;margin-top:16px;}
-  .founding .sub{font-size:16px;color:var(--gold);font-weight:600;margin-top:10px;}
-  .founding p{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:560px;margin:22px auto 0;}
-  .founding .btn{margin-top:28px;}
-  .founding .note{font-size:12.5px;color:var(--faint);margin-top:16px;}
-
-  /* ---------- Who it's for ---------- */
-  .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;}
-  .aud-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .aud-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
-  .aud-card .tag{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
-  .aud-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em;}
-  .aud-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
-
-  /* ---------- Methodology ---------- */
-  .method{max-width:720px;margin:0 auto;text-align:center;}
-  .method p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:18px;}
-  .method .disclaimer{text-align:left;margin-top:34px;}
-
-  /* ---------- Founders ---------- */
-  .founders-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto 40px;}
-  .founder-card{text-align:center;padding:30px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .founder-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
-  .founder-avatar{width:56px;height:56px;border-radius:50%;background:rgba(20,184,166,.12);border:1px solid rgba(20,184,166,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:var(--teal-bright);}
-  .founder-card h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;letter-spacing:-.01em;}
-  .founder-card .role{font-size:13px;color:var(--teal);font-weight:600;margin-top:6px;}
-  .company-line{text-align:center;font-size:13px;color:var(--faint);font-weight:500;}
-
-  /* ---------- Final CTA ---------- */
-  .final-cta{text-align:center;background:radial-gradient(900px 420px at 50% 120%,rgba(20,184,166,.14) 0%,var(--paper) 65%);}
-  .final-cta h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,48px);letter-spacing:-.02em;max-width:760px;margin:0 auto;line-height:1.15;}
-  .final-cta p{font-size:16px;color:var(--ink-soft);margin-top:18px;}
-  .final-ctas{display:flex;gap:16px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
-  .final-ctas .btn{padding:15px 26px;font-size:14.5px;}
-
-  /* ---------- Footer ---------- */
-  footer{border-top:1px solid var(--line);padding:56px 32px 40px;background:var(--surface);}
-  .footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;}
-  .footer-tag-row{display:flex;align-items:center;gap:9px;margin-top:14px;max-width:240px;}
-  .footer-tag{font-size:13.5px;color:var(--muted);line-height:1.6;}
-  .spot-interactive{position:relative;width:26px;height:26px;flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
-  .spot-interactive:hover{transform:rotate(-14deg);}
-  .spot-interactive:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:50%;}
-  .spot-face{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .16s ease;}
-  .spot-face-blink{opacity:0;}
-  .spot-interactive:hover .spot-face-open,.spot-interactive.blinking .spot-face-open{opacity:0;}
-  .spot-interactive:hover .spot-face-blink,.spot-interactive.blinking .spot-face-blink{opacity:1;}
-  @keyframes spotWag{0%,100%{transform:rotate(0deg);}20%{transform:rotate(-20deg);}40%{transform:rotate(15deg);}60%{transform:rotate(-11deg);}80%{transform:rotate(6deg);}}
-  .spot-interactive.wagging{animation:spotWag .6s ease-in-out;}
-  @media (prefers-reduced-motion:reduce){
-    .spot-interactive,.spot-interactive.wagging{animation:none;transition:none;}
-    .spot-interactive:hover{transform:none;}
-  }
-  .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
-  .footer-links a{font-size:13.5px;color:var(--ink-soft);font-weight:600;transition:color .15s;}
-  .footer-links a:hover{color:var(--teal-bright);}
-  .footer-bottom{max-width:var(--max);margin:44px auto 0;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);line-height:1.7;}
-
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
-    .compare{grid-template-columns:1fr;}
-    .pricing-grid{grid-template-columns:1fr;}
-    .audience-grid{grid-template-columns:1fr;}
-    .founders-grid{grid-template-columns:1fr;}
     .stat-row{gap:36px;}
-    .footer-inner{flex-direction:column;}
   }
   @media (max-width:640px){
-    .nav-links{display:none;}
-    nav{padding:14px 16px;}
-    .nav-right{gap:10px;}
-    .nav-cta-full{display:none;}
-    .nav-cta-short{display:inline;}
-    .nav-cta{padding:9px 14px;font-size:12.5px;}
-    .nav-login{font-size:12.5px;}
     .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
     .hero{padding-top:80px;}
     .sig-card{padding:24px 20px;}
@@ -254,10 +129,10 @@
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
     <div class="nav-links">
-      <a href="#intelligence">Intelligence</a>
-      <a href="#reports">Reports</a>
-      <a href="#methodology">Methodology</a>
-      <a href="#contact">Contact</a>
+      <a href="intelligence/index.html">Intelligence</a>
+      <a href="reports/index.html">Reports</a>
+      <a href="team/index.html">Team</a>
+      <a href="request/index.html">Contact</a>
     </div>
     <div class="nav-right">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
@@ -301,7 +176,7 @@
   </section>
 
   <!-- LIVE INTELLIGENCE CARD -->
-  <section class="card-section reveal" id="intelligence">
+  <section class="card-section reveal">
     <div class="sig-card" id="sample-report">
       <div class="sig-head">
         <div>
@@ -341,158 +216,24 @@
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section class="sec sec-alt reveal">
-    <div class="sec-head">
-      <h2>Real estate decisions are made on instinct and lagging data.</h2>
-    </div>
-    <div class="compare">
-      <div class="compare-card bad">
-        <h3>What the market gives you</h3>
-        <ul>
-          <li><span class="mark x">✕</span>Zillow comps trailing 90 days</li>
-          <li><span class="mark x">✕</span>Gut feel on neighborhoods</li>
-          <li><span class="mark x">✕</span>Manual research taking weeks</li>
-          <li><span class="mark x">✕</span>Metro-level trends that miss the zip</li>
-        </ul>
-      </div>
-      <div class="compare-card good">
-        <h3>What SpotWise gives you</h3>
-        <ul>
-          <li><span class="mark check">✓</span>Forward-looking zip-level momentum scores</li>
-          <li><span class="mark check">✓</span>Walk-forward validated signal (94% hit rate)</li>
-          <li><span class="mark check">✓</span>Packaged intelligence ready for decision-making</li>
-          <li><span class="mark check">✓</span>Neighborhood-level precision across 1,213 zips — and growing</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- MARKET SIGNAL REPORT / PRICING -->
-  <section class="sec reveal" id="reports">
-    <div class="sec-head">
-      <h2>Decision intelligence, packaged for action.</h2>
-      <p>Lead with the answer. Then provide the analytics.</p>
-    </div>
-    <ul class="report-list">
-      <li><span class="mark check">✓</span>Top-ranked zip codes for your target geography or investment thesis</li>
-      <li><span class="mark check">✓</span>Classification by stage: Peak, Momentum, Emerging, Watch</li>
-      <li><span class="mark check">✓</span>Key reasons each zip was flagged</li>
-      <li><span class="mark check">✓</span>Supporting metrics and investor ratios</li>
-      <li><span class="mark check">✓</span>Comparison against the broader metro area</li>
-      <li><span class="mark check">✓</span>Recommended action: Investigate, Monitor, or Avoid</li>
-      <li><span class="mark check">✓</span>Short methodology note</li>
-      <li><span class="mark check">✓</span>Clear disclaimer: market intelligence, not financial advice</li>
-    </ul>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Targeted</h3>
-        <div class="count">1 Market Signal Report</div>
-        <div class="amount">Custom Pricing</div>
-        <div class="best">Best for testing a specific geography or investment thesis.</div>
-      </div>
-      <div class="price-card feat">
-        <div class="price-tag">Most Popular</div>
-        <h3>Comparative</h3>
-        <div class="count">3 Market Signal Reports</div>
-        <div class="amount">Custom Pricing</div>
-        <div class="best">Best for comparing geographies, asset types, or acquisition strategies.</div>
-      </div>
-      <div class="price-card">
-        <h3>Portfolio</h3>
-        <div class="count">5 Market Signal Reports</div>
-        <div class="amount">Custom Pricing</div>
-        <div class="best">Best for active investors, private lenders, and acquisition teams.</div>
-      </div>
-    </div>
-    <div class="disclaimer" style="max-width:var(--max);margin-left:auto;margin-right:auto;">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
-  </section>
-
-  <!-- FOUNDING PROGRAM -->
+  <!-- FOUNDING PROGRAM (condensed teaser — full details on /reports) -->
   <section class="sec sec-alt reveal">
     <div class="founding">
       <div class="eyebrow">Founding Market Intelligence Program</div>
-      <h2>25 invitations. Complimentary report. Structured feedback.</h2>
-      <p>We are opening 25 invitations in our Founding Market Intelligence Program. Participants receive a complimentary Market Signal Report for a selected geography in exchange for a feedback session and, where appropriate, permission to use anonymized feedback or a short testimonial.</p>
+      <h2>25 invitations. Complimentary report.</h2>
+      <p>Get a complimentary Market Signal Report for a selected geography in exchange for a short feedback session.</p>
       <a class="btn btn-primary" href="founding-program/index.html">Apply for an invitation →</a>
-      <div class="note">Wave 1 — 5 reports — Going to warm contacts for honest feedback</div>
     </div>
-  </section>
-
-  <!-- WHO IT'S FOR -->
-  <section class="sec reveal">
-    <div class="sec-head">
-      <h2>Built for operators making real capital decisions.</h2>
-    </div>
-    <div class="audience-grid">
-      <div class="aud-card">
-        <div class="tag">Hard Money Lenders</div>
-        <h3>Underwrite with confidence</h3>
-        <p>Underwrite loans with confidence in neighborhood trajectory — know which collateral is in an appreciation window before you close.</p>
-      </div>
-      <div class="aud-card">
-        <div class="tag">Private Equity Real Estate</div>
-        <h3>Source before the market prices it in</h3>
-        <p>Identify emerging markets before they're priced in. Source and prioritize acquisitions using forward-looking momentum signals.</p>
-      </div>
-      <div class="aud-card">
-        <div class="tag">Regional Developers</div>
-        <h3>Evaluate market entry with precision</h3>
-        <p>Evaluate market entry decisions with zip-level intelligence on supply, demand, and appreciation potential across our footprint — expanding every month.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- METHODOLOGY -->
-  <section class="sec sec-alt reveal" id="methodology">
-    <div class="method">
-      <div class="eyebrow">Methodology</div>
-      <h2 class="display" style="font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;margin-top:16px;">How we build the signal.</h2>
-      <p>SpotWise's momentum score is generated by a machine learning model trained on a range of economic and real estate indicators measured at the zip code level. The model is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
-      <p style="margin-top:18px;">The dashboard also includes a buyer-adjustable weighting tool that lets investors re-rank zip codes by their own priorities — cash flow, appreciation, or a balanced view. This is a filtering layer on top of the base score, not a separate model: the underlying momentum score is fixed and validated; the re-ranking simply reorders results to match how a specific buyer evaluates deals.</p>
-      <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
-    </div>
-  </section>
-
-  <!-- FOUNDERS / STORY -->
-  <section class="sec reveal" id="our-story">
-    <div class="sec-head">
-      <div class="eyebrow">Our Story</div>
-      <h2 style="margin-top:16px;">Three college kids, one shared frustration.</h2>
-      <p>SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola — three friends comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, a comp sheet that was already a year stale, or a hunch about a neighborhood nobody had actually checked against the numbers.</p>
-      <p style="margin-top:14px;">We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been — a forward-looking edge instead of a guess.</p>
-    </div>
-    <div class="eyebrow" style="text-align:center;margin:8px auto 28px;">The Team</div>
-    <div class="founders-grid">
-      <div class="founder-card">
-        <div class="founder-avatar">SK</div>
-        <h3>Sameer Katwala</h3>
-        <div class="role">Co-Founder &amp; CEO</div>
-      </div>
-      <div class="founder-card">
-        <div class="founder-avatar">JL</div>
-        <h3>Joseph Lamonica</h3>
-        <div class="role">Co-Founder &amp; CTO</div>
-      </div>
-      <div class="founder-card">
-        <div class="founder-avatar">AG</div>
-        <h3>Andrew Giacomini</h3>
-        <div class="role">Co-Founder &amp; COO</div>
-      </div>
-    </div>
-    <div class="company-line">SpotWise Data Group LLC · New York Metropolitan Area · 2026</div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal" id="contact">
+  <section class="sec final-cta reveal">
     <h2>Your next market signal is already forming.</h2>
     <p>Request a Market Signal Report or apply for the Founding Program.</p>
     <div class="final-ctas">
       <a class="btn btn-primary" href="request/index.html">Request a Report →</a>
       <a class="btn btn-ghost" href="founding-program/index.html">Apply for Founding Program →</a>
     </div>
-    <p style="margin-top:22px;font-size:13.5px;color:var(--faint);">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com" style="color:var(--teal-bright);font-weight:600;">Contact us</a></p>
-    <p style="margin-top:8px;font-size:12px;color:var(--faint);font-family:'JetBrains Mono',monospace;">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</p>
   </section>
 
 </main>
@@ -511,12 +252,13 @@
           <img class="spot-face spot-face-blink" src="assets/spot-icon-blink.png" alt="" />
         </button>
       </div>
+      <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
     </div>
     <div class="footer-links">
-      <a href="#intelligence">Intelligence</a>
-      <a href="#reports">Reports</a>
-      <a href="#methodology">Methodology</a>
-      <a href="#contact">Contact</a>
+      <a href="intelligence/index.html">Intelligence</a>
+      <a href="reports/index.html">Reports</a>
+      <a href="team/index.html">Team</a>
+      <a href="request/index.html">Contact</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -525,6 +267,7 @@
   </div>
 </footer>
 
+<script src="shared.js"></script>
 <script>
   (function(){
     var el = document.getElementById('live-ts');
@@ -578,44 +321,6 @@
       });
     }, { threshold: 0.4 });
     obs.observe(row);
-  })();
-</script>
-
-<script>
-  // Fades/slides in each major section once as it scrolls into view. Safe by
-  // construction: the CSS that hides .reveal elements is scoped under
-  // html.js (see the capability-check script in <head>), which is only ever
-  // added when prefers-reduced-motion is off AND IntersectionObserver exists
-  // -- so this script either runs correctly, or the elements were never
-  // hidden in the first place. Nothing here can leave content stuck invisible.
-  (function(){
-    if (!document.documentElement.classList.contains('js')) return;
-    var els = document.querySelectorAll('.reveal');
-    if (!els.length) return;
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    els.forEach(function(el){ obs.observe(el); });
-  })();
-</script>
-
-<script>
-  (function(){
-    var spot = document.querySelector('.spot-interactive');
-    if (!spot) return;
-    var timer = null;
-    spot.addEventListener('click', function(){
-      spot.classList.remove('wagging');
-      void spot.offsetWidth;
-      spot.classList.add('wagging', 'blinking');
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(function(){ spot.classList.remove('wagging', 'blinking'); }, 650);
-    });
   })();
 </script>
 
