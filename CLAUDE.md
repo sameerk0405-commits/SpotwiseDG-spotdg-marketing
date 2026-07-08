@@ -9,7 +9,7 @@ Marketing site for SpotWise Data Group at `spotdg.com` — a static, no-build-st
 ## Structure
 
 - `index.html` — homepage (founders, product overview, Founding Market Intelligence Program pitch)
-- `founding-program/index.html` — Founding Market Intelligence Program application form; the single lead-gen form and the only CTA button anywhere on the site (top nav, every page — "Join the Program →")
+- `founding-program/index.html` — Founding Market Intelligence Program application form; the single lead-gen form and the only CTA button anywhere on the site (top nav, every page — "Join Market Intelligence Program →")
 - `shared.css` / `shared.js` — shared styling and form-submission logic
 - `_redirects` — Netlify redirect rules; `/request/*` and `/request` 301 to `/founding-program/` (the old "Request a Report" page was removed as a distinct entry point and consolidated into the single Founding Program CTA)
 
