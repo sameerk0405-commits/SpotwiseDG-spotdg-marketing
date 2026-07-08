@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+  }
+</script>
+<title>Sample Report — SpotWise Data Group</title>
+<meta name="description" content="See a complete, unblurred example Market Signal Report — momentum score, tier, investor ratios, key reasons, and metro comparison — using an illustrative sample geography." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0A1512" />
+<link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
+<link rel="apple-touch-icon" href="../assets/favicon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="../shared.css" rel="stylesheet" />
+<style>
+  /* ---------- Sample banner ---------- */
+  .sample-banner{background:rgba(245,158,11,.1);border-bottom:1px solid rgba(245,158,11,.28);color:var(--gold);text-align:center;font-size:13px;font-weight:600;line-height:1.6;padding:12px 20px;}
+  .sample-banner b{font-weight:800;letter-spacing:.04em;}
+
+  /* ---------- Report card (same visual language as the homepage teaser, fully unblurred) ---------- */
+  .card-section{padding:20px 32px 40px;}
+  .sig-card{position:relative;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);}
+  .sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap;}
+  .sig-head-label{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .sig-head-title{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;}
+  .sig-badge{display:flex;align-items:center;gap:7px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:var(--gold);font-size:11.5px;font-weight:700;padding:7px 13px;border-radius:100px;flex-shrink:0;white-space:nowrap;}
+  .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  .sig-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0 22px;}
+  .sig-score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:56px;color:var(--teal-bright);letter-spacing:-.02em;}
+  .sig-score-label{font-size:12.5px;color:var(--muted);font-weight:600;}
+  .sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+  .sig-item{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .sig-item .k{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px;}
+  .sig-item .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15.5px;color:var(--ink);}
+  .sig-item .v.pos{color:var(--teal-bright);}
+  .sig-item .v.neg{color:var(--gold);}
+  .ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--line);flex-wrap:wrap;}
+  .ratio{display:flex;flex-direction:column;gap:4px;}
+  .ratio .k{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+  .ratio .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;}
+
+  /* ---------- Key reasons ---------- */
+  .sig-reasons{padding:20px 0;border-top:1px solid var(--line);}
+  .sig-reasons .k-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .sig-reasons ul{display:flex;flex-direction:column;gap:10px;}
+  .sig-reasons li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.55;}
+
+  /* ---------- Metro comparison ---------- */
+  .sig-compare{padding:20px 0;border-top:1px solid var(--line);}
+  .sig-compare .k-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .compare-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .compare-table th{text-align:right;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:0 0 8px;}
+  .compare-table th:first-child{text-align:left;}
+  .compare-table td{padding:9px 0;border-top:1px solid var(--line);color:var(--ink-soft);}
+  .compare-table td:first-child{color:var(--ink);font-weight:600;}
+  .compare-table td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;}
+  .compare-table td.zip-val{color:var(--teal-bright);}
+
+  .action-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:100px;margin-top:20px;}
+  .sig-disclaimer{font-size:11.5px;color:var(--faint);margin-top:14px;font-style:italic;}
+  .sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap;gap:10px;}
+  .sig-footer .src{font-size:11px;color:var(--faint);font-weight:500;}
+  .sig-footer .ts{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- Methodology (reused pattern from Intelligence page) ---------- */
+  .method{max-width:720px;margin:0 auto;text-align:center;}
+  .method p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:18px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:640px){
+    .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
+    .sig-card{padding:24px 20px;}
+    .sig-grid{grid-template-columns:1fr;}
+    .ratio-row{gap:18px;}
+    .compare-table{font-size:12.5px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="../index.html" class="logo">
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../how-we-score/index.html">How We Score</a>
+      <a href="../reports/index.html">Reports</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
+      <a href="../founding-program/index.html">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join Market Intelligence Program →</span><span class="nav-cta-short">Join →</span></a>
+    </div>
+  </nav>
+</header>
+
+<div class="sample-banner"><b>SAMPLE REPORT</b> — Illustrative data for demonstration purposes only. Actual reports reflect live, current scoring.</div>
+
+<main>
+
+  <section class="sec" style="padding-bottom:32px;">
+    <div class="sec-head">
+      <div class="eyebrow">Sample Report</div>
+      <h2 style="margin-top:16px;">See exactly what you get.</h2>
+      <p>A complete Market Signal Report, fully visible, for a fictional zip code. Every section below — momentum profile, investor ratios, flagged reasons, and metro comparison — mirrors the structure of a real report.</p>
+    </div>
+  </section>
+
+  <!-- SAMPLE REPORT CARD -->
+  <section class="card-section reveal">
+    <div class="sig-card">
+      <div class="sig-head">
+        <div>
+          <div class="sig-head-label">Market Signal Report · Sample Zip 00000 · Example Market, XX</div>
+          <div class="sig-head-title">Momentum Profile</div>
+        </div>
+        <div class="sig-badge"><span class="pulse-dot"></span>Momentum</div>
+      </div>
+
+      <div class="sig-score-row">
+        <div class="sig-score">87.3</div>
+        <div class="sig-score-label">Momentum Score<br/>/ 100</div>
+      </div>
+
+      <div class="sig-grid">
+        <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%</div></div>
+        <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%</div></div>
+        <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp</div></div>
+        <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg">Moderate</div></div>
+      </div>
+
+      <div class="ratio-row">
+        <div class="ratio"><div class="k">Cap Rate</div><div class="v">5.8%</div></div>
+        <div class="ratio"><div class="k">GRM</div><div class="v">12.1x</div></div>
+        <div class="ratio"><div class="k">Price / Income</div><div class="v">3.6x</div></div>
+        <div class="ratio"><div class="k">Rent Burden</div><div class="v">27%</div></div>
+        <div class="ratio"><div class="k">1% Rule</div><div class="v">0.92%</div></div>
+      </div>
+
+      <div class="sig-reasons">
+        <div class="k-label">Key reasons this zip was flagged</div>
+        <ul>
+          <li><span class="mark check">✓</span>Price momentum has accelerated for three consecutive years, outpacing the metro average by more than 2x.</li>
+          <li><span class="mark check">✓</span>Local income growth is outpacing the surrounding metro, tightening affordability pressure that has historically preceded price appreciation.</li>
+          <li><span class="mark check">✓</span>Vacancy has declined steadily, signaling tightening rental supply relative to demand.</li>
+        </ul>
+      </div>
+
+      <div class="sig-compare">
+        <div class="k-label">Comparison against broader metro</div>
+        <table class="compare-table">
+          <thead>
+            <tr><th>Metric</th><th>Sample Zip 00000</th><th>Example Metro Avg</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Momentum Score</td><td class="zip-val">87.3</td><td>61.4</td></tr>
+            <tr><td>Price momentum (3yr)</td><td class="zip-val">+14.6%</td><td>+7.2%</td></tr>
+            <tr><td>Income growth (2yr)</td><td class="zip-val">+9.8%</td><td>+5.1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-badge">→ Investigate Further</div>
+      <div class="sig-disclaimer">Market intelligence, not financial or investment advice.</div>
+
+      <div class="sig-footer">
+        <div class="src">Walk-forward validated · 2000–2026 · Illustrative sample — not live data</div>
+        <div class="ts">Sample Zip 00000</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY (verbatim reuse from Intelligence page) -->
+  <section class="sec sec-alt reveal">
+    <div class="method">
+      <div class="eyebrow">Methodology</div>
+      <h2 class="display" style="font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;margin-top:16px;">How this report was built.</h2>
+      <p>SpotWise's momentum score is generated by a machine learning model trained on a range of economic and real estate indicators measured at the zip code level. The model is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
+      <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="sec final-cta reveal">
+    <h2>Want this for a real zip code?</h2>
+    <p>Join the Founding Market Intelligence Program using the button above.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="../index.html" class="logo">
+        <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+        <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
+      </a>
+      <div class="footer-tag-row">
+        <div class="footer-tag">Before the market moves.</div>
+        <button class="spot-interactive" type="button" aria-label="Say hi to Spot">
+          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" />
+          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" />
+        </button>
+      </div>
+      <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
+    </div>
+    <div class="footer-links">
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../how-we-score/index.html">How We Score</a>
+      <a href="../reports/index.html">Reports</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
+      <a href="../founding-program/index.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 SpotWise Data Group LLC · New York Metropolitan Area.<br/>
+    Market intelligence, not financial or investment advice. Past performance does not guarantee future results.
+  </div>
+</footer>
+
+<script src="../shared.js"></script>
+
+</body>
+</html>
