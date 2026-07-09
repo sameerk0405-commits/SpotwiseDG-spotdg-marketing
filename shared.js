@@ -74,6 +74,34 @@ function spotwiseHandleForm(form, opts) {
   els.forEach(function (el) { obs.observe(el); });
 })();
 
+// Nav menu dropdown: single trigger/panel used at every viewport width (no
+// separate mobile hamburger). Toggles on click, closes on outside click,
+// Escape, or when a menu item is chosen. No-ops on pages with no nav menu.
+(function () {
+  var menu = document.querySelector('.nav-menu');
+  if (!menu) return;
+  var trigger = menu.querySelector('.nav-menu-trigger');
+  if (!trigger) return;
+
+  function close() {
+    menu.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+  function toggle(e) {
+    e.stopPropagation();
+    var open = menu.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  trigger.addEventListener('click', toggle);
+  document.addEventListener('click', function (e) {
+    if (!menu.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+
 // Footer mascot: wag + blink on click. No-ops on pages with no footer.
 (function () {
   var spot = document.querySelector('.spot-interactive');
