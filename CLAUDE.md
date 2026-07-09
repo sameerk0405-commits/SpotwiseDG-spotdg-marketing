@@ -9,9 +9,17 @@ Marketing site for SpotWise Data Group at `spotdg.com` — a static, no-build-st
 ## Structure
 
 - `index.html` — homepage (founders, product overview, Founding Market Intelligence Program pitch)
+- `intelligence/`, `reports/`, `team/`, `sample-report/`, `disclaimer/` — content pages, each a self-contained `index.html` sharing `shared.css`/`shared.js`
 - `founding-program/index.html` — Founding Market Intelligence Program application form; the single lead-gen form and the only CTA button anywhere on the site (top nav, every page — "Join Market Intelligence Program →")
-- `shared.css` / `shared.js` — shared styling and form-submission logic
+- `shared.css` / `shared.js` — shared styling, nav-dropdown behavior, scroll reveals, and form-submission logic
 - `_redirects` — Netlify redirect rules; `/request/*` and `/request` 301 to `/founding-program/` (the old "Request a Report" page was removed as a distinct entry point and consolidated into the single Founding Program CTA)
+
+## Nav, Accordion, and Head Tags
+
+- **Nav dropdown** (`shared.css` + `shared.js`): all page links live in a single "Menu" dropdown — a full-width panel that extends down from the header, identical at every viewport width (deliberately no separate mobile hamburger; this fixed a nav-wrap bug on narrow screens). Click toggles it; outside click or Escape closes it (Escape also returns focus to the trigger); Arrow keys move between items. "Join Market Intelligence Program" stays outside the dropdown as the always-visible CTA. The former standalone "How We Score" page/nav item was merged into `sample-report/index.html` (`#how-we-score` anchor).
+- **Pricing tier accordion** (`reports/index.html`): the three tier cards (Targeted/Comparative/Portfolio) expand inline on click to show what's-included/who-it's-for/differentiation detail — single-open behavior in `shared.js` (`.price-card[data-tier]`), all three cards stay visible while one is expanded. Cards intentionally show no dollar amounts or pricing line.
+- **Open Graph tags**: every page except `founding-program/` has per-page `og:title/description/url` plus a shared `og:image` (`assets/og-image.png`, 1200×630, generated from the mascot + brand fonts). Deliberately no `twitter:` tags — no Twitter/X presence.
+- **Plausible analytics**: every page's `<head>` carries the exact proxied snippet (`plausible.io/js/pa-bX3k9X4nnLirx0EZjZW_5.js` + `window.plausible` init). Don't "simplify" it to the generic `plausible.io/js/script.js` + `data-domain` form — the custom-path script is what the account is configured for.
 
 ## Form Submission (`shared.js`)
 
