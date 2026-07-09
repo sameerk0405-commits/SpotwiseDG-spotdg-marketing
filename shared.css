@@ -17,6 +17,7 @@ img{max-width:100%;display:block;}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 32px;}
 section{position:relative;}
 .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);}
+.eyebrow::before{content:"";display:inline-block;width:18px;height:2px;background:currentColor;border-radius:2px;vertical-align:middle;margin-right:10px;margin-top:-2px;}
 .mark{flex-shrink:0;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
 .mark.x{background:rgba(255,255,255,.06);color:var(--faint);}
 .mark.check{background:rgba(20,184,166,.16);color:var(--teal-bright);}
@@ -53,7 +54,7 @@ section{position:relative;}
 }
 
 /* ---------- Buttons ---------- */
-.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:100px;transition:background-color .2s,color .2s,border-color .2s,box-shadow .2s,transform .12s cubic-bezier(.16,1,.3,1);white-space:nowrap;cursor:pointer;font-family:inherit;border:none;}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;padding:12px 22px;border-radius:100px;transition:background-color .2s,color .2s,border-color .2s,box-shadow .2s,transform .12s cubic-bezier(.16,1,.3,1);white-space:nowrap;cursor:pointer;font-family:inherit;border:none;}
 .btn-primary{background:var(--teal);color:#031A17;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 20px rgba(20,184,166,.3);}
 .btn-primary:hover{background:var(--teal-bright);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 6px 26px rgba(20,184,166,.44);transform:translateY(-1px);}
 .btn-primary:active{transform:scale(.97) translateY(0);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 2px 12px rgba(20,184,166,.35);}
@@ -101,7 +102,7 @@ section{position:relative;}
 .nda-checkbox .req{color:var(--gold);margin-left:3px;}
 
 /* ---------- Nav (shared across all top-level pages) ---------- */
-header{position:sticky;top:0;z-index:100;background:rgba(10,21,18,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+header{position:sticky;top:0;z-index:100;background:rgba(10,21,18,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:2px solid var(--teal);border-bottom:1px solid var(--line);}
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:var(--max);margin:0 auto;}
 .nav-right{display:flex;align-items:center;gap:14px;}
 
@@ -181,10 +182,10 @@ html.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubi
 html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
 
 /* ---------- Generic section shell (shared across all top-level pages) ---------- */
-.sec{padding:96px 32px;}
-.sec-alt{background:var(--surface);}
-.sec-head{max-width:680px;margin:0 auto 56px;text-align:center;}
-.sec-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;line-height:1.15;}
+.sec{padding:120px 32px;}
+.sec-alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.sec-head{max-width:680px;margin:0 auto 64px;text-align:center;}
+.sec-head h2{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.2vw,46px);letter-spacing:-.02em;line-height:1.15;}
 .sec-head p{font-size:16px;color:var(--ink-soft);margin-top:16px;line-height:1.6;}
 
 /* ---------- Founding program (shared: condensed teaser on Home, full section on Reports) ---------- */
@@ -204,7 +205,7 @@ html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
 .final-ctas .btn{padding:15px 26px;font-size:14.5px;}
 
 /* ---------- Footer (shared across all top-level pages) ---------- */
-footer{border-top:1px solid var(--line);padding:56px 32px 40px;background:var(--surface);}
+footer{border-top:1px solid rgba(20,184,166,.16);padding:72px 32px 40px;background:var(--surface);}
 .footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;}
 .footer-tag-row{display:flex;align-items:center;gap:9px;margin-top:14px;max-width:240px;}
 .footer-tag{font-size:13.5px;color:var(--muted);line-height:1.6;}
@@ -231,6 +232,7 @@ footer{border-top:1px solid var(--line);padding:56px 32px 40px;background:var(--
 
 /* ---------- Responsive: nav + footer (shared across all top-level pages) ---------- */
 @media (max-width:900px){
+  .sec{padding:88px 32px;}
   .footer-inner{flex-direction:column;}
   .nav-menu-panel-inner{grid-template-columns:repeat(3,1fr);}
 }

@@ -46,10 +46,11 @@
   @media (prefers-reduced-motion:reduce){.hero-inner{animation:none;}}
 
   /* ---------- Hero ---------- */
-  .hero{padding:108px 32px 90px;background:radial-gradient(1100px 560px at 50% -12%,rgba(20,184,166,.16) 0%,rgba(20,184,166,.04) 45%,var(--paper) 72%);}
-  .beta-badge-row{max-width:var(--max);margin:0 auto 24px;}
+  .hero{padding:124px 32px 90px;background:radial-gradient(1100px 560px at 50% -12%,rgba(20,184,166,.16) 0%,rgba(20,184,166,.04) 45%,var(--paper) 72%);}
+  .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(45,212,196,.13) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(1000px 560px at 50% 0%,#000 0%,transparent 78%);mask-image:radial-gradient(1000px 560px at 50% 0%,#000 0%,transparent 78%);pointer-events:none;}
+  .beta-badge-row{position:relative;max-width:var(--max);margin:0 auto 24px;}
   .beta-badge{display:inline-flex;align-items:center;margin-left:14px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 15px;border-radius:100px;}
-  .hero-inner{max-width:var(--max);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .hero-inner{position:relative;max-width:var(--max);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
   .hero .eyebrow{margin-bottom:20px;}
   h1{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(38px,6.4vw,74px);letter-spacing:-.03em;line-height:1.04;max-width:900px;}
   h1 em{font-style:normal;color:var(--teal-bright);}
@@ -60,7 +61,7 @@
   .stat-row::before{content:"";position:absolute;inset:-40px -20px;background:radial-gradient(600px 140px at 50% 50%,rgba(20,184,166,.09) 0%,transparent 70%);z-index:-1;pointer-events:none;}
   .stat{text-align:center;padding:0 32px;position:relative;}
   .stat:not(:first-child){border-left:1px solid var(--line);}
-  .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(30px,4vw,40px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 32px rgba(45,212,196,.45);font-variant-numeric:tabular-nums;}
+  .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(32px,4.2vw,44px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 32px rgba(45,212,196,.45);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:9px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.09em;}
 
   /* ---------- Hero: momentum visualization ---------- */
