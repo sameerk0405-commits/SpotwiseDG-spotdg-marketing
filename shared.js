@@ -102,6 +102,32 @@ function spotwiseHandleForm(form, opts) {
   });
 })();
 
+// Pricing tier accordion (/reports): click a card to expand its detail panel
+// inline; the other cards stay visible and unexpanded so all three remain
+// comparable side by side. Opening one closes any other that's open.
+// No-ops on pages with no pricing cards.
+(function () {
+  var cards = document.querySelectorAll('.price-card[data-tier]');
+  if (!cards.length) return;
+
+  cards.forEach(function (card) {
+    var trigger = card.querySelector('.price-card-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', function () {
+      var isOpen = card.classList.contains('is-open');
+      cards.forEach(function (other) {
+        other.classList.remove('is-open');
+        var otherTrigger = other.querySelector('.price-card-trigger');
+        if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        card.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
+
 // Footer mascot: wag + blink on click. No-ops on pages with no footer.
 (function () {
   var spot = document.querySelector('.spot-interactive');

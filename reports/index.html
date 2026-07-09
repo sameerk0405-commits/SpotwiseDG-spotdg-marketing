@@ -27,15 +27,30 @@
   .report-list{max-width:640px;margin:0 auto 64px;}
   .report-list li{display:flex;gap:13px;align-items:flex-start;font-size:15px;color:var(--ink-soft);padding:13px 0;border-top:1px solid var(--line);}
   .report-list li:first-child{border-top:none;}
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:stretch;}
-  .price-card{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:30px 26px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1);}
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:start;}
+  .price-card{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1);}
   .price-card.feat{border-color:rgba(20,184,166,.4);position:relative;background:linear-gradient(180deg,rgba(20,184,166,.06) 0%,var(--surface-2) 60%);}
   .price-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.3);}
   .price-card.feat:hover{box-shadow:0 16px 44px -14px rgba(20,184,166,.28),0 16px 40px -16px rgba(0,0,0,.4);border-color:rgba(20,184,166,.55);}
-  .price-tag{position:absolute;top:-11px;left:26px;background:var(--teal);color:#031A17;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:100px;}
+  .price-card.is-open{transform:none;}
+  .price-tag{position:absolute;top:-11px;left:26px;background:var(--teal);color:#031A17;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:100px;z-index:1;}
   .price-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;}
   .price-card .count{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:16px;}
   .price-card .best{font-size:13.5px;color:var(--ink-soft);line-height:1.55;flex:1;}
+
+  /* ---------- Pricing accordion ---------- */
+  .price-card-trigger{width:100%;text-align:left;background:transparent;border:none;padding:30px 26px;display:flex;flex-direction:column;font-family:inherit;cursor:pointer;color:inherit;border-radius:16px;}
+  .price-card-trigger:focus-visible{outline:2px solid var(--teal-bright);outline-offset:-2px;}
+  .price-card-more{display:flex;align-items:center;gap:6px;margin-top:18px;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--teal-bright);}
+  .price-card-more .chev{width:9px;height:9px;flex-shrink:0;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .price-card.is-open .price-card-more .chev{transform:rotate(180deg);}
+  .price-card-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.16,1,.3,1);}
+  .price-card.is-open .price-card-panel{grid-template-rows:1fr;}
+  .price-card-panel-inner{overflow:hidden;}
+  .price-card-detail{padding:0 26px 28px;border-top:1px solid var(--line);margin-top:2px;}
+  .price-card-detail-block{padding-top:18px;}
+  .price-card-detail-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+  .price-card-detail-block p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
@@ -115,21 +130,84 @@
   <!-- PACKAGE TIERS (no pricing) -->
   <section class="sec reveal">
     <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Targeted</h3>
-        <div class="count">1 Market Signal Report</div>
-        <div class="best">Best for testing a specific geography or investment thesis.</div>
+      <div class="price-card" data-tier>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-targeted-panel">
+          <h3>Targeted</h3>
+          <div class="count">1 Market Signal Report</div>
+          <div class="best">Best for testing a specific geography or investment thesis.</div>
+          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
+        </button>
+        <div class="price-card-panel" id="tier-targeted-panel">
+          <div class="price-card-panel-inner">
+            <div class="price-card-detail">
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">What's included</div>
+                <p>One full Market Signal Report covering a single zip code or one defined geography of your choosing (a neighborhood, submarket, or custom radius). Includes tier classification, the top signals driving the score, full investor ratios, and a comparison against the broader metro.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Who it's for</div>
+                <p>An investor or lender with one specific opportunity already on the table — you have a zip code or two in mind and want a fast, data-backed second opinion before committing capital or underwriting time.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Vs. Comparative</div>
+                <p>Comparative gets you the same depth across 3 geographies with a side-by-side ranking — this tier is for validating one thesis, not choosing between several.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="price-card feat">
+      <div class="price-card feat" data-tier>
         <div class="price-tag">Most Popular</div>
-        <h3>Comparative</h3>
-        <div class="count">3 Market Signal Reports</div>
-        <div class="best">Best for comparing geographies, asset types, or acquisition strategies.</div>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-comparative-panel">
+          <h3>Comparative</h3>
+          <div class="count">3 Market Signal Reports</div>
+          <div class="best">Best for comparing geographies, asset types, or acquisition strategies.</div>
+          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
+        </button>
+        <div class="price-card-panel" id="tier-comparative-panel">
+          <div class="price-card-panel-inner">
+            <div class="price-card-detail">
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">What's included</div>
+                <p>Three full Market Signal Reports, each covering a zip code or geography of your choice, delivered as a set with a side-by-side summary ranking all three on momentum, investor ratios, and recommended action.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Who it's for</div>
+                <p>Investors, asset managers, or private lenders actively narrowing a shortlist — you're deciding between a few submarkets or acquisition strategies and need the numbers next to each other, not in three separate PDFs.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Vs. Targeted / Portfolio</div>
+                <p>Built for comparison, not just validation — the ranked summary is the point. Portfolio is sized for ongoing deal flow across a wider pipeline; this tier is a single point-in-time, three-way decision.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="price-card">
-        <h3>Portfolio</h3>
-        <div class="count">5 Market Signal Reports</div>
-        <div class="best">Best for active investors, private lenders, and acquisition teams.</div>
+      <div class="price-card" data-tier>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-portfolio-panel">
+          <h3>Portfolio</h3>
+          <div class="count">5 Market Signal Reports</div>
+          <div class="best">Best for active investors, private lenders, and acquisition teams.</div>
+          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
+        </button>
+        <div class="price-card-panel" id="tier-portfolio-panel">
+          <div class="price-card-panel-inner">
+            <div class="price-card-detail">
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">What's included</div>
+                <p>Five full Market Signal Reports across zip codes or geographies of your choice, plus a consolidated cross-report summary memo ranking the full set by opportunity so you can triage at a glance.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Who it's for</div>
+                <p>Active investors, private lenders, and acquisition teams running deal flow across multiple markets at once — you need repeated coverage across a pipeline, not a single snapshot.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Vs. Comparative</div>
+                <p>Same side-by-side logic, scaled to a fuller pipeline (5 vs. 3) for teams evaluating more opportunities in parallel rather than one three-way call.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="disclaimer" style="max-width:var(--max);margin-left:auto;margin-right:auto;">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
