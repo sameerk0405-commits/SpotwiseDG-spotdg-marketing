@@ -146,6 +146,23 @@ function spotwiseHandleForm(form, opts) {
   });
 })();
 
+// FAQ accordion (/contact): same expand/collapse mechanics as the pricing
+// tier accordion, but each question toggles independently since multiple
+// answers may be worth comparing at once. No-ops on pages with no FAQ.
+(function () {
+  var items = document.querySelectorAll('.faq-item[data-faq]');
+  if (!items.length) return;
+
+  items.forEach(function (item) {
+    var trigger = item.querySelector('.faq-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', function () {
+      var isOpen = item.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+})();
+
 // Footer mascot: wag + blink on click. No-ops on pages with no footer.
 (function () {
   var spot = document.querySelector('.spot-interactive');
