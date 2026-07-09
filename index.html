@@ -86,7 +86,8 @@
 
   /* ---------- Intelligence Card (live sample report) ---------- */
   .card-section{padding:20px 32px 96px;}
-  .sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);}
+  .sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);transition:border-color .25s,box-shadow .25s cubic-bezier(.16,1,.3,1);}
+  .sig-card:hover{border-color:rgba(20,184,166,.3);box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.12),0 0 40px rgba(20,184,166,.08);}
   .blur-val{filter:blur(6px);user-select:none;}
   .sample-overlay{position:absolute;inset:0;background:rgba(9,18,16,.62);backdrop-filter:blur(1.5px);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;}
   .sample-overlay-inner{max-width:300px;display:flex;flex-direction:column;align-items:center;gap:16px;}

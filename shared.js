@@ -98,7 +98,25 @@ function spotwiseHandleForm(form, opts) {
     if (!menu.contains(e.target)) close();
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') close();
+    if (e.key === 'Escape') {
+      var refocus = menu.classList.contains('is-open') && menu.contains(document.activeElement);
+      close();
+      if (refocus) trigger.focus();
+    }
+  });
+
+  // Arrow-key navigation between menu items while the panel is open.
+  menu.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    if (!menu.classList.contains('is-open')) return;
+    var links = Array.prototype.slice.call(menu.querySelectorAll('.nav-menu-panel a'));
+    if (!links.length) return;
+    e.preventDefault();
+    var i = links.indexOf(document.activeElement);
+    var next;
+    if (e.key === 'ArrowDown') next = i < 0 ? 0 : (i + 1) % links.length;
+    else next = i < 0 ? links.length - 1 : (i - 1 + links.length) % links.length;
+    links[next].focus();
   });
 })();
 
