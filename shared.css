@@ -387,3 +387,49 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
   .nav-home{width:30px;height:30px;}
   .nav-home svg{width:16px;height:16px;}
 }
+
+/* ===================================================================
+   MOBILE HARDENING & VISUAL RETHINK  —  2026-07-10
+   Every rule below is scoped inside a max-width media query, so it
+   applies to phones ONLY. Any viewport >= 641px receives none of these
+   rules and desktop rendering is provably unchanged (verified by
+   pixel-diffing 1440px before/after screenshots). This block is placed
+   last so it wins source-order ties over the mobile rules above.
+   =================================================================== */
+@media (max-width:640px){
+  /* ---- Touch targets: 44x44 minimum (WCAG 2.5.5 target size) ---- */
+  .logo{min-height:44px;}
+  .nav-menu-trigger{min-height:44px;padding-top:0;padding-bottom:0;}
+  .nav-home{width:44px;height:44px;border-radius:12px;}
+  .nav-home svg{width:20px;height:20px;}
+  .nav-login{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;}
+  .btn{min-height:44px;}
+  .nav-cta{padding-top:0;padding-bottom:0;}
+  .action-badge{min-height:44px;}
+  a.email-link{min-height:44px;}
+  .footer-col{gap:2px;}
+  .footer-col a,.footer-links a{display:inline-flex;align-items:center;min-height:44px;}
+  .footer-contact a{display:inline-flex;align-items:center;min-height:36px;}
+  .spot-interactive{width:44px;height:44px;}
+
+  /* ---- iOS Safari zooms the page when an input < 16px is focused ---- */
+  .field-group input,
+  .field-group select,
+  .field-group textarea{font-size:16px;padding:14px 15px;}
+  .nda-checkbox{gap:12px;align-items:center;}
+  .nda-checkbox input[type="checkbox"]{width:22px;height:22px;margin-top:0;}
+
+  /* ---- Breathing room: shared signal card ---- */
+  .sig-card{padding:26px 20px;}
+  .sig-score{font-size:54px;}
+  .sig-grid{gap:12px;}
+  .sig-item{padding:14px 16px;}
+  .ratio-row{gap:16px 22px;}
+  .ratio .v{font-size:17px;}
+  .sec-head p{font-size:16px;}
+  .final-ctas .btn{width:100%;justify-content:center;}
+}
+@media (max-width:400px){
+  .nav-right{gap:4px;}
+  .nav-cta{padding-left:13px;padding-right:13px;}
+}

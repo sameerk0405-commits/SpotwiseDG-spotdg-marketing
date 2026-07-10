@@ -124,6 +124,32 @@
     .momentum-badge{font-size:10px;padding:6px 11px;}
     .steps{grid-template-columns:1fr;}
   }
+
+  /* ---------- Mobile visual rethink (phones only; desktop untouched) ---------- */
+  @media (max-width:640px){
+    .hero{padding:104px 20px 76px;}
+    .hero .eyebrow{margin-bottom:20px;}
+    h1{font-size:clamp(40px,11.5vw,54px);letter-spacing:-.03em;line-height:1.03;}
+    .hero-sub{font-size:16.5px;margin-top:22px;line-height:1.6;}
+    .hero-ctas{margin-top:30px;width:100%;}
+    .hero-ctas .btn{width:100%;justify-content:center;padding:16px 26px;}
+
+    /* Stat callouts -> full-width stacked cards (mobile-specific layout) */
+    .stat-row{flex-direction:column;align-items:stretch;gap:12px;margin-top:52px;width:100%;}
+    .stat-row::before{display:none;}
+    .stat{padding:20px 22px;background:var(--surface);border:1px solid var(--line);
+      border-radius:16px;text-align:left;display:flex;flex-direction:column;gap:4px;}
+    .stat:not(:first-child){border-left:1px solid var(--line);}
+    .stat b{font-size:40px;text-align:left;line-height:1;}
+    .stat span{margin-top:4px;font-size:11px;letter-spacing:.08em;}
+
+    .momentum-viz{margin-top:44px;}
+    .card-section .sec-head{margin-bottom:28px;}
+  }
+  @media (max-width:400px){
+    h1{font-size:clamp(34px,10.5vw,44px);}
+    .stat b{font-size:34px;}
+  }
 </style>
 </head>
 <body>
