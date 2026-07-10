@@ -189,7 +189,8 @@ function spotwiseHandleForm(form, opts) {
   update();
 })();
 
-// Footer mascot: wag + blink on click. No-ops on pages with no footer.
+// Footer mascot: wag + blink on click, plus an ambient idle blink so it reads as
+// alive rather than purely reactive. No-ops on pages with no footer.
 (function () {
   var spot = document.querySelector('.spot-interactive');
   if (!spot) return;
@@ -201,4 +202,23 @@ function spotwiseHandleForm(form, opts) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(function () { spot.classList.remove('wagging', 'blinking'); }, 650);
   });
+
+  // Ambient idle blink: every few seconds, on a randomized interval so it feels
+  // natural. Purely decorative unprompted motion, so it's gated behind
+  // !prefers-reduced-motion. Skips a beat whenever the mascot is mid-wag or
+  // hovered (both already show the blink face) so ambient and interaction never
+  // fight, and never strips .blinking out from under an in-progress click wag.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    (function scheduleBlink() {
+      setTimeout(function () {
+        if (!spot.classList.contains('wagging') && !spot.matches(':hover')) {
+          spot.classList.add('blinking');
+          setTimeout(function () {
+            if (!spot.classList.contains('wagging')) spot.classList.remove('blinking');
+          }, 150);
+        }
+        scheduleBlink();
+      }, 3200 + Math.random() * 2600);
+    })();
+  }
 })();
