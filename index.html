@@ -114,11 +114,6 @@
     .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
     .hero{padding-top:96px;}
     .sig-card{padding:24px 20px;}
-    .sig-grid{grid-template-columns:1fr;}
-    .ratio-row{gap:20px;}
-    .stat-row{gap:28px;}
-    .stat{padding:0 20px;}
-    .stat b{font-size:28px;}
     h1{font-size:clamp(34px,10vw,48px);}
     .momentum-viz{margin-top:48px;}
     .momentum-badge{font-size:10px;padding:6px 11px;}
@@ -134,13 +129,15 @@
     .hero-ctas{margin-top:30px;width:100%;}
     .hero-ctas .btn{width:100%;justify-content:center;padding:16px 26px;}
 
-    /* Stat callouts -> full-width stacked cards (mobile-specific layout) */
-    .stat-row{flex-direction:column;align-items:stretch;gap:12px;margin-top:52px;width:100%;}
+    /* Stat callouts -> dense card grid: lead stat full-width, other two side by side */
+    .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:52px;width:100%;}
     .stat-row::before{display:none;}
-    .stat{padding:20px 22px;background:var(--surface);border:1px solid var(--line);
+    .stat{padding:18px;background:var(--surface);border:1px solid var(--line);
       border-radius:16px;text-align:left;display:flex;flex-direction:column;gap:4px;}
+    .stat:first-child{grid-column:1/-1;}
     .stat:not(:first-child){border-left:1px solid var(--line);}
     .stat b{font-size:40px;text-align:left;line-height:1;}
+    .stat:not(:first-child) b{font-size:32px;}
     .stat span{margin-top:4px;font-size:11px;letter-spacing:.08em;}
 
     .momentum-viz{margin-top:44px;}
@@ -149,6 +146,7 @@
   @media (max-width:400px){
     h1{font-size:clamp(34px,10.5vw,44px);}
     .stat b{font-size:34px;}
+    .stat:not(:first-child) b{font-size:28px;}
   }
 </style>
 </head>

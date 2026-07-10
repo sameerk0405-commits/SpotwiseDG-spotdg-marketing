@@ -419,12 +419,14 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
   .nda-checkbox{gap:12px;align-items:center;}
   .nda-checkbox input[type="checkbox"]{width:22px;height:22px;margin-top:0;}
 
-  /* ---- Breathing room: shared signal card ---- */
+  /* ---- Breathing room + 2-col density: shared signal card ----
+     Dense data groups keep a multi-column grid on phones (like desktop)
+     instead of collapsing to one sparse column. Text sizes unchanged. */
   .sig-card{padding:26px 20px;}
   .sig-score{font-size:54px;}
-  .sig-grid{gap:12px;}
-  .sig-item{padding:14px 16px;}
-  .ratio-row{gap:16px 22px;}
+  .sig-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .sig-item{padding:13px 12px;}
+  .ratio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px;}
   .ratio .v{font-size:17px;}
   .sec-head p{font-size:16px;}
   .final-ctas .btn{width:100%;justify-content:center;}
