@@ -110,6 +110,23 @@
   @keyframes wfGrow{to{transform:scaleX(1);opacity:1;}}
   .wf-caption{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:12px;}
 
+  /* ---------- Scroll-reveal cascade: each guide block (.dsec) is its own
+     reveal, and its cards arrive in sequence once it enters view. Keyed on
+     the .dsec itself (not the outer .demo reveal) so timing follows the
+     block the reader has actually reached. Backwards-fill animation keeps
+     hover transforms intact; inert without html.js. ---------- */
+  html.js .dsec.reveal:not(.is-visible) :is(.tier-card,.ratio-explain-card){opacity:0;}
+  html.js .dsec.reveal.is-visible :is(.tier-card,.ratio-explain-card){animation:rvIn .6s var(--ease) backwards;}
+  html.js .dsec.reveal.is-visible .tier-card:nth-child(2){animation-delay:.1s;}
+  html.js .dsec.reveal.is-visible .tier-card:nth-child(3){animation-delay:.2s;}
+  html.js .dsec.reveal.is-visible .tier-card:nth-child(4){animation-delay:.3s;}
+  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(2){animation-delay:.08s;}
+  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(3){animation-delay:.16s;}
+  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(4){animation-delay:.24s;}
+  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(5){animation-delay:.32s;}
+  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(6){animation-delay:.4s;}
+  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
   /* ---------- Responsive ---------- */
   @media (max-width:1080px){
     .demo{grid-template-columns:1fr;gap:56px;}
@@ -273,14 +290,14 @@
     <div class="demo-col">
 
       <!-- HOW WE SCORE (merged from standalone /how-we-score page) -->
-      <div class="dsec" id="how-we-score">
+      <div class="dsec reveal" id="how-we-score">
         <div class="eyebrow">How We Score</div>
         <h2>Plain-language guide to every number above.</h2>
         <p>Every Market Signal Report boils a lot of data down to a handful of numbers. Here's what each one means and why it matters — without the algorithm or exact thresholds behind it.</p>
       </div>
 
       <!-- MOMENTUM SCORE -->
-      <div class="dsec">
+      <div class="dsec reveal">
         <div class="eyebrow">The Momentum Score</div>
         <h2>A single number, 0–100.</h2>
         <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. A higher score means a stronger, more corroborated signal that the neighborhood is entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker, mixed, or not yet confirmed.</p>
@@ -306,7 +323,7 @@
       </div>
 
       <!-- TIER SYSTEM -->
-      <div class="dsec">
+      <div class="dsec reveal">
         <h2>What each tier means.</h2>
         <p>Every scored zip is classified into one of four tiers based on the strength and confirmation of its signal.</p>
         <div class="tier-grid">
@@ -330,7 +347,7 @@
       </div>
 
       <!-- INVESTOR RATIOS -->
-      <div class="dsec">
+      <div class="dsec reveal">
         <h2>The investor ratios, explained.</h2>
         <p>Every report also includes standard investor metrics, computed for the specific zip so you don't have to.</p>
         <div class="ratio-grid">

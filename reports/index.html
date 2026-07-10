@@ -90,6 +90,32 @@
   .tier-table tr:last-child th,.tier-table tr:last-child td{border-bottom:none;}
   .tier-table td.tt-feat{background:rgba(20,184,166,.045);}
 
+  /* ---------- Scroll-reveal cascade: children of each revealed section arrive
+     in sequence. Hidden state is scoped to .reveal:not(.is-visible) and the
+     entrance uses a backwards-fill animation, so once it finishes elements
+     return to their natural styles (hover/accordion transforms stay intact).
+     Inert without html.js (no-JS / reduced-motion get the static page). ---------- */
+  html.js .reveal:not(.is-visible) :is(.sec-head>*,.report-list li,.view-toggle,.price-card,.founding>*){opacity:0;}
+  html.js .reveal.is-visible :is(.sec-head>*,.report-list li,.view-toggle,.price-card,.founding>*){animation:rvIn .6s var(--ease) backwards;}
+  html.js .reveal.is-visible .sec-head>*:nth-child(2){animation-delay:.08s;}
+  html.js .reveal.is-visible .sec-head>*:nth-child(3){animation-delay:.16s;}
+  html.js .reveal.is-visible .sec-head>*:nth-child(4){animation-delay:.24s;}
+  html.js .reveal.is-visible .report-list li:nth-child(2){animation-delay:.05s;}
+  html.js .reveal.is-visible .report-list li:nth-child(3){animation-delay:.1s;}
+  html.js .reveal.is-visible .report-list li:nth-child(4){animation-delay:.15s;}
+  html.js .reveal.is-visible .report-list li:nth-child(5){animation-delay:.2s;}
+  html.js .reveal.is-visible .report-list li:nth-child(6){animation-delay:.25s;}
+  html.js .reveal.is-visible .report-list li:nth-child(7){animation-delay:.3s;}
+  html.js .reveal.is-visible .report-list li:nth-child(8){animation-delay:.35s;}
+  html.js .reveal.is-visible .view-toggle{animation-delay:.08s;}
+  html.js .reveal.is-visible .price-card:nth-child(1){animation-delay:.16s;}
+  html.js .reveal.is-visible .price-card:nth-child(2){animation-delay:.28s;}
+  html.js .reveal.is-visible .price-card:nth-child(3){animation-delay:.4s;}
+  html.js .reveal.is-visible .founding>*:nth-child(2){animation-delay:.1s;}
+  html.js .reveal.is-visible .founding>*:nth-child(3){animation-delay:.2s;}
+  html.js .reveal.is-visible .founding>*:nth-child(4){animation-delay:.3s;}
+  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
     .pricing-grid{grid-template-columns:1fr;}

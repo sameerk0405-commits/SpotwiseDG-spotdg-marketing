@@ -67,6 +67,27 @@
   .aud-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em;}
   .aud-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
 
+  /* ---------- Scroll-reveal cascade: children of each revealed section arrive
+     in sequence. Hidden state is scoped to .reveal:not(.is-visible) and the
+     entrance uses a backwards-fill animation, so once it finishes elements
+     return to their natural styles (hover transforms stay intact). Inert
+     without html.js (no-JS / reduced-motion get the static page). ---------- */
+  html.js .reveal:not(.is-visible) :is(.sec-head>*,.method-head,.method .lede,.method p:not(.lede),.method .coverage,.method .disclaimer,.versus-half,.aud-card){opacity:0;}
+  html.js .reveal.is-visible :is(.sec-head>*,.method-head,.method .lede,.method p:not(.lede),.method .coverage,.method .disclaimer,.versus-half,.aud-card){animation:rvIn .6s var(--ease) backwards;}
+  html.js .reveal.is-visible .sec-head>*:nth-child(2){animation-delay:.08s;}
+  html.js .reveal.is-visible .sec-head>*:nth-child(3){animation-delay:.16s;}
+  html.js .reveal.is-visible .method .lede{animation-delay:.12s;}
+  html.js .reveal.is-visible .method p:not(.lede){animation-delay:.2s;}
+  html.js .reveal.is-visible .method .coverage{animation-delay:.28s;}
+  html.js .reveal.is-visible .method .disclaimer{animation-delay:.34s;}
+  html.js .reveal.is-visible .versus-half.good{animation-delay:.16s;}
+  html.js .reveal.is-visible .aud-card:nth-child(2){animation-delay:.12s;}
+  html.js .reveal.is-visible .aud-card:nth-child(3){animation-delay:.24s;}
+  html.js .reveal:not(.is-visible) .versus-chip{opacity:0;}
+  html.js .reveal.is-visible .versus-chip{animation:rvFade .5s ease .4s backwards;}
+  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  @keyframes rvFade{from{opacity:0;}to{opacity:1;}}
+
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
     .versus{grid-template-columns:1fr;}
