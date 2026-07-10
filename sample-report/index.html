@@ -40,61 +40,19 @@
   .sample-banner{background:rgba(245,158,11,.1);border-bottom:1px solid rgba(245,158,11,.28);color:var(--gold);text-align:center;font-size:13px;font-weight:600;line-height:1.6;padding:12px 20px;}
   .sample-banner b{font-weight:800;letter-spacing:.04em;}
 
-  /* ---------- Report card (same visual language as the homepage teaser) ---------- */
-  .card-section{padding:20px 32px 40px;}
-  .sig-card{position:relative;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);}
-  .sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap;}
-  .sig-head-label{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-  .sig-head-title{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;}
-  .sig-badge{display:flex;align-items:center;gap:7px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:var(--gold);font-size:11.5px;font-weight:700;padding:7px 13px;border-radius:100px;flex-shrink:0;white-space:nowrap;}
-  .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
-  .sig-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0 22px;}
-  .sig-score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:56px;color:var(--teal-bright);letter-spacing:-.02em;}
-  .sig-score-label{font-size:12.5px;color:var(--muted);font-weight:600;}
-  .sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
-  .sig-item{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
-  .sig-item .k{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px;}
-  .sig-item .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15.5px;color:var(--ink);}
-  .sig-item .v.pos{color:var(--teal-bright);}
-  .sig-item .v.neg{color:var(--gold);}
-  .ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--line);flex-wrap:wrap;}
-  .ratio{display:flex;flex-direction:column;gap:4px;}
-  .ratio .k{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
-  .ratio .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;}
+  /* ---------- Demo layout: sticky report card + scrolling explainers ---------- */
+  .demo{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);gap:48px;max-width:var(--max);margin:0 auto;align-items:start;padding:0 32px 130px;}
+  .demo-card-col{position:sticky;top:96px;}
+  .demo-card-col .sig-card{max-width:none;}
+  .demo-col{min-width:0;}
+  .demo-col .dsec{margin-bottom:64px;}
+  .demo-col .dsec:last-child{margin-bottom:0;}
+  .demo-col h2{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-.025em;font-size:clamp(22px,2.6vw,30px);margin-top:14px;}
+  .demo-col .dsec > p{font-size:15px;color:var(--ink-soft);line-height:1.75;margin-top:16px;}
 
-  /* ---------- Key reasons ---------- */
-  .sig-reasons{padding:20px 0;border-top:1px solid var(--line);}
-  .sig-reasons .k-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
-  .sig-reasons ul{display:flex;flex-direction:column;gap:10px;}
-  .sig-reasons li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.55;}
-
-  /* ---------- Metro comparison ---------- */
-  .sig-compare{padding:20px 0;border-top:1px solid var(--line);}
-  .sig-compare .k-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
-  .compare-table{width:100%;border-collapse:collapse;font-size:13.5px;}
-  .compare-table th{text-align:right;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:0 0 8px;}
-  .compare-table th:first-child{text-align:left;}
-  .compare-table td{padding:9px 0;border-top:1px solid var(--line);color:var(--ink-soft);}
-  .compare-table td:first-child{color:var(--ink);font-weight:600;}
-  .compare-table td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;}
-  .compare-table td.zip-val{color:var(--teal-bright);}
-
-  .action-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:100px;margin-top:20px;transition:background-color .2s,border-color .2s,transform .12s cubic-bezier(.16,1,.3,1);}
-  a.action-badge:hover{background:rgba(20,184,166,.18);border-color:rgba(20,184,166,.45);}
-  a.action-badge:active{transform:scale(.97);}
-  .sig-disclaimer{font-size:11.5px;color:var(--faint);margin-top:14px;font-style:italic;}
-  .sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap;gap:10px;}
-  .sig-footer .src{font-size:11px;color:var(--faint);font-weight:500;}
-  .sig-footer .ts{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;}
-
-  /* ---------- Methodology (reused pattern from Intelligence page) ---------- */
-  .method{max-width:720px;margin:0 auto;text-align:center;}
-  .method p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:18px;}
-
-  /* ---------- Tier cards (merged from How We Score) ---------- */
-  .tier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:var(--max);margin:0 auto;}
-  .tier-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 22px;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .tier-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
+  /* ---------- Tier cards ---------- */
+  .tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px;}
+  .tier-card{padding:24px 22px;border-radius:16px;}
   .tier-badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:100px;margin-bottom:14px;}
   .tier-badge.peak{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:var(--gold);}
   .tier-badge.momentum{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);}
@@ -102,20 +60,20 @@
   .tier-badge.watch{background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted);}
   .tier-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
 
-  /* ---------- Ratio explainer grid (merged from How We Score) ---------- */
-  .ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;}
-  .ratio-explain-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .ratio-explain-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
-  .ratio-explain-card h3{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em;color:var(--teal-bright);}
+  /* ---------- Ratio explainer cards ---------- */
+  .ratio-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px;}
+  .ratio-explain-card{padding:24px 22px;border-radius:16px;}
+  .ratio-explain-card h3{font-family:'Sora',sans-serif;font-size:15.5px;font-weight:700;margin-bottom:9px;letter-spacing:-.01em;color:var(--teal-bright);}
   .ratio-explain-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
 
   /* ---------- Responsive ---------- */
-  @media (max-width:900px){
-    .tier-grid{grid-template-columns:1fr 1fr;}
-    .ratio-grid{grid-template-columns:1fr 1fr;}
+  @media (max-width:1080px){
+    .demo{grid-template-columns:1fr;gap:56px;}
+    .demo-card-col{position:static;}
+    .demo-card-col .sig-card{max-width:640px;margin:0 auto;}
   }
   @media (max-width:640px){
-    .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
+    .wrap,.sec,.demo,footer{padding-left:20px;padding-right:20px;}
     .sig-card{padding:24px 20px;}
     .sig-grid{grid-template-columns:1fr;}
     .ratio-row{gap:18px;}
@@ -144,12 +102,30 @@
         </button>
         <div class="nav-menu-panel" role="menu">
           <div class="nav-menu-panel-inner">
-            <a href="../intelligence/index.html" role="menuitem">Intelligence</a>
-            <a href="../sample-report/index.html" class="active" role="menuitem">Sample Report</a>
-            <a href="../reports/index.html" role="menuitem">Reports</a>
-            <a href="../team/index.html" role="menuitem">Team</a>
-            <a href="../disclaimer/index.html" role="menuitem">Disclaimer</a>
-            <a href="../contact/index.html" role="menuitem">Contact</a>
+            <a href="../intelligence/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
+              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
+            </a>
+            <a href="../sample-report/index.html" class="active" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
+              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
+            </a>
+            <a href="../reports/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Packages and the Founding Program</span></span>
+            </a>
+            <a href="../team/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
+              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
+            </a>
+            <a href="../disclaimer/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
+              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
+            </a>
+            <a href="../contact/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
+              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
+            </a>
           </div>
         </div>
       </div>
@@ -163,160 +139,164 @@
 
 <main>
 
-  <section class="sec" style="padding-bottom:32px;">
-    <div class="sec-head">
+  <section class="sec" style="padding-bottom:56px;overflow:hidden;">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="sec-head" style="margin-bottom:0;">
       <div class="eyebrow">Sample Report</div>
       <h2 style="margin-top:16px;">A preview of the format — not the full report.</h2>
       <p>This excerpt, built on a fictional zip code, shows the <em>structure</em> a real Market Signal Report follows: momentum profile, investor ratios, flagged reasons, and metro comparison. It's a preview of the format, not the full depth of a live report — actual reports are generated from live, current data and go further than what's shown below.</p>
+      <div class="trail"></div>
     </div>
   </section>
 
-  <!-- SAMPLE REPORT CARD -->
-  <section class="card-section reveal">
-    <div class="sig-card">
-      <div class="sig-head">
-        <div>
-          <div class="sig-head-label">Market Signal Report · Sample Zip 00000 · Example Market, XX</div>
-          <div class="sig-head-title">Momentum Profile</div>
+  <!-- DEMO: sticky sample card + scrolling plain-language guide -->
+  <div class="demo reveal">
+
+    <!-- SAMPLE REPORT CARD (sticky on desktop) -->
+    <div class="demo-card-col">
+      <div class="sig-card">
+        <div class="sig-head">
+          <div>
+            <div class="sig-head-label">Market Signal Report · Sample Zip 00000 · Example Market, XX</div>
+            <div class="sig-head-title">Momentum Profile</div>
+          </div>
+          <div class="sig-badge"><span class="pulse-dot"></span>Momentum</div>
         </div>
-        <div class="sig-badge"><span class="pulse-dot"></span>Momentum</div>
-      </div>
 
-      <div class="sig-score-row">
-        <div class="sig-score">87.3</div>
-        <div class="sig-score-label">Momentum Score<br/>/ 100</div>
-      </div>
+        <div class="sig-score-row">
+          <div class="sig-score">87.3</div>
+          <div class="sig-score-label">Momentum Score<br/>/ 100</div>
+        </div>
 
-      <div class="sig-grid">
-        <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%</div></div>
-        <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%</div></div>
-        <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp</div></div>
-        <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg">Moderate</div></div>
-      </div>
+        <div class="sig-grid">
+          <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%</div></div>
+          <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%</div></div>
+          <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp</div></div>
+          <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg">Moderate</div></div>
+        </div>
 
-      <div class="ratio-row">
-        <div class="ratio"><div class="k">Cap Rate</div><div class="v">5.8%</div></div>
-        <div class="ratio"><div class="k">GRM</div><div class="v">12.1x</div></div>
-        <div class="ratio"><div class="k">Price / Income</div><div class="v">3.6x</div></div>
-        <div class="ratio"><div class="k">Rent Burden</div><div class="v">27%</div></div>
-        <div class="ratio"><div class="k">1% Rule</div><div class="v">0.92%</div></div>
-      </div>
+        <div class="ratio-row">
+          <div class="ratio"><div class="k">Cap Rate</div><div class="v">5.8%</div></div>
+          <div class="ratio"><div class="k">GRM</div><div class="v">12.1x</div></div>
+          <div class="ratio"><div class="k">Price / Income</div><div class="v">3.6x</div></div>
+          <div class="ratio"><div class="k">Rent Burden</div><div class="v">27%</div></div>
+          <div class="ratio"><div class="k">1% Rule</div><div class="v">0.92%</div></div>
+        </div>
 
-      <div class="sig-reasons">
-        <div class="k-label">Key reasons this zip was flagged</div>
-        <ul>
-          <li><span class="mark check">✓</span>Price momentum has accelerated for three consecutive years, outpacing the metro average by more than 2x.</li>
-          <li><span class="mark check">✓</span>Local income growth is outpacing the surrounding metro, tightening affordability pressure that has historically preceded price appreciation.</li>
-          <li><span class="mark check">✓</span>Vacancy has declined steadily, signaling tightening rental supply relative to demand.</li>
-        </ul>
-      </div>
+        <div class="sig-reasons">
+          <div class="k-label">Key reasons this zip was flagged</div>
+          <ul>
+            <li><span class="mark check">✓</span>Price momentum has accelerated for three consecutive years, outpacing the metro average by more than 2x.</li>
+            <li><span class="mark check">✓</span>Local income growth is outpacing the surrounding metro, tightening affordability pressure that has historically preceded price appreciation.</li>
+            <li><span class="mark check">✓</span>Vacancy has declined steadily, signaling tightening rental supply relative to demand.</li>
+          </ul>
+        </div>
 
-      <div class="sig-compare">
-        <div class="k-label">Comparison against broader metro</div>
-        <table class="compare-table">
-          <thead>
-            <tr><th>Metric</th><th>Sample Zip 00000</th><th>Example Metro Avg</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Momentum Score</td><td class="zip-val">87.3</td><td>61.4</td></tr>
-            <tr><td>Price momentum (3yr)</td><td class="zip-val">+14.6%</td><td>+7.2%</td></tr>
-            <tr><td>Income growth (2yr)</td><td class="zip-val">+9.8%</td><td>+5.1%</td></tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="sig-compare">
+          <div class="k-label">Comparison against broader metro</div>
+          <table class="compare-table">
+            <thead>
+              <tr><th>Metric</th><th>Sample Zip 00000</th><th>Example Metro Avg</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Momentum Score</td><td class="zip-val">87.3</td><td>61.4</td></tr>
+              <tr><td>Price momentum (3yr)</td><td class="zip-val">+14.6%</td><td>+7.2%</td></tr>
+              <tr><td>Income growth (2yr)</td><td class="zip-val">+9.8%</td><td>+5.1%</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-      <a class="action-badge" href="../founding-program/index.html">→ Investigate Further</a>
-      <div class="sig-disclaimer">Market intelligence, not financial or investment advice.</div>
+        <a class="action-badge" href="../founding-program/index.html">→ Investigate Further</a>
+        <div class="sig-disclaimer">Market intelligence, not financial or investment advice.</div>
 
-      <div class="sig-footer">
-        <div class="src">Walk-forward validated · 2000–2026 · Illustrative sample — not live data</div>
-        <div class="ts">Sample Zip 00000</div>
+        <div class="sig-footer">
+          <div class="src">Walk-forward validated · 2000–2026 · Illustrative sample — not live data</div>
+          <div class="ts">Sample Zip 00000</div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- HOW WE SCORE (merged from standalone /how-we-score page) -->
-  <section class="sec sec-alt reveal" id="how-we-score">
-    <div class="method">
-      <div class="eyebrow">How We Score</div>
-      <h2 class="display" style="font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;margin-top:16px;">Plain-language guide to every number above.</h2>
-      <p>Every Market Signal Report boils a lot of data down to a handful of numbers. Here's what each one means and why it matters — without the algorithm or exact thresholds behind it.</p>
-    </div>
-  </section>
+    <!-- PLAIN-LANGUAGE GUIDE (scrolls beside the card) -->
+    <div class="demo-col">
 
-  <!-- MOMENTUM SCORE -->
-  <section class="sec reveal">
-    <div class="method">
-      <div class="eyebrow">The Momentum Score</div>
-      <h2 class="display" style="font-size:clamp(24px,3.2vw,32px);font-weight:700;letter-spacing:-.02em;margin-top:16px;">A single number, 0–100.</h2>
-      <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. A higher score means a stronger, more corroborated signal that the neighborhood is entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker, mixed, or not yet confirmed.</p>
-      <p>The model behind it is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
-      <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
-    </div>
-  </section>
+      <!-- HOW WE SCORE (merged from standalone /how-we-score page) -->
+      <div class="dsec" id="how-we-score">
+        <div class="eyebrow">How We Score</div>
+        <h2>Plain-language guide to every number above.</h2>
+        <p>Every Market Signal Report boils a lot of data down to a handful of numbers. Here's what each one means and why it matters — without the algorithm or exact thresholds behind it.</p>
+      </div>
 
-  <!-- TIER SYSTEM -->
-  <section class="sec sec-alt reveal">
-    <div class="sec-head">
-      <h2>What each tier means.</h2>
-      <p>Every scored zip is classified into one of four tiers based on the strength and confirmation of its signal.</p>
-    </div>
-    <div class="tier-grid">
-      <div class="tier-card">
-        <div class="tier-badge peak">Peak Momentum</div>
-        <p>The strongest, most confirmed signal. Price and income trends are already accelerating together, corroborated by multiple independent indicators.</p>
+      <!-- MOMENTUM SCORE -->
+      <div class="dsec">
+        <div class="eyebrow">The Momentum Score</div>
+        <h2>A single number, 0–100.</h2>
+        <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. A higher score means a stronger, more corroborated signal that the neighborhood is entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker, mixed, or not yet confirmed.</p>
+        <p>The model behind it is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
+        <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
       </div>
-      <div class="tier-card">
-        <div class="tier-badge momentum">Momentum</div>
-        <p>A strong, still-building signal. The zip shows clear upward trends across price and income and warrants a closer look.</p>
-      </div>
-      <div class="tier-card">
-        <div class="tier-badge emerging">Emerging</div>
-        <p>An early-stage signal. Some positive indicators are appearing, but the trend is less established than Peak or Momentum.</p>
-      </div>
-      <div class="tier-card">
-        <div class="tier-badge watch">Watch</div>
-        <p>Worth tracking over time. Signals are early or mixed and haven't yet corroborated into a clear momentum trend.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- INVESTOR RATIOS -->
-  <section class="sec reveal">
-    <div class="sec-head">
-      <h2>The investor ratios, explained.</h2>
-      <p>Every report also includes standard investor metrics, computed for the specific zip so you don't have to.</p>
+      <!-- TIER SYSTEM -->
+      <div class="dsec">
+        <h2>What each tier means.</h2>
+        <p>Every scored zip is classified into one of four tiers based on the strength and confirmation of its signal.</p>
+        <div class="tier-grid">
+          <div class="tier-card sw-card">
+            <div class="tier-badge peak">Peak Momentum</div>
+            <p>The strongest, most confirmed signal. Price and income trends are already accelerating together, corroborated by multiple independent indicators.</p>
+          </div>
+          <div class="tier-card sw-card">
+            <div class="tier-badge momentum">Momentum</div>
+            <p>A strong, still-building signal. The zip shows clear upward trends across price and income and warrants a closer look.</p>
+          </div>
+          <div class="tier-card sw-card">
+            <div class="tier-badge emerging">Emerging</div>
+            <p>An early-stage signal. Some positive indicators are appearing, but the trend is less established than Peak or Momentum.</p>
+          </div>
+          <div class="tier-card sw-card">
+            <div class="tier-badge watch">Watch</div>
+            <p>Worth tracking over time. Signals are early or mixed and haven't yet corroborated into a clear momentum trend.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVESTOR RATIOS -->
+      <div class="dsec">
+        <h2>The investor ratios, explained.</h2>
+        <p>Every report also includes standard investor metrics, computed for the specific zip so you don't have to.</p>
+        <div class="ratio-grid">
+          <div class="ratio-explain-card sw-card">
+            <h3>Cap Rate</h3>
+            <p>Annual rental income as a percentage of purchase price. Higher generally means more cash flow relative to price paid, though it can also reflect higher risk.</p>
+          </div>
+          <div class="ratio-explain-card sw-card">
+            <h3>GRM (Gross Rent Multiplier)</h3>
+            <p>How many years of gross rent it would take to equal the purchase price. Lower generally means a cheaper entry point relative to rental income.</p>
+          </div>
+          <div class="ratio-explain-card sw-card">
+            <h3>Price / Income</h3>
+            <p>Median home price relative to median household income in the area. Higher can signal an area becoming less affordable to local wage earners — often a precursor to price pressure.</p>
+          </div>
+          <div class="ratio-explain-card sw-card">
+            <h3>Rent Burden</h3>
+            <p>The share of median household income a median rent payment would consume. Useful for understanding how stretched local renters already are.</p>
+          </div>
+          <div class="ratio-explain-card sw-card">
+            <h3>1% Rule</h3>
+            <p>A quick, widely used investor heuristic — whether monthly rent is at least 1% of the purchase price. A rough but common cash-flow screen for rental property.</p>
+          </div>
+          <div class="ratio-explain-card sw-card">
+            <h3>Supply Constraint</h3>
+            <p>How tight new housing supply is relative to demand in the area. Tighter supply generally supports price appreciation.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="ratio-grid">
-      <div class="ratio-explain-card">
-        <h3>Cap Rate</h3>
-        <p>Annual rental income as a percentage of purchase price. Higher generally means more cash flow relative to price paid, though it can also reflect higher risk.</p>
-      </div>
-      <div class="ratio-explain-card">
-        <h3>GRM (Gross Rent Multiplier)</h3>
-        <p>How many years of gross rent it would take to equal the purchase price. Lower generally means a cheaper entry point relative to rental income.</p>
-      </div>
-      <div class="ratio-explain-card">
-        <h3>Price / Income</h3>
-        <p>Median home price relative to median household income in the area. Higher can signal an area becoming less affordable to local wage earners — often a precursor to price pressure.</p>
-      </div>
-      <div class="ratio-explain-card">
-        <h3>Rent Burden</h3>
-        <p>The share of median household income a median rent payment would consume. Useful for understanding how stretched local renters already are.</p>
-      </div>
-      <div class="ratio-explain-card">
-        <h3>1% Rule</h3>
-        <p>A quick, widely used investor heuristic — whether monthly rent is at least 1% of the purchase price. A rough but common cash-flow screen for rental property.</p>
-      </div>
-      <div class="ratio-explain-card">
-        <h3>Supply Constraint</h3>
-        <p>How tight new housing supply is relative to demand in the area. Tighter supply generally supports price appreciation.</p>
-      </div>
-    </div>
-  </section>
+  </div>
 
   <!-- FINAL CTA -->
   <section class="sec final-cta reveal">
+    <div class="trail"></div>
     <h2>Want this for a real zip code?</h2>
     <p>Join the Founding Market Intelligence Program using the button above.</p>
   </section>
@@ -339,13 +319,20 @@
       </div>
       <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
     </div>
-    <div class="footer-links">
-      <a href="../intelligence/index.html">Intelligence</a>
-      <a href="#how-we-score">How We Score</a>
-      <a href="../reports/index.html">Reports</a>
-      <a href="../team/index.html">Team</a>
-      <a href="../disclaimer/index.html">Disclaimer</a>
-      <a href="../contact/index.html">Contact</a>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="fc-h">Product</div>
+        <a href="../intelligence/index.html">Intelligence</a>
+        <a href="../sample-report/index.html">Sample Report</a>
+        <a href="#how-we-score">How We Score</a>
+        <a href="../reports/index.html">Reports</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-h">Company</div>
+        <a href="../team/index.html">Team</a>
+        <a href="../contact/index.html">Contact</a>
+        <a href="../disclaimer/index.html">Disclaimer</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">

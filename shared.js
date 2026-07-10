@@ -163,6 +163,32 @@ function spotwiseHandleForm(form, opts) {
   });
 })();
 
+// Floating CTA pill: a second *instance* of the site's single call-to-action
+// (Join the Program -> founding-program page), injected on every page that has
+// the nav CTA and shown once the visitor scrolls past the hero. Reads its href
+// from the existing .nav-cta so relative paths stay correct per page, and
+// naturally no-ops on /founding-program (which has no nav CTA — you're already
+// there). Never introduces a second CTA destination.
+(function () {
+  var navCta = document.querySelector('.nav-cta');
+  if (!navCta) return;
+  var pill = document.createElement('a');
+  pill.className = 'float-cta';
+  pill.href = navCta.getAttribute('href');
+  pill.textContent = 'Join the Program →';
+  document.body.appendChild(pill);
+  var ticking = false;
+  function update() {
+    ticking = false;
+    if (window.scrollY > 560) pill.classList.add('is-on');
+    else pill.classList.remove('is-on');
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+
 // Footer mascot: wag + blink on click. No-ops on pages with no footer.
 (function () {
   var spot = document.querySelector('.spot-interactive');

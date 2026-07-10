@@ -42,36 +42,41 @@
 <style>
   /* ---------- Motion: hero on-load (pure CSS, no JS dependency) ---------- */
   @keyframes heroIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
-  .hero-inner{animation:heroIn .9s cubic-bezier(.16,1,.3,1) both;}
-  @media (prefers-reduced-motion:reduce){.hero-inner{animation:none;}}
+  .hero-inner{animation:heroIn .9s var(--ease) both;}
+  .hero-inner > *{animation:heroIn .9s var(--ease) both;}
+  .hero-inner > *:nth-child(2){animation-delay:.08s;}
+  .hero-inner > *:nth-child(3){animation-delay:.16s;}
+  .hero-inner > *:nth-child(4){animation-delay:.24s;}
+  .hero-inner > *:nth-child(5){animation-delay:.32s;}
+  .hero-inner > *:nth-child(6){animation-delay:.4s;}
+  @media (prefers-reduced-motion:reduce){.hero-inner,.hero-inner > *{animation:none;}}
 
-  /* ---------- Hero ---------- */
-  .hero{padding:124px 32px 90px;background:radial-gradient(1100px 560px at 50% -12%,rgba(20,184,166,.16) 0%,rgba(20,184,166,.04) 45%,var(--paper) 72%);}
-  .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(45,212,196,.13) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(1000px 560px at 50% 0%,#000 0%,transparent 78%);mask-image:radial-gradient(1000px 560px at 50% 0%,#000 0%,transparent 78%);pointer-events:none;}
-  .beta-badge-row{position:relative;max-width:var(--max);margin:0 auto 24px;}
-  .beta-badge{display:inline-flex;align-items:center;margin-left:14px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 15px;border-radius:100px;}
+  /* ---------- Hero: taller, cinematic, gradient-mesh + grain + grid ---------- */
+  .hero{padding:150px 32px 110px;overflow:hidden;}
+  .beta-badge-row{position:relative;max-width:var(--max);margin:0 auto 24px;text-align:center;}
+  .beta-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:7px 16px;border-radius:100px;}
   .hero-inner{position:relative;max-width:var(--max);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
-  .hero .eyebrow{margin-bottom:20px;}
-  h1{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(38px,6.4vw,74px);letter-spacing:-.03em;line-height:1.04;max-width:900px;}
-  h1 em{font-style:normal;color:var(--teal-bright);}
-  .hero-sub{font-size:clamp(15.5px,1.6vw,18.5px);color:var(--ink-soft);max-width:640px;margin:26px auto 0;line-height:1.65;}
-  .hero-ctas{display:flex;gap:16px;margin-top:38px;flex-wrap:wrap;justify-content:center;}
+  .hero .eyebrow{margin-bottom:26px;}
+  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,7.4vw,88px);letter-spacing:-.04em;line-height:1.02;max-width:980px;}
+  h1 em{font-style:normal;background:linear-gradient(100deg,var(--teal) 10%,var(--teal-bright) 55%,#8FF5EA 90%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero-sub{font-size:clamp(16px,1.7vw,19.5px);color:var(--ink-soft);max-width:660px;margin:28px auto 0;line-height:1.68;}
+  .hero-ctas{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;justify-content:center;}
   .hero-ctas .btn{padding:15px 26px;font-size:14.5px;}
-  .stat-row{display:flex;margin-top:74px;flex-wrap:wrap;justify-content:center;position:relative;}
-  .stat-row::before{content:"";position:absolute;inset:-40px -20px;background:radial-gradient(600px 140px at 50% 50%,rgba(20,184,166,.09) 0%,transparent 70%);z-index:-1;pointer-events:none;}
-  .stat{text-align:center;padding:0 32px;position:relative;}
+  .stat-row{display:flex;margin-top:84px;flex-wrap:wrap;justify-content:center;position:relative;}
+  .stat-row::before{content:"";position:absolute;inset:-40px -20px;background:radial-gradient(600px 140px at 50% 50%,rgba(20,184,166,.1) 0%,transparent 70%);z-index:-1;pointer-events:none;}
+  .stat{text-align:center;padding:0 40px;position:relative;}
   .stat:not(:first-child){border-left:1px solid var(--line);}
-  .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(32px,4.2vw,44px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 32px rgba(45,212,196,.45);font-variant-numeric:tabular-nums;}
-  .stat span{font-size:11px;color:var(--muted);margin-top:9px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.09em;}
+  .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(34px,4.6vw,50px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 36px rgba(45,212,196,.5);font-variant-numeric:tabular-nums;}
+  .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
 
-  /* ---------- Hero: momentum visualization ---------- */
-  .momentum-viz{position:relative;width:100%;max-width:560px;min-width:0;margin:64px auto 0;}
+  /* ---------- Hero: momentum visualization (bigger, central) ---------- */
+  .momentum-viz{position:relative;width:100%;max-width:720px;min-width:0;margin:76px auto 0;}
   .momentum-viz svg{display:block;width:100%;height:auto;}
   .momentum-viz .viz-grey{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:vizGreyLine 5s ease-in-out infinite;}
-  .momentum-viz .viz-teal{fill:none;stroke:var(--teal-bright);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(45,212,196,.5));stroke-dasharray:1;animation:vizTealDraw 5s ease-in-out infinite;}
+  .momentum-viz .viz-teal{fill:none;stroke:var(--teal-bright);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(45,212,196,.55));stroke-dasharray:1;animation:vizTealDraw 5s ease-in-out infinite;}
   .momentum-viz .viz-band{animation:vizBand 5s ease-in-out infinite;}
   .momentum-viz .band-stop-a{stop-color:#14B8A6;stop-opacity:0;}
-  .momentum-viz .band-stop-b{stop-color:#14B8A6;stop-opacity:.14;}
+  .momentum-viz .band-stop-b{stop-color:#14B8A6;stop-opacity:.16;}
   .momentum-badge{position:absolute;top:0;right:4%;transform:translateY(-55%);animation:vizBadge 5s ease-in-out infinite;}
   @keyframes vizGreyLine{0%{opacity:0;}6%{opacity:.5;}46%{opacity:.5;}60%{opacity:0;}100%{opacity:0;}}
   @keyframes vizTealDraw{0%{stroke-dashoffset:1;opacity:0;}8%{stroke-dashoffset:1;opacity:1;}60%{stroke-dashoffset:0;opacity:1;}90%{stroke-dashoffset:0;opacity:1;}97%{stroke-dashoffset:0;opacity:0;}100%{stroke-dashoffset:1;opacity:0;}}
@@ -85,57 +90,39 @@
     .momentum-badge{opacity:1;transform:translateY(-55%);}
   }
 
-  /* ---------- Intelligence Card (live sample report) ---------- */
-  .card-section{padding:20px 32px 96px;}
-  .sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.05);transition:border-color .25s,box-shadow .25s cubic-bezier(.16,1,.3,1);}
-  .sig-card:hover{border-color:rgba(20,184,166,.3);box-shadow:0 30px 80px -20px rgba(0,0,0,.55),0 0 0 1px rgba(20,184,166,.12),0 0 40px rgba(20,184,166,.08);}
-  .blur-val{filter:blur(6px);user-select:none;}
-  .sig-score.blur-val{filter:blur(14px);}
-  .sig-head-label.blur-val{filter:blur(5px);}
-  .sample-overlay{position:absolute;inset:0;background:rgba(9,18,16,.62);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;}
-  .sample-overlay-inner{max-width:300px;display:flex;flex-direction:column;align-items:center;gap:16px;}
-  .sample-overlay-inner .msg{font-family:'Sora',sans-serif;font-weight:700;font-size:16.5px;letter-spacing:-.01em;line-height:1.4;color:var(--ink);}
-  .sample-icon{width:32px;height:32px;object-fit:contain;}
-  .sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line);}
-  .sig-head-label{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-  .sig-head-title{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;}
-  .sig-badge{display:flex;align-items:center;gap:7px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:var(--gold);font-size:11.5px;font-weight:700;padding:7px 13px;border-radius:100px;flex-shrink:0;white-space:nowrap;}
-  .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(245,158,11,.6);animation:pulse 2s infinite;}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(245,158,11,.55);}70%{box-shadow:0 0 0 7px rgba(245,158,11,0);}100%{box-shadow:0 0 0 0 rgba(245,158,11,0);}}
-  .sig-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0 22px;}
-  .sig-score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:56px;color:var(--teal-bright);letter-spacing:-.02em;}
-  .sig-score-label{font-size:12.5px;color:var(--muted);font-weight:600;}
-  .sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
-  .sig-item{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
-  .sig-item .k{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px;}
-  .sig-item .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15.5px;color:var(--ink);}
-  .sig-item .v.pos{color:var(--teal-bright);}
-  .sig-item .v.neg{color:var(--gold);}
-  .ratio-row{display:flex;gap:26px;padding:18px 0;border-top:1px solid var(--line);flex-wrap:wrap;}
-  .ratio{display:flex;flex-direction:column;gap:4px;}
-  .ratio .k{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
-  .ratio .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;}
-  .action-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:100px;margin-top:6px;}
-  .sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap;gap:10px;}
-  .sig-footer .src{font-size:11px;color:var(--faint);font-weight:500;}
-  .sig-footer .ts{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;}
-  .sig-disclaimer{font-size:11.5px;color:var(--faint);margin-top:14px;font-style:italic;}
+  /* ---------- Live intelligence card: staged as the hero's payoff ---------- */
+  .card-section{padding:0 32px 130px;margin-top:-6px;background:linear-gradient(180deg,transparent 0%,rgba(20,184,166,.02) 40%,transparent 100%);}
+  .card-section .sec-head{margin-bottom:40px;}
+
+  /* ---------- How it works: 4-step signal narrative ---------- */
+  .steps{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:var(--max);margin:0 auto;}
+  .steps::before{content:"";position:absolute;top:26px;left:6%;right:6%;height:2px;background:linear-gradient(90deg,transparent,var(--teal-dim) 12%,var(--teal) 50%,var(--teal-dim) 88%,transparent);opacity:.45;z-index:0;}
+  .step{position:relative;z-index:1;padding:0 8px;text-align:center;}
+  .step .snum{width:52px;height:52px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--teal-bright);background:var(--surface-2);border:1px solid rgba(20,184,166,.3);border-radius:50%;box-shadow:0 0 0 6px var(--paper),0 0 24px rgba(45,212,196,.15);}
+  .step h3{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;margin-bottom:10px;}
+  .step p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;max-width:240px;margin:0 auto;}
+  .steps-link{text-align:center;margin-top:52px;}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
     .stat-row{gap:36px;}
+    .steps{grid-template-columns:1fr 1fr;row-gap:44px;}
+    .steps::before{display:none;}
+    .step .snum{box-shadow:none;}
   }
   @media (max-width:640px){
     .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
-    .hero{padding-top:80px;}
+    .hero{padding-top:96px;}
     .sig-card{padding:24px 20px;}
     .sig-grid{grid-template-columns:1fr;}
     .ratio-row{gap:20px;}
     .stat-row{gap:28px;}
-    .stat b{font-size:26px;}
-    h1{font-size:clamp(32px,9vw,44px);}
-    .momentum-viz{margin-top:44px;}
+    .stat{padding:0 20px;}
+    .stat b{font-size:28px;}
+    h1{font-size:clamp(34px,10vw,48px);}
+    .momentum-viz{margin-top:48px;}
     .momentum-badge{font-size:10px;padding:6px 11px;}
+    .steps{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -158,12 +145,30 @@
         </button>
         <div class="nav-menu-panel" role="menu">
           <div class="nav-menu-panel-inner">
-            <a href="intelligence/index.html" role="menuitem">Intelligence</a>
-            <a href="sample-report/index.html" role="menuitem">Sample Report</a>
-            <a href="reports/index.html" role="menuitem">Reports</a>
-            <a href="team/index.html" role="menuitem">Team</a>
-            <a href="disclaimer/index.html" role="menuitem">Disclaimer</a>
-            <a href="contact/index.html" role="menuitem">Contact</a>
+            <a href="intelligence/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
+              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
+            </a>
+            <a href="sample-report/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
+              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
+            </a>
+            <a href="reports/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Packages and the Founding Program</span></span>
+            </a>
+            <a href="team/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
+              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
+            </a>
+            <a href="disclaimer/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
+              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
+            </a>
+            <a href="contact/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
+              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
+            </a>
           </div>
         </div>
       </div>
@@ -177,7 +182,8 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="beta-badge-row"><span class="beta-badge">Beta</span></div>
+    <div class="mesh mesh-grid" aria-hidden="true"></div>
+    <div class="beta-badge-row"><span class="beta-badge"><span class="pulse-dot" style="background:var(--teal-bright);box-shadow:none;"></span>Beta</span></div>
     <div class="hero-inner">
       <div class="eyebrow">Building in Northeastern Tri-State — more markets coming.</div>
       <h1>Before the market <em>moves.</em></h1>
@@ -207,8 +213,12 @@
     </div>
   </section>
 
-  <!-- LIVE INTELLIGENCE CARD -->
+  <!-- LIVE INTELLIGENCE CARD — the hero's payoff -->
   <section class="card-section reveal">
+    <div class="sec-head">
+      <div class="eyebrow">Live Signal</div>
+      <h2 style="margin-top:16px;font-size:clamp(24px,3.2vw,34px);">What a signal looks like.</h2>
+    </div>
     <div class="sig-card" id="sample-report">
       <div class="sig-head">
         <div>
@@ -245,13 +255,47 @@
         </div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:20px;">
+    <div style="text-align:center;margin-top:24px;">
       <a class="btn btn-ghost" href="sample-report/index.html">See a full sample report →</a>
     </div>
   </section>
 
-  <!-- FOUNDING PROGRAM (condensed teaser — full details on /reports) -->
+  <!-- HOW IT WORKS — signal narrative -->
   <section class="sec sec-alt reveal">
+    <div class="sec-head">
+      <div class="eyebrow">How It Works</div>
+      <h2 style="margin-top:16px;">From raw data to a decision.</h2>
+      <div class="trail"></div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="snum">01</div>
+        <h3>Data</h3>
+        <p>Public real estate, economic, and demographic data across 1,213 tri-state zip codes.</p>
+      </div>
+      <div class="step">
+        <div class="snum">02</div>
+        <h3>Model</h3>
+        <p>A walk-forward validated model — trained only on data available before each prediction point.</p>
+      </div>
+      <div class="step">
+        <div class="snum">03</div>
+        <h3>Score</h3>
+        <p>Every zip is scored 0–100 on appreciation momentum and classified into a tier.</p>
+      </div>
+      <div class="step">
+        <div class="snum">04</div>
+        <h3>Report</h3>
+        <p>Packaged into a decision-ready Market Signal Report — the answer first, the analytics behind it.</p>
+      </div>
+    </div>
+    <div class="steps-link">
+      <a class="btn btn-ghost" href="intelligence/index.html">Read the full methodology →</a>
+    </div>
+  </section>
+
+  <!-- FOUNDING PROGRAM (condensed teaser — full details on /reports) -->
+  <section class="sec reveal">
     <div class="founding">
       <div class="eyebrow">Founding Market Intelligence Program</div>
       <h2>25 invitations. Complimentary report.</h2>
@@ -261,6 +305,7 @@
 
   <!-- FINAL CTA -->
   <section class="sec final-cta reveal">
+    <div class="trail"></div>
     <h2>Your next market signal is already forming.</h2>
     <p>Join the Founding Market Intelligence Program using the button above.</p>
   </section>
@@ -283,13 +328,20 @@
       </div>
       <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
     </div>
-    <div class="footer-links">
-      <a href="intelligence/index.html">Intelligence</a>
-      <a href="sample-report/index.html#how-we-score">How We Score</a>
-      <a href="reports/index.html">Reports</a>
-      <a href="team/index.html">Team</a>
-      <a href="disclaimer/index.html">Disclaimer</a>
-      <a href="contact/index.html">Contact</a>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="fc-h">Product</div>
+        <a href="intelligence/index.html">Intelligence</a>
+        <a href="sample-report/index.html">Sample Report</a>
+        <a href="sample-report/index.html#how-we-score">How We Score</a>
+        <a href="reports/index.html">Reports</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-h">Company</div>
+        <a href="team/index.html">Team</a>
+        <a href="contact/index.html">Contact</a>
+        <a href="disclaimer/index.html">Disclaimer</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">

@@ -36,13 +36,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Disclaimer ---------- */
-  .legal{max-width:720px;margin:0 auto;text-align:left;}
-  .legal .sec-head{text-align:center;margin-bottom:48px;}
-  .legal h3{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;margin-top:40px;margin-bottom:12px;}
-  .legal h3:first-of-type{margin-top:0;}
-  .legal p{font-size:15px;color:var(--ink-soft);line-height:1.75;}
+  /* ---------- Legal: editorial document treatment ---------- */
+  .legal-layout{display:grid;grid-template-columns:56px minmax(0,720px);gap:48px;max-width:860px;margin:0 auto;justify-content:center;}
+  .legal-rail{position:sticky;top:120px;align-self:start;display:flex;flex-direction:column;align-items:center;gap:0;height:fit-content;}
+  .legal-rail .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--faint);background:var(--surface);border:1px solid var(--line);transition:color .3s,border-color .3s,box-shadow .3s;}
+  .legal-rail .dot.active{color:var(--teal-bright);border-color:rgba(20,184,166,.45);box-shadow:0 0 16px rgba(45,212,196,.18);}
+  .legal-rail .rail-line{width:1px;height:52px;background:var(--line);}
+  .legal-head{text-align:center;margin-bottom:72px;}
+  .legal-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,50px);letter-spacing:-.03em;line-height:1.1;margin-top:16px;}
+  .legal-head .trail{margin:24px auto 0;}
+  .legal-item{position:relative;padding:0 0 64px;}
+  .legal-item:last-child{padding-bottom:0;}
+  .legal-item .lnum{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(40px,5vw,60px);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(45,212,196,.35);line-height:1;margin-bottom:18px;}
+  .legal-item h3{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(19px,2.4vw,25px);letter-spacing:-.02em;margin-bottom:14px;}
+  .legal-item p{font-size:15.5px;color:var(--ink-soft);line-height:1.8;}
 
+  @media (max-width:760px){
+    .legal-layout{grid-template-columns:1fr;gap:0;}
+    .legal-rail{display:none;}
+  }
   @media (max-width:640px){
     .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
   }
@@ -67,12 +79,30 @@
         </button>
         <div class="nav-menu-panel" role="menu">
           <div class="nav-menu-panel-inner">
-            <a href="../intelligence/index.html" role="menuitem">Intelligence</a>
-            <a href="../sample-report/index.html" role="menuitem">Sample Report</a>
-            <a href="../reports/index.html" role="menuitem">Reports</a>
-            <a href="../team/index.html" role="menuitem">Team</a>
-            <a href="../disclaimer/index.html" class="active" role="menuitem">Disclaimer</a>
-            <a href="../contact/index.html" role="menuitem">Contact</a>
+            <a href="../intelligence/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
+              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
+            </a>
+            <a href="../sample-report/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
+              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
+            </a>
+            <a href="../reports/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Packages and the Founding Program</span></span>
+            </a>
+            <a href="../team/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
+              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
+            </a>
+            <a href="../disclaimer/index.html" class="active" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
+              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
+            </a>
+            <a href="../contact/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
+              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
+            </a>
           </div>
         </div>
       </div>
@@ -85,26 +115,44 @@
 <main>
 
   <!-- DISCLAIMER -->
-  <section class="sec reveal">
-    <div class="legal">
-      <div class="sec-head">
-        <div class="eyebrow">Disclaimer</div>
-        <h2 style="margin-top:16px;">Read this before you act on anything here.</h2>
+  <section class="sec reveal" style="overflow:hidden;">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="legal-head">
+      <div class="eyebrow">Disclaimer</div>
+      <h2>Read this before you act on anything here.</h2>
+      <div class="trail"></div>
+    </div>
+    <div class="legal-layout">
+      <div class="legal-rail" aria-hidden="true">
+        <div class="dot" data-rail="1">01</div>
+        <div class="rail-line"></div>
+        <div class="dot" data-rail="2">02</div>
+        <div class="rail-line"></div>
+        <div class="dot" data-rail="3">03</div>
       </div>
-
-      <h3>SpotWise is in beta.</h3>
-      <p>The product you're using right now is an active beta. The model, our data coverage, our scoring methodology, and the reports themselves are still being built and refined. Scores, tiers, and underlying figures can and will change as we improve the system — nothing here should be treated as a finished, static product.</p>
-
-      <h3>This is market intelligence, not financial advice.</h3>
-      <p>SpotWise provides data-driven market intelligence to inform your own research. It is not financial, investment, legal, or tax advice, and nothing on this site or in a Market Signal Report should be interpreted as a recommendation to buy, sell, or hold any asset. Every investment decision you make — and its outcome — remains your sole responsibility. Consult a licensed financial, legal, or tax professional before acting on anything here.</p>
-
-      <h3>Past performance does not guarantee future results.</h3>
-      <p>Our reported 94% backtest hit rate and +28.4% average outperformance reflect walk-forward validated testing against historical entry cohorts — they describe how the model performed on past data, not a guarantee, promise, or prediction of future performance. Real estate markets are volatile and unpredictable, and actual future results may differ materially from historical backtests.</p>
+      <div class="legal-body">
+        <article class="legal-item" data-legal="1">
+          <div class="lnum">01</div>
+          <h3>SpotWise is in beta.</h3>
+          <p>The product you're using right now is an active beta. The model, our data coverage, our scoring methodology, and the reports themselves are still being built and refined. Scores, tiers, and underlying figures can and will change as we improve the system — nothing here should be treated as a finished, static product.</p>
+        </article>
+        <article class="legal-item" data-legal="2">
+          <div class="lnum">02</div>
+          <h3>This is market intelligence, not financial advice.</h3>
+          <p>SpotWise provides data-driven market intelligence to inform your own research. It is not financial, investment, legal, or tax advice, and nothing on this site or in a Market Signal Report should be interpreted as a recommendation to buy, sell, or hold any asset. Every investment decision you make — and its outcome — remains your sole responsibility. Consult a licensed financial, legal, or tax professional before acting on anything here.</p>
+        </article>
+        <article class="legal-item" data-legal="3">
+          <div class="lnum">03</div>
+          <h3>Past performance does not guarantee future results.</h3>
+          <p>Our reported 94% backtest hit rate and +28.4% average outperformance reflect walk-forward validated testing against historical entry cohorts — they describe how the model performed on past data, not a guarantee, promise, or prediction of future performance. Real estate markets are volatile and unpredictable, and actual future results may differ materially from historical backtests.</p>
+        </article>
+      </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
   <section class="sec final-cta reveal">
+    <div class="trail"></div>
     <h2>Your next market signal is already forming.</h2>
     <p>Join the Founding Market Intelligence Program using the button above.</p>
   </section>
@@ -127,13 +175,20 @@
       </div>
       <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
     </div>
-    <div class="footer-links">
-      <a href="../intelligence/index.html">Intelligence</a>
-      <a href="../sample-report/index.html#how-we-score">How We Score</a>
-      <a href="../reports/index.html">Reports</a>
-      <a href="../team/index.html">Team</a>
-      <a href="../disclaimer/index.html">Disclaimer</a>
-      <a href="../contact/index.html">Contact</a>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="fc-h">Product</div>
+        <a href="../intelligence/index.html">Intelligence</a>
+        <a href="../sample-report/index.html">Sample Report</a>
+        <a href="../sample-report/index.html#how-we-score">How We Score</a>
+        <a href="../reports/index.html">Reports</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-h">Company</div>
+        <a href="../team/index.html">Team</a>
+        <a href="../contact/index.html">Contact</a>
+        <a href="../disclaimer/index.html">Disclaimer</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
@@ -143,6 +198,24 @@
 </footer>
 
 <script src="../shared.js"></script>
+<script>
+  // Progress rail: highlights the numeral of whichever disclaimer section is
+  // currently in view. Purely decorative — no-ops without IntersectionObserver.
+  (function(){
+    if (!('IntersectionObserver' in window)) return;
+    var items = document.querySelectorAll('.legal-item[data-legal]');
+    var dots = document.querySelectorAll('.legal-rail .dot[data-rail]');
+    if (!items.length || !dots.length) return;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var n = e.target.dataset.legal;
+        dots.forEach(function(d){ d.classList.toggle('active', d.dataset.rail === n); });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    items.forEach(function(el){ obs.observe(el); });
+  })();
+</script>
 
 </body>
 </html>

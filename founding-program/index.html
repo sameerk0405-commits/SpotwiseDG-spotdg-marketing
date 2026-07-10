@@ -24,22 +24,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  header{padding:24px 32px;border-bottom:1px solid var(--line);}
-  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;color:var(--muted);margin-left:auto;}
+  header{padding:24px 32px;border-bottom:1px solid var(--line);position:relative;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;}
+  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;color:var(--muted);margin-left:auto;transition:color .2s var(--ease),background-color .2s var(--ease);}
   .back-link:hover{color:var(--teal-bright);background:var(--surface);}
   .back-link svg{width:20px;height:20px;}
   header .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;}
-  main{padding:64px 20px 100px;background:radial-gradient(900px 460px at 50% -12%,rgba(245,158,11,.1) 0%,var(--paper) 60%);min-height:calc(100vh - 88px);}
-  .form-card{max-width:600px;margin:0 auto;background:var(--surface);border:1px solid rgba(245,158,11,.22);border-radius:20px;padding:44px 40px;}
-  .form-card h1{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(24px,3.4vw,32px);letter-spacing:-.02em;margin-top:14px;}
+  main{position:relative;padding:64px 20px 100px;min-height:calc(100vh - 88px);overflow:hidden;}
+  main .mesh::before{background:
+    radial-gradient(700px 460px at 50% -10%,rgba(245,158,11,.12) 0%,transparent 60%),
+    radial-gradient(640px 420px at 12% 30%,rgba(20,184,166,.08) 0%,transparent 60%),
+    radial-gradient(720px 480px at 92% 70%,rgba(91,127,232,.07) 0%,transparent 62%);}
+  .form-card{position:relative;max-width:620px;margin:0 auto;background:var(--surface);border:1px solid rgba(245,158,11,.22);border-radius:22px;padding:46px 42px;overflow:hidden;}
+  .form-card::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.6),transparent);}
+  .form-card h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.03em;margin-top:14px;}
   .form-card .sub{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
   .eyebrow.gold{color:var(--gold);}
+  .eyebrow.gold::before{background:linear-gradient(90deg,transparent,var(--gold));}
   form{margin-top:32px;}
   #form-success{display:none;text-align:center;padding:24px 0;}
   #form-success h2{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--gold);}
   #form-success p{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
   .note{font-size:12.5px;color:var(--faint);margin-top:16px;text-align:center;}
-  @media (max-width:640px){.form-card{padding:32px 22px;}}
+  @media (max-width:640px){.form-card{padding:34px 22px;}}
 </style>
 </head>
 <body>
@@ -57,6 +63,7 @@
 </header>
 
 <main>
+  <div class="mesh" aria-hidden="true"></div>
   <div class="form-card">
     <div class="eyebrow gold">Founding Market Intelligence Program</div>
     <h1>Apply for an invitation.</h1>
@@ -64,6 +71,8 @@
 
     <form id="founding-form">
       <input type="hidden" name="_subject" value="New Founding Program Application" />
+
+      <div class="form-step"><span class="num">01</span><span class="lbl">About you</span><span class="rule"></span></div>
       <div class="field-group">
         <label for="name">Name<span class="req">*</span></label>
         <input type="text" id="name" name="name" required />
@@ -90,6 +99,8 @@
           <option value="Other">Other</option>
         </select>
       </div>
+
+      <div class="form-step"><span class="num">02</span><span class="lbl">Your interest</span><span class="rule"></span></div>
       <div class="field-group">
         <label for="geography">Geography you're most interested in</label>
         <input type="text" id="geography" name="geography" placeholder="e.g. Hudson County NJ" />
@@ -98,6 +109,8 @@
         <label for="why">Why are you interested?</label>
         <textarea id="why" name="why" placeholder="Tell us a bit about what you're evaluating"></textarea>
       </div>
+
+      <div class="form-step"><span class="num">03</span><span class="lbl">Agreement</span><span class="rule"></span></div>
       <div class="nda-block">
         <div class="nda-heading">Mutual Non-Disclosure Agreement</div>
         <div class="nda-note">This is a standard mutual confidentiality agreement. Contact us with any questions.</div>

@@ -36,20 +36,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
+  /* ---------- Story: editorial treatment ---------- */
+  .story{max-width:760px;margin:0 auto 72px;text-align:center;}
+  .story h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,52px);letter-spacing:-.03em;line-height:1.1;margin-top:16px;}
+  .story .trail{margin:24px auto 0;}
+  .story p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:22px;text-align:left;}
+  .story p:first-of-type{font-family:'Sora',sans-serif;font-size:clamp(17px,2vw,21px);font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.6;padding-left:24px;border-left:2px solid var(--teal);margin-top:36px;}
+
   /* ---------- Founders ---------- */
   .founders-primary{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:760px;margin:0 auto 22px;}
-  .founder-card{text-align:center;padding:30px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .founder-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
-  .founder-avatar{width:56px;height:56px;border-radius:50%;background:rgba(20,184,166,.12);border:1px solid rgba(20,184,166,.45);box-shadow:0 0 0 4px rgba(20,184,166,.08),0 0 24px rgba(20,184,166,.14);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:var(--teal-bright);}
-  .founder-card h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;letter-spacing:-.01em;}
+  .founder-card{text-align:center;padding:34px 22px;}
+  .founder-card h3{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;}
   .founder-card .role{font-size:13px;color:var(--teal);font-weight:600;margin-top:6px;}
   .founder-card .founder-sub{font-size:13px;color:var(--ink-soft);margin-top:10px;line-height:1.5;}
   .founders-secondary{max-width:340px;margin:0 auto 40px;}
-  .founders-secondary .founder-card{background:transparent;padding:24px 20px;}
-  .founders-secondary .founder-avatar{width:48px;height:48px;font-size:15px;}
+  .founders-secondary .founder-card{background:transparent;padding:26px 20px;}
+  .founders-secondary .founder-card:hover{transform:none;box-shadow:none;}
+  .founders-secondary .orb{width:52px;height:52px;font-size:15px;}
   .founders-secondary h3{font-size:15px;}
   .founders-secondary .role{color:var(--muted);}
-  .company-line{text-align:center;font-size:13px;color:var(--faint);font-weight:500;}
+  .company-line{text-align:center;font-size:13px;color:var(--faint);font-weight:500;font-family:'JetBrains Mono',monospace;}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
@@ -79,12 +85,30 @@
         </button>
         <div class="nav-menu-panel" role="menu">
           <div class="nav-menu-panel-inner">
-            <a href="../intelligence/index.html" role="menuitem">Intelligence</a>
-            <a href="../sample-report/index.html" role="menuitem">Sample Report</a>
-            <a href="../reports/index.html" role="menuitem">Reports</a>
-            <a href="../team/index.html" class="active" role="menuitem">Team</a>
-            <a href="../disclaimer/index.html" role="menuitem">Disclaimer</a>
-            <a href="../contact/index.html" role="menuitem">Contact</a>
+            <a href="../intelligence/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
+              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
+            </a>
+            <a href="../sample-report/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
+              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
+            </a>
+            <a href="../reports/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Packages and the Founding Program</span></span>
+            </a>
+            <a href="../team/index.html" class="active" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
+              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
+            </a>
+            <a href="../disclaimer/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
+              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
+            </a>
+            <a href="../contact/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
+              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
+            </a>
           </div>
         </div>
       </div>
@@ -97,23 +121,25 @@
 <main>
 
   <!-- FOUNDERS / STORY -->
-  <section class="sec reveal">
-    <div class="sec-head">
+  <section class="sec reveal" style="overflow:hidden;">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="story">
       <div class="eyebrow">Our Story</div>
-      <h2 style="margin-top:16px;">Three undergraduates, one shared frustration.</h2>
+      <h2>Three undergraduates, one shared frustration.</h2>
+      <div class="trail"></div>
       <p>SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola — three friends comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, a comp sheet that was already a year stale, or a hunch about a neighborhood nobody had actually checked against the numbers.</p>
-      <p style="margin-top:14px;">We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been — a forward-looking edge instead of a guess.</p>
+      <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been — a forward-looking edge instead of a guess.</p>
     </div>
-    <div class="eyebrow" style="text-align:center;margin:8px auto 28px;">The Team</div>
+    <div class="eyebrow" style="display:flex;justify-content:center;margin:8px auto 28px;">The Team</div>
     <div class="founders-primary">
-      <div class="founder-card">
-        <div class="founder-avatar">SK</div>
+      <div class="founder-card sw-card">
+        <div class="orb orb-a">SK</div>
         <h3>Sameer Katwala</h3>
         <div class="role">Co-Founder &amp; CEO</div>
         <div class="founder-sub">Leads Production and Development.</div>
       </div>
-      <div class="founder-card">
-        <div class="founder-avatar">AG</div>
+      <div class="founder-card sw-card">
+        <div class="orb orb-b">AG</div>
         <h3>Andrew Giacomini</h3>
         <div class="role">Co-Founder &amp; COO/CFO</div>
         <div class="founder-sub">Handles day-to-day operations and manages finances.</div>
@@ -121,7 +147,7 @@
     </div>
     <div class="founders-secondary">
       <div class="founder-card">
-        <div class="founder-avatar">JL</div>
+        <div class="orb orb-c">JL</div>
         <h3>Joseph LaMonica</h3>
         <div class="role">Technical Advisor</div>
       </div>
@@ -131,6 +157,7 @@
 
   <!-- FINAL CTA -->
   <section class="sec final-cta reveal">
+    <div class="trail"></div>
     <h2>Your next market signal is already forming.</h2>
     <p>Join the Founding Market Intelligence Program using the button above.</p>
   </section>
@@ -153,13 +180,20 @@
       </div>
       <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
     </div>
-    <div class="footer-links">
-      <a href="../intelligence/index.html">Intelligence</a>
-      <a href="../sample-report/index.html#how-we-score">How We Score</a>
-      <a href="../reports/index.html">Reports</a>
-      <a href="../team/index.html">Team</a>
-      <a href="../disclaimer/index.html">Disclaimer</a>
-      <a href="../contact/index.html">Contact</a>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="fc-h">Product</div>
+        <a href="../intelligence/index.html">Intelligence</a>
+        <a href="../sample-report/index.html">Sample Report</a>
+        <a href="../sample-report/index.html#how-we-score">How We Score</a>
+        <a href="../reports/index.html">Reports</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-h">Company</div>
+        <a href="../team/index.html">Team</a>
+        <a href="../contact/index.html">Contact</a>
+        <a href="../disclaimer/index.html">Disclaimer</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">

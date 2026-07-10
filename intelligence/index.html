@@ -36,36 +36,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Methodology ---------- */
-  .method{max-width:720px;margin:0 auto;text-align:center;}
-  .method p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:18px;}
+  /* ---------- Methodology: editorial lede treatment ---------- */
+  .method{position:relative;max-width:760px;margin:0 auto;}
+  .method .method-head{text-align:center;margin-bottom:44px;}
+  .method .trail{margin:24px auto 0;}
+  .method .lede{font-family:'Sora',sans-serif;font-size:clamp(18px,2.2vw,23px);font-weight:600;letter-spacing:-.015em;color:var(--ink);line-height:1.55;padding-left:24px;border-left:2px solid var(--teal);}
+  .method p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:22px;}
+  .method .coverage{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--teal-dim);border-radius:12px;padding:20px 24px;font-size:15px;color:var(--ink-soft);line-height:1.7;}
 
-  /* ---------- Problem section ---------- */
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--max);margin:0 auto;}
-  .compare-card{border-radius:16px;padding:32px;border:1px solid var(--line);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .compare-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);}
-  .compare-card.bad{background:rgba(255,255,255,.015);}
-  .compare-card.good{background:linear-gradient(180deg,rgba(20,184,166,.08) 0%,rgba(20,184,166,.02) 100%);border-color:rgba(20,184,166,.25);}
-  .compare-card.good:hover{border-color:rgba(20,184,166,.45);box-shadow:0 16px 40px -16px rgba(20,184,166,.2),0 16px 40px -16px rgba(0,0,0,.4);}
-  .compare-card h3{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;margin-bottom:20px;letter-spacing:-.01em;}
-  .compare-card li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft);padding:11px 0;border-top:1px solid var(--line);line-height:1.5;}
-  .compare-card li:first-of-type{border-top:none;}
+  /* ---------- Problem: split-screen instinct vs. data ---------- */
+  .versus{position:relative;display:grid;grid-template-columns:1fr 1fr;max-width:var(--max);margin:0 auto;border:1px solid var(--line);border-radius:22px;overflow:hidden;}
+  .versus-half{padding:44px 40px;}
+  .versus-half.bad{background:rgba(255,255,255,.012);}
+  .versus-half.good{background:linear-gradient(160deg,rgba(20,184,166,.1) 0%,rgba(20,184,166,.02) 70%);box-shadow:inset 1px 0 0 rgba(20,184,166,.25);}
+  .versus-half h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;margin-bottom:22px;letter-spacing:-.01em;}
+  .versus-half.bad h3{color:var(--muted);}
+  .versus-half.good h3{color:var(--teal-bright);}
+  .versus-half li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;padding:12px 0;border-top:1px solid var(--line);line-height:1.55;}
+  .versus-half li:first-of-type{border-top:none;}
+  .versus-half.bad li{color:var(--muted);}
+  .versus-half.good li{color:var(--ink-soft);}
+  .versus-chip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--surface-2);border:1px solid var(--line-bright);border-radius:50%;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal-bright);box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 20px rgba(45,212,196,.12);}
 
   /* ---------- Who it's for ---------- */
   .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;}
-  .aud-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
-  .aud-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.25);}
-  .aud-card .tag{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+  .aud-card{padding:32px 28px;}
+  .aud-card .ai{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(20,184,166,.1);color:var(--teal-bright);margin-bottom:18px;}
+  .aud-card .ai svg{width:19px;height:19px;}
+  .aud-card .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
   .aud-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em;}
   .aud-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
-    .compare{grid-template-columns:1fr;}
+    .versus{grid-template-columns:1fr;}
+    .versus-half.good{box-shadow:inset 0 1px 0 rgba(20,184,166,.25);}
+    .versus-chip{display:none;}
     .audience-grid{grid-template-columns:1fr;}
   }
   @media (max-width:640px){
     .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
+    .versus-half{padding:32px 24px;}
   }
 </style>
 </head>
@@ -88,12 +99,30 @@
         </button>
         <div class="nav-menu-panel" role="menu">
           <div class="nav-menu-panel-inner">
-            <a href="../intelligence/index.html" class="active" role="menuitem">Intelligence</a>
-            <a href="../sample-report/index.html" role="menuitem">Sample Report</a>
-            <a href="../reports/index.html" role="menuitem">Reports</a>
-            <a href="../team/index.html" role="menuitem">Team</a>
-            <a href="../disclaimer/index.html" role="menuitem">Disclaimer</a>
-            <a href="../contact/index.html" role="menuitem">Contact</a>
+            <a href="../intelligence/index.html" class="active" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
+              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
+            </a>
+            <a href="../sample-report/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
+              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
+            </a>
+            <a href="../reports/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Packages and the Founding Program</span></span>
+            </a>
+            <a href="../team/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
+              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
+            </a>
+            <a href="../disclaimer/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
+              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
+            </a>
+            <a href="../contact/index.html" role="menuitem">
+              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
+              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
+            </a>
           </div>
         </div>
       </div>
@@ -106,13 +135,17 @@
 <main>
 
   <!-- METHODOLOGY -->
-  <section class="sec reveal">
+  <section class="sec reveal" style="overflow:hidden;">
+    <div class="mesh" aria-hidden="true"></div>
     <div class="method">
-      <div class="eyebrow">Intelligence</div>
-      <h2 class="display" style="font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;margin-top:16px;">How we build the signal.</h2>
-      <p>SpotWise's momentum score is generated by a machine learning model trained on a range of economic and real estate indicators measured at the zip code level. The model is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
-      <p style="margin-top:18px;">The dashboard also includes a buyer-adjustable weighting tool that lets investors re-rank zip codes by their own priorities — cash flow, appreciation, or a balanced view. This is a filtering layer on top of the base score, not a separate model: the underlying momentum score is fixed and validated; the re-ranking simply reorders results to match how a specific buyer evaluates deals.</p>
-      <p style="margin-top:18px;"><strong style="color:var(--ink);">Coverage today:</strong> residential and small multifamily properties (1–4 units) across the New York, New Jersey, and Pennsylvania tri-state area — not large multifamily, commercial, or industrial assets.</p>
+      <div class="method-head">
+        <div class="eyebrow">Intelligence</div>
+        <h2 class="display" style="font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.03em;margin-top:16px;">How we build the signal.</h2>
+        <div class="trail"></div>
+      </div>
+      <p class="lede">SpotWise's momentum score is generated by a machine learning model trained on a range of economic and real estate indicators measured at the zip code level. The model is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
+      <p>The dashboard also includes a buyer-adjustable weighting tool that lets investors re-rank zip codes by their own priorities — cash flow, appreciation, or a balanced view. This is a filtering layer on top of the base score, not a separate model: the underlying momentum score is fixed and validated; the re-ranking simply reorders results to match how a specific buyer evaluates deals.</p>
+      <div class="coverage"><strong style="color:var(--ink);">Coverage today:</strong> residential and small multifamily properties (1–4 units) across the New York, New Jersey, and Pennsylvania tri-state area — not large multifamily, commercial, or industrial assets.</div>
       <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
     </div>
   </section>
@@ -122,8 +155,8 @@
     <div class="sec-head">
       <h2>Real estate decisions are made on instinct and lagging data.</h2>
     </div>
-    <div class="compare">
-      <div class="compare-card bad">
+    <div class="versus">
+      <div class="versus-half bad">
         <h3>What the market gives you</h3>
         <ul>
           <li><span class="mark x">✕</span>Zillow comps trailing 90 days</li>
@@ -132,7 +165,7 @@
           <li><span class="mark x">✕</span>Metro-level trends that miss the zip</li>
         </ul>
       </div>
-      <div class="compare-card good">
+      <div class="versus-half good">
         <h3>What SpotWise gives you</h3>
         <ul>
           <li><span class="mark check">✓</span>Forward-looking zip-level momentum scores</li>
@@ -141,6 +174,7 @@
           <li><span class="mark check">✓</span>Neighborhood-level precision across 1,213 zips — and growing</li>
         </ul>
       </div>
+      <div class="versus-chip" aria-hidden="true">VS</div>
     </div>
   </section>
 
@@ -148,19 +182,23 @@
   <section class="sec reveal">
     <div class="sec-head">
       <h2>Built for operators making real capital decisions.</h2>
+      <div class="trail"></div>
     </div>
     <div class="audience-grid">
-      <div class="aud-card">
+      <div class="aud-card sw-card">
+        <div class="ai"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 1.5l7 3v5c0 4.2-2.9 7.2-7 8.5-4.1-1.3-7-4.3-7-8.5v-5l7-3z"/><path d="M7 10l2 2 4-4"/></svg></div>
         <div class="tag">Hard Money Lenders</div>
         <h3>Underwrite with confidence</h3>
         <p>Underwrite loans with confidence in neighborhood trajectory — know which collateral is in an appreciation window before you close.</p>
       </div>
-      <div class="aud-card">
+      <div class="aud-card sw-card">
+        <div class="ai"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17.5h16"/><path d="M4 17.5V8l6-4.5L16 8v9.5"/><path d="M8 17.5v-4h4v4"/></svg></div>
         <div class="tag">Private Equity Real Estate</div>
         <h3>Source before the market prices it in</h3>
         <p>Identify emerging markets before they're priced in. Source and prioritize acquisitions using forward-looking momentum signals.</p>
       </div>
-      <div class="aud-card">
+      <div class="aud-card sw-card">
+        <div class="ai"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h16"/><path d="M3.5 18V9.5h4V18"/><path d="M12.5 18V4.5h4V18"/><path d="M8 18v-5.5h4V18"/></svg></div>
         <div class="tag">Regional Developers</div>
         <h3>Evaluate market entry with precision</h3>
         <p>Evaluate market entry decisions with zip-level intelligence on supply, demand, and appreciation potential across our footprint — expanding every month.</p>
@@ -170,6 +208,7 @@
 
   <!-- FINAL CTA -->
   <section class="sec final-cta reveal">
+    <div class="trail"></div>
     <h2>Your next market signal is already forming.</h2>
     <p>Join the Founding Market Intelligence Program using the button above.</p>
   </section>
@@ -192,13 +231,20 @@
       </div>
       <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
     </div>
-    <div class="footer-links">
-      <a href="../intelligence/index.html">Intelligence</a>
-      <a href="../sample-report/index.html#how-we-score">How We Score</a>
-      <a href="../reports/index.html">Reports</a>
-      <a href="../team/index.html">Team</a>
-      <a href="../disclaimer/index.html">Disclaimer</a>
-      <a href="../contact/index.html">Contact</a>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="fc-h">Product</div>
+        <a href="../intelligence/index.html">Intelligence</a>
+        <a href="../sample-report/index.html">Sample Report</a>
+        <a href="../sample-report/index.html#how-we-score">How We Score</a>
+        <a href="../reports/index.html">Reports</a>
+      </div>
+      <div class="footer-col">
+        <div class="fc-h">Company</div>
+        <a href="../team/index.html">Team</a>
+        <a href="../contact/index.html">Contact</a>
+        <a href="../disclaimer/index.html">Disclaimer</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
