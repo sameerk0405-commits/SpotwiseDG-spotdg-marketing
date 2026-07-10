@@ -69,6 +69,22 @@
   .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(34px,4.6vw,50px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 36px rgba(45,212,196,.5);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
 
+  /* ---------- Stat micro-sparklines: each backtest stat gets a tiny data
+     treatment that draws in alongside the existing count-up. Hidden-then-drawn
+     only under html.js (same safety pattern as .reveal); static otherwise. ---------- */
+  .stat-spark{display:block;width:96px;height:26px;margin:12px auto 0;}
+  .stat-spark .sp-grey{fill:none;stroke:var(--muted);stroke-width:1.5;opacity:.45;stroke-linecap:round;}
+  .stat-spark .sp-teal{fill:none;stroke:var(--teal-bright);stroke-width:2;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(45,212,196,.4));}
+  .stat-spark .sp-ticks rect{fill:var(--teal);opacity:.75;}
+  .stat-spark .sp-ticks rect.miss{fill:var(--muted);opacity:.4;}
+  .stat-spark .sp-rise rect{fill:var(--teal);opacity:.55;}
+  html.js .stat-spark .sp-teal{stroke-dasharray:1;stroke-dashoffset:1;}
+  html.js .stat-row.is-live .sp-teal{animation:spDraw 1.1s var(--ease) .15s forwards;}
+  html.js .stat-spark .sp-ticks,html.js .stat-spark .sp-rise{opacity:0;transform:scaleY(.2);transform-box:fill-box;transform-origin:bottom;}
+  html.js .stat-row.is-live .sp-ticks,html.js .stat-row.is-live .sp-rise{animation:spGrow .7s var(--ease) .2s forwards;}
+  @keyframes spDraw{to{stroke-dashoffset:0;}}
+  @keyframes spGrow{to{opacity:1;transform:scaleY(1);}}
+
   /* ---------- Hero: momentum visualization — a signal resolving out of market noise.
      One 7s master loop, pure CSS/SVG: a scan sweeps the chart left-to-right, data
      points ignite as it passes, the momentum line draws in and diverges from the
@@ -177,6 +193,7 @@
     .stat b{font-size:40px;text-align:left;line-height:1;}
     .stat:not(:first-child) b{font-size:32px;}
     .stat span{margin-top:4px;font-size:11px;letter-spacing:.08em;}
+    .stat-spark{margin:10px 0 0;}
 
     .momentum-viz{margin-top:44px;}
     .card-section .sec-head{margin-bottom:28px;}
@@ -254,9 +271,55 @@
         <a class="btn btn-ghost" href="#sample-report">See sample data ↓</a>
       </div>
       <div class="stat-row" id="stat-row">
-        <div class="stat"><b data-target="28.4" data-prefix="+" data-suffix="%">+28.4%</b><span>avg outperformance vs metro</span></div>
-        <div class="stat"><b data-target="94" data-suffix="%">94%</b><span>backtest hit rate</span></div>
-        <div class="stat"><b data-target="1213" data-format="comma">1,213</b><span>zip codes scored — and growing</span></div>
+        <div class="stat">
+          <b data-target="28.4" data-prefix="+" data-suffix="%">+28.4%</b>
+          <svg class="stat-spark" viewBox="0 0 96 26" aria-hidden="true">
+            <polyline class="sp-grey" points="2,18 14,17.5 26,18.5 38,17 50,18 62,17.5 74,18.5 86,17.5 94,18"/>
+            <path class="sp-teal" pathLength="1" d="M2,19 C20,18 34,16 48,13 C64,9.5 80,6 94,3.5"/>
+          </svg>
+          <span>avg outperformance vs metro</span>
+        </div>
+        <div class="stat">
+          <b data-target="94" data-suffix="%">94%</b>
+          <svg class="stat-spark" viewBox="0 0 96 26" aria-hidden="true">
+            <g class="sp-ticks">
+              <rect x="2" y="12" width="3.6" height="12" rx="1"/>
+              <rect x="7.9" y="9" width="3.6" height="15" rx="1"/>
+              <rect x="13.8" y="13" width="3.6" height="11" rx="1"/>
+              <rect x="19.7" y="8" width="3.6" height="16" rx="1"/>
+              <rect x="25.6" y="11" width="3.6" height="13" rx="1"/>
+              <rect x="31.5" y="9" width="3.6" height="15" rx="1"/>
+              <rect x="37.4" y="14" width="3.6" height="10" rx="1"/>
+              <rect x="43.3" y="10" width="3.6" height="14" rx="1"/>
+              <rect x="49.2" y="12" width="3.6" height="12" rx="1"/>
+              <rect x="55.1" y="8" width="3.6" height="16" rx="1"/>
+              <rect class="miss" x="61" y="13" width="3.6" height="11" rx="1"/>
+              <rect x="66.9" y="11" width="3.6" height="13" rx="1"/>
+              <rect x="72.8" y="9" width="3.6" height="15" rx="1"/>
+              <rect x="78.7" y="12" width="3.6" height="12" rx="1"/>
+              <rect x="84.6" y="8" width="3.6" height="16" rx="1"/>
+              <rect x="90.5" y="10" width="3.6" height="14" rx="1"/>
+            </g>
+          </svg>
+          <span>backtest hit rate</span>
+        </div>
+        <div class="stat">
+          <b data-target="1213" data-format="comma">1,213</b>
+          <svg class="stat-spark" viewBox="0 0 96 26" aria-hidden="true">
+            <g class="sp-rise">
+              <rect x="2" y="19" width="6.5" height="5" rx="1"/>
+              <rect x="12.6" y="17" width="6.5" height="7" rx="1"/>
+              <rect x="23.2" y="15" width="6.5" height="9" rx="1"/>
+              <rect x="33.8" y="13" width="6.5" height="11" rx="1"/>
+              <rect x="44.4" y="11" width="6.5" height="13" rx="1"/>
+              <rect x="55" y="9" width="6.5" height="15" rx="1"/>
+              <rect x="65.6" y="7" width="6.5" height="17" rx="1"/>
+              <rect x="76.2" y="5" width="6.5" height="19" rx="1"/>
+              <rect x="86.8" y="3" width="6.5" height="21" rx="1"/>
+            </g>
+          </svg>
+          <span>zip codes scored — and growing</span>
+        </div>
       </div>
       <div class="momentum-viz" aria-hidden="true">
         <svg viewBox="0 0 600 230" width="600" height="230" preserveAspectRatio="none">
@@ -498,6 +561,7 @@
       entries.forEach(function(e){
         if (e.isIntersecting && !done) {
           done = true;
+          row.classList.add('is-live'); // draws the stat sparklines in step with the count-up
           row.querySelectorAll('b[data-target]').forEach(animate);
           obs.disconnect();
         }

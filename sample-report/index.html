@@ -66,6 +66,50 @@
   .ratio-explain-card h3{font-family:'Sora',sans-serif;font-size:15.5px;font-weight:700;margin-bottom:9px;letter-spacing:-.01em;color:var(--teal-bright);}
   .ratio-explain-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
 
+  /* ---------- Score scale: the 87.3 rendered on its 0–100 range ---------- */
+  .score-scale{position:relative;height:4px;border-radius:4px;background:var(--line);margin:0 0 22px;}
+  .score-scale-fill{position:absolute;left:0;top:0;bottom:0;width:87.3%;border-radius:4px;background:linear-gradient(90deg,var(--teal-dim),var(--teal-bright));box-shadow:0 0 12px rgba(45,212,196,.3);}
+  .score-scale-fill::after{content:"";position:absolute;right:-3px;top:50%;width:8px;height:8px;border-radius:50%;background:var(--teal-bright);transform:translateY(-50%);box-shadow:0 0 10px rgba(45,212,196,.8);}
+  html.js .score-scale-fill{width:0;transition:width 1.2s var(--ease) .25s;}
+  html.js .reveal.is-visible .score-scale-fill{width:87.3%;}
+
+  /* ---------- Metric micro-trends: tiny sparkline beside each value ---------- */
+  .sig-item .v{display:flex;align-items:center;}
+  .vspark{width:44px;height:14px;margin-left:auto;padding-left:8px;flex-shrink:0;overflow:visible;}
+  .vspark path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;opacity:.55;}
+  html.js .vspark path{stroke-dasharray:1;stroke-dashoffset:1;}
+  html.js .reveal.is-visible .vspark path{animation:vsparkDraw .9s var(--ease) .35s forwards;}
+  @keyframes vsparkDraw{to{stroke-dashoffset:0;}}
+
+  /* ---------- Walk-forward validation timeline: trained here -> tested here,
+     window by window. Expanding train window, five-year test window sliding
+     forward — a visual of the sentence above it. ---------- */
+  .wf{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 10px;}
+  .wf-legend{display:flex;align-items:center;gap:6px 18px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .wf-leg{display:inline-flex;align-items:center;gap:8px;}
+  .wf-key{display:inline-block;width:14px;height:8px;border-radius:2px;flex-shrink:0;}
+  .wf-key.train{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);}
+  .wf-key.test{background:var(--teal);}
+  .wf svg{display:block;width:100%;height:auto;}
+  .wf-axis{stroke:var(--line);stroke-width:1;}
+  .wf-year{fill:var(--faint);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;}
+  .wf-lbl{fill:var(--ink-soft);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.08em;}
+  .wf-lbl.test{fill:var(--teal-bright);}
+  html.js .wf .wf-lbl{opacity:0;transition:opacity .4s ease .65s;}
+  html.js .wf.is-visible .wf-lbl{opacity:1;}
+  .wf-train{fill:rgba(255,255,255,.07);stroke:rgba(255,255,255,.13);stroke-width:1;}
+  .wf-test{fill:rgba(20,184,166,.55);}
+  html.js .wf .wf-train,html.js .wf .wf-test{transform-box:fill-box;transform-origin:left;transform:scaleX(0);opacity:0;}
+  html.js .wf.is-visible .wf-train{animation:wfGrow .6s var(--ease) forwards;}
+  html.js .wf.is-visible .wf-test{animation:wfGrow .45s var(--ease) forwards;}
+  html.js .wf.is-visible .wf-train.t2{animation-delay:.18s;}
+  html.js .wf.is-visible .wf-train.t3{animation-delay:.36s;}
+  html.js .wf.is-visible .wf-test.s1{animation-delay:.55s;}
+  html.js .wf.is-visible .wf-test.s2{animation-delay:.73s;}
+  html.js .wf.is-visible .wf-test.s3{animation-delay:.91s;}
+  @keyframes wfGrow{to{transform:scaleX(1);opacity:1;}}
+  .wf-caption{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:12px;}
+
   /* ---------- Responsive ---------- */
   @media (max-width:1080px){
     .demo{grid-template-columns:1fr;gap:56px;}
@@ -81,6 +125,9 @@
     .compare-table th,.compare-table td{padding-top:11px;padding-bottom:11px;}
     .tier-grid{grid-template-columns:1fr 1fr;gap:12px;}
     .ratio-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .vspark{width:36px;padding-left:6px;}
+    .sig-item .v{flex-wrap:wrap;}
+    .wf{padding:14px 14px 8px;}
     .tier-card,.ratio-explain-card{padding:18px 16px;}
     .demo-col .dsec{margin-bottom:52px;}
     .demo-col h2{font-size:clamp(24px,6.5vw,28px);}
@@ -169,15 +216,16 @@
         </div>
 
         <div class="sig-score-row">
-          <div class="sig-score">87.3</div>
+          <div class="sig-score" data-target="87.3">87.3</div>
           <div class="sig-score-label">Momentum Score<br/>/ 100</div>
         </div>
+        <div class="score-scale" aria-hidden="true"><div class="score-scale-fill"></div></div>
 
         <div class="sig-grid">
-          <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%</div></div>
-          <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%</div></div>
-          <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp</div></div>
-          <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg">Moderate</div></div>
+          <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,12 C12,11 20,9 28,6.5 C34,4.7 40,3 42,2.5"/></svg></div></div>
+          <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,11.5 C12,11 22,9.5 30,8 C36,6.8 40,6 42,5.5"/></svg></div></div>
+          <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,3 C12,4 20,6 28,8.5 C34,10.2 40,11.5 42,12"/></svg></div></div>
+          <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg">Moderate<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,8 C8,6.5 12,9.5 18,8 C24,6.5 28,9.5 34,8 C38,7 40,8 42,7.5"/></svg></div></div>
         </div>
 
         <div class="ratio-row">
@@ -237,6 +285,23 @@
         <h2>A single number, 0–100.</h2>
         <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. A higher score means a stronger, more corroborated signal that the neighborhood is entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker, mixed, or not yet confirmed.</p>
         <p>The model behind it is walk-forward validated — trained only on data available before each prediction point, then tested against real outcomes over five-year holding periods. Top-tier picks beat their own metro 94% of the time over five years.</p>
+        <div class="wf reveal">
+          <div class="wf-legend"><span class="wf-leg"><span class="wf-key train"></span>Trained on data to here</span><span class="wf-leg"><span class="wf-key test"></span>Tested on the five years after</span></div>
+          <svg viewBox="0 0 560 122" aria-hidden="true">
+            <rect class="wf-train t1" x="8" y="14" width="180" height="14" rx="3"></rect>
+            <rect class="wf-test s1" x="192" y="14" width="88" height="14" rx="3"></rect>
+            <text class="wf-lbl" x="98" y="25" text-anchor="middle">TRAIN</text>
+            <text class="wf-lbl test" x="290" y="25" text-anchor="start">TEST</text>
+            <rect class="wf-train t2" x="8" y="42" width="262" height="14" rx="3"></rect>
+            <rect class="wf-test s2" x="274" y="42" width="88" height="14" rx="3"></rect>
+            <rect class="wf-train t3" x="8" y="70" width="344" height="14" rx="3"></rect>
+            <rect class="wf-test s3" x="356" y="70" width="88" height="14" rx="3"></rect>
+            <line class="wf-axis" x1="8" y1="98" x2="552" y2="98"></line>
+            <text class="wf-year" x="8" y="116">2000</text>
+            <text class="wf-year" x="552" y="116" text-anchor="end">2026</text>
+          </svg>
+          <div class="wf-caption">Walk-forward validation, window by window: each prediction is made with only the data that existed at that point, then scored against the five years that followed.</div>
+        </div>
         <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
       </div>
 
@@ -347,6 +412,33 @@
 </footer>
 
 <script src="../shared.js"></script>
+<script>
+  // Momentum-score count-up: animates 87.3 from 0 the first time the sample
+  // card scrolls into view. The real value is already the element's text, so
+  // no-JS / reduced-motion / any failure just leaves the correct static number.
+  (function(){
+    var el = document.querySelector('.sig-score[data-target]');
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    var done = false;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting && !done) {
+          done = true;
+          var target = parseFloat(el.dataset.target);
+          var start = performance.now();
+          (function step(now){
+            var p = Math.min((now - start) / 1100, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = (target * eased).toFixed(1);
+            if (p < 1) requestAnimationFrame(step);
+          })(start);
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    obs.observe(el);
+  })();
+</script>
 
 </body>
 </html>
