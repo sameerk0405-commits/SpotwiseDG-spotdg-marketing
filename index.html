@@ -69,25 +69,62 @@
   .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(34px,4.6vw,50px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 36px rgba(45,212,196,.5);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
 
-  /* ---------- Hero: momentum visualization (bigger, central) ---------- */
+  /* ---------- Hero: momentum visualization — a signal resolving out of market noise.
+     One 7s master loop, pure CSS/SVG: a scan sweeps the chart left-to-right, data
+     points ignite as it passes, the momentum line draws in and diverges from the
+     grey noise cluster (which dims once the signal is confirmed), the appreciation
+     window rises, a highlight pulse travels the resolved line, and a mono status
+     caption flips from "analyzing" to "resolved". ---------- */
   .momentum-viz{position:relative;width:100%;max-width:720px;min-width:0;margin:76px auto 0;}
   .momentum-viz svg{display:block;width:100%;height:auto;}
-  .momentum-viz .viz-grey{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:vizGreyLine 5s ease-in-out infinite;}
-  .momentum-viz .viz-teal{fill:none;stroke:var(--teal-bright);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(45,212,196,.55));stroke-dasharray:1;animation:vizTealDraw 5s ease-in-out infinite;}
-  .momentum-viz .viz-band{animation:vizBand 5s ease-in-out infinite;}
-  .momentum-viz .band-stop-a{stop-color:#14B8A6;stop-opacity:0;}
-  .momentum-viz .band-stop-b{stop-color:#14B8A6;stop-opacity:.16;}
-  .momentum-badge{position:absolute;top:0;right:4%;transform:translateY(-55%);animation:vizBadge 5s ease-in-out infinite;}
-  @keyframes vizGreyLine{0%{opacity:0;}6%{opacity:.5;}46%{opacity:.5;}60%{opacity:0;}100%{opacity:0;}}
-  @keyframes vizTealDraw{0%{stroke-dashoffset:1;opacity:0;}8%{stroke-dashoffset:1;opacity:1;}60%{stroke-dashoffset:0;opacity:1;}90%{stroke-dashoffset:0;opacity:1;}97%{stroke-dashoffset:0;opacity:0;}100%{stroke-dashoffset:1;opacity:0;}}
-  @keyframes vizBand{0%,55%{opacity:0;}68%{opacity:1;}90%{opacity:1;}97%{opacity:0;}100%{opacity:0;}}
-  @keyframes vizBadge{0%,62%{opacity:0;transform:translateY(-55%) translateY(6px) scale(.92);}74%{opacity:1;transform:translateY(-55%) translateY(0) scale(1);}90%{opacity:1;transform:translateY(-55%);}97%{opacity:0;transform:translateY(-55%) translateY(4px) scale(.96);}100%{opacity:0;transform:translateY(-55%) translateY(6px) scale(.92);}}
+  .viz-gridlines line{stroke:var(--line);stroke-width:1;opacity:.7;}
+  .viz-noise{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;--nop:.38;animation:vizNoise 7s ease-in-out infinite;}
+  .viz-noise.n2{--nop:.28;}
+  .viz-noise.n3{--nop:.18;}
+  .viz-scan{animation:vizScan 7s cubic-bezier(.45,.05,.55,.95) infinite;}
+  .viz-scan line{stroke:var(--teal-bright);stroke-width:1.5;}
+  .viz-teal{fill:none;stroke:var(--teal-bright);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(45,212,196,.55));stroke-dasharray:1;animation:vizTeal 7s ease-in-out infinite;}
+  .viz-teal-pulse{fill:none;stroke:#8FF5EA;stroke-width:3;stroke-linecap:round;stroke-dasharray:70 930;opacity:0;filter:drop-shadow(0 0 7px rgba(143,245,234,.75));animation:vizPulse 7s linear infinite;}
+  .viz-dot{fill:var(--teal-bright);opacity:0;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 6px rgba(45,212,196,.7));}
+  .viz-dot.vd1{animation:vd1 7s ease-out infinite;}
+  .viz-dot.vd2{animation:vd2 7s ease-out infinite;}
+  .viz-dot.vd3{animation:vd3 7s ease-out infinite;}
+  .viz-dot.vd4{animation:vd4 7s ease-out infinite;}
+  .viz-dot.vd5{animation:vd5 7s ease-out infinite;}
+  .viz-dot.vd6{animation:vd6 7s ease-out infinite;}
+  .viz-band{transform-box:fill-box;transform-origin:bottom;opacity:0;animation:vizBand 7s ease-in-out infinite;}
+  .band-stop-a{stop-color:#14B8A6;stop-opacity:0;}
+  .band-stop-b{stop-color:#14B8A6;stop-opacity:.16;}
+  .momentum-badge{position:absolute;top:0;right:4%;transform:translateY(-55%);animation:vizBadge 7s ease-in-out infinite;}
+  .viz-caption{margin-top:14px;display:grid;justify-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;}
+  .viz-caption span{grid-area:1/1;}
+  .vc-scan{display:inline-flex;align-items:center;color:var(--muted);opacity:0;animation:vcScan 7s ease-in-out infinite;}
+  .vc-lock{color:var(--teal-bright);opacity:0;animation:vcLock 7s ease-in-out infinite;}
+  .vc-cursor{display:inline-block;width:7px;height:12px;margin-left:8px;background:currentColor;animation:vcBlink 1.05s steps(1,end) infinite;}
+  @keyframes vizNoise{0%{opacity:0;}5%{opacity:var(--nop);}48%{opacity:var(--nop);}58%{opacity:.1;}90%{opacity:.1;}96%,100%{opacity:0;}}
+  @keyframes vizScan{0%,5%{transform:translateX(-8px);opacity:0;}7%{opacity:1;}44%{opacity:1;}47%{transform:translateX(610px);opacity:0;}100%{transform:translateX(610px);opacity:0;}}
+  @keyframes vizTeal{0%,6%{stroke-dashoffset:1;opacity:0;}8%{opacity:1;}46%{stroke-dashoffset:0;opacity:1;}92%{stroke-dashoffset:0;opacity:1;}97%,100%{stroke-dashoffset:0;opacity:0;}}
+  @keyframes vizPulse{0%,55%{stroke-dashoffset:70;opacity:0;}58%{opacity:.9;}86%{opacity:.9;}90%,100%{stroke-dashoffset:-1000;opacity:0;}}
+  @keyframes vd1{0%,10.5%{opacity:0;transform:scale(.2);}12.5%{opacity:1;transform:scale(1.45);}14.5%{transform:scale(1);}92%{opacity:1;transform:scale(1);}97%,100%{opacity:0;transform:scale(.2);}}
+  @keyframes vd2{0%,15.8%{opacity:0;transform:scale(.2);}17.8%{opacity:1;transform:scale(1.45);}19.8%{transform:scale(1);}92%{opacity:1;transform:scale(1);}97%,100%{opacity:0;transform:scale(.2);}}
+  @keyframes vd3{0%,21.3%{opacity:0;transform:scale(.2);}23.3%{opacity:1;transform:scale(1.45);}25.3%{transform:scale(1);}92%{opacity:1;transform:scale(1);}97%,100%{opacity:0;transform:scale(.2);}}
+  @keyframes vd4{0%,27.7%{opacity:0;transform:scale(.2);}29.7%{opacity:1;transform:scale(1.45);}31.7%{transform:scale(1);}92%{opacity:1;transform:scale(1);}97%,100%{opacity:0;transform:scale(.2);}}
+  @keyframes vd5{0%,34.7%{opacity:0;transform:scale(.2);}36.7%{opacity:1;transform:scale(1.45);}38.7%{transform:scale(1);}92%{opacity:1;transform:scale(1);}97%,100%{opacity:0;transform:scale(.2);}}
+  @keyframes vd6{0%,42.3%{opacity:0;transform:scale(.2);}44.3%{opacity:1;transform:scale(1.45);}46.3%{transform:scale(1);}92%{opacity:1;transform:scale(1);}97%,100%{opacity:0;transform:scale(.2);}}
+  @keyframes vizBand{0%,50%{opacity:0;transform:scaleY(0);}60%{opacity:1;transform:scaleY(1);}92%{opacity:1;transform:scaleY(1);}97%,100%{opacity:0;transform:scaleY(1);}}
+  @keyframes vizBadge{0%,62%{opacity:0;transform:translateY(-55%) translateY(6px) scale(.92);}70%{opacity:1;transform:translateY(-55%) translateY(0) scale(1);}92%{opacity:1;transform:translateY(-55%);}97%,100%{opacity:0;transform:translateY(-55%) translateY(4px) scale(.94);}}
+  @keyframes vcScan{0%,3%{opacity:0;}6%{opacity:.9;}50%{opacity:.9;}56%{opacity:0;}100%{opacity:0;}}
+  @keyframes vcLock{0%,60%{opacity:0;}66%{opacity:1;}92%{opacity:1;}97%,100%{opacity:0;}}
+  @keyframes vcBlink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
   @media (prefers-reduced-motion:reduce){
-    .momentum-viz .viz-grey,.momentum-viz .viz-teal,.momentum-viz .viz-band,.momentum-badge{animation:none;}
-    .momentum-viz .viz-grey{opacity:0;}
-    .momentum-viz .viz-teal{stroke-dashoffset:0;opacity:1;}
-    .momentum-viz .viz-band{opacity:1;}
+    .viz-noise,.viz-scan,.viz-teal,.viz-teal-pulse,.viz-dot,.viz-band,.momentum-badge,.vc-scan,.vc-lock,.vc-cursor{animation:none;}
+    .viz-noise{opacity:.12;}
+    .viz-scan,.viz-teal-pulse,.vc-scan{opacity:0;}
+    .viz-teal{stroke-dashoffset:0;opacity:1;}
+    .viz-dot{opacity:1;transform:scale(1);}
+    .viz-band{opacity:1;transform:scaleY(1);}
     .momentum-badge{opacity:1;transform:translateY(-55%);}
+    .vc-lock{opacity:1;}
   }
 
   /* ---------- Live intelligence card: staged as the hero's payoff ---------- */
@@ -117,6 +154,7 @@
     h1{font-size:clamp(34px,10vw,48px);}
     .momentum-viz{margin-top:48px;}
     .momentum-badge{font-size:10px;padding:6px 11px;}
+    .viz-caption{font-size:10px;letter-spacing:.1em;}
     .steps{grid-template-columns:1fr;}
   }
 
@@ -221,18 +259,56 @@
         <div class="stat"><b data-target="1213" data-format="comma">1,213</b><span>zip codes scored — and growing</span></div>
       </div>
       <div class="momentum-viz" aria-hidden="true">
-        <svg viewBox="0 0 600 200" width="600" height="200" preserveAspectRatio="none">
+        <svg viewBox="0 0 600 230" width="600" height="230" preserveAspectRatio="none">
           <defs>
             <linearGradient id="bandGrad" x1="0" y1="0" x2="1" y2="0">
               <stop class="band-stop-a" offset="0%"></stop>
               <stop class="band-stop-b" offset="100%"></stop>
             </linearGradient>
+            <linearGradient id="scanGrad" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0%" stop-color="#2DD4C4" stop-opacity=".26"></stop>
+              <stop offset="100%" stop-color="#2DD4C4" stop-opacity="0"></stop>
+            </linearGradient>
           </defs>
-          <rect class="viz-band" x="330" y="34" width="260" height="140" fill="url(#bandGrad)"></rect>
-          <polyline class="viz-grey" points="10,150 50,142 90,155 130,136 170,148 210,127 250,143 290,122 330,138 370,118 410,132 450,115 490,126 530,110 570,118"></polyline>
-          <path class="viz-teal" pathLength="1" d="M10,152 C90,146 170,140 250,130 C320,122 340,110 380,90 C420,70 460,55 500,40 C530,30 555,24 580,18"></path>
+
+          <!-- chart grid -->
+          <g class="viz-gridlines">
+            <line x1="0" y1="58" x2="600" y2="58"/>
+            <line x1="0" y1="116" x2="600" y2="116"/>
+            <line x1="0" y1="174" x2="600" y2="174"/>
+          </g>
+
+          <!-- appreciation window -->
+          <rect class="viz-band" x="330" y="30" width="262" height="184" fill="url(#bandGrad)"></rect>
+
+          <!-- market noise: candidate zips that don't resolve -->
+          <polyline class="viz-noise" points="8,150 48,144 88,156 128,140 168,152 208,142 248,154 288,146 328,156 368,148 408,158 448,150 488,160 528,154 568,160"></polyline>
+          <polyline class="viz-noise n2" points="8,168 48,174 88,164 128,176 168,166 208,176 248,166 288,174 328,166 368,176 408,168 448,178 488,170 528,178 568,172"></polyline>
+          <polyline class="viz-noise n3" points="8,186 48,182 88,190 128,184 168,192 208,186 248,194 288,188 328,196 368,190 408,198 448,192 488,198 528,194 568,198"></polyline>
+
+          <!-- the momentum signal, resolving -->
+          <path class="viz-teal" pathLength="1" d="M8,164 C56,160 96,166 136,157 C176,149 208,154 240,145 C272,137 302,128 332,113 C372,94 412,78 452,58 C492,40 540,27 585,18"></path>
+          <path class="viz-teal-pulse" pathLength="1000" d="M8,164 C56,160 96,166 136,157 C176,149 208,154 240,145 C272,137 302,128 332,113 C372,94 412,78 452,58 C492,40 540,27 585,18"></path>
+
+          <!-- data points ignite as the scan passes -->
+          <circle class="viz-dot vd1" cx="86" cy="161" r="6"></circle>
+          <circle class="viz-dot vd2" cx="162" cy="152" r="6"></circle>
+          <circle class="viz-dot vd3" cx="240" cy="145" r="6"></circle>
+          <circle class="viz-dot vd4" cx="332" cy="113" r="6"></circle>
+          <circle class="viz-dot vd5" cx="432" cy="68" r="6"></circle>
+          <circle class="viz-dot vd6" cx="540" cy="27" r="6"></circle>
+
+          <!-- scan sweep -->
+          <g class="viz-scan">
+            <rect x="-46" y="18" width="46" height="200" fill="url(#scanGrad)"></rect>
+            <line x1="0" y1="18" x2="0" y2="218"/>
+          </g>
         </svg>
         <div class="sig-badge momentum-badge"><span class="pulse-dot"></span>Peak Momentum</div>
+        <div class="viz-caption">
+          <span class="vc-scan">Analyzing 1,213 zip codes<span class="vc-cursor"></span></span>
+          <span class="vc-lock">Signal resolved — Peak Momentum</span>
+        </div>
       </div>
     </div>
   </section>
