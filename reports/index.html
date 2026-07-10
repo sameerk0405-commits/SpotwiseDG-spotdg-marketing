@@ -15,7 +15,7 @@
   }
 </script>
 <title>Reports — SpotWise Data Group</title>
-<meta name="description" content="The Market Signal Report: top-ranked zip codes, tier classification, driving signals, and investor ratios — packaged for action. Explore the Targeted, Comparative, and Portfolio packages." />
+<meta name="description" content="The Market Signal Report: top-ranked zip codes, tier classification, driving signals, and investor ratios — packaged for action. Explore the Analyst, Pro, Enterprise, and Lender Scale subscription tiers." />
 <meta name="robots" content="index, follow" />
 <meta property="og:title" content="Reports — SpotWise Data Group" />
 <meta property="og:description" content="The Market Signal Report: top-ranked zip codes, tier classification, driving signals, and investor ratios — packaged for action." />
@@ -49,7 +49,7 @@
   .view-toggle button:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
 
   /* ---------- Pricing cards ---------- */
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:start;}
+  .pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:start;}
   .price-card{background:linear-gradient(180deg,rgba(255,255,255,.025) 0%,var(--surface-2) 42%);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;position:relative;overflow:visible;transition:border-color .25s,transform .25s var(--ease),box-shadow .25s var(--ease);}
   .price-card.feat{border-color:rgba(20,184,166,.4);background:linear-gradient(180deg,rgba(20,184,166,.07) 0%,var(--surface-2) 60%);}
   .price-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.3);}
@@ -78,7 +78,7 @@
 
   /* ---------- Tier comparison table (alternate view of the same three tiers) ---------- */
   .tier-table-wrap{max-width:var(--max);margin:0 auto;overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface);}
-  .tier-table{width:100%;border-collapse:collapse;min-width:640px;}
+  .tier-table{width:100%;border-collapse:collapse;min-width:760px;}
   .tier-table th,.tier-table td{padding:18px 22px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
   .tier-table thead th{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.01em;background:rgba(255,255,255,.015);}
   .tier-table thead th:first-child{width:150px;}
@@ -111,6 +111,7 @@
   html.js .reveal.is-visible .price-card:nth-child(1){animation-delay:.16s;}
   html.js .reveal.is-visible .price-card:nth-child(2){animation-delay:.28s;}
   html.js .reveal.is-visible .price-card:nth-child(3){animation-delay:.4s;}
+  html.js .reveal.is-visible .price-card:nth-child(4){animation-delay:.52s;}
   @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
   /* ---------- Responsive ---------- */
@@ -162,7 +163,7 @@
             </a>
             <a href="../reports/index.html" class="active" role="menuitem">
               <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
-              <span class="mtxt"><span class="mt">Reports</span><span class="md">Package tiers and pricing</span></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Subscription tiers and pricing</span></span>
             </a>
             <a href="../team/index.html" role="menuitem">
               <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
@@ -214,8 +215,8 @@
   <!-- PACKAGE TIERS -->
   <section class="sec sec-alt reveal">
     <div class="sec-head">
-      <div class="eyebrow">Packages</div>
-      <h2 style="margin-top:16px;">Three ways to engage.</h2>
+      <div class="eyebrow">Plans</div>
+      <h2 style="margin-top:16px;">Four ways to engage.</h2>
       <div class="trail"></div>
     </div>
 
@@ -226,27 +227,27 @@
 
     <div class="pricing-grid" id="tier-cards">
       <div class="price-card" data-tier>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-targeted-panel">
-          <h3>Targeted</h3>
-          <div class="count">1 Market Signal Report</div>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-analyst-panel">
+          <h3>SpotWise Analyst</h3>
+          <div class="count">For solo deal flow</div>
           <div class="price-line">Available upon request</div>
-          <div class="best">Best for testing a specific geography or investment thesis.</div>
+          <div class="best">Best for independent flippers and local wholesalers evaluating deals zip by zip.</div>
           <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
         </button>
-        <div class="price-card-panel" id="tier-targeted-panel">
+        <div class="price-card-panel" id="tier-analyst-panel">
           <div class="price-card-panel-inner">
             <div class="price-card-detail">
               <div class="price-card-detail-block">
                 <div class="price-card-detail-label">What's included</div>
-                <p>One full Market Signal Report covering a single zip code or one defined geography of your choosing (a neighborhood, submarket, or custom radius). Includes tier classification, the top signals driving the score, full investor ratios, and a comparison against the broader metro.</p>
+                <p>Monthly access to a set number of zip-level Market Signal Reports, with the ability to add more as needed. Each report includes the momentum score, tier classification, top signals, and investor ratios for a single zip or geography of your choosing.</p>
               </div>
               <div class="price-card-detail-block">
                 <div class="price-card-detail-label">Who it's for</div>
-                <p>An investor or lender with one specific opportunity already on the table — you have a zip code or two in mind and want a fast, data-backed second opinion before committing capital or underwriting time.</p>
+                <p>Independent flippers and local wholesalers who move on one opportunity at a time and want a fast, data-backed read on a zip before committing capital or a contract.</p>
               </div>
               <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Comparative</div>
-                <p>Comparative gets you the same depth across 3 geographies with a side-by-side ranking — this tier is for validating one thesis, not choosing between several.</p>
+                <div class="price-card-detail-label">Vs. Pro</div>
+                <p>Pro raises the monthly allotment and adds side-by-side comparison across multiple geographies — built for evaluating several deals in parallel rather than one at a time.</p>
               </div>
             </div>
           </div>
@@ -254,54 +255,81 @@
       </div>
       <div class="price-card feat" data-tier>
         <div class="price-tag">Most Popular</div>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-comparative-panel">
-          <h3>Comparative</h3>
-          <div class="count">3 Market Signal Reports</div>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-pro-panel">
+          <h3>SpotWise Pro</h3>
+          <div class="count">For active deal teams</div>
           <div class="price-line">Available upon request</div>
-          <div class="best">Best for comparing geographies, asset types, or acquisition strategies.</div>
+          <div class="best">Best for active investment syndicates and professional flippers running multiple deals at once.</div>
           <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
         </button>
-        <div class="price-card-panel" id="tier-comparative-panel">
+        <div class="price-card-panel" id="tier-pro-panel">
           <div class="price-card-panel-inner">
             <div class="price-card-detail">
               <div class="price-card-detail-block">
                 <div class="price-card-detail-label">What's included</div>
-                <p>Three full Market Signal Reports, each covering a zip code or geography of your choice, delivered as a set with a side-by-side summary ranking all three on momentum, investor ratios, and recommended action.</p>
+                <p>A larger monthly allotment of Market Signal Reports, plus side-by-side comparison and ranking across the geographies you're evaluating, with the ability to add more as your pipeline grows.</p>
               </div>
               <div class="price-card-detail-block">
                 <div class="price-card-detail-label">Who it's for</div>
-                <p>Investors, asset managers, or private lenders actively narrowing a shortlist — you're deciding between a few submarkets or acquisition strategies and need the numbers next to each other, not in three separate PDFs.</p>
+                <p>Investment syndicates and professional flippers actively sourcing and underwriting several opportunities in parallel — you need the numbers ranked next to each other, not read one report at a time.</p>
               </div>
               <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Targeted / Portfolio</div>
-                <p>Built for comparison, not just validation — the ranked summary is the point. Portfolio is sized for ongoing deal flow across a wider pipeline; this tier is a single point-in-time, three-way decision.</p>
+                <div class="price-card-detail-label">Vs. Analyst / Enterprise</div>
+                <p>A meaningfully larger allotment and comparison tooling beyond Analyst's single-deal use; Enterprise scales further still, built around a lending or fund operation rather than an individual investor's pipeline.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="price-card" data-tier>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-portfolio-panel">
-          <h3>Portfolio</h3>
-          <div class="count">5 Market Signal Reports</div>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-enterprise-panel">
+          <h3>SpotWise Enterprise</h3>
+          <div class="count">For lending &amp; fund operations</div>
           <div class="price-line">Available upon request</div>
-          <div class="best">Best for active investors, private lenders, and acquisition teams.</div>
+          <div class="best">Best for regional hard money lenders and micro-funds underwriting collateral across a portfolio.</div>
           <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
         </button>
-        <div class="price-card-panel" id="tier-portfolio-panel">
+        <div class="price-card-panel" id="tier-enterprise-panel">
           <div class="price-card-panel-inner">
             <div class="price-card-detail">
               <div class="price-card-detail-block">
                 <div class="price-card-detail-label">What's included</div>
-                <p>Five full Market Signal Reports across zip codes or geographies of your choice, plus a consolidated cross-report summary memo ranking the full set by opportunity so you can triage at a glance.</p>
+                <p>A monthly report allotment sized for underwriting volume, team-wide access so your whole lending or fund operation works from the same signal, and the ability to add capacity as deal flow picks up.</p>
               </div>
               <div class="price-card-detail-block">
                 <div class="price-card-detail-label">Who it's for</div>
-                <p>Active investors, private lenders, and acquisition teams running deal flow across multiple markets at once — you need repeated coverage across a pipeline, not a single snapshot.</p>
+                <p>Regional hard money lenders and micro-funds that need to underwrite collateral across a steady flow of deals, not a single transaction — momentum data built into how your team evaluates risk.</p>
               </div>
               <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Comparative</div>
-                <p>Same side-by-side logic, scaled to a fuller pipeline (5 vs. 3) for teams evaluating more opportunities in parallel rather than one three-way call.</p>
+                <div class="price-card-detail-label">Vs. Pro / Lender Scale</div>
+                <p>A materially higher allotment and team access beyond what a single investment team needs; Lender Scale removes the cap entirely for underwriting at institutional volume.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="price-card" data-tier>
+        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-lenderscale-panel">
+          <h3>SpotWise Lender Scale</h3>
+          <div class="count">For institutional underwriting</div>
+          <div class="price-line">Available upon request</div>
+          <div class="best">Best for institutional fund underwriters and large credit pools underwriting at scale.</div>
+          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
+        </button>
+        <div class="price-card-panel" id="tier-lenderscale-panel">
+          <div class="price-card-panel-inner">
+            <div class="price-card-detail">
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">What's included</div>
+                <p>Unlimited query access for underwriting at scale, so momentum data sits inside your underwriting workflow without a monthly ceiling — built for teams evaluating collateral continuously across a large book.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Who it's for</div>
+                <p>Institutional fund underwriters and large credit pools where deal volume is constant and a capped monthly allotment would be a bottleneck, not a convenience.</p>
+              </div>
+              <div class="price-card-detail-block">
+                <div class="price-card-detail-label">Vs. Enterprise</div>
+                <p>Enterprise is sized for regional/micro-fund volume with a generous but capped allotment; Lender Scale removes the cap for continuous, institutional-scale underwriting.</p>
               </div>
             </div>
           </div>
@@ -314,29 +342,33 @@
         <thead>
           <tr>
             <th></th>
-            <th>Targeted</th>
-            <th>Comparative<span class="tt-pop">Most Popular</span></th>
-            <th>Portfolio</th>
+            <th>Analyst</th>
+            <th>Pro<span class="tt-pop">Most Popular</span></th>
+            <th>Enterprise</th>
+            <th>Lender Scale</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Reports</th>
-            <td class="tt-mono">1</td>
-            <td class="tt-mono tt-feat">3</td>
-            <td class="tt-mono">5</td>
+            <th scope="row">Report volume</th>
+            <td class="tt-mono">Standard</td>
+            <td class="tt-mono tt-feat">Expanded</td>
+            <td class="tt-mono">High-volume</td>
+            <td class="tt-mono">Unlimited</td>
           </tr>
           <tr>
             <th scope="row">Pricing</th>
             <td class="tt-price">Available upon request</td>
             <td class="tt-price tt-feat">Available upon request</td>
             <td class="tt-price">Available upon request</td>
+            <td class="tt-price">Available upon request</td>
           </tr>
           <tr>
             <th scope="row">Best for</th>
-            <td>Best for testing a specific geography or investment thesis.</td>
-            <td class="tt-feat">Best for comparing geographies, asset types, or acquisition strategies.</td>
-            <td>Best for active investors, private lenders, and acquisition teams.</td>
+            <td>Independent flippers &amp; local wholesalers</td>
+            <td class="tt-feat">Active investment syndicates &amp; professional flippers</td>
+            <td>Regional hard money lenders &amp; micro-funds</td>
+            <td>Institutional fund underwriters &amp; large credit pools</td>
           </tr>
         </tbody>
       </table>
