@@ -15,7 +15,7 @@
   }
 </script>
 <title>Reports — SpotWise Data Group</title>
-<meta name="description" content="The Market Signal Report: top-ranked zip codes, tier classification, driving signals, and investor ratios — packaged for action. Plus the Founding Market Intelligence Program." />
+<meta name="description" content="The Market Signal Report: top-ranked zip codes, tier classification, driving signals, and investor ratios — packaged for action. Explore the Targeted, Comparative, and Portfolio packages." />
 <meta name="robots" content="index, follow" />
 <meta property="og:title" content="Reports — SpotWise Data Group" />
 <meta property="og:description" content="The Market Signal Report: top-ranked zip codes, tier classification, driving signals, and investor ratios — packaged for action." />
@@ -95,8 +95,8 @@
      entrance uses a backwards-fill animation, so once it finishes elements
      return to their natural styles (hover/accordion transforms stay intact).
      Inert without html.js (no-JS / reduced-motion get the static page). ---------- */
-  html.js .reveal:not(.is-visible) :is(.sec-head>*,.report-list li,.view-toggle,.price-card,.founding>*){opacity:0;}
-  html.js .reveal.is-visible :is(.sec-head>*,.report-list li,.view-toggle,.price-card,.founding>*){animation:rvIn .6s var(--ease) backwards;}
+  html.js .reveal:not(.is-visible) :is(.sec-head>*,.report-list li,.view-toggle,.price-card){opacity:0;}
+  html.js .reveal.is-visible :is(.sec-head>*,.report-list li,.view-toggle,.price-card){animation:rvIn .6s var(--ease) backwards;}
   html.js .reveal.is-visible .sec-head>*:nth-child(2){animation-delay:.08s;}
   html.js .reveal.is-visible .sec-head>*:nth-child(3){animation-delay:.16s;}
   html.js .reveal.is-visible .sec-head>*:nth-child(4){animation-delay:.24s;}
@@ -111,9 +111,6 @@
   html.js .reveal.is-visible .price-card:nth-child(1){animation-delay:.16s;}
   html.js .reveal.is-visible .price-card:nth-child(2){animation-delay:.28s;}
   html.js .reveal.is-visible .price-card:nth-child(3){animation-delay:.4s;}
-  html.js .reveal.is-visible .founding>*:nth-child(2){animation-delay:.1s;}
-  html.js .reveal.is-visible .founding>*:nth-child(3){animation-delay:.2s;}
-  html.js .reveal.is-visible .founding>*:nth-child(4){animation-delay:.3s;}
   @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
   /* ---------- Responsive ---------- */
@@ -165,7 +162,7 @@
             </a>
             <a href="../reports/index.html" class="active" role="menuitem">
               <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
-              <span class="mtxt"><span class="mt">Reports</span><span class="md">Packages and the Founding Program</span></span>
+              <span class="mtxt"><span class="mt">Reports</span><span class="md">Package tiers and pricing</span></span>
             </a>
             <a href="../team/index.html" role="menuitem">
               <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
@@ -214,18 +211,8 @@
     </div>
   </section>
 
-  <!-- FOUNDING PROGRAM (full — positioned before the pricing cards) -->
-  <section class="sec sec-alt reveal">
-    <div class="founding">
-      <div class="eyebrow">Founding Market Intelligence Program</div>
-      <h2>25 invitations. Complimentary report. Structured feedback.</h2>
-      <p>We are opening 25 invitations in our Founding Market Intelligence Program. Participants receive a complimentary Market Signal Report for a selected geography in exchange for a feedback session and, where appropriate, permission to use anonymized feedback or a short testimonial.</p>
-      <div class="note">Wave 1 — 5 reports — Going to warm contacts for honest feedback</div>
-    </div>
-  </section>
-
   <!-- PACKAGE TIERS -->
-  <section class="sec reveal">
+  <section class="sec sec-alt reveal">
     <div class="sec-head">
       <div class="eyebrow">Packages</div>
       <h2 style="margin-top:16px;">Three ways to engage.</h2>
