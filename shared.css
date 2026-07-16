@@ -195,7 +195,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
   box-shadow:0 32px 64px -24px rgba(0,0,0,.7);
   opacity:0;visibility:hidden;transform:translateY(-10px);filter:blur(6px);
   transition:opacity .3s var(--ease),transform .3s var(--ease),filter .3s var(--ease),visibility 0s linear .3s;
-  z-index:110;overflow:hidden;
+  z-index:110;
 }
 /* Top accent line + faint corner glows -- echoes the hero-glow / footer
    scan-line language so the open panel feels like part of the same system. */
@@ -209,7 +209,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
 }
 .nav-menu-panel-inner{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:var(--max);margin:0 auto;padding:22px 32px;}
 .nav-menu-panel a{
-  position:relative;overflow:hidden;
+  position:relative;
   display:flex;align-items:flex-start;gap:14px;text-align:left;
   color:var(--ink-soft);
   background:var(--surface);
@@ -221,7 +221,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
 }
 /* Cursor-follow spotlight (position set by shared.js on pointermove); a
    pure hover-feedback highlight, not an autoplaying animation. */
-.nav-menu-panel a::before{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(160px circle at var(--mx,50%) var(--my,50%),rgba(20,184,166,.16),transparent 70%);transition:opacity .25s var(--ease);}
+.nav-menu-panel a::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;pointer-events:none;background:radial-gradient(160px circle at var(--mx,50%) var(--my,50%),rgba(20,184,166,.16),transparent 70%);transition:opacity .25s var(--ease);}
 .nav-menu-panel a:hover::before{opacity:1;}
 .nav-menu-panel a .mtxt{position:relative;z-index:1;display:flex;flex-direction:column;min-width:0;}
 .nav-menu-panel a .mi{position:relative;z-index:1;flex-shrink:0;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(20,184,166,.1);color:var(--teal-bright);transition:transform .3s cubic-bezier(.34,1.56,.64,1),background-color .2s var(--ease),box-shadow .2s var(--ease);}
