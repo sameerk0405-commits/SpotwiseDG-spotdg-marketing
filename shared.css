@@ -36,7 +36,7 @@ section{position:relative;}
 .trail{position:relative;width:72px;height:20px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='20' viewBox='0 0 72 20' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='tg' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%230D7A72'/%3E%3Cstop offset='1' stop-color='%232DD4C4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M3 15 L69 15' stroke='%236E8B84' stroke-width='1.5' stroke-linecap='round' opacity='.35'/%3E%3Cpath d='M3 15 L26 15 C44 15 50 5 68 4' stroke='url(%23tg)' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='68' cy='4' r='2.4' fill='%232DD4C4'/%3E%3C/svg%3E") no-repeat center/contain;}
 .trail::after{content:"";position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,rgba(45,212,196,.6) 0%,rgba(45,212,196,0) 70%);animation:nodePulse 2.8s ease-in-out infinite;}
 @keyframes nodePulse{0%,100%{opacity:.45;transform:scale(.75);}50%{opacity:1;transform:scale(1.2);}}
-@media (prefers-reduced-motion:reduce){.trail::after{animation:none;opacity:.85;transform:none;}}
+@media (prefers-reduced-motion:reduce){.trail::after,.nav-home::after,.nav-menu-panel a.active::after{animation:none;opacity:.85;transform:none;}}
 
 .mark{flex-shrink:0;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
 .mark.x{background:rgba(255,255,255,.06);color:var(--faint);}
@@ -165,18 +165,26 @@ header{position:sticky;top:0;z-index:100;background:rgba(7,15,13,.75);backdrop-f
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:var(--max);margin:0 auto;}
 .nav-right{display:flex;align-items:center;gap:14px;}
 
-.nav-home{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;color:var(--muted);flex-shrink:0;transition:color .2s var(--ease),background-color .2s var(--ease);}
-.nav-home:hover{color:var(--teal-bright);background:var(--surface);}
-.nav-home svg{width:19px;height:19px;transition:transform .2s var(--ease);}
-.nav-home:hover svg{transform:scale(1.12);}
+/* ---------- Home button: a small "signature mark" -- glass chip with an
+   ambient corner signal-node (same nodePulse dot used by .trail) and a
+   glow burst on hover, so it reads as a designed control, not a bare icon. ---------- */
+.nav-home{position:relative;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:11px;color:var(--muted);flex-shrink:0;background:rgba(255,255,255,.02);border:1px solid var(--line);transition:color .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease),box-shadow .3s var(--ease);}
+.nav-home::after{content:"";position:absolute;top:-3px;right:-3px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,rgba(45,212,196,.85) 0%,rgba(45,212,196,0) 72%);box-shadow:0 0 8px rgba(45,212,196,.55);animation:nodePulse 2.8s ease-in-out infinite;}
+.nav-home:hover{color:var(--teal-bright);background:rgba(20,184,166,.08);border-color:rgba(20,184,166,.35);box-shadow:0 0 0 1px rgba(20,184,166,.12),0 6px 22px -6px rgba(20,184,166,.4);}
+.nav-home svg{width:19px;height:19px;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.nav-home:hover svg{transform:scale(1.14) rotate(-4deg);}
+.nav-home:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
 
 /* ---------- Nav mega-menu: full-width panel of rich links (icon + title + description) ---------- */
-.nav-menu{display:flex;}
-.nav-menu-trigger{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:var(--ink-soft);background:transparent;border:1px solid transparent;padding:8px 13px;border-radius:9px;cursor:pointer;font-family:inherit;transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease);}
-.nav-menu-trigger:hover{color:var(--teal-bright);background:rgba(20,184,166,.08);}
+.nav-menu{display:flex;position:relative;}
+.nav-menu-trigger{position:relative;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-soft);background:rgba(255,255,255,.02);border:1px solid var(--line);padding:8px 14px;border-radius:11px;cursor:pointer;font-family:inherit;transition:color .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease),box-shadow .3s var(--ease);}
+.nav-menu-trigger::before{content:"";width:13px;height:13px;flex-shrink:0;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='1' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='1' y='9' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1.5'/%3E%3C/svg%3E") no-repeat center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='1' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='1' y='9' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1.5'/%3E%3C/svg%3E") no-repeat center/contain;opacity:.65;transition:opacity .25s var(--ease);}
+.nav-menu-trigger:hover{color:var(--teal-bright);background:rgba(20,184,166,.08);border-color:rgba(20,184,166,.28);box-shadow:0 6px 20px -8px rgba(20,184,166,.35);}
+.nav-menu-trigger:hover::before{opacity:1;}
 .nav-menu-trigger:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
-.nav-menu-trigger .chev{width:9px;height:9px;flex-shrink:0;transition:transform .3s var(--ease);}
-.nav-menu.is-open .nav-menu-trigger{color:var(--teal-bright);background:rgba(20,184,166,.1);border-color:rgba(20,184,166,.22);}
+.nav-menu-trigger .chev{width:9px;height:9px;flex-shrink:0;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+.nav-menu.is-open .nav-menu-trigger{color:var(--teal-bright);background:rgba(20,184,166,.12);border-color:rgba(20,184,166,.4);box-shadow:0 0 0 1px rgba(20,184,166,.2),0 0 26px rgba(45,212,196,.22);}
+.nav-menu.is-open .nav-menu-trigger::before{opacity:1;}
 .nav-menu.is-open .nav-menu-trigger .chev{transform:rotate(180deg);}
 
 .nav-menu-panel{
@@ -185,16 +193,23 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
   border-top:1px solid rgba(20,184,166,.14);
   border-bottom:1px solid var(--line);
   box-shadow:0 32px 64px -24px rgba(0,0,0,.7);
-  opacity:0;visibility:hidden;transform:translateY(-10px);
-  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility 0s linear .28s;
-  z-index:110;
+  opacity:0;visibility:hidden;transform:translateY(-10px);filter:blur(6px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease),filter .3s var(--ease),visibility 0s linear .3s;
+  z-index:110;overflow:hidden;
 }
+/* Top accent line + faint corner glows -- echoes the hero-glow / footer
+   scan-line language so the open panel feels like part of the same system. */
+.nav-menu-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal-bright),transparent);opacity:.55;pointer-events:none;}
+.nav-menu-panel::after{content:"";position:absolute;inset:0;opacity:.4;pointer-events:none;background:
+  radial-gradient(480px 220px at 15% 0%,rgba(20,184,166,.08) 0%,transparent 65%),
+  radial-gradient(480px 220px at 85% 100%,rgba(20,184,166,.05) 0%,transparent 65%);}
 .nav-menu.is-open .nav-menu-panel{
-  opacity:1;visibility:visible;transform:translateY(0);
-  transition:opacity .28s var(--ease),transform .28s var(--ease);
+  opacity:1;visibility:visible;transform:translateY(0);filter:blur(0);
+  transition:opacity .3s var(--ease),transform .3s var(--ease),filter .3s var(--ease);
 }
-.nav-menu-panel-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:var(--max);margin:0 auto;padding:22px 32px;}
+.nav-menu-panel-inner{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:var(--max);margin:0 auto;padding:22px 32px;}
 .nav-menu-panel a{
+  position:relative;overflow:hidden;
   display:flex;align-items:flex-start;gap:14px;text-align:left;
   color:var(--ink-soft);
   background:var(--surface);
@@ -204,8 +219,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
   opacity:0;
   transition:color .2s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease),opacity .3s var(--ease);
 }
-.nav-menu-panel a .mtxt{display:flex;flex-direction:column;min-width:0;}
-.nav-menu-panel a .mi{flex-shrink:0;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(20,184,166,.1);color:var(--teal-bright);}
+/* Cursor-follow spotlight (position set by shared.js on pointermove); a
+   pure hover-feedback highlight, not an autoplaying animation. */
+.nav-menu-panel a::before{content:"";position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(160px circle at var(--mx,50%) var(--my,50%),rgba(20,184,166,.16),transparent 70%);transition:opacity .25s var(--ease);}
+.nav-menu-panel a:hover::before{opacity:1;}
+.nav-menu-panel a .mtxt{position:relative;z-index:1;display:flex;flex-direction:column;min-width:0;}
+.nav-menu-panel a .mi{position:relative;z-index:1;flex-shrink:0;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(20,184,166,.1);color:var(--teal-bright);transition:transform .3s cubic-bezier(.34,1.56,.64,1),background-color .2s var(--ease),box-shadow .2s var(--ease);}
 .nav-menu-panel a .mi svg{width:16px;height:16px;}
 .nav-menu-panel a .mt{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--ink);line-height:1.25;}
 .nav-menu-panel a .md{font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:3px;}
@@ -217,7 +236,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
 .nav-menu.is-open .nav-menu-panel a:nth-child(6){transition-delay:0s,0s,0s,0s,0s,.175s;}
 .nav-menu-panel a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
 @media (prefers-reduced-motion:reduce){
-  .nav-menu-panel,.nav-menu-panel a{transition:none;}
+  .nav-menu-panel{transition:opacity .15s linear;transform:none;filter:none;}
+  .nav-menu-panel a{transition:none;}
   .nav-menu.is-open .nav-menu-panel a{transition-delay:0s;}
 }
 .nav-menu-panel a:hover{
@@ -227,12 +247,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
   transform:translateY(-2px);
   box-shadow:0 16px 32px -16px rgba(0,0,0,.5);
 }
+.nav-menu-panel a:hover .mi{transform:scale(1.1) rotate(-6deg);background:rgba(20,184,166,.2);box-shadow:0 0 14px rgba(45,212,196,.3);}
 .nav-menu-panel a.active{
   background:rgba(20,184,166,.09);
   border-color:rgba(20,184,166,.4);
   box-shadow:0 0 0 1px rgba(20,184,166,.22),0 0 20px rgba(45,212,196,.14);
 }
 .nav-menu-panel a.active .mt{color:var(--teal-bright);}
+/* "You are here": a small pulsing signal-node on the active item, same
+   motif as .trail's inflection node and the home button's corner node. */
+.nav-menu-panel a.active::after{content:"";position:absolute;top:14px;right:14px;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,rgba(45,212,196,.9) 0%,rgba(45,212,196,.15) 70%);box-shadow:0 0 10px rgba(45,212,196,.6);animation:nodePulse 2.8s ease-in-out infinite;}
 
 .nav-login{font-size:13.5px;font-weight:600;color:var(--ink-soft);white-space:nowrap;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
 .nav-login:hover{color:var(--teal-bright);background-size:100% 1px;}
@@ -360,6 +384,7 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
      colour/underline feedback, drop the movement. */
   .nav-home:hover svg{transform:none;}
   a.action-badge:hover{transform:none;}
+  .nav-menu-panel a:hover .mi{transform:none;}
 }
 .footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
 .footer-col{display:flex;flex-direction:column;gap:12px;min-width:130px;}
@@ -447,4 +472,7 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
 @media (max-width:400px){
   .nav-right{gap:4px;}
   .nav-cta{padding-left:13px;padding-right:13px;}
+  /* Drop the trigger's leading icon at the narrowest widths -- keeps the
+     "Menu" label + chevron from crowding the always-visible CTA. */
+  .nav-menu-trigger::before{display:none;}
 }

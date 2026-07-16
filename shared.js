@@ -118,6 +118,22 @@ function spotwiseHandleForm(form, opts) {
     else next = i < 0 ? links.length - 1 : (i - 1 + links.length) % links.length;
     links[next].focus();
   });
+
+  // Cursor-follow spotlight on each menu item: sets --mx/--my (consumed by
+  // shared.css's radial-gradient highlight) to the pointer position relative
+  // to the hovered link. Pure direct-manipulation hover feedback, not an
+  // autoplaying animation, so it isn't gated behind prefers-reduced-motion
+  // (same treatment as the rest of the panel's colour/border hover states).
+  var panelInner = menu.querySelector('.nav-menu-panel-inner');
+  if (panelInner && window.PointerEvent) {
+    panelInner.addEventListener('pointermove', function (e) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      var r = a.getBoundingClientRect();
+      a.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      a.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  }
 })();
 
 // Pricing tier accordion (/reports): click a card to expand its detail panel
