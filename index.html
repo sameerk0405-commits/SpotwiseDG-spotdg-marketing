@@ -40,34 +40,66 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Motion: hero on-load (pure CSS, no JS dependency) ---------- */
-  @keyframes heroIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
-  .hero-inner{animation:heroIn .9s var(--ease) both;}
-  .hero-inner > *{animation:heroIn .9s var(--ease) both;}
-  .hero-inner > *:nth-child(2){animation-delay:.08s;}
-  .hero-inner > *:nth-child(3){animation-delay:.16s;}
-  .hero-inner > *:nth-child(4){animation-delay:.24s;}
-  .hero-inner > *:nth-child(5){animation-delay:.32s;}
-  .hero-inner > *:nth-child(6){animation-delay:.4s;}
+  /* ---------- Motion: hero on-load (pure CSS, no JS dependency) ----------
+     Heavier entrance than a simple fade-up: real travel distance plus a
+     blur-to-focus resolve, echoing the "signal resolving into focus"
+     language used elsewhere on the page (momentum-viz, stat sparklines). ---------- */
+  @keyframes heroIn{
+    0%{opacity:0;transform:translateY(34px);filter:blur(7px);}
+    60%{filter:blur(0);}
+    100%{opacity:1;transform:none;filter:blur(0);}
+  }
+  .hero-inner{animation:heroIn 1s var(--ease) both;}
+  .hero-inner > *{animation:heroIn 1s var(--ease) both;}
+  .hero-inner > *:nth-child(2){animation-delay:.1s;}
+  .hero-inner > *:nth-child(3){animation-delay:.2s;}
+  .hero-inner > *:nth-child(4){animation-delay:.3s;}
+  .hero-inner > *:nth-child(5){animation-delay:.4s;}
+  .hero-inner > *:nth-child(6){animation-delay:.5s;}
   @media (prefers-reduced-motion:reduce){.hero-inner,.hero-inner > *{animation:none;}}
 
-  /* ---------- Hero: taller, cinematic, gradient-mesh + grain + grid ---------- */
-  .hero{padding:150px 32px 110px;overflow:hidden;}
-  .beta-badge-row{position:relative;max-width:var(--max);margin:0 auto 24px;text-align:center;}
-  .beta-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:7px 16px;border-radius:100px;}
-  .hero-inner{position:relative;max-width:var(--max);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
-  .hero .eyebrow{margin-bottom:26px;}
-  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,7.4vw,88px);letter-spacing:-.04em;line-height:1.02;max-width:980px;}
-  h1 em{font-style:normal;background:linear-gradient(100deg,var(--teal) 10%,var(--teal-bright) 55%,#8FF5EA 90%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .hero-sub{font-size:clamp(16px,1.7vw,19.5px);color:var(--ink-soft);max-width:660px;margin:28px auto 0;line-height:1.68;}
-  .hero-ctas{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;justify-content:center;}
-  .hero-ctas .btn{padding:15px 26px;font-size:14.5px;}
-  .stat-row{display:flex;margin-top:84px;flex-wrap:wrap;justify-content:center;position:relative;}
+  /* ---------- Hero: taller, cinematic, gradient-mesh + grain + grid, plus a
+     pulsing glow field behind the headline for scale/depth. Parallax on
+     .mesh / .hero-glow is wired in the script block at the bottom of the
+     page (plain scroll listener, skipped entirely under reduced-motion). ---------- */
+  .hero{padding:176px 32px 120px;overflow:hidden;}
+  /* Split in two: the outer element is the parallax target (JS sets its
+     transform on scroll, see the script block at the bottom of the page),
+     the ::before pseudo owns the pulse animation -- keeping both on the same
+     "transform" property on the same element would fight each other, since
+     a running CSS animation always wins over an inline style. */
+  .hero-glow{position:absolute;top:-6%;left:50%;width:1100px;height:1100px;max-width:170vw;
+    transform:translateX(-50%);pointer-events:none;z-index:0;}
+  .hero-glow::before{content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle,rgba(45,212,196,.22) 0%,rgba(45,212,196,.08) 38%,transparent 68%);
+    filter:blur(10px);animation:heroGlowPulse 6.5s ease-in-out infinite;}
+  @keyframes heroGlowPulse{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  .beta-badge-row{position:relative;max-width:var(--max);margin:0 auto 26px;text-align:center;z-index:1;}
+  .beta-badge{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:7px 16px;border-radius:100px;}
+  .beta-badge::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);animation:badgeShimmer 3.4s ease-in-out infinite;}
+  @keyframes badgeShimmer{0%,30%{left:-60%;}70%,100%{left:130%;}}
+  .hero-inner{position:relative;z-index:1;max-width:var(--max);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .hero .eyebrow{margin-bottom:28px;}
+  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(48px,8.6vw,116px);letter-spacing:-.045em;line-height:.98;max-width:1060px;}
+  h1 em{font-style:normal;display:block;font-size:clamp(58px,11.4vw,152px);line-height:.94;margin-top:.04em;
+    background:linear-gradient(100deg,var(--teal) 6%,var(--teal-bright) 50%,#8FF5EA 92%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:emGlow 4.2s ease-in-out infinite;}
+  @keyframes emGlow{0%,100%{filter:drop-shadow(0 0 14px rgba(45,212,196,.18));}50%{filter:drop-shadow(0 0 34px rgba(45,212,196,.4));}}
+  .hero-sub{font-size:clamp(17px,1.8vw,21px);color:var(--ink-soft);max-width:660px;margin:32px auto 0;line-height:1.68;}
+  .hero-ctas{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;justify-content:center;}
+  .hero-ctas .btn{padding:17px 30px;font-size:15px;}
+  .stat-row{display:flex;margin-top:88px;flex-wrap:wrap;justify-content:center;position:relative;}
   .stat-row::before{content:"";position:absolute;inset:-40px -20px;background:radial-gradient(600px 140px at 50% 50%,rgba(20,184,166,.1) 0%,transparent 70%);z-index:-1;pointer-events:none;}
   .stat{text-align:center;padding:0 40px;position:relative;}
   .stat:not(:first-child){border-left:1px solid var(--line);}
-  .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(34px,4.6vw,50px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 36px rgba(45,212,196,.5);font-variant-numeric:tabular-nums;}
+  .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(36px,5vw,58px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 40px rgba(45,212,196,.55);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
+  @media (prefers-reduced-motion:reduce){
+    .hero-glow::before{animation:none;opacity:.85;}
+    .beta-badge::after{animation:none;display:none;}
+    h1 em{animation:none;filter:drop-shadow(0 0 20px rgba(45,212,196,.28));}
+  }
 
   /* ---------- Stat micro-sparklines: each backtest stat gets a tiny data
      treatment that draws in alongside the existing count-up. Hidden-then-drawn
@@ -143,9 +175,29 @@
     .vc-lock{opacity:1;}
   }
 
-  /* ---------- Live intelligence card: staged as the hero's payoff ---------- */
+  /* ---------- Live intelligence card: staged as the hero's payoff, then given
+     a signature "ignition" moment when it scrolls into view -- the card
+     resolves out of a blur with a radial signal-burst behind it, echoing the
+     "signal resolving out of noise" language of the hero visualization. This
+     rides on the existing .reveal/.is-visible mechanism from shared.js, so no
+     extra JS is needed; it's inert (full opacity, no burst) without html.js
+     or under reduced-motion, same safety pattern as everything else here. ---------- */
   .card-section{padding:0 32px 130px;margin-top:-6px;background:linear-gradient(180deg,transparent 0%,rgba(20,184,166,.02) 40%,transparent 100%);}
   .card-section .sec-head{margin-bottom:40px;}
+  .card-section::after{content:"";position:absolute;left:50%;top:46%;width:14px;height:14px;border-radius:50%;
+    transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(45,212,196,.6) 0%,rgba(45,212,196,.15) 45%,transparent 72%);}
+  html.js .card-section.reveal.is-visible::after{animation:burstRing 1.15s var(--ease) .05s both;}
+  @keyframes burstRing{0%{opacity:.9;transform:translate(-50%,-50%) scale(0);}55%{opacity:.55;}100%{opacity:0;transform:translate(-50%,-50%) scale(34);}}
+  .card-section .sig-card{position:relative;z-index:1;}
+  html.js .card-section.reveal:not(.is-visible) .sig-card{opacity:0;transform:scale(.88) rotate(-1.6deg);filter:blur(16px);}
+  html.js .card-section.reveal.is-visible .sig-card{animation:cardIgnite .95s var(--ease) both;}
+  @keyframes cardIgnite{
+    0%{opacity:0;transform:scale(.88) rotate(-1.6deg);filter:blur(16px);}
+    55%{opacity:1;filter:blur(0);}
+    100%{opacity:1;transform:scale(1) rotate(0deg);filter:blur(0);}
+  }
+  @media (prefers-reduced-motion:reduce){.card-section::after{display:none;}}
 
   /* ---------- How it works: 4-step signal narrative ---------- */
   .steps{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:var(--max);margin:0 auto;}
@@ -157,11 +209,14 @@
   .steps-link{text-align:center;margin-top:52px;}
 
   /* ---------- Scroll-reveal cascade: children of each revealed section arrive
-     in sequence, matching intelligence/reports/sample-report. Backwards-fill
-     animation returns elements to their natural styles so hover transforms stay
-     intact; inert without html.js (no-JS / reduced-motion get the static page). ---------- */
+     in sequence, matching intelligence/reports/sample-report -- but with more
+     weight than the shared 14px fade (real travel distance + a scale-down +
+     a blur-to-focus resolve), so scrolling through the rest of the page still
+     feels alive rather than static-with-hover-fades. Backwards-fill animation
+     returns elements to their natural styles so hover transforms stay intact;
+     inert without html.js (no-JS / reduced-motion get the static page). ---------- */
   html.js .reveal:not(.is-visible) :is(.sec-head>*,.step,.steps-link,.founding>*){opacity:0;}
-  html.js .reveal.is-visible :is(.sec-head>*,.step,.steps-link,.founding>*){animation:rvIn .6s var(--ease) backwards;}
+  html.js .reveal.is-visible :is(.sec-head>*,.step,.steps-link,.founding>*){animation:rvIn .75s var(--ease) backwards;}
   html.js .reveal.is-visible .sec-head>*:nth-child(2){animation-delay:.08s;}
   html.js .reveal.is-visible .sec-head>*:nth-child(3){animation-delay:.16s;}
   html.js .reveal.is-visible .step:nth-child(2){animation-delay:.1s;}
@@ -171,7 +226,17 @@
   html.js .reveal.is-visible .founding>*:nth-child(2){animation-delay:.1s;}
   html.js .reveal.is-visible .founding>*:nth-child(3){animation-delay:.2s;}
   html.js .reveal.is-visible .founding>*:nth-child(4){animation-delay:.3s;}
-  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  @keyframes rvIn{
+    0%{opacity:0;transform:translateY(38px) scale(.95);filter:blur(5px);}
+    60%{filter:blur(0);}
+    100%{opacity:1;transform:none;filter:blur(0);}
+  }
+
+  /* ---------- Final CTA: its own headline gets a touch more weight so the
+     page closes with the same energy it opened with. ---------- */
+  html.js .final-cta.reveal:not(.is-visible) h2{opacity:0;}
+  html.js .final-cta.reveal.is-visible h2{animation:ctaIn .8s var(--ease) both;}
+  @keyframes ctaIn{0%{opacity:0;transform:translateY(30px) scale(.96);filter:blur(6px);}100%{opacity:1;transform:none;filter:blur(0);}}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
@@ -183,6 +248,7 @@
   @media (max-width:640px){
     .wrap,.hero,.sec,.card-section,footer{padding-left:20px;padding-right:20px;}
     .hero{padding-top:96px;}
+    .hero-glow{top:-10%;}
     .sig-card{padding:24px 20px;}
     h1{font-size:clamp(34px,10vw,48px);}
     .momentum-viz{margin-top:48px;}
@@ -193,9 +259,10 @@
 
   /* ---------- Mobile visual rethink (phones only; desktop untouched) ---------- */
   @media (max-width:640px){
-    .hero{padding:104px 20px 76px;}
+    .hero{padding:108px 20px 80px;}
     .hero .eyebrow{margin-bottom:20px;}
-    h1{font-size:clamp(40px,11.5vw,54px);letter-spacing:-.03em;line-height:1.03;}
+    h1{font-size:clamp(42px,12vw,60px);letter-spacing:-.03em;line-height:1.0;}
+    h1 em{font-size:clamp(48px,14vw,72px);margin-top:.05em;}
     .hero-sub{font-size:16.5px;margin-top:22px;line-height:1.6;}
     .hero-ctas{margin-top:30px;width:100%;}
     .hero-ctas .btn{width:100%;justify-content:center;padding:16px 26px;}
@@ -216,7 +283,8 @@
     .card-section .sec-head{margin-bottom:28px;}
   }
   @media (max-width:400px){
-    h1{font-size:clamp(34px,10.5vw,44px);}
+    h1{font-size:clamp(36px,11vw,50px);}
+    h1 em{font-size:clamp(42px,13vw,58px);}
     .stat b{font-size:34px;}
     .stat:not(:first-child) b{font-size:28px;}
   }
@@ -279,6 +347,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="mesh mesh-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="beta-badge-row"><span class="beta-badge"><span class="pulse-dot" style="background:var(--teal-bright);box-shadow:none;"></span>Beta</span></div>
     <div class="hero-inner">
       <div class="eyebrow">Building in Northeastern Tri-State — more markets coming.</div>
@@ -585,6 +654,32 @@
       });
     }, { threshold: 0.4 });
     obs.observe(row);
+  })();
+</script>
+
+<script>
+  // Hero parallax: the gradient-mesh backdrop and the glow field behind the
+  // headline drift at slightly different rates as the visitor scrolls past
+  // the hero, for a bit of depth. Pure transform (no layout writes), rAF-
+  // throttled, and skipped entirely under prefers-reduced-motion -- same
+  // pattern as the stat count-up above.
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var mesh = document.querySelector('.hero .mesh');
+    var glow = document.querySelector('.hero-glow');
+    if (!mesh && !glow) return;
+
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var shift = Math.min(window.scrollY * 0.15, 90);
+      if (mesh) mesh.style.transform = 'translateY(' + shift + 'px)';
+      if (glow) glow.style.transform = 'translateX(-50%) translateY(' + (shift * -0.6) + 'px)';
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
   })();
 </script>
 
