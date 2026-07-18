@@ -162,7 +162,7 @@ section{position:relative;}
 
 /* ---------- Nav (shared across all top-level pages) ---------- */
 header{position:sticky;top:0;z-index:100;background:rgba(7,15,13,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:2px solid var(--teal);border-bottom:1px solid var(--line);}
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:var(--max);margin:0 auto;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:var(--max);margin:0 auto;position:relative;}
 .nav-right{display:flex;align-items:center;gap:14px;}
 
 /* ---------- Home button: a small "signature mark" -- glass chip with an
@@ -175,8 +175,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 3
 .nav-home:hover svg{transform:scale(1.14) rotate(-4deg);}
 .nav-home:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
 
-/* ---------- Nav mega-menu: full-width panel of rich links (icon + title + description) ---------- */
-.nav-menu{display:flex;position:relative;}
+/* ---------- Nav mega-menu: full-width panel of rich links (icon + title + description) ----------
+   .nav-menu-panel's left:0/right:0 is meant to span the whole nav bar, so its
+   containing block has to be `nav` (now position:relative, above) -- NOT
+   .nav-menu, which is only as wide as the trigger button and sits over on
+   the right inside .nav-right. Leaving position:relative on .nav-menu here
+   would win as the nearer ancestor and silently shrink the "full-width"
+   panel down to trigger-width, pinned wherever that button is. */
+.nav-menu{display:flex;}
 .nav-menu-trigger{position:relative;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-soft);background:rgba(255,255,255,.02);border:1px solid var(--line);padding:8px 14px;border-radius:11px;cursor:pointer;font-family:inherit;transition:color .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease),box-shadow .3s var(--ease);}
 .nav-menu-trigger::before{content:"";width:13px;height:13px;flex-shrink:0;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='1' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='1' y='9' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1.5'/%3E%3C/svg%3E") no-repeat center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='1' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='1' width='6' height='6' rx='1.5'/%3E%3Crect x='1' y='9' width='6' height='6' rx='1.5'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1.5'/%3E%3C/svg%3E") no-repeat center/contain;opacity:.65;transition:opacity .25s var(--ease);}
 .nav-menu-trigger:hover{color:var(--teal-bright);background:rgba(20,184,166,.08);border-color:rgba(20,184,166,.28);box-shadow:0 6px 20px -8px rgba(20,184,166,.35);}
