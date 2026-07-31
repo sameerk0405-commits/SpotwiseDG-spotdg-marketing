@@ -358,36 +358,36 @@
       </div>
       <div class="stat-row" id="stat-row">
         <div class="stat">
-          <b data-target="28.4" data-prefix="+" data-suffix="%">+28.4%</b>
+          <b data-target="14.0" data-prefix="+" data-suffix="%">+14.0%</b>
           <svg class="stat-spark" viewBox="0 0 96 26" aria-hidden="true">
             <polyline class="sp-grey" points="2,18 14,17.5 26,18.5 38,17 50,18 62,17.5 74,18.5 86,17.5 94,18"/>
             <path class="sp-teal" pathLength="1" d="M2,19 C20,18 34,16 48,13 C64,9.5 80,6 94,3.5"/>
           </svg>
-          <span>avg outperformance vs metro</span>
+          <span>avg outperformance vs metro — top-decile picks</span>
         </div>
         <div class="stat">
-          <b data-target="94" data-suffix="%">94%</b>
+          <b data-target="77" data-suffix="%">77%</b>
           <svg class="stat-spark" viewBox="0 0 96 26" aria-hidden="true">
             <g class="sp-ticks">
               <rect x="2" y="12" width="3.6" height="12" rx="1"/>
               <rect x="7.9" y="9" width="3.6" height="15" rx="1"/>
-              <rect x="13.8" y="13" width="3.6" height="11" rx="1"/>
+              <rect class="miss" x="13.8" y="13" width="3.6" height="11" rx="1"/>
               <rect x="19.7" y="8" width="3.6" height="16" rx="1"/>
               <rect x="25.6" y="11" width="3.6" height="13" rx="1"/>
               <rect x="31.5" y="9" width="3.6" height="15" rx="1"/>
-              <rect x="37.4" y="14" width="3.6" height="10" rx="1"/>
+              <rect class="miss" x="37.4" y="14" width="3.6" height="10" rx="1"/>
               <rect x="43.3" y="10" width="3.6" height="14" rx="1"/>
               <rect x="49.2" y="12" width="3.6" height="12" rx="1"/>
               <rect x="55.1" y="8" width="3.6" height="16" rx="1"/>
               <rect class="miss" x="61" y="13" width="3.6" height="11" rx="1"/>
               <rect x="66.9" y="11" width="3.6" height="13" rx="1"/>
-              <rect x="72.8" y="9" width="3.6" height="15" rx="1"/>
+              <rect class="miss" x="72.8" y="9" width="3.6" height="15" rx="1"/>
               <rect x="78.7" y="12" width="3.6" height="12" rx="1"/>
               <rect x="84.6" y="8" width="3.6" height="16" rx="1"/>
               <rect x="90.5" y="10" width="3.6" height="14" rx="1"/>
             </g>
           </svg>
-          <span>backtest hit rate</span>
+          <span>5-yr backtest hit rate — 2014–2021 cohorts</span>
         </div>
         <div class="stat">
           <b data-target="1213" data-format="comma">1,213</b>
@@ -494,7 +494,7 @@
       <div class="action-badge">→ Investigate Further</div>
       <div class="sig-disclaimer">Market intelligence, not financial or investment advice.</div>
       <div class="sig-footer">
-        <div class="src">Walk-forward validated · 2000–2026 · Confidence: High</div>
+        <div class="src">Walk-forward validated · 2014–2021 cohorts · Confidence: High</div>
         <div class="ts" id="live-ts">Updated 4s ago</div>
       </div>
       <div class="sample-overlay">
@@ -525,7 +525,7 @@
       <div class="step">
         <div class="snum">02</div>
         <h3>Model</h3>
-        <p>A walk-forward validated model — trained only on data available before each prediction point.</p>
+        <p>A walk-forward validated model — trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized.</p>
       </div>
       <div class="step">
         <div class="snum">03</div>
