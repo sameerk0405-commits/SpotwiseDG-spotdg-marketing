@@ -300,7 +300,7 @@
       <div class="dsec reveal">
         <div class="eyebrow">The Momentum Score</div>
         <h2>A single number, 0–100.</h2>
-        <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. A higher score means a stronger, more corroborated signal that the neighborhood is entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker, mixed, or not yet confirmed.</p>
+        <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. The score is a percentile rank: a higher score means the model rates that zip above more of the others we score, as entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker or mixed.</p>
         <p>The model behind it is walk-forward validated with a strict outcome embargo — trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro 77% of the time over five years (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
         <div class="wf reveal">
           <div class="wf-legend"><span class="wf-leg"><span class="wf-key train"></span>Trained on data to here</span><span class="wf-leg"><span class="wf-key test"></span>Tested on the five years after</span></div>
@@ -325,11 +325,11 @@
       <!-- TIER SYSTEM -->
       <div class="dsec reveal">
         <h2>What each tier means.</h2>
-        <p>Every scored zip is classified into one of four tiers based on the strength and confirmation of its signal.</p>
+        <p>Every scored zip is classified into one of four tiers based on where its score ranks against every other zip we score.</p>
         <div class="tier-grid">
           <div class="tier-card sw-card">
             <div class="tier-badge peak">Peak Momentum</div>
-            <p>The strongest, most confirmed signal. Price and income trends are already accelerating together, corroborated by multiple independent indicators.</p>
+            <p>The strongest signal we identify — the top-ranked zips in the scored universe, where the model reads the underlying trends as furthest along.</p>
           </div>
           <div class="tier-card sw-card">
             <div class="tier-badge momentum">Momentum</div>
@@ -341,7 +341,7 @@
           </div>
           <div class="tier-card sw-card">
             <div class="tier-badge watch">Watch</div>
-            <p>Worth tracking over time. Signals are early or mixed and haven't yet corroborated into a clear momentum trend.</p>
+            <p>Worth tracking over time. These zips rank in the lower half of the scored universe — the signals are early or mixed rather than clearly established.</p>
           </div>
         </div>
       </div>
