@@ -405,11 +405,36 @@ function spotwiseHandleForm(form, opts) {
 
   var scrollKeys = [], hoverKeys = null;
 
+  // The card is capped to the viewport and scrolls internally, so a spot can be
+  // lit while sitting outside the card's own visible area. Bring the first lit
+  // spot into view within the card -- never via scrollIntoView, which would also
+  // scroll the page and fight the reader.
+  var scroller = root.querySelector('.demo-card-col');
+  function revealInCard(el) {
+    if (!scroller || !el) return;
+    if (scroller.scrollHeight <= scroller.clientHeight + 1) return;
+    var sr = scroller.getBoundingClientRect(), er = el.getBoundingClientRect();
+    var pad = 24, delta = 0;
+    if (er.top < sr.top + pad) delta = er.top - sr.top - pad;
+    else if (er.bottom > sr.bottom - pad) delta = er.bottom - sr.bottom + pad;
+    if (!delta) return;
+    var target = scroller.scrollTop + delta;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !scroller.scrollTo) {
+      scroller.scrollTop = target;
+    } else {
+      scroller.scrollTo({ top: target, behavior: 'smooth' });
+    }
+  }
+
   function paint() {
     var active = hoverKeys || scrollKeys;
+    var first = null;
     Array.prototype.forEach.call(spots, function (s) {
-      s.classList.toggle('is-lit', active.indexOf(s.getAttribute('data-spot')) !== -1);
+      var on = active.indexOf(s.getAttribute('data-spot')) !== -1;
+      s.classList.toggle('is-lit', on);
+      if (on && !first) first = s;
     });
+    revealInCard(first);
   }
   function clearAll() {
     Array.prototype.forEach.call(spots, function (s) { s.classList.remove('is-lit'); });

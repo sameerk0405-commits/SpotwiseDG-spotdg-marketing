@@ -42,7 +42,16 @@
 
   /* ---------- Demo layout: sticky report card + scrolling explainers ---------- */
   .demo{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);gap:48px;max-width:var(--max);margin:0 auto;align-items:start;padding:0 32px 130px;}
-  .demo-card-col{position:sticky;top:96px;}
+  /* The card is taller than most viewports. Left uncapped, it sticks with its
+     header above the top of the screen and its footer below the bottom, so
+     parts of it are permanently unreachable while reading the guide beside it.
+     Capping it to the visible area and letting it scroll internally keeps every
+     row reachable; shared.js scrolls the spotlit row into view within it. */
+  .demo-card-col{position:sticky;top:96px;max-height:calc(100vh - 120px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--teal-dim) var(--surface-2);}
+  .demo-card-col::-webkit-scrollbar{width:8px;}
+  .demo-card-col::-webkit-scrollbar-track{background:var(--surface-2);border-radius:8px;}
+  .demo-card-col::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:8px;}
+  .demo-card-col::-webkit-scrollbar-thumb:hover{background:var(--teal);}
   .demo-card-col .sig-card{max-width:none;}
   .demo-col{min-width:0;}
   .demo-col .dsec{margin-bottom:64px;}
@@ -92,7 +101,7 @@
   .wf-key.test{background:var(--teal);}
   .wf svg{display:block;width:100%;height:auto;}
   .wf-axis{stroke:var(--line);stroke-width:1;}
-  .wf-year{fill:var(--faint);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;}
+  .wf-year{fill:var(--muted);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;}
   .wf-lbl{fill:var(--ink-soft);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.08em;}
   .wf-lbl.test{fill:var(--teal-bright);}
   html.js .wf .wf-lbl{opacity:0;transition:opacity .4s ease .65s;}
@@ -155,7 +164,9 @@
 
   @media (max-width:1080px){
     .demo{grid-template-columns:1fr;gap:56px;}
-    .demo-card-col{position:static;}
+    /* Stacked above the guide rather than beside it, so the cap and the inner
+       scroller would just trap the card in a box for no benefit. */
+    .demo-card-col{position:static;max-height:none;overflow:visible;}
     .demo-card-col .sig-card{max-width:640px;margin:0 auto;}
   }
   @media (max-width:640px){

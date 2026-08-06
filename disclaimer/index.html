@@ -39,7 +39,7 @@
   /* ---------- Legal: editorial document treatment ---------- */
   .legal-layout{display:grid;grid-template-columns:56px minmax(0,720px);gap:48px;max-width:860px;margin:0 auto;justify-content:center;}
   .legal-rail{position:sticky;top:120px;align-self:start;display:flex;flex-direction:column;align-items:center;gap:0;height:fit-content;}
-  .legal-rail .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--faint);background:var(--surface);border:1px solid var(--line);transition:color .3s,border-color .3s,box-shadow .3s;}
+  .legal-rail .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);background:var(--surface);border:1px solid var(--line);transition:color .3s,border-color .3s,box-shadow .3s;}
   .legal-rail .dot.active{color:var(--teal-bright);border-color:rgba(20,184,166,.45);box-shadow:0 0 16px rgba(45,212,196,.18);}
   .legal-rail .rail-line{width:1px;height:52px;background:var(--line);}
   .legal-head{text-align:center;margin-bottom:72px;}
@@ -49,7 +49,14 @@
   .legal-item:last-child{padding-bottom:0;}
   .legal-item .lnum{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(40px,5vw,60px);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(45,212,196,.35);line-height:1;margin-bottom:18px;}
   .legal-item h3{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(19px,2.4vw,25px);letter-spacing:-.02em;margin-bottom:14px;}
-  .legal-item p{font-size:15.5px;color:var(--ink-soft);line-height:1.8;}
+  /* The 720px column runs ~95 characters per line at 15.5px, well past the
+     ~65-75 where the eye reliably finds the next line. Constrained on the
+     paragraph rather than the column so the numerals and headings keep their
+     full scale, and in ch so it tracks the font rather than a guessed pixel.
+     56ch (not 68) because ch is the width of "0", which is noticeably wider
+     than Inter Tight's average lowercase glyph -- 68ch measured out at 83
+     real characters per line. 56ch lands at 68. */
+  .legal-item p{font-size:15.5px;color:var(--ink-soft);line-height:1.8;max-width:56ch;}
 
   @media (max-width:760px){
     .legal-layout{grid-template-columns:1fr;gap:0;}
