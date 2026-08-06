@@ -1,6 +1,13 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --ink:#EAF4F1; --ink-soft:#B2C8C2; --muted:#6E8B84; --faint:#4A6058;
+  /* --faint is a decorative/dimmed value: on --paper it measures 2.9:1, which
+     fails WCAG AA (4.5:1) for normal text. --legal is the readable equivalent
+     for disclaimer copy -- it clears 4.5:1 on every surface in the palette
+     (paper 6.9:1, surface 6.3:1, surface-2 5.7:1, surface-3 5.0:1) while still
+     reading as secondary to --ink-soft. Use --legal for any text a reader is
+     expected to actually read; keep --faint for decoration. */
+  --legal:#82A099;
   --paper:#070F0D; --surface:#0D1B17; --surface-2:#12241E; --surface-3:#173029;
   --line:#1B2E28; --line-bright:rgba(45,212,196,.22);
   --teal:#14B8A6; --teal-bright:#2DD4C4; --teal-dim:#0D7A72;
@@ -41,7 +48,7 @@ section{position:relative;}
 .mark{flex-shrink:0;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
 .mark.x{background:rgba(255,255,255,.06);color:var(--faint);}
 .mark.check{background:rgba(20,184,166,.16);color:var(--teal-bright);}
-.disclaimer{font-size:12.5px;color:var(--faint);line-height:1.6;border-top:1px solid var(--line);padding-top:14px;margin-top:22px;}
+.disclaimer{font-size:12.5px;color:var(--legal);line-height:1.6;border-top:1px solid var(--line);padding-top:14px;margin-top:22px;}
 
 /* ---------- Shared card base: one elevation/hover language for every card ---------- */
 .sw-card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;}
@@ -320,7 +327,7 @@ html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
 .action-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:100px;margin-top:20px;transition:background-color .2s,border-color .2s,transform .12s var(--ease);}
 a.action-badge:hover{background:rgba(20,184,166,.18);border-color:rgba(20,184,166,.45);transform:translateX(3px);}
 a.action-badge:active{transform:scale(.97);}
-.sig-disclaimer{font-size:11.5px;color:var(--faint);margin-top:14px;font-style:italic;}
+.sig-disclaimer{font-size:11.5px;color:var(--legal);margin-top:14px;font-style:italic;}
 .sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap;gap:10px;}
 .sig-footer .src{font-size:11px;color:var(--faint);font-weight:500;}
 .sig-footer .ts{font-size:11px;color:var(--faint);font-family:'JetBrains Mono',monospace;}
@@ -400,7 +407,9 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
 .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
 .footer-links a{font-size:13.5px;color:var(--ink-soft);font-weight:600;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
 .footer-links a:hover{color:var(--teal-bright);background-size:100% 1px;}
-.footer-bottom{max-width:var(--max);margin:44px auto 0;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);line-height:1.7;}
+/* Carries the same "not financial advice / past performance" line as
+   .disclaimer, so it gets the same readable treatment. */
+.footer-bottom{max-width:var(--max);margin:44px auto 0;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--legal);line-height:1.7;}
 
 /* ---------- Responsive: nav + footer + sections (shared) ---------- */
 @media (max-width:900px){
