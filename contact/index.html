@@ -81,53 +81,45 @@
 </head>
 <body>
 
-<header>
+<header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
       <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
-    <div class="nav-right">
-      <a class="nav-home" href="../index.html" aria-label="Back to home" title="Back to home">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/></svg>
-      </a>
-      <div class="nav-menu">
-        <button class="nav-menu-trigger" type="button" aria-haspopup="true" aria-expanded="false">
-          Menu
-          <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+
+    <div class="nav-tabs">
+        <a href="../intelligence/index.html">Intelligence</a>
+        <a href="../sample-report/index.html">Sample Report</a>
+        <a href="../reports/index.html">Reports</a>
+        <a href="../team/index.html">Team</a>
+        <a href="../contact/index.html" class="active" aria-current="page">Contact</a>
+        <a href="../disclaimer/index.html">Disclaimer</a>
+      <span class="nav-rail" aria-hidden="true"></span>
+    </div>
+
+    <div class="nav-actions">
+      <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program &rarr;</span><span class="nav-cta-short">Join &rarr;</span></a>
+      <div class="nav-sheet">
+        <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
+          <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
         </button>
-        <div class="nav-menu-panel" role="menu">
-          <div class="nav-menu-panel-inner">
-            <a href="../intelligence/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
-              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
-            </a>
-            <a href="../sample-report/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
-              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
-            </a>
-            <a href="../reports/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
-              <span class="mtxt"><span class="mt">Reports</span><span class="md">Subscription tiers and pricing</span></span>
-            </a>
-            <a href="../team/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
-              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
-            </a>
-            <a href="../disclaimer/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
-              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
-            </a>
-            <a href="../contact/index.html" class="active" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
-              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
-            </a>
+        <div class="nav-sheet-panel" id="nav-sheet-panel">
+          <div class="nav-sheet-inner">
+            <a href="../intelligence/index.html">Intelligence</a>
+            <a href="../sample-report/index.html">Sample Report</a>
+            <a href="../reports/index.html">Reports</a>
+            <a href="../team/index.html">Team</a>
+            <a href="../contact/index.html" class="active" aria-current="page">Contact</a>
+            <a href="../disclaimer/index.html">Disclaimer</a>
+            <a class="nav-sheet-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in to the dashboard</a>
           </div>
         </div>
       </div>
-      <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join Market Intelligence Program →</span><span class="nav-cta-short">Join →</span></a>
     </div>
+
+    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
@@ -166,7 +158,7 @@
 
   <!-- FAQ -->
   <section class="sec sec-alt reveal">
-    <div class="sec-head">
+    <div class="sec-head sec-head-left">
       <div class="eyebrow">FAQ</div>
       <h2 style="margin-top:16px;">Common questions.</h2>
       <p>What we hear most before someone joins the program. Don't see yours — email us above.</p>
@@ -264,8 +256,12 @@
   <!-- FINAL CTA -->
   <section class="sec final-cta reveal">
     <div class="trail"></div>
-    <h2>Your next market signal is already forming.</h2>
-    <p>Join the Founding Market Intelligence Program using the button above.</p>
+    <h2>Still deciding? Start with the sample.</h2>
+    <p>The full report format, fully visible, no signup.</p>
+    <div class="final-ctas">
+      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
+      <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
+    </div>
   </section>
 
 </main>

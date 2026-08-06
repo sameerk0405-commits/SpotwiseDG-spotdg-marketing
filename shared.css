@@ -291,6 +291,23 @@ html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
 .sec-head p{font-size:16.5px;color:var(--ink-soft);margin-top:18px;line-height:1.65;}
 .sec-head .trail{margin:22px auto 0;}
 
+/* ---------- Left-anchored section head ----------
+   Every section on the site used to be a centered head over a grid, which gave
+   the whole page one repeated shape and no cadence. Centered is now reserved
+   for a page's opening thesis and its closing CTA; the argument sections in
+   between run left, so scrolling alternates instead of repeating. */
+/* Width is the full content container, NOT a narrow box pinned left: the head
+   has to share a left edge with the grid beneath it. Pinning it to the section
+   padding instead leaves the head hanging ~150px left of the cards at wide
+   viewports. The measure is constrained on the children, not the container. */
+.sec-head-left{max-width:var(--max);margin-left:auto;margin-right:auto;text-align:left;}
+.sec-head-left h2{max-width:18ch;}
+.sec-head-left p{margin-top:16px;max-width:62ch;}
+.sec-head-left .trail{margin:22px 0 0;}
+@media (max-width:900px){
+  .sec-head-left h2{max-width:none;}
+}
+
 /* ---------- Signal Card (shared: blurred teaser on Home, full sample on /sample-report) ---------- */
 .sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.6),0 0 0 1px rgba(20,184,166,.05);transition:border-color .25s,box-shadow .25s var(--ease);}
 .sig-card:hover{border-color:rgba(20,184,166,.3);box-shadow:0 30px 80px -20px rgba(0,0,0,.6),0 0 0 1px rgba(20,184,166,.12),0 0 40px rgba(20,184,166,.08);}

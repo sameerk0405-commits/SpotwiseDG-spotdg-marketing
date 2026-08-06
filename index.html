@@ -67,7 +67,10 @@
      pulsing glow field behind the headline for scale/depth. Parallax on
      .mesh / .hero-glow is wired in the script block at the bottom of the
      page (plain scroll listener, skipped entirely under reduced-motion). ---------- */
-  .hero{padding:176px 32px 120px;overflow:hidden;}
+  /* 176px top was sized for the old single-column hero, where the headline was
+     the only thing above the fold. The two-column layout carries more weight
+     up top, so that much lead-in just reads as dead air under the header. */
+  .hero{padding:116px 32px 108px;overflow:hidden;}
   /* Split in two: the outer element is the parallax target (JS sets its
      transform on scroll, see the script block at the bottom of the page),
      the ::before pseudo owns the pulse animation -- keeping both on the same
@@ -269,13 +272,7 @@
   html.js .final-cta.reveal.is-visible h2{animation:ctaIn .8s var(--ease) both;}
   @keyframes ctaIn{0%{opacity:0;transform:translateY(30px) scale(.96);filter:blur(6px);}100%{opacity:1;transform:none;filter:blur(0);}}
 
-  /* ---------- Section rhythm: left-anchored heads ----------
-     Alternates against the centered heads so the page has cadence instead of
-     one repeated shape. Centered is now reserved for the two thesis moments
-     (the live signal card, the closing CTA); argument sections run left. */
-  .sec-head-left{max-width:760px;margin-left:0;margin-right:auto;text-align:left;}
-  .sec-head-left h2{max-width:16ch;}
-  .sec-head-left p{margin-top:16px;max-width:62ch;}
+  /* .sec-head-left now lives in shared.css so every page can use it. */
 
   /* ---------- Pipeline: the connector draws itself left-to-right as the
      section arrives, so the four stages read as one sequence being traced
@@ -306,7 +303,7 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width:1023px){
-    .hero{padding-top:132px;}
+    .hero{padding-top:104px;}
     .hero-inner{grid-template-columns:1fr;grid-template-areas:"copy" "viz" "stats";row-gap:52px;}
     .hero-copy{max-width:660px;}
     h1{font-size:clamp(44px,7.4vw,72px);}
