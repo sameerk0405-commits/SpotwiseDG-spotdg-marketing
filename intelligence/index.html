@@ -36,6 +36,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
+  /* ---------- Section rail ----------
+     Fixed to the left margin, outside the content column, so it never competes
+     with the reading measure. Hidden below 1240px, where there's no free margin
+     to put it in and it would overlap the text. */
+  .sec-rail{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:20px;}
+  .sec-rail a{display:flex;align-items:center;gap:12px;color:var(--muted);}
+  .sec-rail .sr-dot{position:relative;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--line);
+    box-shadow:0 0 0 1px rgba(255,255,255,.05);transition:background-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .sec-rail .sr-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(-6px);
+    transition:opacity .28s var(--ease),transform .28s var(--ease),color .28s var(--ease);}
+  .sec-rail a:hover .sr-label,.sec-rail a:focus-visible .sr-label,.sec-rail a.active .sr-label{opacity:1;transform:none;}
+  .sec-rail a:hover .sr-dot{background:var(--teal-dim);}
+  .sec-rail a.active .sr-dot{background:var(--teal-bright);transform:scale(1.25);box-shadow:0 0 12px rgba(45,212,196,.55);}
+  .sec-rail a.active .sr-label{color:var(--teal-bright);}
+  .sec-rail a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:4px;border-radius:4px;}
+  @media (min-width:1240px){.sec-rail{display:flex;}}
+  @media (prefers-reduced-motion:reduce){
+    .sec-rail .sr-dot,.sec-rail .sr-label{transition:none;}
+  }
+
   /* ---------- Methodology: editorial lede treatment ---------- */
   .method{position:relative;max-width:760px;margin:0 auto;}
   .method .method-head{text-align:center;margin-bottom:44px;}
@@ -151,8 +172,17 @@
 
 <main>
 
+  <!-- Section rail: unnumbered on purpose. These three are distinct topics,
+       not an ordered sequence, so numbering them would assert a progression
+       that doesn't exist. Dots mark position; labels name the destination. -->
+  <nav class="sec-rail" aria-label="Sections on this page">
+    <a href="#method"><span class="sr-dot"></span><span class="sr-label">Method</span></a>
+    <a href="#problem"><span class="sr-dot"></span><span class="sr-label">The problem</span></a>
+    <a href="#audience"><span class="sr-dot"></span><span class="sr-label">Who it's for</span></a>
+  </nav>
+
   <!-- METHODOLOGY -->
-  <section class="sec reveal" style="overflow:hidden;">
+  <section id="method" class="sec reveal" style="overflow:hidden;">
     <div class="mesh" aria-hidden="true"></div>
     <div class="method">
       <div class="method-head">
@@ -168,7 +198,7 @@
   </section>
 
   <!-- PROBLEM -->
-  <section class="sec sec-alt reveal">
+  <section id="problem" class="sec sec-alt reveal">
     <div class="sec-head">
       <h2>Real estate decisions are made on instinct and lagging data.</h2>
     </div>
@@ -196,7 +226,7 @@
   </section>
 
   <!-- WHO IT'S FOR -->
-  <section class="sec reveal">
+  <section id="audience" class="sec reveal">
     <div class="sec-head sec-head-left">
       <h2>Built for operators making real capital decisions.</h2>
       <div class="trail"></div>

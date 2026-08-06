@@ -45,6 +45,34 @@
   #form-success h2{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--gold);}
   #form-success p{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
   .note{font-size:12.5px;color:var(--muted);margin-top:16px;text-align:center;}
+
+  /* ---------- Form progress ----------
+     Three states per step: pending, active (you're in it), done (every required
+     field in it validates). Done is derived from the fields themselves, not from
+     scroll position, so it can't claim a step is complete when it isn't. */
+  .form-progress{display:flex;align-items:center;gap:10px;margin:0 0 30px;padding:14px 4px 16px;border-bottom:1px solid var(--line);}
+  .fp-step{display:flex;align-items:center;gap:9px;min-width:0;}
+  .fp-dot{position:relative;width:20px;height:20px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--line);background:var(--surface-2);transition:border-color .3s var(--ease),background-color .3s var(--ease),box-shadow .3s var(--ease);}
+  .fp-dot::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--muted);transition:background-color .3s var(--ease),transform .3s var(--ease);}
+  .fp-label{font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap;transition:color .3s var(--ease);}
+  .fp-bar{flex:1;height:1px;background:var(--line);min-width:12px;}
+
+  .fp-step.is-active .fp-dot{border-color:rgba(45,212,196,.6);background:rgba(20,184,166,.12);box-shadow:0 0 0 3px rgba(20,184,166,.12);}
+  .fp-step.is-active .fp-dot::after{background:var(--teal-bright);}
+  .fp-step.is-active .fp-label{color:var(--teal-bright);}
+
+  .fp-step.is-done .fp-dot{border-color:rgba(45,212,196,.5);background:var(--teal);}
+  .fp-step.is-done .fp-dot::after{width:9px;height:9px;margin:-5px 0 0 -4px;border-radius:0;background:transparent;
+    border-right:2px solid #041A17;border-bottom:2px solid #041A17;transform:rotate(42deg) translate(-1px,-1px);}
+  .fp-step.is-done .fp-label{color:var(--ink-soft);}
+
+  @media (max-width:560px){
+    .fp-label{display:none;}
+    .form-progress{gap:6px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .fp-dot,.fp-dot::after,.fp-label{transition:none;}
+  }
   @media (max-width:640px){
     header{padding:18px 20px;}
     .back-link{width:44px;height:44px;}
@@ -75,6 +103,18 @@
     <div class="eyebrow gold">Founding Market Intelligence Program</div>
     <h1>Apply for an invitation.</h1>
     <p class="sub">25 invitations. Complimentary Market Signal Report for a selected geography, in exchange for a feedback session.</p>
+
+    <!-- Visual mirror of the 01/02/03 headings below, so progress through a
+         three-part form is legible without scrolling. aria-hidden because the
+         .form-step headings are the real, announced structure -- this would
+         otherwise read the same labels to a screen reader twice. -->
+    <div class="form-progress" aria-hidden="true">
+      <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">About you</span></div>
+      <div class="fp-bar"></div>
+      <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">Your interest</span></div>
+      <div class="fp-bar"></div>
+      <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">Agreement</span></div>
+    </div>
 
     <form id="founding-form">
       <input type="hidden" name="_subject" value="New Founding Program Application" />

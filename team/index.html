@@ -37,29 +37,48 @@
 <link href="../shared.css" rel="stylesheet" />
 <style>
   /* ---------- Story: editorial treatment ---------- */
-  .story{max-width:760px;margin:0 auto 72px;text-align:center;}
-  .story h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,52px);letter-spacing:-.03em;line-height:1.1;margin-top:16px;}
-  .story .trail{margin:24px auto 0;}
-  .story p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:22px;text-align:left;}
-  .story p:first-of-type{font-family:'Sora',sans-serif;font-size:clamp(17px,2vw,21px);font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.6;padding-left:24px;border-left:2px solid var(--teal);margin-top:36px;}
+  /* ---------- Story: editorial two-column ----------
+     Was a centered 760px column, which made this page the same centered stack
+     as every other. Heading holds the left rail while the narrative runs right,
+     so the page opens with a composition rather than another centered block. */
+  .story{max-width:var(--max);margin:0 auto 78px;text-align:left;display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:60px;align-items:start;}
+  .story-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;line-height:1.08;margin-top:16px;}
+  .story-head .trail{margin:24px 0 0;}
+  .story-body p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:22px;}
+  .story-body p:first-of-type{font-family:'Sora',sans-serif;font-size:clamp(17px,1.9vw,20px);font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.6;padding-left:24px;border-left:2px solid var(--teal);margin-top:0;}
 
-  /* ---------- Founders ---------- */
-  .founders-primary{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:760px;margin:0 auto 22px;}
-  .founder-card{text-align:center;padding:34px 22px;}
-  .founder-card h3{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;}
-  .founder-card .role{font-size:13px;color:var(--teal);font-weight:600;margin-top:6px;}
-  .founder-card .founder-sub{font-size:13px;color:var(--ink-soft);margin-top:10px;line-height:1.5;}
-  .founders-secondary{max-width:340px;margin:0 auto 40px;}
-  .founders-secondary .founder-card{background:transparent;padding:26px 20px;}
-  .founders-secondary .founder-card:hover{transform:none;box-shadow:none;}
-  .founders-secondary .orb{width:52px;height:52px;font-size:15px;}
-  .founders-secondary h3{font-size:15px;}
-  .founders-secondary .role{color:var(--muted);}
+  /* ---------- Roster heading: label + rule, aligned to the card grid ---------- */
+  .roster-head{display:flex;align-items:center;gap:20px;max-width:var(--max);margin:0 auto 26px;}
+  .roster-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+
+  /* ---------- Founders: horizontal cards ----------
+     Orb beside the name rather than a centered stack above it -- reads as a
+     roster entry instead of an avatar tile, and lets the role and remit sit on
+     their own lines without the card growing tall. */
+  .founders-primary{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:var(--max);margin:0 auto 20px;}
+  .founder-card{text-align:left;padding:28px 26px;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:20px;align-content:start;}
+  .founder-card .orb{grid-row:1 / span 3;margin:0;align-self:start;}
+  .founder-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.01em;align-self:center;}
+  .founder-card .role{font-size:13px;color:var(--teal);font-weight:600;margin-top:4px;}
+  .founder-card .founder-sub{font-size:13px;color:var(--ink-soft);margin-top:10px;line-height:1.55;}
+
+  /* Advisor sits below the founders and is deliberately quieter -- a slim full
+     width bar rather than a third peer card, since the role isn't equivalent. */
+  .founders-secondary{max-width:var(--max);margin:0 auto 44px;}
+  .founders-secondary .founder-card{background:rgba(255,255,255,.015);border:1px solid var(--line);border-radius:16px;padding:20px 26px;grid-template-columns:auto auto minmax(0,1fr);column-gap:16px;align-items:center;}
+  .founders-secondary .founder-card:hover{transform:none;box-shadow:none;border-color:rgba(20,184,166,.22);}
+  .founders-secondary .orb{width:44px;height:44px;font-size:14px;grid-row:1;}
+  .founders-secondary h3{font-size:15.5px;}
+  .founders-secondary .role{color:var(--muted);margin-top:0;}
   .company-line{text-align:center;font-size:13px;color:var(--muted);font-weight:500;font-family:'JetBrains Mono',monospace;}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
-    .founders-primary{grid-template-columns:1fr;max-width:340px;}
+    .story{grid-template-columns:1fr;gap:26px;}
+    .story-body p:first-of-type{margin-top:4px;}
+    .founders-primary{grid-template-columns:1fr;}
+    .founders-secondary .founder-card{grid-template-columns:auto minmax(0,1fr);row-gap:2px;}
+    .founders-secondary .orb{grid-row:1 / span 2;}
   }
   @media (max-width:640px){
     .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
@@ -120,13 +139,20 @@
   <section class="sec reveal" style="overflow:hidden;">
     <div class="mesh" aria-hidden="true"></div>
     <div class="story">
-      <div class="eyebrow">Our Story</div>
-      <h2>Three undergraduates, one shared frustration.</h2>
-      <div class="trail"></div>
-      <p>SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola — three friends comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, a comp sheet that was already a year stale, or a hunch about a neighborhood nobody had actually checked against the numbers.</p>
-      <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been — a forward-looking edge instead of a guess.</p>
+      <div class="story-head">
+        <div class="eyebrow">Our Story</div>
+        <h2>Three undergraduates, one shared frustration.</h2>
+        <div class="trail"></div>
+      </div>
+      <div class="story-body">
+        <p>SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola — three friends comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, a comp sheet that was already a year stale, or a hunch about a neighborhood nobody had actually checked against the numbers.</p>
+        <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been — a forward-looking edge instead of a guess.</p>
+      </div>
     </div>
-    <div class="eyebrow" style="display:flex;justify-content:center;margin:8px auto 28px;">The Team</div>
+    <div class="roster-head">
+      <div class="eyebrow">The Team</div>
+      <div class="roster-rule" aria-hidden="true"></div>
+    </div>
     <div class="founders-primary">
       <div class="founder-card sw-card">
         <div class="orb orb-a">SK</div>

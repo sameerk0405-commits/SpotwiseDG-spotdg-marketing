@@ -74,67 +74,6 @@ function spotwiseHandleForm(form, opts) {
   els.forEach(function (el) { obs.observe(el); });
 })();
 
-// Nav menu dropdown: single trigger/panel used at every viewport width (no
-// separate mobile hamburger). Toggles on click, closes on outside click,
-// Escape, or when a menu item is chosen. No-ops on pages with no nav menu.
-(function () {
-  var menu = document.querySelector('.nav-menu');
-  if (!menu) return;
-  var trigger = menu.querySelector('.nav-menu-trigger');
-  if (!trigger) return;
-
-  function close() {
-    menu.classList.remove('is-open');
-    trigger.setAttribute('aria-expanded', 'false');
-  }
-  function toggle(e) {
-    e.stopPropagation();
-    var open = menu.classList.toggle('is-open');
-    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-
-  trigger.addEventListener('click', toggle);
-  document.addEventListener('click', function (e) {
-    if (!menu.contains(e.target)) close();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      var refocus = menu.classList.contains('is-open') && menu.contains(document.activeElement);
-      close();
-      if (refocus) trigger.focus();
-    }
-  });
-
-  // Arrow-key navigation between menu items while the panel is open.
-  menu.addEventListener('keydown', function (e) {
-    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-    if (!menu.classList.contains('is-open')) return;
-    var links = Array.prototype.slice.call(menu.querySelectorAll('.nav-menu-panel a'));
-    if (!links.length) return;
-    e.preventDefault();
-    var i = links.indexOf(document.activeElement);
-    var next;
-    if (e.key === 'ArrowDown') next = i < 0 ? 0 : (i + 1) % links.length;
-    else next = i < 0 ? links.length - 1 : (i - 1 + links.length) % links.length;
-    links[next].focus();
-  });
-
-  // Cursor-follow spotlight on each menu item: sets --mx/--my (consumed by
-  // shared.css's radial-gradient highlight) to the pointer position relative
-  // to the hovered link. Pure direct-manipulation hover feedback, not an
-  // autoplaying animation, so it isn't gated behind prefers-reduced-motion
-  // (same treatment as the rest of the panel's colour/border hover states).
-  var panelInner = menu.querySelector('.nav-menu-panel-inner');
-  if (panelInner && window.PointerEvent) {
-    panelInner.addEventListener('pointermove', function (e) {
-      var a = e.target.closest ? e.target.closest('a') : null;
-      if (!a) return;
-      var r = a.getBoundingClientRect();
-      a.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-      a.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
-  }
-})();
 
 // Pricing tier accordion (/reports): click a card to expand its detail panel
 // inline; the other cards stay visible and unexpanded so all three remain
@@ -241,8 +180,8 @@ function spotwiseHandleForm(form, opts) {
 
 // ---------------------------------------------------------------------------
 // Nav v2: exposed tab rail. Three independent pieces, each a no-op on pages
-// that don't carry the v2 markup, so pages still on the old .nav-menu dropdown
-// are completely unaffected.
+// that don't carry the v2 markup -- which now means only /founding-program,
+// whose stripped header is deliberate. The old dropdown module is gone.
 // ---------------------------------------------------------------------------
 
 // 1. Signal Rail -- one indicator that slides and resizes to the hovered tab,
@@ -486,4 +425,125 @@ function spotwiseHandleForm(form, opts) {
 
   recomputeScroll();
   paint();
+})();
+
+// ---------------------------------------------------------------------------
+// Founding-program form progress. Pairs each .fp-step with the fields that sit
+// between its .form-step heading and the next one, then derives:
+//   done   -- every required field in that group passes checkValidity()
+//   active -- the group holding focus, else the last group scrolled past
+// "Done" is computed from the fields, never from scroll position, so the
+// indicator can't tell someone a step is complete when it isn't.
+// No-op on pages without .form-progress.
+// ---------------------------------------------------------------------------
+(function () {
+  var bar = document.querySelector('.form-progress');
+  var form = document.getElementById('founding-form');
+  if (!bar || !form) return;
+
+  var pips = Array.prototype.slice.call(bar.querySelectorAll('.fp-step'));
+  var heads = Array.prototype.slice.call(form.querySelectorAll('.form-step'));
+  if (!pips.length || heads.length !== pips.length) return;
+
+  // Walk siblings after each heading until the next heading; collect fields.
+  var groups = heads.map(function (head) {
+    var fields = [], n = head.nextElementSibling;
+    while (n && !n.classList.contains('form-step')) {
+      if (n.matches('input,select,textarea')) fields.push(n);
+      Array.prototype.push.apply(fields, n.querySelectorAll('input,select,textarea'));
+      n = n.nextElementSibling;
+    }
+    return {
+      head: head,
+      fields: fields.filter(function (f) { return f.type !== 'hidden'; })
+    };
+  });
+
+  function isDone(g) {
+    var required = g.fields.filter(function (f) { return f.required; });
+    if (!required.length) {
+      // A group with no required fields counts as done once something in it
+      // has been filled -- otherwise it could never register progress.
+      return g.fields.some(function (f) { return String(f.value || '').trim() !== ''; });
+    }
+    return required.every(function (f) { return f.checkValidity(); });
+  }
+
+  function activeIndex() {
+    var el = document.activeElement;
+    if (el && form.contains(el)) {
+      for (var i = 0; i < groups.length; i++) {
+        if (groups[i].fields.indexOf(el) !== -1) return i;
+      }
+    }
+    var line = window.innerHeight * 0.35, idx = 0;
+    groups.forEach(function (g, i) {
+      if (g.head.getBoundingClientRect().top <= line) idx = i;
+    });
+    return idx;
+  }
+
+  function update() {
+    var act = activeIndex();
+    groups.forEach(function (g, i) {
+      var done = isDone(g);
+      pips[i].classList.toggle('is-done', done);
+      // Done wins over active: a completed step you're still sitting in should
+      // read as complete, not as merely current.
+      pips[i].classList.toggle('is-active', !done && i === act);
+    });
+  }
+
+  form.addEventListener('input', update);
+  form.addEventListener('change', update);
+  form.addEventListener('focusin', update);
+  form.addEventListener('focusout', update);
+
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; update(); });
+  }, { passive: true });
+
+  update();
+})();
+
+// ---------------------------------------------------------------------------
+// Section rail (/intelligence): marks which section you're in and jumps to the
+// others. Reads its targets from its own hrefs, so adding a section is a markup
+// change only. No-op on pages without .sec-rail.
+// ---------------------------------------------------------------------------
+(function () {
+  var rail = document.querySelector('.sec-rail');
+  if (!rail) return;
+  var links = Array.prototype.slice.call(rail.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+
+  var pairs = links.map(function (a) {
+    return { link: a, section: document.querySelector(a.getAttribute('href')) };
+  }).filter(function (p) { return p.section; });
+  if (!pairs.length) return;
+
+  var ticking = false;
+  function update() {
+    ticking = false;
+    // The section that most recently crossed the reading line wins; before any
+    // has, the first one is current rather than none.
+    var line = window.innerHeight * 0.4, current = pairs[0];
+    pairs.forEach(function (p) {
+      if (p.section.getBoundingClientRect().top <= line) current = p;
+    });
+    pairs.forEach(function (p) {
+      var on = p === current;
+      p.link.classList.toggle('active', on);
+      if (on) p.link.setAttribute('aria-current', 'true');
+      else p.link.removeAttribute('aria-current');
+    });
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
 })();
