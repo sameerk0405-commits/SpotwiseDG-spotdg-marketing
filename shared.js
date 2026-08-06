@@ -34,6 +34,11 @@ function spotwiseHandleForm(form, opts) {
       .then(function (res) {
         if (res.ok) {
           form.style.display = 'none';
+          // The step indicator describes a form that is no longer on screen --
+          // leaving it up reads as "you still have steps left" next to a
+          // success message. Hidden alongside the form it belongs to.
+          var progress = document.querySelector('.form-progress');
+          if (progress) progress.style.display = 'none';
           var success = document.getElementById('form-success');
           if (success) {
             success.style.display = 'block';
