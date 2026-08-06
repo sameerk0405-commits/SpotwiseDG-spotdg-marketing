@@ -310,7 +310,45 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
    primary path still reads as primary. */
 .footer-contact .emails a{color:var(--muted);background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
 .footer-contact .emails a:hover,.footer-contact .emails a:focus-visible{color:var(--teal-bright);background-size:100% 1px;}
-.footer-contact .emails .sep{color:var(--muted);opacity:.55;padding:0 2px;}
+.footer-contact .emails .sep{display:none;}
+
+/* ---------- Mail unit: compose link + copy button ----------
+   mailto: only fires if the visitor has a desktop mail client registered as
+   the system handler. Anyone on webmail clicks it and nothing happens, which
+   is exactly what made these look broken. The address now opens Gmail's
+   compose window; the copy button covers everyone Gmail doesn't fit. */
+.mail-unit{display:inline-flex;align-items:center;gap:7px;max-width:100%;}
+.mail-copy{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:22px;height:22px;padding:0;border-radius:6px;cursor:pointer;
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+  font-family:inherit;position:relative;
+  transition:color .2s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease);
+}
+.mail-copy svg{width:12px;height:12px;}
+.mail-copy:hover{color:var(--teal-bright);border-color:rgba(20,184,166,.4);background:rgba(20,184,166,.08);}
+.mail-copy:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
+.mail-copy.is-copied{color:var(--teal-bright);border-color:rgba(20,184,166,.5);background:rgba(20,184,166,.12);}
+.mail-copy.is-copied::after{
+  content:"Copied";position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-bright);background:var(--surface-2);
+  border:1px solid rgba(20,184,166,.35);border-radius:5px;padding:3px 7px;white-space:nowrap;pointer-events:none;
+}
+.footer-contact .emails .mail-unit{display:flex;}
+/* The addresses differ in length, so without a floor the copy buttons stagger.
+   26ch is the longest address and ch is exact in a monospace face, so this
+   lines the buttons up in a column. */
+.footer-contact .emails .mail-unit a{min-width:26ch;}
+@media (max-width:420px){.footer-contact .emails .mail-unit a{min-width:0;}}
+@media (prefers-reduced-motion:reduce){.mail-copy{transition:none;}}
+
+/* ---------- Logo reads as the home link at every width ----------
+   Below 900px the tab rail is behind the sheet trigger, so the logo is the
+   only always-visible way home. It needs to look like a control. */
+.logo{transition:opacity .2s var(--ease);}
+.logo:hover{opacity:.82;}
+.logo:focus-visible{outline:2px solid var(--teal-bright);outline-offset:4px;border-radius:8px;}
 .spot-interactive{position:relative;width:26px;height:26px;flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
 .spot-interactive:hover{transform:rotate(-14deg) scale(1.12);}
 .spot-interactive:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:50%;}

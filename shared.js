@@ -552,3 +552,48 @@ function spotwiseHandleForm(form, opts) {
   window.addEventListener('resize', update, { passive: true });
   update();
 })();
+
+// ---------------------------------------------------------------------------
+// Copy-to-clipboard for email addresses. Pairs with the Gmail compose link
+// beside it: the link covers webmail users, this covers everyone else, and
+// between them nobody is left clicking a dead mailto:.
+// Falls back to a hidden textarea + execCommand on browsers without the async
+// clipboard API, and on insecure origins where navigator.clipboard is absent.
+// No-op on pages with no copy buttons.
+// ---------------------------------------------------------------------------
+(function () {
+  var buttons = document.querySelectorAll('.mail-copy[data-copy]');
+  if (!buttons.length) return;
+
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-1000px;opacity:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function flash(btn) {
+    btn.classList.add('is-copied');
+    if (btn._t) clearTimeout(btn._t);
+    btn._t = setTimeout(function () { btn.classList.remove('is-copied'); }, 1600);
+  }
+
+  Array.prototype.forEach.call(buttons, function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var text = btn.getAttribute('data-copy');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { flash(btn); },
+                                                 function () { if (legacyCopy(text)) flash(btn); });
+      } else if (legacyCopy(text)) {
+        flash(btn);
+      }
+    });
+  });
+})();
