@@ -118,8 +118,11 @@
   .stat{text-align:left;padding:0 40px;position:relative;}
   .stat:first-child{padding-left:0;}
   .stat:not(:first-child){border-left:1px solid var(--line);}
+  /* --faint on --paper measures 2.9:1, which fails WCAG AA for body text --
+     unacceptable for the one line that qualifies the headline figures. --muted
+     measures 5.3:1 and still reads as secondary to the stats above it. */
   .stat-caveat{
-    margin-top:26px;font-size:12px;line-height:1.65;color:var(--faint);max-width:96ch;
+    margin-top:26px;font-size:12.5px;line-height:1.7;color:var(--muted);max-width:96ch;
   }
   .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(36px,5vw,58px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 40px rgba(45,212,196,.55);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
@@ -442,7 +445,10 @@
           <span>avg outperformance vs metro — top-decile picks</span>
         </div>
         <div class="stat">
-          <b data-target="77" data-suffix="%">77%</b>
+          <!-- data-format="comma" routes this through the integer formatter; without
+               it the count-up's default one-decimal path renders the approved "77%"
+               headline as "77.0%" when it lands. -->
+          <b data-target="77" data-suffix="%" data-format="comma">77%</b>
           <svg class="stat-spark" viewBox="0 0 96 26" aria-hidden="true">
             <g class="sp-ticks">
               <rect x="2" y="12" width="3.6" height="12" rx="1"/>
