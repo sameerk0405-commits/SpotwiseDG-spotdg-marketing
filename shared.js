@@ -271,7 +271,7 @@ function spotwiseHandleForm(form, opts) {
   update();
 })();
 
-// 3. Sheet (below 860px): icon-only trigger, no "Menu" label anywhere. Same
+// 3. Sheet (below 900px): icon-only trigger, no "Menu" label anywhere. Same
 // interaction contract the old dropdown had -- click toggles, outside click
 // and Escape close, Escape returns focus to the trigger, arrow keys move
 // between items -- so nothing a returning visitor knew has been taken away.
@@ -314,7 +314,7 @@ function spotwiseHandleForm(form, opts) {
   });
   // Leaving the sheet breakpoint while it's open would otherwise strand the
   // open state on a layout that no longer shows the panel.
-  window.matchMedia('(min-width:860px)').addEventListener('change', function (e) {
+  window.matchMedia('(min-width:900px)').addEventListener('change', function (e) {
     if (e.matches) close();
   });
 })();

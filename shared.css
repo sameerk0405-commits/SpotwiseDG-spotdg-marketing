@@ -302,7 +302,15 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
 .footer-contact{font-size:12.5px;color:var(--muted);margin-top:14px;max-width:280px;line-height:1.7;}
 .footer-contact a{color:var(--teal-bright);font-weight:600;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:background-size .28s var(--ease);}
 .footer-contact a:hover{background-size:100% 1px;}
-.footer-contact .emails{display:block;margin-top:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+.footer-contact .emails{display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);line-height:2;}
+/* Each address is its own single-recipient mailto. A comma-separated
+   multi-address mailto is what made the old footer link appear dead: handlers
+   treat it inconsistently, and it does nothing at all without a desktop mail
+   client. Kept visually quieter than the "Contact us" link above so the
+   primary path still reads as primary. */
+.footer-contact .emails a{color:var(--muted);background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
+.footer-contact .emails a:hover,.footer-contact .emails a:focus-visible{color:var(--teal-bright);background-size:100% 1px;}
+.footer-contact .emails .sep{color:var(--muted);opacity:.55;padding:0 2px;}
 .spot-interactive{position:relative;width:26px;height:26px;flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
 .spot-interactive:hover{transform:rotate(-14deg) scale(1.12);}
 .spot-interactive:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:50%;}
@@ -400,9 +408,9 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
    breakpoints derived from measured element widths (logo 118px, 6 tabs @13.5px
    with 30px gaps = 504px, "Log in" 36px, "Join the Program" CTA 153px):
 
-     >= 1000px  full rail      — 6 tabs, 13.5px, 30px gaps, full CTA label
-     860–999px  condensed rail — 6 tabs, 12.5px, 18px gaps, short CTA label
-     <  860px   sheet          — icon-only trigger, tabs slide down
+     >= 1080px  full rail      — 7 tabs, 13.5px, 30px gaps, full CTA label
+     900–1079px condensed rail — 7 tabs, 12.5px, 18px gaps, short CTA label
+     <  900px   sheet          — icon-only trigger, tabs slide down
 
    The natural width requirement at tier 1 is 887px of content, i.e. it would
    only collide at a 951px viewport — so tier 2 takes over with ~50px of
@@ -527,8 +535,8 @@ header.hdr2 .nav-cta{padding:10px 18px;font-size:13px;}
   font-size:13.5px;font-weight:600;color:var(--ink-soft);
 }
 
-/* ---------- Tier 2: condensed rail (860–999px) ---------- */
-@media (max-width:999px){
+/* ---------- Tier 2: condensed rail (900–1079px) ---------- */
+@media (max-width:1079px){
   header.hdr2 nav{gap:20px;padding-left:24px;padding-right:24px;}
   .nav-tabs{gap:18px;}
   .nav-tabs a{font-size:12.5px;}
@@ -538,8 +546,8 @@ header.hdr2 .nav-cta{padding:10px 18px;font-size:13px;}
   .hdr2 .nav-cta-short{display:inline;}
 }
 
-/* ---------- Tier 3: sheet (<860px) ---------- */
-@media (max-width:859px){
+/* ---------- Tier 3: sheet (<900px) ---------- */
+@media (max-width:899px){
   header.hdr2 nav{grid-template-columns:auto auto;justify-content:space-between;gap:14px;}
   .nav-tabs{display:none;}
   .nav-sheet{display:block;}

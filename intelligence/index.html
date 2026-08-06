@@ -40,19 +40,31 @@
      Fixed to the left margin, outside the content column, so it never competes
      with the reading measure. Hidden below 1240px, where there's no free margin
      to put it in and it would overlap the text. */
-  .sec-rail{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:20px;}
-  .sec-rail a{display:flex;align-items:center;gap:12px;color:var(--muted);}
-  .sec-rail .sr-dot{position:relative;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--line);
-    box-shadow:0 0 0 1px rgba(255,255,255,.05);transition:background-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
-  .sec-rail .sr-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;
-    text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(-6px);
-    transition:opacity .28s var(--ease),transform .28s var(--ease),color .28s var(--ease);}
-  .sec-rail a:hover .sr-label,.sec-rail a:focus-visible .sr-label,.sec-rail a.active .sr-label{opacity:1;transform:none;}
+  /* Anchored to the content column, not the window edge: left is computed as
+     the page gutter -- half the viewport minus half the 1180px container,
+     minus the rail's own width and a 40px standoff. That keeps a consistent
+     optical margin to the text at every width instead of drifting as the
+     window resizes. Labels are always visible (the hover-to-reveal version
+     read as a row of unexplained dots); the active row is the only one that
+     brightens. A continuous hairline connects the marks so it reads as one
+     object rather than three loose dots. */
+  .sec-rail{position:fixed;left:calc(50% - 590px - 148px);top:50%;transform:translateY(-50%);
+    z-index:60;display:none;flex-direction:column;gap:2px;width:132px;}
+  .sec-rail::before{content:"";position:absolute;left:4.5px;top:14px;bottom:14px;width:1px;background:var(--line);}
+  .sec-rail a{position:relative;display:flex;align-items:center;gap:14px;color:var(--muted);padding:9px 0;}
+  .sec-rail .sr-dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--surface-3);
+    box-shadow:0 0 0 3px var(--paper);transition:background-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .sec-rail .sr-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;
+    text-transform:uppercase;white-space:nowrap;line-height:1;
+    transition:color .28s var(--ease),opacity .28s var(--ease);opacity:.55;}
+  .sec-rail a:hover .sr-label{opacity:1;color:var(--ink-soft);}
   .sec-rail a:hover .sr-dot{background:var(--teal-dim);}
-  .sec-rail a.active .sr-dot{background:var(--teal-bright);transform:scale(1.25);box-shadow:0 0 12px rgba(45,212,196,.55);}
-  .sec-rail a.active .sr-label{color:var(--teal-bright);}
-  .sec-rail a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:4px;border-radius:4px;}
-  @media (min-width:1240px){.sec-rail{display:flex;}}
+  .sec-rail a.active .sr-dot{background:var(--teal-bright);transform:scale(1.2);box-shadow:0 0 0 3px var(--paper),0 0 12px rgba(45,212,196,.5);}
+  .sec-rail a.active .sr-label{color:var(--teal-bright);opacity:1;}
+  .sec-rail a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:4px;}
+  /* 1180 container + 2x(148 rail standoff) = 1476 before the rail would start
+     overlapping the text, so it only appears once there is genuinely room. */
+  @media (min-width:1480px){.sec-rail{display:flex;}}
   @media (prefers-reduced-motion:reduce){
     .sec-rail .sr-dot,.sec-rail .sr-label{transition:none;}
   }
@@ -136,6 +148,7 @@
     </a>
 
     <div class="nav-tabs">
+      <a href="../index.html" data-home-tab>Home</a>
         <a href="../intelligence/index.html" class="active" aria-current="page">Intelligence</a>
         <a href="../sample-report/index.html">Sample Report</a>
         <a href="../reports/index.html">Reports</a>
@@ -154,6 +167,7 @@
         </button>
         <div class="nav-sheet-panel" id="nav-sheet-panel">
           <div class="nav-sheet-inner">
+            <a href="../index.html" data-home-sheet>Home</a>
             <a href="../intelligence/index.html" class="active" aria-current="page">Intelligence</a>
             <a href="../sample-report/index.html">Sample Report</a>
             <a href="../reports/index.html">Reports</a>
@@ -280,7 +294,7 @@
           <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" />
         </button>
       </div>
-      <div class="footer-contact">Or reach us directly at <a href="mailto:sameerkatwala@spotdg.com,josephlamonica@spotdg.com,andrewgiacomini@spotdg.com">Contact us</a><span class="emails">sameerkatwala@spotdg.com &middot; josephlamonica@spotdg.com &middot; andrewgiacomini@spotdg.com</span></div>
+      <div class="footer-contact">Or reach us directly at <a href="../contact/index.html">Contact us</a><span class="emails"><a href="mailto:sameerkatwala@spotdg.com">sameerkatwala@spotdg.com</a> <span class="sep">&middot;</span> <a href="mailto:josephlamonica@spotdg.com">josephlamonica@spotdg.com</a> <span class="sep">&middot;</span> <a href="mailto:andrewgiacomini@spotdg.com">andrewgiacomini@spotdg.com</a></span></div>
     </div>
     <div class="footer-cols">
       <div class="footer-col">
