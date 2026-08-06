@@ -49,14 +49,19 @@
     60%{filter:blur(0);}
     100%{opacity:1;transform:none;filter:blur(0);}
   }
-  .hero-inner{animation:heroIn 1s var(--ease) both;}
-  .hero-inner > *{animation:heroIn 1s var(--ease) both;}
-  .hero-inner > *:nth-child(2){animation-delay:.1s;}
-  .hero-inner > *:nth-child(3){animation-delay:.2s;}
-  .hero-inner > *:nth-child(4){animation-delay:.3s;}
-  .hero-inner > *:nth-child(5){animation-delay:.4s;}
-  .hero-inner > *:nth-child(6){animation-delay:.5s;}
-  @media (prefers-reduced-motion:reduce){.hero-inner,.hero-inner > *{animation:none;}}
+  /* Load sequence: the copy column resolves line by line, the visualization
+     arrives just after it, and the stat band lands last -- so the page reads
+     claim -> evidence -> proof rather than everything at once. */
+  .hero-copy > *{animation:heroIn 1s var(--ease) both;}
+  .hero-copy > *:nth-child(2){animation-delay:.08s;}
+  .hero-copy > *:nth-child(3){animation-delay:.16s;}
+  .hero-copy > *:nth-child(4){animation-delay:.24s;}
+  .hero-copy > *:nth-child(5){animation-delay:.32s;}
+  .momentum-viz{animation:heroIn 1.1s var(--ease) .3s both;}
+  .stat-band{animation:heroIn 1s var(--ease) .5s both;}
+  @media (prefers-reduced-motion:reduce){
+    .hero-copy > *,.momentum-viz,.stat-band{animation:none;}
+  }
 
   /* ---------- Hero: taller, cinematic, gradient-mesh + grain + grid, plus a
      pulsing glow field behind the headline for scale/depth. Parallax on
@@ -74,25 +79,48 @@
     background:radial-gradient(circle,rgba(45,212,196,.22) 0%,rgba(45,212,196,.08) 38%,transparent 68%);
     filter:blur(10px);animation:heroGlowPulse 6.5s ease-in-out infinite;}
   @keyframes heroGlowPulse{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
-  .beta-badge-row{position:relative;max-width:var(--max);margin:0 auto 26px;text-align:center;z-index:1;}
+  .beta-badge-row{position:relative;margin:0 0 22px;z-index:1;}
   .beta-badge{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:7px 16px;border-radius:100px;}
   .beta-badge::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);animation:badgeShimmer 3.4s ease-in-out infinite;}
   @keyframes badgeShimmer{0%,30%{left:-60%;}70%,100%{left:130%;}}
-  .hero-inner{position:relative;z-index:1;max-width:var(--max);margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;}
-  .hero .eyebrow{margin-bottom:28px;}
-  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(48px,8.6vw,116px);letter-spacing:-.045em;line-height:.98;max-width:1060px;}
-  h1 em{font-style:normal;display:block;font-size:clamp(58px,11.4vw,152px);line-height:.94;margin-top:.04em;
+  /* Two-column hero: the claim on the left, the live signal it's claiming
+     about on the right. The stat band spans both columns underneath, so the
+     evidence sits directly below the assertion instead of a screen away. */
+  .hero-inner{
+    position:relative;z-index:1;max-width:var(--max);margin:0 auto;
+    display:grid;grid-template-columns:1.02fr .98fr;
+    grid-template-areas:"copy viz" "stats stats";
+    align-items:center;column-gap:56px;
+  }
+  .hero-copy{grid-area:copy;text-align:left;min-width:0;}
+  .hero-inner .momentum-viz{grid-area:viz;min-width:0;}
+  .stat-band{grid-area:stats;}
+  .hero .eyebrow{margin-bottom:26px;}
+  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,5.6vw,78px);letter-spacing:-.045em;line-height:.98;}
+  h1 em{font-style:normal;display:block;font-size:clamp(50px,7.2vw,100px);line-height:.94;margin-top:.04em;
     background:linear-gradient(100deg,var(--teal) 6%,var(--teal-bright) 50%,#8FF5EA 92%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
     animation:emGlow 4.2s ease-in-out infinite;}
   @keyframes emGlow{0%,100%{filter:drop-shadow(0 0 14px rgba(45,212,196,.18));}50%{filter:drop-shadow(0 0 34px rgba(45,212,196,.4));}}
-  .hero-sub{font-size:clamp(17px,1.8vw,21px);color:var(--ink-soft);max-width:660px;margin:32px auto 0;line-height:1.68;}
-  .hero-ctas{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap;justify-content:center;}
-  .hero-ctas .btn{padding:17px 30px;font-size:15px;}
-  .stat-row{display:flex;margin-top:88px;flex-wrap:wrap;justify-content:center;position:relative;}
-  .stat-row::before{content:"";position:absolute;inset:-40px -20px;background:radial-gradient(600px 140px at 50% 50%,rgba(20,184,166,.1) 0%,transparent 70%);z-index:-1;pointer-events:none;}
-  .stat{text-align:center;padding:0 40px;position:relative;}
+  .hero-sub{font-size:clamp(16.5px,1.5vw,19px);color:var(--ink-soft);max-width:52ch;margin:28px 0 0;line-height:1.68;}
+  .hero-ctas{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;justify-content:flex-start;}
+  .hero-ctas .btn{padding:16px 28px;font-size:14.5px;}
+
+  /* ---------- Stat band: the evidence line under the claim ----------
+     Framed as one horizontal instrument panel spanning the full hero width,
+     with the regime caveat attached to it directly -- the figures and the
+     conditions they hold under are one object, not two. */
+  .stat-band{
+    margin-top:76px;padding-top:34px;border-top:1px solid var(--line);position:relative;
+  }
+  .stat-band::before{content:"";position:absolute;top:-1px;left:0;width:180px;height:1px;background:linear-gradient(90deg,var(--teal-bright),transparent);}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);position:relative;}
+  .stat{text-align:left;padding:0 40px;position:relative;}
+  .stat:first-child{padding-left:0;}
   .stat:not(:first-child){border-left:1px solid var(--line);}
+  .stat-caveat{
+    margin-top:26px;font-size:12px;line-height:1.65;color:var(--faint);max-width:96ch;
+  }
   .stat b{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(36px,5vw,58px);color:var(--teal-bright);display:block;letter-spacing:-.03em;text-shadow:0 0 40px rgba(45,212,196,.55);font-variant-numeric:tabular-nums;}
   .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
   @media (prefers-reduced-motion:reduce){
@@ -104,7 +132,7 @@
   /* ---------- Stat micro-sparklines: each backtest stat gets a tiny data
      treatment that draws in alongside the existing count-up. Hidden-then-drawn
      only under html.js (same safety pattern as .reveal); static otherwise. ---------- */
-  .stat-spark{display:block;width:96px;height:26px;margin:12px auto 0;}
+  .stat-spark{display:block;width:96px;height:26px;margin:12px 0 0;}
   .stat-spark .sp-grey{fill:none;stroke:var(--muted);stroke-width:1.5;opacity:.45;stroke-linecap:round;}
   .stat-spark .sp-teal{fill:none;stroke:var(--teal-bright);stroke-width:2;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(45,212,196,.4));}
   .stat-spark .sp-ticks rect{fill:var(--teal);opacity:.75;}
@@ -123,7 +151,7 @@
      grey noise cluster (which dims once the signal is confirmed), the appreciation
      window rises, a highlight pulse travels the resolved line, and a mono status
      caption flips from "analyzing" to "resolved". ---------- */
-  .momentum-viz{position:relative;width:100%;max-width:720px;min-width:0;margin:76px auto 0;}
+  .momentum-viz{position:relative;width:100%;max-width:none;min-width:0;margin:0;}
   .momentum-viz svg{display:block;width:100%;height:auto;}
   .viz-gridlines line{stroke:var(--line);stroke-width:1;opacity:.7;}
   .viz-noise{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;--nop:.38;animation:vizNoise 7s ease-in-out infinite;}
@@ -238,7 +266,60 @@
   html.js .final-cta.reveal.is-visible h2{animation:ctaIn .8s var(--ease) both;}
   @keyframes ctaIn{0%{opacity:0;transform:translateY(30px) scale(.96);filter:blur(6px);}100%{opacity:1;transform:none;filter:blur(0);}}
 
+  /* ---------- Section rhythm: left-anchored heads ----------
+     Alternates against the centered heads so the page has cadence instead of
+     one repeated shape. Centered is now reserved for the two thesis moments
+     (the live signal card, the closing CTA); argument sections run left. */
+  .sec-head-left{max-width:760px;margin-left:0;margin-right:auto;text-align:left;}
+  .sec-head-left h2{max-width:16ch;}
+  .sec-head-left p{margin-top:16px;max-width:62ch;}
+
+  /* ---------- Pipeline: the connector draws itself left-to-right as the
+     section arrives, so the four stages read as one sequence being traced
+     rather than four cards that happened to fade in together. ---------- */
+  .pipeline-sec .steps::before{transform-origin:0 50%;}
+  html.js .pipeline-sec.reveal:not(.is-visible) .steps::before{transform:scaleX(0);}
+  html.js .pipeline-sec.reveal.is-visible .steps::before{animation:pipeDraw 1.15s var(--ease) .1s both;}
+  @keyframes pipeDraw{0%{transform:scaleX(0);}100%{transform:scaleX(1);}}
+  .step .snum{transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
+  .step:hover .snum{transform:scale(1.08);border-color:rgba(45,212,196,.6);box-shadow:0 0 0 6px var(--paper),0 0 30px rgba(45,212,196,.35);}
+  @media (prefers-reduced-motion:reduce){
+    html.js .pipeline-sec.reveal:not(.is-visible) .steps::before{transform:none;}
+    html.js .pipeline-sec.reveal.is-visible .steps::before{animation:none;}
+    .step:hover .snum{transform:none;}
+  }
+
+  /* ---------- Founding: split panel — the offer on one side, the exact terms
+     of the exchange on the other, so "complimentary" is stated alongside what
+     is actually being asked for rather than left implied. ---------- */
+  .founding-split{max-width:var(--max);text-align:left;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:52px 48px;}
+  .founding-split h2{margin-top:14px;}
+  .founding-split p{margin:18px 0 0;max-width:48ch;}
+  .founding-split .btn{margin-top:26px;}
+  .founding-terms{background:rgba(7,15,13,.5);border:1px solid rgba(245,158,11,.18);border-radius:16px;padding:26px;}
+  .ft-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .founding-terms ul{display:flex;flex-direction:column;gap:13px;}
+  .founding-terms li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.55;}
+
   /* ---------- Responsive ---------- */
+  @media (max-width:1023px){
+    .hero{padding-top:132px;}
+    .hero-inner{grid-template-columns:1fr;grid-template-areas:"copy" "viz" "stats";row-gap:52px;}
+    .hero-copy{max-width:660px;}
+    h1{font-size:clamp(44px,7.4vw,72px);}
+    h1 em{font-size:clamp(52px,9vw,92px);}
+    .stat-band{margin-top:4px;}
+    .founding-split{grid-template-columns:1fr;gap:30px;padding:44px 34px;}
+    .sec-head-left h2{max-width:none;}
+  }
+  /* Upper-bounded at 641px on purpose: below that the "mobile visual rethink"
+     block further down turns the stats into cards, and these stacked-divider
+     rules would fight it. */
+  @media (max-width:720px) and (min-width:641px){
+    .stat-row{grid-template-columns:1fr;}
+    .stat{padding:0;}
+    .stat:not(:first-child){border-left:none;border-top:1px solid var(--line);padding-top:20px;margin-top:20px;}
+  }
   @media (max-width:900px){
     .stat-row{gap:36px;}
     .steps{grid-template-columns:1fr 1fr;row-gap:44px;}
@@ -251,7 +332,6 @@
     .hero-glow{top:-10%;}
     .sig-card{padding:24px 20px;}
     h1{font-size:clamp(34px,10vw,48px);}
-    .momentum-viz{margin-top:48px;}
     .momentum-badge{font-size:10px;padding:6px 11px;}
     .viz-caption{font-size:10px;letter-spacing:.1em;}
     .steps{grid-template-columns:1fr;}
@@ -268,7 +348,7 @@
     .hero-ctas .btn{width:100%;justify-content:center;padding:16px 26px;}
 
     /* Stat callouts -> dense card grid: lead stat full-width, other two side by side */
-    .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:52px;width:100%;}
+    .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0;width:100%;}
     .stat-row::before{display:none;}
     .stat{padding:18px;background:var(--surface);border:1px solid var(--line);
       border-radius:16px;text-align:left;display:flex;flex-direction:column;gap:4px;}
@@ -279,7 +359,6 @@
     .stat span{margin-top:4px;font-size:11px;letter-spacing:.08em;}
     .stat-spark{margin:10px 0 0;}
 
-    .momentum-viz{margin-top:44px;}
     .card-section .sec-head{margin-bottom:28px;}
   }
   @media (max-width:400px){
@@ -292,53 +371,45 @@
 </head>
 <body>
 
-<header>
+<header class="hdr2">
   <nav>
     <a href="#top" class="logo">
       <img class="logo-mark" src="assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
-    <div class="nav-right">
-      <a class="nav-home" href="#top" aria-label="Back to home" title="Back to home">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/></svg>
-      </a>
-      <div class="nav-menu">
-        <button class="nav-menu-trigger" type="button" aria-haspopup="true" aria-expanded="false">
-          Menu
-          <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+
+    <div class="nav-tabs">
+      <a href="intelligence/index.html">Intelligence</a>
+      <a href="sample-report/index.html">Sample Report</a>
+      <a href="reports/index.html">Reports</a>
+      <a href="team/index.html">Team</a>
+      <a href="contact/index.html">Contact</a>
+      <a href="disclaimer/index.html">Disclaimer</a>
+      <span class="nav-rail" aria-hidden="true"></span>
+    </div>
+
+    <div class="nav-actions">
+      <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
+      <a class="btn btn-primary nav-cta" href="founding-program/index.html"><span class="nav-cta-full">Join the Program →</span><span class="nav-cta-short">Join →</span></a>
+      <div class="nav-sheet">
+        <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
+          <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
         </button>
-        <div class="nav-menu-panel" role="menu">
-          <div class="nav-menu-panel-inner">
-            <a href="intelligence/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h3l2-5 4 10 2-5h3"/></svg></span>
-              <span class="mtxt"><span class="mt">Intelligence</span><span class="md">How we build the momentum signal</span></span>
-            </a>
-            <a href="sample-report/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M6 5.5h4M6 8.5h4M6 11.5h2.5"/></svg></span>
-              <span class="mtxt"><span class="mt">Sample Report</span><span class="md">The full report format, fully visible</span></span>
-            </a>
-            <a href="reports/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l6 3-6 3-6-3 6-3z"/><path d="M2 8.5l6 3 6-3"/><path d="M2 11.5l6 3 6-3"/></svg></span>
-              <span class="mtxt"><span class="mt">Reports</span><span class="md">Subscription tiers and pricing</span></span>
-            </a>
-            <a href="team/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.2"/><path d="M1.5 13c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="11.5" cy="5.5" r="1.8"/><path d="M10.5 9.3c2 .2 3.5 1.8 3.5 3.7"/></svg></span>
-              <span class="mtxt"><span class="mt">Team</span><span class="md">The people behind SpotWise</span></span>
-            </a>
-            <a href="disclaimer/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5.5 2v4c0 3.5-2.3 5.9-5.5 7-3.2-1.1-5.5-3.5-5.5-7v-4l5.5-2z"/></svg></span>
-              <span class="mtxt"><span class="mt">Disclaimer</span><span class="md">Read before acting on anything here</span></span>
-            </a>
-            <a href="contact/index.html" role="menuitem">
-              <span class="mi"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 5 6-5"/></svg></span>
-              <span class="mtxt"><span class="mt">Contact</span><span class="md">Reach the founders, plus FAQ</span></span>
-            </a>
+        <div class="nav-sheet-panel" id="nav-sheet-panel">
+          <div class="nav-sheet-inner">
+            <a href="intelligence/index.html">Intelligence</a>
+            <a href="sample-report/index.html">Sample Report</a>
+            <a href="reports/index.html">Reports</a>
+            <a href="team/index.html">Team</a>
+            <a href="contact/index.html">Contact</a>
+            <a href="disclaimer/index.html">Disclaimer</a>
+            <a class="nav-sheet-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in to the dashboard</a>
           </div>
         </div>
       </div>
-      <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="founding-program/index.html"><span class="nav-cta-full">Join Market Intelligence Program →</span><span class="nav-cta-short">Join →</span></a>
     </div>
+
+    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
@@ -348,14 +419,19 @@
   <section class="hero">
     <div class="mesh mesh-grid" aria-hidden="true"></div>
     <div class="hero-glow" aria-hidden="true"></div>
-    <div class="beta-badge-row"><span class="beta-badge"><span class="pulse-dot" style="background:var(--teal-bright);box-shadow:none;"></span>Beta</span></div>
     <div class="hero-inner">
+      <div class="hero-copy">
+      <div class="beta-badge-row"><span class="beta-badge"><span class="pulse-dot" style="background:var(--teal-bright);box-shadow:none;"></span>Beta</span></div>
       <div class="eyebrow">Building in Northeastern Tri-State — more markets coming.</div>
       <h1>Before the market <em>moves.</em></h1>
       <p class="hero-sub">SpotWise identifies which neighborhoods are entering the next appreciation window — and packages that intelligence into investor-ready Market Signal Reports.</p>
       <div class="hero-ctas">
-        <a class="btn btn-ghost" href="#sample-report">See sample data ↓</a>
+        <a class="btn btn-primary" href="founding-program/index.html">Join the Program →</a>
+        <a class="btn btn-ghost" href="#signal">See a live signal ↓</a>
       </div>
+      </div><!-- /.hero-copy -->
+
+      <div class="stat-band">
       <div class="stat-row" id="stat-row">
         <div class="stat">
           <b data-target="14.0" data-prefix="+" data-suffix="%">+14.0%</b>
@@ -407,6 +483,9 @@
           <span>zip codes scored — and growing</span>
         </div>
       </div>
+      <p class="stat-caveat">Top-decile picks, 2014–2021 entry cohorts, embargo-respecting walk-forward, replicated across all 10 US regions (per-region hit rate 68–88%). These figures reflect post-2013 market conditions — the same signal underperformed in the 2006–2012 downturn era. Past performance does not guarantee future results.</p>
+      </div><!-- /.stat-band -->
+
       <div class="momentum-viz" aria-hidden="true">
         <svg viewBox="0 0 600 230" width="600" height="230" preserveAspectRatio="none">
           <defs>
@@ -463,7 +542,7 @@
   </section>
 
   <!-- LIVE INTELLIGENCE CARD — the hero's payoff -->
-  <section class="card-section reveal">
+  <section class="card-section reveal" id="signal">
     <div class="sec-head">
       <div class="eyebrow">Live Signal</div>
       <h2 style="margin-top:16px;font-size:clamp(24px,3.2vw,34px);">What a signal looks like.</h2>
@@ -510,11 +589,11 @@
   </section>
 
   <!-- HOW IT WORKS — signal narrative -->
-  <section class="sec sec-alt reveal">
-    <div class="sec-head">
+  <section class="sec sec-alt reveal pipeline-sec">
+    <div class="sec-head sec-head-left">
       <div class="eyebrow">How It Works</div>
       <h2 style="margin-top:16px;">From raw data to a decision.</h2>
-      <div class="trail"></div>
+      <p>Four stages, in order. Nothing downstream sees data the stage before it hasn't already accounted for.</p>
     </div>
     <div class="steps">
       <div class="step">
@@ -545,10 +624,22 @@
 
   <!-- FOUNDING PROGRAM (condensed teaser — full details on /reports) -->
   <section class="sec reveal">
-    <div class="founding">
-      <div class="eyebrow">Founding Market Intelligence Program</div>
-      <h2>25 invitations. Complimentary report.</h2>
-      <p>Get a complimentary Market Signal Report for a selected geography in exchange for a short feedback session.</p>
+    <div class="founding founding-split">
+      <div class="founding-copy">
+        <div class="eyebrow">Founding Market Intelligence Program</div>
+        <h2>25 invitations. Complimentary report.</h2>
+        <p>Get a complimentary Market Signal Report for a selected geography in exchange for a short feedback session.</p>
+        <a class="btn btn-primary" href="founding-program/index.html">Apply for an invitation →</a>
+      </div>
+      <div class="founding-terms">
+        <div class="ft-label">What the exchange is</div>
+        <ul>
+          <li><span class="mark check">✓</span><span>A full Market Signal Report for a geography you choose</span></li>
+          <li><span class="mark check">✓</span><span>Direct access to the founders while you read it</span></li>
+          <li><span class="mark check">✓</span><span>One short feedback session — that's the whole ask</span></li>
+          <li><span class="mark x">–</span><span>No payment, and no obligation to continue</span></li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -556,7 +647,11 @@
   <section class="sec final-cta reveal">
     <div class="trail"></div>
     <h2>Your next market signal is already forming.</h2>
-    <p>Join the Founding Market Intelligence Program using the button above.</p>
+    <p>Twenty-five founding invitations, then the program closes.</p>
+    <div class="final-ctas">
+      <a class="btn btn-primary" href="founding-program/index.html">Join the Program →</a>
+      <a class="btn btn-ghost" href="sample-report/index.html">See a full sample report</a>
+    </div>
   </section>
 
 </main>

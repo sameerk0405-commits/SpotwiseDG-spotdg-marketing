@@ -482,3 +482,173 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
      "Menu" label + chevron from crowding the always-visible CTA. */
   .nav-menu-trigger::before{display:none;}
 }
+
+/* ============================================================================
+   NAV v2 — exposed tab rail (replaces the "Menu" dropdown)
+   ============================================================================
+   Scoped entirely under `header.hdr2` / the `.nav-tabs` family so pages still
+   carrying the old `.nav-menu` markup are untouched. Three tiers, with the
+   breakpoints derived from measured element widths (logo 118px, 6 tabs @13.5px
+   with 30px gaps = 504px, "Log in" 36px, "Join the Program" CTA 153px):
+
+     >= 1000px  full rail      — 6 tabs, 13.5px, 30px gaps, full CTA label
+     860–999px  condensed rail — 6 tabs, 12.5px, 18px gaps, short CTA label
+     <  860px   sheet          — icon-only trigger, tabs slide down
+
+   The natural width requirement at tier 1 is 887px of content, i.e. it would
+   only collide at a 951px viewport — so tier 2 takes over with ~50px of
+   headroom rather than at the failure point.
+   ---------------------------------------------------------------------- */
+
+header.hdr2{
+  transition:background-color .3s var(--ease),backdrop-filter .3s var(--ease),box-shadow .3s var(--ease);
+}
+header.hdr2 nav{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;
+  padding:16px 32px;transition:padding .28s var(--ease);
+}
+header.hdr2 .logo{flex-shrink:0;}
+/* The second logo line is what wraps first as width drops, so it's the first
+   thing surrendered — both on scroll-condense and at the tier-2 breakpoint. */
+header.hdr2 .logo-text span{
+  overflow:hidden;max-height:14px;opacity:1;
+  transition:max-height .28s var(--ease),opacity .2s var(--ease);
+}
+
+/* ---------- Scroll-condensed state (set by shared.js past 80px) ---------- */
+header.hdr2.is-condensed nav{padding:9px 32px;}
+header.hdr2.is-condensed .logo-text span{max-height:0;opacity:0;}
+header.hdr2.is-condensed{background:rgba(7,15,13,.9);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 8px 30px -12px rgba(0,0,0,.7);}
+header.hdr2 .logo-mark{transition:width .28s var(--ease),height .28s var(--ease);}
+header.hdr2.is-condensed .logo-mark{width:32px;height:32px;}
+
+/* ---------- Scroll-depth bar along the header's bottom edge ---------- */
+.nav-progress{
+  position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:0 50%;
+  transform:scaleX(0);pointer-events:none;
+  background:linear-gradient(90deg,var(--teal-dim),var(--teal-bright));
+  box-shadow:0 0 10px rgba(45,212,196,.5);opacity:0;transition:opacity .3s var(--ease);
+}
+header.hdr2.is-condensed .nav-progress{opacity:1;}
+
+/* ---------- The tab rail ---------- */
+.nav-tabs{position:relative;display:flex;align-items:center;gap:30px;justify-self:center;}
+.nav-tabs a{
+  position:relative;display:inline-flex;align-items:center;
+  font-size:13.5px;font-weight:600;color:var(--ink-soft);white-space:nowrap;
+  padding:4px 0;transition:color .22s var(--ease);
+}
+.nav-tabs a:hover{color:var(--teal-bright);}
+.nav-tabs a.active{color:var(--teal-bright);}
+.nav-tabs a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:4px;border-radius:3px;}
+
+/* Signal Rail: ONE element that slides + resizes to the hovered tab, drawn as
+   the site's momentum mark (flat grey lead-in ticking up into a lit node), so
+   the indicator is the brand motif rather than a generic underline. Position
+   and width are set by shared.js; only transform/width animate. */
+.nav-rail{
+  position:absolute;left:0;bottom:-9px;height:9px;width:0;
+  pointer-events:none;opacity:0;
+  transition:transform .38s var(--ease),width .38s var(--ease),opacity .25s var(--ease);
+}
+.nav-rail.is-on{opacity:1;}
+.nav-rail svg{display:block;width:100%;height:100%;overflow:visible;}
+.nav-rail .rail-line{stroke:var(--teal-bright);stroke-width:1.6;stroke-linecap:round;fill:none;}
+.nav-rail .rail-base{stroke:var(--muted);stroke-width:1.4;stroke-linecap:round;fill:none;opacity:.3;}
+.nav-rail .rail-node{fill:var(--teal-bright);}
+.nav-rail .rail-halo{fill:var(--teal-bright);opacity:.25;}
+
+/* ---------- Right-hand actions ---------- */
+.nav-actions{display:flex;align-items:center;gap:22px;justify-self:end;}
+header.hdr2 .nav-cta{padding:10px 18px;font-size:13px;}
+.hdr2 .nav-cta-short{display:none;}
+
+/* ---------- Sheet trigger (icon only — no "Menu" label anywhere) ---------- */
+.nav-sheet-trigger{
+  display:none;align-items:center;justify-content:center;width:40px;height:40px;
+  border-radius:11px;background:rgba(255,255,255,.02);border:1px solid var(--line);
+  color:var(--ink-soft);cursor:pointer;font-family:inherit;flex-shrink:0;
+  transition:color .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease);
+}
+.nav-sheet-trigger:hover{color:var(--teal-bright);background:rgba(20,184,166,.08);border-color:rgba(20,184,166,.35);}
+.nav-sheet-trigger:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
+.nav-sheet-trigger .bars{position:relative;width:17px;height:12px;}
+.nav-sheet-trigger .bars i{
+  position:absolute;left:0;right:0;height:1.7px;border-radius:2px;background:currentColor;
+  transition:transform .32s var(--ease),opacity .2s var(--ease);
+}
+.nav-sheet-trigger .bars i:nth-child(1){top:0;}
+.nav-sheet-trigger .bars i:nth-child(2){top:5.2px;}
+.nav-sheet-trigger .bars i:nth-child(3){top:10.4px;}
+.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(1){transform:translateY(5.2px) rotate(45deg);}
+.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(2){opacity:0;}
+.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(3){transform:translateY(-5.2px) rotate(-45deg);}
+
+/* ---------- Sheet panel ---------- */
+.nav-sheet{display:none;}
+.nav-sheet-panel{
+  position:absolute;top:100%;left:0;right:0;
+  background:rgba(9,19,16,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  opacity:0;visibility:hidden;transform:translateY(-10px);
+  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s;
+}
+.nav-sheet-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal-bright),transparent);opacity:.55;}
+.nav-sheet.is-open .nav-sheet-panel{opacity:1;visibility:visible;transform:none;}
+.nav-sheet-inner{max-width:var(--max);margin:0 auto;padding:14px 32px 22px;display:flex;flex-direction:column;}
+.nav-sheet-inner a{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:var(--ink);
+  padding:15px 2px;border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(-6px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease),color .2s var(--ease);
+}
+.nav-sheet-inner a:last-of-type{border-bottom:none;}
+.nav-sheet-inner a:hover,.nav-sheet-inner a.active{color:var(--teal-bright);}
+.nav-sheet-inner a::after{content:"\2192";color:var(--teal-dim);font-size:14px;}
+.nav-sheet-inner a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;border-radius:4px;}
+.nav-sheet.is-open .nav-sheet-inner a{opacity:1;transform:none;}
+.nav-sheet.is-open .nav-sheet-inner a:nth-child(2){transition-delay:.04s;}
+.nav-sheet.is-open .nav-sheet-inner a:nth-child(3){transition-delay:.08s;}
+.nav-sheet.is-open .nav-sheet-inner a:nth-child(4){transition-delay:.12s;}
+.nav-sheet.is-open .nav-sheet-inner a:nth-child(5){transition-delay:.16s;}
+.nav-sheet.is-open .nav-sheet-inner a:nth-child(6){transition-delay:.2s;}
+.nav-sheet-login{
+  margin-top:18px;display:inline-flex;align-items:center;gap:8px;
+  font-size:13.5px;font-weight:600;color:var(--ink-soft);
+}
+
+/* ---------- Tier 2: condensed rail (860–999px) ---------- */
+@media (max-width:999px){
+  header.hdr2 nav{gap:20px;padding-left:24px;padding-right:24px;}
+  .nav-tabs{gap:18px;}
+  .nav-tabs a{font-size:12.5px;}
+  .nav-actions{gap:16px;}
+  header.hdr2 .logo-text span{max-height:0;opacity:0;}
+  .hdr2 .nav-cta-full{display:none;}
+  .hdr2 .nav-cta-short{display:inline;}
+}
+
+/* ---------- Tier 3: sheet (<860px) ---------- */
+@media (max-width:859px){
+  header.hdr2 nav{grid-template-columns:auto auto;justify-content:space-between;gap:14px;}
+  .nav-tabs{display:none;}
+  .nav-sheet{display:block;}
+  .nav-sheet-trigger{display:inline-flex;}
+  .nav-actions{gap:12px;}
+  .nav-actions .nav-login{display:none;}
+  header.hdr2 .logo-text span{max-height:14px;opacity:1;}
+  header.hdr2.is-condensed .logo-text span{max-height:0;opacity:0;}
+}
+@media (max-width:420px){
+  header.hdr2 nav{padding-left:18px;padding-right:18px;}
+  .nav-sheet-inner{padding-left:18px;padding-right:18px;}
+  header.hdr2 .nav-cta{padding:9px 14px;font-size:12.5px;}
+}
+
+/* ---------- Reduced motion: keep every state, drop the travel ---------- */
+@media (prefers-reduced-motion:reduce){
+  header.hdr2 nav,header.hdr2 .logo-text span,header.hdr2 .logo-mark,
+  .nav-rail,.nav-progress,.nav-sheet-panel,.nav-sheet-inner a,
+  .nav-sheet-trigger .bars i{transition:none;}
+}

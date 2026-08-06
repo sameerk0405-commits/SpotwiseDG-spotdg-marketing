@@ -238,3 +238,139 @@ function spotwiseHandleForm(form, opts) {
     })();
   }
 })();
+
+// ---------------------------------------------------------------------------
+// Nav v2: exposed tab rail. Three independent pieces, each a no-op on pages
+// that don't carry the v2 markup, so pages still on the old .nav-menu dropdown
+// are completely unaffected.
+// ---------------------------------------------------------------------------
+
+// 1. Signal Rail -- one indicator that slides and resizes to the hovered tab,
+// resting under the current page's tab (or hidden, on pages with no tab of
+// their own, e.g. the homepage). Only transform/width animate, so this stays
+// on the compositor. Under prefers-reduced-motion the CSS drops the transition
+// but the rail still tracks correctly -- it just moves instantly.
+(function () {
+  var tabs = document.querySelector('.nav-tabs');
+  if (!tabs) return;
+  var rail = tabs.querySelector('.nav-rail');
+  if (!rail) return;
+  var links = Array.prototype.slice.call(tabs.querySelectorAll('a'));
+  if (!links.length) return;
+  var active = tabs.querySelector('a.active');
+
+  rail.innerHTML =
+    '<svg viewBox="0 0 100 9" preserveAspectRatio="none" aria-hidden="true">' +
+    '<path class="rail-base" d="M1 7 L99 7" vector-effect="non-scaling-stroke"/>' +
+    '<path class="rail-line" d="M1 7 L42 7 C64 7 70 2.4 97 2" vector-effect="non-scaling-stroke"/>' +
+    '<circle class="rail-halo" cx="97" cy="2" r="3.4" vector-effect="non-scaling-stroke"/>' +
+    '<circle class="rail-node" cx="97" cy="2" r="1.9" vector-effect="non-scaling-stroke"/>' +
+    '</svg>';
+
+  function moveTo(el, show) {
+    if (!el) {
+      rail.classList.remove('is-on');
+      return;
+    }
+    rail.style.width = el.offsetWidth + 'px';
+    rail.style.transform = 'translateX(' + el.offsetLeft + 'px)';
+    if (show !== false) rail.classList.add('is-on');
+  }
+  function rest() { moveTo(active, !!active); }
+
+  links.forEach(function (a) {
+    a.addEventListener('mouseenter', function () { moveTo(a); });
+    a.addEventListener('focus', function () { moveTo(a); });
+  });
+  tabs.addEventListener('mouseleave', rest);
+  tabs.addEventListener('focusout', function (e) {
+    if (!tabs.contains(e.relatedTarget)) rest();
+  });
+
+  // Fonts land after first paint and change tab widths, so re-measure once
+  // they're ready as well as on resize.
+  rest();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(rest);
+  var rafId = null;
+  window.addEventListener('resize', function () {
+    if (rafId) return;
+    rafId = requestAnimationFrame(function () { rafId = null; rest(); });
+  });
+})();
+
+// 2. Condensing header + scroll-depth bar. One class toggle drives every
+// condensed-state property in CSS; the depth bar is a scaleX transform so it
+// never triggers layout. Hysteresis (80 down / 40 up) keeps the header from
+// flickering when a scroll lands right on the threshold.
+(function () {
+  var header = document.querySelector('header.hdr2');
+  if (!header) return;
+  var bar = header.querySelector('.nav-progress');
+  var ticking = false;
+  var condensed = false;
+
+  function update() {
+    ticking = false;
+    var y = window.scrollY || document.documentElement.scrollTop;
+    if (!condensed && y > 80) { condensed = true; header.classList.add('is-condensed'); }
+    else if (condensed && y < 40) { condensed = false; header.classList.remove('is-condensed'); }
+    if (bar) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(y / max, 1) : 0;
+      bar.style.transform = 'scaleX(' + p + ')';
+    }
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+// 3. Sheet (below 860px): icon-only trigger, no "Menu" label anywhere. Same
+// interaction contract the old dropdown had -- click toggles, outside click
+// and Escape close, Escape returns focus to the trigger, arrow keys move
+// between items -- so nothing a returning visitor knew has been taken away.
+(function () {
+  var sheet = document.querySelector('.nav-sheet');
+  if (!sheet) return;
+  var trigger = sheet.querySelector('.nav-sheet-trigger');
+  var panel = sheet.querySelector('.nav-sheet-panel');
+  if (!trigger || !panel) return;
+
+  function close() {
+    sheet.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+  trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = sheet.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function (e) {
+    if (!sheet.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var refocus = sheet.classList.contains('is-open') && sheet.contains(document.activeElement);
+    close();
+    if (refocus) trigger.focus();
+  });
+  sheet.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    if (!sheet.classList.contains('is-open')) return;
+    var links = Array.prototype.slice.call(panel.querySelectorAll('a'));
+    if (!links.length) return;
+    e.preventDefault();
+    var i = links.indexOf(document.activeElement);
+    var next;
+    if (e.key === 'ArrowDown') next = i < 0 ? 0 : (i + 1) % links.length;
+    else next = i < 0 ? links.length - 1 : (i - 1 + links.length) % links.length;
+    links[next].focus();
+  });
+  // Leaving the sheet breakpoint while it's open would otherwise strand the
+  // open state on a layout that no longer shows the panel.
+  window.matchMedia('(min-width:860px)').addEventListener('change', function (e) {
+    if (e.matches) close();
+  });
+})();
