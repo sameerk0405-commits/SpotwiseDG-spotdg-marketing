@@ -128,6 +128,31 @@
   @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
   /* ---------- Responsive ---------- */
+  /* ---------- Scroll-linked spotlight ----------
+     As you read down the guide, the part of the sticky report being explained
+     lights up, so the explanation and the number it describes are never more
+     than a glance apart. Hovering or focusing an individual ratio card lights
+     that one ratio specifically.
+
+     Emphasis is additive only -- nothing is dimmed. Dimming the rest of the
+     card would push real data below its contrast floor to decorate the bit
+     being read. Outline (not border) so lighting a value never reflows the
+     card. Only active >=1081px, where the card is genuinely sticky beside the
+     text; below that it sits above the guide and lighting it does nothing. */
+  .demo [data-spot]{transition:outline-color .3s var(--ease),background-color .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease);}
+  .demo [data-spot].is-lit{outline:1px solid rgba(45,212,196,.5);outline-offset:7px;border-radius:7px;}
+  .demo .sig-item[data-spot].is-lit{outline-offset:3px;border-color:rgba(45,212,196,.4);background:rgba(20,184,166,.06);}
+  .demo .ratio[data-spot].is-lit .v{color:var(--teal-bright);}
+  .demo .sig-score-row[data-spot].is-lit{outline-offset:4px;}
+  .demo .score-scale[data-spot].is-lit{outline:none;box-shadow:0 0 18px rgba(45,212,196,.35);}
+  .demo .sig-badge[data-spot].is-lit{outline:none;box-shadow:0 0 0 3px rgba(45,212,196,.22),0 0 20px rgba(45,212,196,.3);}
+  .ratio-explain-card[data-lights]{cursor:default;}
+  .ratio-explain-card[data-lights]:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;}
+
+  @media (prefers-reduced-motion:reduce){
+    .demo [data-spot]{transition:none;}
+  }
+
   @media (max-width:1080px){
     .demo{grid-template-columns:1fr;gap:56px;}
     .demo-card-col{position:static;}
@@ -221,28 +246,28 @@
             <div class="sig-head-label">Market Signal Report · Sample Zip 00000 · Example Market, XX</div>
             <div class="sig-head-title">Momentum Profile</div>
           </div>
-          <div class="sig-badge"><span class="pulse-dot"></span>Momentum</div>
+          <div class="sig-badge" data-spot="tier"><span class="pulse-dot"></span>Momentum</div>
         </div>
 
-        <div class="sig-score-row">
+        <div class="sig-score-row" data-spot="score">
           <div class="sig-score" data-target="87.3">87.3</div>
           <div class="sig-score-label">Momentum Score<br/>/ 100</div>
         </div>
-        <div class="score-scale" aria-hidden="true"><div class="score-scale-fill"></div></div>
+        <div class="score-scale" data-spot="score" aria-hidden="true"><div class="score-scale-fill"></div></div>
 
         <div class="sig-grid">
           <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,12 C12,11 20,9 28,6.5 C34,4.7 40,3 42,2.5"/></svg></div></div>
           <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,11.5 C12,11 22,9.5 30,8 C36,6.8 40,6 42,5.5"/></svg></div></div>
           <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,3 C12,4 20,6 28,8.5 C34,10.2 40,11.5 42,12"/></svg></div></div>
-          <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg">Moderate<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,8 C8,6.5 12,9.5 18,8 C24,6.5 28,9.5 34,8 C38,7 40,8 42,7.5"/></svg></div></div>
+          <div class="sig-item" data-spot="supply"><div class="k">Supply constraint</div><div class="v neg">Moderate<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,8 C8,6.5 12,9.5 18,8 C24,6.5 28,9.5 34,8 C38,7 40,8 42,7.5"/></svg></div></div>
         </div>
 
         <div class="ratio-row">
-          <div class="ratio"><div class="k">Cap Rate</div><div class="v">5.8%</div></div>
-          <div class="ratio"><div class="k">GRM</div><div class="v">12.1x</div></div>
-          <div class="ratio"><div class="k">Price / Income</div><div class="v">3.6x</div></div>
-          <div class="ratio"><div class="k">Rent Burden</div><div class="v">27%</div></div>
-          <div class="ratio"><div class="k">1% Rule</div><div class="v">0.92%</div></div>
+          <div class="ratio" data-spot="cap-rate"><div class="k">Cap Rate</div><div class="v">5.8%</div></div>
+          <div class="ratio" data-spot="grm"><div class="k">GRM</div><div class="v">12.1x</div></div>
+          <div class="ratio" data-spot="price-income"><div class="k">Price / Income</div><div class="v">3.6x</div></div>
+          <div class="ratio" data-spot="rent-burden"><div class="k">Rent Burden</div><div class="v">27%</div></div>
+          <div class="ratio" data-spot="one-percent"><div class="k">1% Rule</div><div class="v">0.92%</div></div>
         </div>
 
         <div class="sig-reasons">
@@ -289,7 +314,7 @@
       </div>
 
       <!-- MOMENTUM SCORE -->
-      <div class="dsec reveal">
+      <div class="dsec reveal" data-lights="score">
         <div class="eyebrow">The Momentum Score</div>
         <h2>A single number, 0–100.</h2>
         <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. The score is a percentile rank: a higher score means the model rates that zip above more of the others we score, as entering — or already in — a period of outperformance relative to its metro. A lower score means the signal is weaker or mixed.</p>
@@ -315,7 +340,7 @@
       </div>
 
       <!-- TIER SYSTEM -->
-      <div class="dsec reveal">
+      <div class="dsec reveal" data-lights="tier">
         <h2>What each tier means.</h2>
         <p>Every scored zip is classified into one of four tiers based on where its score ranks against every other zip we score.</p>
         <div class="tier-grid">
@@ -339,31 +364,31 @@
       </div>
 
       <!-- INVESTOR RATIOS -->
-      <div class="dsec reveal">
+      <div class="dsec reveal" data-lights="cap-rate grm price-income rent-burden one-percent supply">
         <h2>The investor ratios, explained.</h2>
         <p>Every report also includes standard investor metrics, computed for the specific zip so you don't have to.</p>
         <div class="ratio-grid">
-          <div class="ratio-explain-card sw-card">
+          <div class="ratio-explain-card sw-card" data-lights="cap-rate" tabindex="0">
             <h3>Cap Rate</h3>
             <p>Annual rental income as a percentage of purchase price. Higher generally means more cash flow relative to price paid, though it can also reflect higher risk.</p>
           </div>
-          <div class="ratio-explain-card sw-card">
+          <div class="ratio-explain-card sw-card" data-lights="grm" tabindex="0">
             <h3>GRM (Gross Rent Multiplier)</h3>
             <p>How many years of gross rent it would take to equal the purchase price. Lower generally means a cheaper entry point relative to rental income.</p>
           </div>
-          <div class="ratio-explain-card sw-card">
+          <div class="ratio-explain-card sw-card" data-lights="price-income" tabindex="0">
             <h3>Price / Income</h3>
             <p>Median home price relative to median household income in the area. Higher can signal an area becoming less affordable to local wage earners — often a precursor to price pressure.</p>
           </div>
-          <div class="ratio-explain-card sw-card">
+          <div class="ratio-explain-card sw-card" data-lights="rent-burden" tabindex="0">
             <h3>Rent Burden</h3>
             <p>The share of median household income a median rent payment would consume. Useful for understanding how stretched local renters already are.</p>
           </div>
-          <div class="ratio-explain-card sw-card">
+          <div class="ratio-explain-card sw-card" data-lights="one-percent" tabindex="0">
             <h3>1% Rule</h3>
             <p>A quick, widely used investor heuristic — whether monthly rent is at least 1% of the purchase price. A rough but common cash-flow screen for rental property.</p>
           </div>
-          <div class="ratio-explain-card sw-card">
+          <div class="ratio-explain-card sw-card" data-lights="supply" tabindex="0">
             <h3>Supply Constraint</h3>
             <p>How tight new housing supply is relative to demand in the area. Tighter supply generally supports price appreciation.</p>
           </div>

@@ -374,3 +374,91 @@ function spotwiseHandleForm(form, opts) {
     if (e.matches) close();
   });
 })();
+
+// ---------------------------------------------------------------------------
+// Scroll-linked spotlight (/sample-report): as a guide section scrolls into
+// the reading zone, the part of the sticky report card it describes lights up.
+// Hovering or keyboard-focusing an individual ratio card lights that one ratio.
+//
+// Driven by markup, not hardcoded selectors: any element with data-lights="a b"
+// lights every [data-spot="a"], [data-spot="b"] inside the same container. No-op
+// on pages with no [data-spot], so it costs nothing anywhere else.
+// ---------------------------------------------------------------------------
+(function () {
+  var root = document.querySelector('.demo');
+  if (!root) return;
+  var spots = root.querySelectorAll('[data-spot]');
+  var sources = root.querySelectorAll('[data-lights]');
+  if (!spots.length || !sources.length) return;
+
+  // Below this the card is static and sits above the guide, so lighting it
+  // would highlight something already scrolled off screen.
+  var wide = window.matchMedia('(min-width:1081px)');
+
+  // Sections (the scroll-driven layer) vs cards (the hover-driven layer).
+  var sections = [], cards = [];
+  Array.prototype.forEach.call(sources, function (el) {
+    (el.classList.contains('ratio-explain-card') ? cards : sections).push(el);
+  });
+
+  function keysOf(el) { return (el.getAttribute('data-lights') || '').split(/\s+/).filter(Boolean); }
+
+  var scrollKeys = [], hoverKeys = null;
+
+  function paint() {
+    var active = hoverKeys || scrollKeys;
+    Array.prototype.forEach.call(spots, function (s) {
+      s.classList.toggle('is-lit', active.indexOf(s.getAttribute('data-spot')) !== -1);
+    });
+  }
+  function clearAll() {
+    Array.prototype.forEach.call(spots, function (s) { s.classList.remove('is-lit'); });
+  }
+
+  // The section whose top has most recently passed the reading line is the one
+  // being read. Falls back to the first section before any has passed it.
+  function recomputeScroll() {
+    if (!wide.matches) { scrollKeys = []; return; }
+    var line = window.innerHeight * 0.42;
+    var chosen = null;
+    sections.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top <= line && r.bottom > 0) chosen = el;
+    });
+    if (!chosen) {
+      var first = sections[0];
+      if (first && first.getBoundingClientRect().top > line) chosen = null;
+    }
+    scrollKeys = chosen ? keysOf(chosen) : [];
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      recomputeScroll();
+      paint();
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  cards.forEach(function (card) {
+    function enter() { if (!wide.matches) return; hoverKeys = keysOf(card); paint(); }
+    function leave() { hoverKeys = null; paint(); }
+    card.addEventListener('mouseenter', enter);
+    card.addEventListener('focus', enter);
+    card.addEventListener('mouseleave', leave);
+    card.addEventListener('blur', leave);
+  });
+
+  wide.addEventListener('change', function (e) {
+    if (!e.matches) { hoverKeys = null; clearAll(); }
+    else onScroll();
+  });
+
+  recomputeScroll();
+  paint();
+})();
