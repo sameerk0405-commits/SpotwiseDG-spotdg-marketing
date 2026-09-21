@@ -72,6 +72,15 @@
   .founders-secondary .role{color:var(--muted);margin-top:0;}
   .company-line{text-align:center;font-size:13px;color:var(--muted);font-weight:500;font-family:'JetBrains Mono',monospace;}
 
+  /* ---------- Photo orbs ----------
+     Headshots replace the initials. The morphing blob is right for a monogram
+     and wrong for a face, so photos get a still circle and the ring stays put.
+     Gradient class is kept underneath as the paint-before-load fallback. */
+  .orb-photo{width:88px;height:88px;padding:0;overflow:hidden;border-radius:50%;animation:none;}
+  .orb-photo::after{border-radius:50%;animation:none;}
+  .orb-photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;}
+  .founders-secondary .orb-photo{width:56px;height:56px;}
+
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
     .story{grid-template-columns:1fr;gap:26px;}
@@ -157,13 +166,13 @@
     </div>
     <div class="founders-primary">
       <div class="founder-card sw-card">
-        <div class="orb orb-a">SK</div>
+        <div class="orb orb-a orb-photo"><img src="../assets/team/sameer-400.webp" srcset="../assets/team/sameer-200.webp 200w, ../assets/team/sameer-400.webp 400w" sizes="88px" width="88" height="88" alt="Sameer Katwala" loading="lazy" decoding="async" /></div>
         <h3>Sameer Katwala</h3>
         <div class="role">Co-Founder &amp; CEO</div>
         <div class="founder-sub">Leads Production and Development.</div>
       </div>
       <div class="founder-card sw-card">
-        <div class="orb orb-b">AG</div>
+        <div class="orb orb-b orb-photo"><img src="../assets/team/andrew-400.webp" srcset="../assets/team/andrew-200.webp 200w, ../assets/team/andrew-400.webp 400w" sizes="88px" width="88" height="88" alt="Andrew Giacomini" loading="lazy" decoding="async" /></div>
         <h3>Andrew Giacomini</h3>
         <div class="role">Co-Founder &amp; COO/CFO</div>
         <div class="founder-sub">Handles day-to-day operations and manages finances.</div>
@@ -171,7 +180,7 @@
     </div>
     <div class="founders-secondary">
       <div class="founder-card">
-        <div class="orb orb-c">JL</div>
+        <div class="orb orb-c orb-photo"><img src="../assets/team/joseph-400.webp" srcset="../assets/team/joseph-200.webp 200w, ../assets/team/joseph-400.webp 400w" sizes="56px" width="56" height="56" alt="Joseph LaMonica" loading="lazy" decoding="async" /></div>
         <h3>Joseph LaMonica</h3>
         <div class="role">Technical Advisor</div>
       </div>
