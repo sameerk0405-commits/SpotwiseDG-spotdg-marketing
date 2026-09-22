@@ -14,11 +14,11 @@
     document.documentElement.classList.add('js');
   }
 </script>
-<title>Disclaimer — SpotWise Data Group</title>
-<meta name="description" content="SpotWise is in beta and provides market intelligence, not financial or investment advice. Past performance, including our backtest results, does not guarantee future results." />
+<title>Disclaimer: SpotWise Data Group</title>
+<meta name="description" content="SpotWise provides market intelligence, not financial or investment advice. Past performance, including our backtest results, does not guarantee future results." />
 <meta name="robots" content="index, follow" />
-<meta property="og:title" content="Disclaimer — SpotWise Data Group" />
-<meta property="og:description" content="SpotWise is in beta and provides market intelligence, not financial or investment advice. Past performance, including our backtest results, does not guarantee future results." />
+<meta property="og:title" content="Disclaimer: SpotWise Data Group" />
+<meta property="og:description" content="SpotWise provides market intelligence, not financial or investment advice. Past performance, including our backtest results, does not guarantee future results." />
 <meta property="og:url" content="https://spotdg.com/disclaimer/" />
 <meta property="og:image" content="https://spotdg.com/assets/og-image.png" />
 <meta property="og:image:width" content="1200" />
@@ -83,6 +83,7 @@
         <a href="../reports/index.html">Reports</a>
         <a href="../team/index.html">Team</a>
         <a href="../contact/index.html">Contact</a>
+        <a href="../faq/index.html">FAQ</a>
         <a href="../disclaimer/index.html" class="active" aria-current="page">Disclaimer</a>
       <span class="nav-rail" aria-hidden="true"></span>
     </div>
@@ -102,6 +103,7 @@
             <a href="../reports/index.html">Reports</a>
             <a href="../team/index.html">Team</a>
             <a href="../contact/index.html">Contact</a>
+            <a href="../faq/index.html">FAQ</a>
             <a href="../disclaimer/index.html" class="active" aria-current="page">Disclaimer</a>
             <a class="nav-sheet-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in to the dashboard</a>
           </div>
@@ -134,18 +136,18 @@
       <div class="legal-body">
         <article class="legal-item" data-legal="1">
           <div class="lnum">01</div>
-          <h3>SpotWise is in beta.</h3>
-          <p>The product you're using right now is an active beta. The model, our data coverage, our scoring methodology, and the reports themselves are still being built and refined. Scores, tiers, and underlying figures can and will change as we improve the system — nothing here should be treated as a finished, static product.</p>
+          <h3>Scores are recalculated as new data is released and can change between updates.</h3>
+          <p>The product you're using right now is under active development. The model, our data coverage, our scoring methodology, and the reports themselves are still being built and refined. Scores, tiers, and underlying figures can and will change as we improve the system, and nothing here should be treated as a finished, static product.</p>
         </article>
         <article class="legal-item" data-legal="2">
           <div class="lnum">02</div>
           <h3>This is market intelligence, not financial advice.</h3>
-          <p>SpotWise provides data-driven market intelligence to inform your own research. It is not financial, investment, legal, or tax advice, and nothing on this site or in a Market Signal Report should be interpreted as a recommendation to buy, sell, or hold any asset. Every investment decision you make — and its outcome — remains your sole responsibility. Consult a licensed financial, legal, or tax professional before acting on anything here.</p>
+          <p>SpotWise provides data-driven market intelligence to inform your own research. It is not financial, investment, legal, or tax advice, and nothing on this site or in a Market Signal Report should be interpreted as a recommendation to buy, sell, or hold any asset. Every investment decision you make, and its outcome, remains your sole responsibility. Consult a licensed financial, legal, or tax professional before acting on anything here.</p>
         </article>
         <article class="legal-item" data-legal="3">
           <div class="lnum">03</div>
           <h3>Past performance does not guarantee future results.</h3>
-          <p>Our reported 77% backtest hit rate and +14.0% average outperformance reflect embargo-respecting walk-forward testing of top-decile picks against 2014–2021 entry cohorts, replicated across all 10 US regions. These figures reflect post-2013 market conditions — the same signal underperformed in the 2006–2012 downturn era — and describe how the methodology performed on past data, not a guarantee, promise, or prediction of future performance. Real estate markets are volatile and unpredictable, and actual future results may differ materially from historical backtests.</p>
+          <p>Our reported 77% backtest hit rate and +14.0% average outperformance reflect embargo-respecting walk-forward testing of top-decile picks against 2014–2021 entry cohorts, replicated across all 10 US regions. These figures reflect post-2013 market conditions. The same signal underperformed in the 2006–2012 downturn era. They describe how the methodology performed on past data, not a guarantee, promise, or prediction of future performance. Real estate markets are volatile and unpredictable, and actual future results may differ materially from historical backtests.</p>
         </article>
       </div>
     </div>
@@ -155,7 +157,6 @@
   <section class="sec final-cta reveal">
     <div class="trail"></div>
     <h2>Now that the caveats are clear.</h2>
-    <p>Twenty-five founding invitations, then the program closes.</p>
     <div class="final-ctas">
       <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
       <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
@@ -192,20 +193,21 @@
         <div class="fc-h">Company</div>
         <a href="../team/index.html">Team</a>
         <a href="../contact/index.html">Contact</a>
+        <a href="../faq/index.html">FAQ</a>
         <a href="../disclaimer/index.html">Disclaimer</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
     © 2026 SpotWise Data Group LLC · New York Metropolitan Area.<br/>
-    Market intelligence, not financial or investment advice. Past performance does not guarantee future results.
+    SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.
   </div>
 </footer>
 
 <script src="../shared.js"></script>
 <script>
   // Progress rail: highlights the numeral of whichever disclaimer section is
-  // currently in view. Purely decorative — no-ops without IntersectionObserver.
+  // currently in view. Purely decorative. No-ops without IntersectionObserver.
   (function(){
     if (!('IntersectionObserver' in window)) return;
     var items = document.querySelectorAll('.legal-item[data-legal]');

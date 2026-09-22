@@ -37,6 +37,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://spotdg.com/faq/</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://spotdg.com/disclaimer/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>yearly</changefreq>

@@ -9,8 +9,8 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<title>Apply — Founding Market Intelligence Program — SpotWise Data Group</title>
-<meta name="description" content="Apply for an invitation to SpotWise's Founding Market Intelligence Program — a complimentary Market Signal Report in exchange for structured feedback." />
+<title>Founding Program | SpotWise</title>
+<meta name="description" content="Request access to the Founding Market Intelligence Program: a complimentary Market Signal Report in exchange for structured feedback." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0A1512" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
@@ -101,19 +101,17 @@
   <div class="mesh" aria-hidden="true"></div>
   <div class="form-card">
     <div class="eyebrow gold">Founding Market Intelligence Program</div>
-    <h1>Apply for an invitation.</h1>
-    <p class="sub">25 invitations. Complimentary Market Signal Report for a selected geography, in exchange for a feedback session.</p>
+    <h1>Request your report.</h1>
+    <p class="sub">A complimentary Market Signal Report for a geography you choose, with a walkthrough from our team.</p>
 
-    <!-- Visual mirror of the 01/02/03 headings below, so progress through a
-         three-part form is legible without scrolling. aria-hidden because the
+    <!-- Visual mirror of the 01/02 headings below, so progress through a
+         two-part form is legible without scrolling. aria-hidden because the
          .form-step headings are the real, announced structure -- this would
          otherwise read the same labels to a screen reader twice. -->
     <div class="form-progress" aria-hidden="true">
       <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">About you</span></div>
       <div class="fp-bar"></div>
       <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">Your interest</span></div>
-      <div class="fp-bar"></div>
-      <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">Agreement</span></div>
     </div>
 
     <form id="founding-form">
@@ -130,8 +128,8 @@
           <input type="email" id="email" name="email" required />
         </div>
         <div class="field-group">
-          <label for="company">Company<span class="req">*</span></label>
-          <input type="text" id="company" name="company" required />
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" />
         </div>
       </div>
       <div class="field-group">
@@ -157,28 +155,8 @@
         <textarea id="why" name="why" placeholder="Tell us a bit about what you're evaluating"></textarea>
       </div>
 
-      <div class="form-step"><span class="num">03</span><span class="lbl">Agreement</span><span class="rule"></span></div>
-      <div class="nda-block">
-        <div class="nda-heading">Mutual Non-Disclosure Agreement</div>
-        <div class="nda-note">This is a standard mutual confidentiality agreement. Contact us with any questions.</div>
-        <div class="nda-scroll" tabindex="0">
-          <p>This agreement is entered into between SpotWise Data Group LLC ("SpotWise") and the individual or entity submitting this request ("Recipient") as of the date of submission below.</p>
-          <p class="nda-date-line">Date of submission: <span id="nda-date">—</span></p>
-          <p><strong>1. Confidential Information.</strong> In connection with this engagement, SpotWise may disclose to Recipient certain proprietary information, including but not limited to Market Signal Reports, scoring methodology, data outputs, and platform functionality ("Confidential Information"). Recipient may also disclose feedback, business context, or investment criteria to SpotWise in connection with this engagement.</p>
-          <p><strong>2. Obligations.</strong> Each party agrees to: (a) hold the other party's Confidential Information in strict confidence; (b) not disclose Confidential Information to any third party without prior written consent; (c) use Confidential Information solely for the purpose of evaluating and engaging with SpotWise's services; and (d) protect Confidential Information with at least the same degree of care used to protect its own confidential information, but no less than reasonable care.</p>
-          <p><strong>3. Exclusions.</strong> Confidential Information does not include information that: (a) is or becomes publicly available through no fault of the receiving party; (b) was already known to the receiving party prior to disclosure; (c) is independently developed without use of the disclosing party's Confidential Information; or (d) is required to be disclosed by law or court order, provided reasonable notice is given where legally permissible.</p>
-          <p><strong>4. Term.</strong> This agreement remains in effect for two (2) years from the date of acceptance below, or until superseded by a separate written agreement between the parties.</p>
-          <p><strong>5. No License or Obligation.</strong> Nothing in this agreement obligates either party to proceed with any business relationship, purchase, or transaction.</p>
-          <p>By checking the box below, you acknowledge that you have read, understood, and agree to be bound by the terms of this Mutual Non-Disclosure Agreement.</p>
-        </div>
-        <label class="nda-checkbox">
-          <input type="checkbox" id="nda" name="nda" required />
-          <span>I have read, understood, and agree to be bound by the terms of this Mutual Non-Disclosure Agreement.<span class="req">*</span></span>
-        </label>
-      </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14.5px;">Submit Application →</button>
-      <div class="disclaimer">Market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
-      <div class="note">Wave 1 — 5 reports — Going to warm contacts for honest feedback</div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14.5px;">Request report →</button>
+      <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
     </form>
 
     <div id="form-success">
@@ -186,8 +164,8 @@
         <img class="success-icon success-icon-open" src="../assets/spot-icon.png" alt="" />
         <img class="success-icon success-icon-blink" src="../assets/spot-icon-blink.png" alt="" />
       </div>
-      <h2>Application received.</h2>
-      <p>Thanks for applying to the Founding Market Intelligence Program — we'll follow up on next steps shortly.</p>
+      <h2>Request received.</h2>
+      <p>We'll review it and reply within two business days.</p>
     </div>
   </div>
 </main>
@@ -196,15 +174,10 @@
 <script>
   var FORM_ENDPOINT = 'https://formspree.io/f/mlgyvzvq';
 
-  var _ndaDate = document.getElementById('nda-date');
-  if (_ndaDate) {
-    _ndaDate.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  }
-
   spotwiseHandleForm(document.getElementById('founding-form'), {
     endpoint: FORM_ENDPOINT,
     subject: 'Founding Market Intelligence Program Application',
-    submitLabel: 'Submit Application →',
+    submitLabel: 'Request report →',
     fields: [
       { name: 'name', label: 'Name' },
       { name: 'email', label: 'Email' },

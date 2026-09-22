@@ -18,10 +18,10 @@
     document.documentElement.classList.add('js');
   }
 </script>
-<title>SpotWise Data Group — Tri-State Real Estate Intelligence</title>
-<meta name="description" content="SpotWise identifies which tri-state neighborhoods are entering the next appreciation window — packaged into investor-ready Market Signal Reports. Forward-looking, walk-forward validated, zip-level precision." />
+<title>SpotWise Data Group: Tri-State Real Estate Intelligence</title>
+<meta name="description" content="SpotWise identifies which tri-state neighborhoods are entering the next appreciation window, packaged into investor-ready Market Signal Reports. Forward-looking, walk-forward validated, zip-level precision." />
 <meta name="robots" content="index, follow" />
-<meta property="og:title" content="SpotWise Data Group — Before the market moves." />
+<meta property="og:title" content="SpotWise Data Group: Before the market moves." />
 <meta property="og:description" content="Tri-state real estate intelligence, packaged into investor-ready Market Signal Reports." />
 <meta property="og:url" content="https://spotdg.com/" />
 <meta property="og:image" content="https://spotdg.com/assets/og-image.png" />
@@ -82,10 +82,6 @@
     background:radial-gradient(circle,rgba(45,212,196,.22) 0%,rgba(45,212,196,.08) 38%,transparent 68%);
     filter:blur(10px);animation:heroGlowPulse 6.5s ease-in-out infinite;}
   @keyframes heroGlowPulse{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
-  .beta-badge-row{position:relative;margin:0 0 22px;z-index:1;}
-  .beta-badge{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:7px 16px;border-radius:100px;}
-  .beta-badge::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);animation:badgeShimmer 3.4s ease-in-out infinite;}
-  @keyframes badgeShimmer{0%,30%{left:-60%;}70%,100%{left:130%;}}
   /* Two-column hero: the claim on the left, the live signal it's claiming
      about on the right. The stat band spans both columns underneath, so the
      evidence sits directly below the assertion instead of a screen away. */
@@ -131,7 +127,6 @@
   .stat span{font-size:11px;color:var(--muted);margin-top:10px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
   @media (prefers-reduced-motion:reduce){
     .hero-glow::before{animation:none;opacity:.85;}
-    .beta-badge::after{animation:none;display:none;}
     h1 em{animation:none;filter:drop-shadow(0 0 20px rgba(45,212,196,.28));}
   }
 
@@ -151,7 +146,7 @@
   @keyframes spDraw{to{stroke-dashoffset:0;}}
   @keyframes spGrow{to{opacity:1;transform:scaleY(1);}}
 
-  /* ---------- Hero: momentum visualization — a signal resolving out of market noise.
+  /* ---------- Hero: momentum visualization: a signal resolving out of market noise.
      One 7s master loop, pure CSS/SVG: a scan sweeps the chart left-to-right, data
      points ignite as it passes, the momentum line draws in and diverges from the
      grey noise cluster (which dims once the signal is confirmed), the appreciation
@@ -289,7 +284,7 @@
     .step:hover .snum{transform:none;}
   }
 
-  /* ---------- Founding: split panel — the offer on one side, the exact terms
+  /* ---------- Founding: split panel: the offer on one side, the exact terms
      of the exchange on the other, so "complimentary" is stated alongside what
      is actually being asked for rather than left implied. ---------- */
   .founding-split{max-width:var(--max);text-align:left;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:52px 48px;}
@@ -300,6 +295,7 @@
   .ft-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
   .founding-terms ul{display:flex;flex-direction:column;gap:13px;}
   .founding-terms li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.55;}
+  .founding-terms li::before{content:"";width:6px;height:6px;margin-top:7px;border-radius:50%;background:var(--teal-bright);flex-shrink:0;}
 
   /* ---------- Responsive ---------- */
   @media (max-width:1023px){
@@ -385,6 +381,7 @@
       <a href="reports/index.html">Reports</a>
       <a href="team/index.html">Team</a>
       <a href="contact/index.html">Contact</a>
+      <a href="faq/index.html">FAQ</a>
       <a href="disclaimer/index.html">Disclaimer</a>
       <span class="nav-rail" aria-hidden="true"></span>
     </div>
@@ -404,6 +401,7 @@
             <a href="reports/index.html">Reports</a>
             <a href="team/index.html">Team</a>
             <a href="contact/index.html">Contact</a>
+            <a href="faq/index.html">FAQ</a>
             <a href="disclaimer/index.html">Disclaimer</a>
             <a class="nav-sheet-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in to the dashboard</a>
           </div>
@@ -423,13 +421,12 @@
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-inner">
       <div class="hero-copy">
-      <div class="beta-badge-row"><span class="beta-badge"><span class="pulse-dot" style="background:var(--teal-bright);box-shadow:none;"></span>Beta</span></div>
-      <div class="eyebrow">Building in Northeastern Tri-State — more markets coming.</div>
+      <div class="eyebrow">1,213 ZIP codes scored across New Jersey, New York, and Pennsylvania.</div>
       <h1>Before the market <em>moves.</em></h1>
-      <p class="hero-sub">SpotWise identifies which neighborhoods are entering the next appreciation window — and packages that intelligence into investor-ready Market Signal Reports.</p>
+      <p class="hero-sub">SpotWise identifies which neighborhoods are entering the next appreciation window, and packages that intelligence into investor-ready Market Signal Reports.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="founding-program/index.html">Join the Program →</a>
-        <a class="btn btn-ghost" href="#signal">See a live signal ↓</a>
+        <a class="btn btn-ghost" href="#signal">See a real signal ↓</a>
       </div>
       </div><!-- /.hero-copy -->
 
@@ -441,7 +438,7 @@
             <polyline class="sp-grey" points="2,18 14,17.5 26,18.5 38,17 50,18 62,17.5 74,18.5 86,17.5 94,18"/>
             <path class="sp-teal" pathLength="1" d="M2,19 C20,18 34,16 48,13 C64,9.5 80,6 94,3.5"/>
           </svg>
-          <span>avg outperformance vs metro — top-decile picks</span>
+          <span>avg outperformance vs metro, top-decile picks</span>
         </div>
         <div class="stat">
           <!-- data-format="comma" routes this through the integer formatter; without
@@ -468,7 +465,7 @@
               <rect x="90.5" y="10" width="3.6" height="14" rx="1"/>
             </g>
           </svg>
-          <span>5-yr backtest hit rate — 2014–2021 cohorts</span>
+          <span>5-yr backtest hit rate, 2014–2021 cohorts</span>
         </div>
         <div class="stat">
           <b data-target="1213" data-format="comma">1,213</b>
@@ -485,10 +482,10 @@
               <rect x="86.8" y="3" width="6.5" height="21" rx="1"/>
             </g>
           </svg>
-          <span>zip codes scored — and growing</span>
+          <span>zip codes scored, and growing</span>
         </div>
       </div>
-      <p class="stat-caveat">Top-decile picks, 2014–2021 entry cohorts, embargo-respecting walk-forward, replicated across all 10 US regions (per-region hit rate 68–88%). These figures reflect post-2013 market conditions — the same signal underperformed in the 2006–2012 downturn era. Past performance does not guarantee future results.</p>
+      <p class="stat-caveat">Top-decile picks, 2014–2021 entry cohorts, embargo-respecting walk-forward, replicated across all 10 US regions (per-region hit rate 68–88%). These figures reflect post-2013 market conditions. The same signal underperformed in the 2006–2012 downturn era. Past performance does not guarantee future results.</p>
       </div><!-- /.stat-band -->
 
       <div class="momentum-viz" aria-hidden="true">
@@ -540,52 +537,43 @@
         <div class="sig-badge momentum-badge"><span class="pulse-dot"></span>Peak Momentum</div>
         <div class="viz-caption">
           <span class="vc-scan">Analyzing 1,213 zip codes<span class="vc-cursor"></span></span>
-          <span class="vc-lock">Signal resolved — Peak Momentum</span>
+          <span class="vc-lock">Signal resolved: Peak Momentum</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- LIVE INTELLIGENCE CARD — the hero's payoff -->
+  <!-- LIVE INTELLIGENCE CARD: the hero's payoff -->
   <section class="card-section reveal" id="signal">
     <div class="sec-head">
-      <div class="eyebrow">Live Signal</div>
-      <h2 style="margin-top:16px;font-size:clamp(24px,3.2vw,34px);">What a signal looks like.</h2>
+      <div class="eyebrow">A real signal</div>
+      <h2 style="margin-top:16px;font-size:clamp(24px,3.2vw,34px);">One ZIP, scored.</h2>
     </div>
     <div class="sig-card" id="sample-report">
       <div class="sig-head">
         <div>
-          <div class="sig-head-label blur-val">Market Signal Report · NJ-07030 · Hoboken, NJ</div>
+          <div class="sig-head-label">Market Signal Report · 10462 · Bronx, NY</div>
           <div class="sig-head-title">Momentum Profile</div>
         </div>
-        <div class="sig-badge"><span class="pulse-dot"></span>Peak Momentum</div>
+        <div class="sig-badge"><span class="pulse-dot"></span>Peak</div>
       </div>
       <div class="sig-score-row">
-        <div class="sig-score blur-val">94.2</div>
+        <div class="sig-score">99.8</div>
         <div class="sig-score-label">Momentum Score<br/>/ 100</div>
       </div>
       <div class="sig-grid">
-        <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos blur-val">+18.3%</div></div>
-        <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos blur-val">+22.1%</div></div>
-        <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos blur-val">−1.8pp</div></div>
-        <div class="sig-item"><div class="k">Supply constraint</div><div class="v neg blur-val">Low</div></div>
+        <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.8%</div></div>
+        <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+10.8%</div></div>
       </div>
       <div class="ratio-row">
-        <div class="ratio"><div class="k">Cap Rate</div><div class="v blur-val">6.2%</div></div>
-        <div class="ratio"><div class="k">GRM</div><div class="v blur-val">11.4x</div></div>
-        <div class="ratio"><div class="k">Price / Income</div><div class="v blur-val">4.1x</div></div>
+        <div class="ratio"><div class="k">Cap Rate</div><div class="v">12.79%</div></div>
+        <div class="ratio"><div class="k">GRM</div><div class="v">7.8×</div></div>
+        <div class="ratio"><div class="k">Price / Income</div><div class="v">3.85×</div></div>
       </div>
       <div class="action-badge">→ Investigate Further</div>
-      <div class="sig-disclaimer">Market intelligence, not financial or investment advice.</div>
+      <div class="sig-disclaimer">SpotWise provides market intelligence, not financial or investment advice.</div>
       <div class="sig-footer">
-        <div class="src">Walk-forward validated · 2014–2021 cohorts · Confidence: High</div>
-        <div class="ts" id="live-ts">Updated 4s ago</div>
-      </div>
-      <div class="sample-overlay">
-        <div class="sample-overlay-inner">
-          <img class="sample-icon" src="assets/spot-icon.png" alt="" />
-          <div class="msg">Sample data</div>
-        </div>
+        <div class="src">Walk-forward validated · 2014–2021 cohorts · Batch 2026-09</div>
       </div>
     </div>
     <div style="text-align:center;margin-top:24px;">
@@ -593,7 +581,7 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS — signal narrative -->
+  <!-- HOW IT WORKS: signal narrative -->
   <section class="sec sec-alt reveal pipeline-sec">
     <div class="sec-head sec-head-left">
       <div class="eyebrow">How It Works</div>
@@ -609,7 +597,7 @@
       <div class="step">
         <div class="snum">02</div>
         <h3>Model</h3>
-        <p>A walk-forward validated model — trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized.</p>
+        <p>A walk-forward validated model: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized.</p>
       </div>
       <div class="step">
         <div class="snum">03</div>
@@ -619,7 +607,7 @@
       <div class="step">
         <div class="snum">04</div>
         <h3>Report</h3>
-        <p>Packaged into a decision-ready Market Signal Report — the answer first, the analytics behind it.</p>
+        <p>Packaged into a decision-ready Market Signal Report: the answer first, the analytics behind it.</p>
       </div>
     </div>
     <div class="steps-link">
@@ -627,22 +615,21 @@
     </div>
   </section>
 
-  <!-- FOUNDING PROGRAM (condensed teaser — full details on /reports) -->
+  <!-- FOUNDING PROGRAM (condensed teaser: full details on /reports) -->
   <section class="sec reveal">
     <div class="founding founding-split">
       <div class="founding-copy">
         <div class="eyebrow">Founding Market Intelligence Program</div>
-        <h2>25 invitations. Complimentary report.</h2>
-        <p>Get a complimentary Market Signal Report for a selected geography in exchange for a short feedback session.</p>
-        <a class="btn btn-primary" href="founding-program/index.html">Apply for an invitation →</a>
+        <h2>Get a Market Signal Report for your market.</h2>
+        <p>Pick a geography. We send you a full report and walk you through it with our team. No payment, no obligation, and you can stop there. In return, we ask for twenty minutes of your feedback.</p>
+        <a class="btn btn-primary" href="founding-program/index.html">Request a report →</a>
       </div>
       <div class="founding-terms">
-        <div class="ft-label">What the exchange is</div>
+        <div class="ft-label">What you get</div>
         <ul>
-          <li><span class="mark check">✓</span><span>A full Market Signal Report for a geography you choose</span></li>
-          <li><span class="mark check">✓</span><span>Direct access to the founders while you read it</span></li>
-          <li><span class="mark check">✓</span><span>One short feedback session — that's the whole ask</span></li>
-          <li><span class="mark x">–</span><span>No payment, and no obligation to continue</span></li>
+          <li>A full Market Signal Report for a geography you choose</li>
+          <li>A walkthrough with the founders, at your pace</li>
+          <li>No payment and no obligation to continue</li>
         </ul>
       </div>
     </div>
@@ -652,7 +639,6 @@
   <section class="sec final-cta reveal">
     <div class="trail"></div>
     <h2>Your next market signal is already forming.</h2>
-    <p>Twenty-five founding invitations, then the program closes.</p>
     <div class="final-ctas">
       <a class="btn btn-primary" href="founding-program/index.html">Join the Program →</a>
       <a class="btn btn-ghost" href="sample-report/index.html">See a full sample report</a>
@@ -689,34 +675,24 @@
         <div class="fc-h">Company</div>
         <a href="team/index.html">Team</a>
         <a href="contact/index.html">Contact</a>
+        <a href="faq/index.html">FAQ</a>
         <a href="disclaimer/index.html">Disclaimer</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
     © 2026 SpotWise Data Group LLC · New York Metropolitan Area.<br/>
-    Market intelligence, not financial or investment advice. Past performance does not guarantee future results.
+    SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.
   </div>
 </footer>
 
 <script src="shared.js"></script>
-<script>
-  (function(){
-    var el = document.getElementById('live-ts');
-    if(!el) return;
-    var start = Date.now();
-    setInterval(function(){
-      var s = Math.floor((Date.now() - start) / 1000) + 4;
-      el.textContent = 'Updated ' + s + 's ago';
-    }, 1000);
-  })();
-</script>
 
 <script>
   // Hero stat count-up: animates each stat from 0 to its real value once, the
   // first time #stat-row scrolls into view. The real value is already the
   // element's text content, so a disabled/failed script or prefers-reduced-motion
-  // both just leave the correct static number in place — no broken zero state.
+  // both just leave the correct static number in place, no broken zero state.
   (function(){
     var row = document.getElementById('stat-row');
     if (!row || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
