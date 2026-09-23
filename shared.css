@@ -115,17 +115,17 @@ section{position:relative;}
   .split-5-7,.split-7-5,.split-6-6{grid-template-columns:1fr;gap:36px;}
 }
 
-/* Sections are separated by a hairline rule and 96px, never by a background
+/* Sections are separated by a hairline rule and 72px, never by a background
    change or a card. Apply .sec to every section after the hero; the hero
    itself is exempt (nothing sits above it). */
-.sec{max-width:var(--max);margin:0 auto;padding:var(--s7) var(--gutter);border-top:1px solid var(--rule);}
+.sec{max-width:var(--max);margin:0 auto;padding:72px var(--gutter);border-top:1px solid var(--rule);}
 .sec:first-of-type{border-top:none;}
 
 /* One approved gradient sitewide: a soft radial wash in the top-right of a
-   page's opening section. Apply to the hero on every page. Nothing else
-   gets a gradient, a mesh, or a glow. */
+   page's opening section, sitting behind the right-column visual. Apply to
+   the hero on every page. Nothing else gets a gradient, a mesh, or a glow. */
 .wash-top{
-  background-image:radial-gradient(circle at 70% 0%, rgba(15,124,110,.07) 0%, transparent 55%);
+  background-image:radial-gradient(circle at 78% 0%, rgba(15,124,110,.10) 0%, transparent 55%);
   background-repeat:no-repeat;
 }
 
@@ -479,22 +479,24 @@ header.hdr2 .logo{flex-shrink:0;}
 .mono-table.head-ink thead th{border-bottom:1px solid var(--ink);}
 
 /* ---------- Plan rows: each plan (Analyst/Pro/Enterprise/Lender Scale) as a
-   row separated by a hairline, not a card -- name + one-line audience, then
-   a two-column detail split (reuses .split-6-6). ---------- */
+   row separated by a hairline, not a card. Three columns (paper pass two): a
+   fixed 200px name column (Instrument Serif 28px name, one-line audience
+   beneath), then "What's included" and "Who it's for" as equal columns. Rows
+   are exactly as tall as their text -- no min-height, 24px of padding above
+   and below. Stacks to one column below 900px. ---------- */
 .plan-rows{display:flex;flex-direction:column;}
-.plan-row{padding:40px 0;border-top:1px solid var(--rule);}
+.plan-row{display:grid;grid-template-columns:200px 1fr 1fr;gap:20px 48px;align-items:start;padding:24px 0;border-top:1px solid var(--rule);}
 .plan-rows .plan-row:first-child{border-top:1px solid var(--rule);}
 .plan-rows .plan-row:last-child{border-bottom:1px solid var(--rule);}
-.plan-head{margin-bottom:24px;}
-/* Promoted from h3 to h2 (reports/index.html's four plan names) so the page
-   doesn't skip a level under its own h1. Selector renamed, not duplicated --
-   .plan-head only ever wraps one heading tag, unlike .num-row below. Explicit
-   line-height:1.55 blocks the generic h2{line-height:1.05} "serif scale"
-   rule now that the tag is h2 -- h3 got 1.55 for free via inheritance. */
-.plan-head h2{font-family:var(--font-serif);font-weight:400;font-size:28px;color:var(--ink);line-height:1.55;}
+.plan-head{min-width:0;}
+/* h2, not h3, so the page doesn't skip a level under its own h1; explicit
+   line-height blocks the generic h2{line-height:1.05} serif-scale rule. */
+.plan-head h2{font-family:var(--font-serif);font-weight:400;font-size:28px;color:var(--ink);line-height:1.2;}
 .plan-audience{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);margin-top:6px;}
+.plan-col{min-width:0;}
 .plan-label{font-family:var(--font-sans);font-weight:600;font-size:13px;color:var(--ink-2);margin-bottom:8px;}
-.plan-cols p{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
+.plan-col p{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
+@media (max-width:900px){.plan-row{grid-template-columns:1fr;gap:16px;}}
 
 /* ---------- Tier swatches: the shared color language for the five score
    tiers (Peak/Momentum/Emerging/Watch/Pass), used on the map legend and

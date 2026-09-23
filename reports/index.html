@@ -44,6 +44,11 @@
   @media (max-width:640px){
     .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
+
+  /* Paper pass two: the H1 block and the plan rows read as one unit -- 56px between the lead and the first row,
+     the first row's own hairline is the divider. */
+  .sec.wash-top{padding-bottom:0;}
+  .sec.plan-sec{border-top:none;padding-top:56px;}
 </style>
 </head>
 <body>
@@ -101,22 +106,20 @@
   </section>
 
   <!-- PLAN ROWS -->
-  <section class="sec reveal">
+  <section class="sec plan-sec reveal">
     <div class="plan-rows">
       <div class="plan-row">
         <div class="plan-head">
           <h2>SpotWise Analyst</h2>
           <div class="plan-audience">For solo deal flow</div>
         </div>
-        <div class="split-6-6 plan-cols">
-          <div>
-            <div class="plan-label">What's included</div>
-            <p>Monthly access to a set number of zip-level Market Signal Reports, with the ability to add more as needed. Each report includes the momentum score, tier classification, top signals, and investor ratios for a single zip or market of your choosing.</p>
-          </div>
-          <div>
-            <div class="plan-label">Who it's for</div>
-            <p>Independent flippers and local wholesalers who move on one opportunity at a time and want a fast, data-backed read on a zip before committing capital or a contract.</p>
-          </div>
+        <div class="plan-col">
+          <div class="plan-label">What's included</div>
+          <p>Monthly access to a set number of zip-level Market Signal Reports, with the ability to add more as needed. Each report includes the momentum score, tier classification, top signals, and investor ratios for a single zip or market of your choosing.</p>
+        </div>
+        <div class="plan-col">
+          <div class="plan-label">Who it's for</div>
+          <p>Independent flippers and local wholesalers who move on one opportunity at a time and want a fast, data-backed read on a zip before committing capital or a contract.</p>
         </div>
       </div>
 
@@ -125,15 +128,13 @@
           <h2>SpotWise Pro</h2>
           <div class="plan-audience">For active deal teams</div>
         </div>
-        <div class="split-6-6 plan-cols">
-          <div>
-            <div class="plan-label">What's included</div>
-            <p>A larger monthly allotment of Market Signal Reports, plus side-by-side comparison and ranking across the geographies you're evaluating, with the ability to add more as your pipeline grows.</p>
-          </div>
-          <div>
-            <div class="plan-label">Who it's for</div>
-            <p>Investment syndicates and professional flippers actively sourcing and underwriting several opportunities in parallel need the numbers ranked next to each other, not read one report at a time.</p>
-          </div>
+        <div class="plan-col">
+          <div class="plan-label">What's included</div>
+          <p>A larger monthly allotment of Market Signal Reports, plus side-by-side comparison and ranking across the markets you're evaluating, with the ability to add more as your pipeline grows.</p>
+        </div>
+        <div class="plan-col">
+          <div class="plan-label">Who it's for</div>
+          <p>Investment syndicates and professional flippers actively sourcing and underwriting several opportunities in parallel need the numbers ranked next to each other, not read one report at a time.</p>
         </div>
       </div>
 
@@ -142,15 +143,13 @@
           <h2>SpotWise Enterprise</h2>
           <div class="plan-audience">For lending &amp; fund operations</div>
         </div>
-        <div class="split-6-6 plan-cols">
-          <div>
-            <div class="plan-label">What's included</div>
-            <p>A monthly report allotment sized for underwriting volume, team-wide access so your whole lending or fund operation works from the same signal, and the ability to add capacity as deal flow picks up.</p>
-          </div>
-          <div>
-            <div class="plan-label">Who it's for</div>
-            <p>Regional hard money lenders and micro-funds that need to underwrite collateral across a steady flow of deals, not a single transaction, want momentum data built into how their team evaluates risk.</p>
-          </div>
+        <div class="plan-col">
+          <div class="plan-label">What's included</div>
+          <p>A monthly report allotment sized for underwriting volume, team-wide access so your whole lending or fund operation works from the same signal, and the ability to add capacity as deal flow picks up.</p>
+        </div>
+        <div class="plan-col">
+          <div class="plan-label">Who it's for</div>
+          <p>Regional hard money lenders and micro-funds that need to underwrite collateral across a steady flow of deals, not a single transaction, want momentum data built into how their team evaluates risk.</p>
         </div>
       </div>
 
@@ -159,15 +158,13 @@
           <h2>SpotWise Lender Scale</h2>
           <div class="plan-audience">For institutional underwriting</div>
         </div>
-        <div class="split-6-6 plan-cols">
-          <div>
-            <div class="plan-label">What's included</div>
-            <p>Unlimited query access for underwriting at scale, so momentum data sits inside your underwriting workflow without a monthly ceiling, built for teams evaluating collateral continuously across a large book.</p>
-          </div>
-          <div>
-            <div class="plan-label">Who it's for</div>
-            <p>Institutional fund underwriters and large credit pools where deal volume is constant and a capped monthly allotment would be a bottleneck, not a convenience.</p>
-          </div>
+        <div class="plan-col">
+          <div class="plan-label">What's included</div>
+          <p>Unlimited query access for underwriting at scale, so momentum data sits inside your underwriting workflow without a monthly ceiling, built for teams evaluating collateral continuously across a large book.</p>
+        </div>
+        <div class="plan-col">
+          <div class="plan-label">Who it's for</div>
+          <p>Institutional fund underwriters and large credit pools where deal volume is constant and a capped monthly allotment would be a bottleneck, not a convenience.</p>
         </div>
       </div>
     </div>

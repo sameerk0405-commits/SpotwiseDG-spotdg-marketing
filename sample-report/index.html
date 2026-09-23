@@ -52,6 +52,34 @@
   @media (max-width:640px){
     .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
+
+  /* ---------- Walk-forward diagram (paper pass two). Timeline + row labels IBM Plex Mono 11px --ink-2; keys
+     Archivo 500 13px --ink-2 with 10px swatches; caption 13px --ink-2. "Trained on" bars --ink at 25% (the same
+     value the home cohort chart uses for metro bars), "tested on" bars --teal. ---------- */
+  .wf-fig{margin:0;min-width:0;}
+  .wf-keys{display:flex;flex-wrap:wrap;gap:8px 22px;margin-bottom:18px;font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);}
+  .wf-key{display:inline-flex;align-items:center;gap:8px;}
+  .wf-swatch{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  .wf-swatch-train{background:rgba(20,32,28,.25);}
+  .wf-swatch-test{background:var(--teal);}
+  .wf-rows{display:flex;flex-direction:column;gap:8px;}
+  .wf-row,.wf-axis{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:12px;}
+  .wf-year{font-family:var(--font-mono);font-size:11px;color:var(--ink-2);line-height:1;}
+  .wf-track{position:relative;height:12px;}
+  .wf-bar{position:absolute;top:0;height:12px;display:block;border-radius:2px;}
+  .wf-bar-train{background:rgba(20,32,28,.25);}
+  .wf-bar-test{background:var(--teal);}
+  .wf-axis{margin-top:10px;}
+  .wf-axis-track{position:relative;height:22px;border-top:1px solid var(--ink);}
+  .wf-tick{position:absolute;top:6px;transform:translateX(-50%);font-family:var(--font-mono);font-size:11px;color:var(--ink-2);white-space:nowrap;}
+  .wf-tick:first-child{transform:none;}
+  .wf-tick-end{transform:translateX(-100%);}
+  .wf-caption{margin-top:16px;font-family:var(--font-sans);font-size:13px;line-height:1.6;color:var(--ink-2);}
+  /* Draw-in: under html.js only, each row's two bars start at scaleX(0) from their left edge and draw to full over
+     600ms with --ease once the figure is first 20% in view (.is-live); rows are staggered 60ms top to bottom via
+     the inline --i index. Without JS / reduced motion the bars are simply drawn. */
+  html.js .wf-fig .wf-bar{transform-origin:left center;transition:transform .6s var(--ease);transition-delay:calc(var(--i, 0) * 60ms);}
+  html.js .wf-fig:not(.is-live) .wf-bar{transform:scaleX(0);}
 </style>
 </head>
 <body>
@@ -191,22 +219,53 @@
     </div>
   </section>
 
-  <!-- HOW WE SCORE (merged from standalone /how-we-score page) -->
+  <!-- HOW WE SCORE / MOMENTUM SCORE: copy left (5), walk-forward diagram right (7).
+       The "Plain-language guide" section that used to sit above was merged into this one (paper pass two):
+       its heading is now this section's eyebrow and its sentence the lead. -->
   <section class="sec reveal" id="how-we-score">
-    <div class="sec-head">
-      <div class="eyebrow">How We Score</div>
-      <h2>Plain-language guide to every number above.</h2>
-      <p>Each report reduces a lot of data to a few numbers. This is what each one means. We do not publish the thresholds.</p>
-    </div>
-  </section>
+    <div class="split-5-7">
+      <div>
+        <div class="eyebrow">Plain-language guide to every number above.</div>
+        <h2>A single number, 0–100.</h2>
+        <p class="lead">Each report reduces a lot of data to a few numbers. This is what each one means. We do not publish the thresholds.</p>
+        <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. The score is a percentile rank: a higher score means the model rates that zip above more of the others we score, as entering, or already in, a period of outperformance relative to its metro. A lower score means the signal is weaker or mixed.</p>
+        <p>The model behind it is walk-forward validated with a strict outcome embargo: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro <span class="num-strong mono-num">77</span>% of the time over five years, against a <span class="num-strong mono-num">46.3</span>% base rate for all ZIPs (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
+      </div>
 
-  <!-- MOMENTUM SCORE -->
-  <section class="sec reveal">
-    <div class="sec-head">
-      <div class="eyebrow">The Momentum Score</div>
-      <h2>A single number, 0–100.</h2>
-      <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. The score is a percentile rank: a higher score means the model rates that zip above more of the others we score, as entering, or already in, a period of outperformance relative to its metro. A lower score means the signal is weaker or mixed.</p>
-      <p>The model behind it is walk-forward validated with a strict outcome embargo: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro <span class="num-strong mono-num">77</span>% of the time over five years, against a <span class="num-strong mono-num">46.3</span>% base rate for all ZIPs (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
+      <!-- Walk-forward diagram. Eight entry cohorts (2014-2021), the same cohorts named in the paragraph to the
+           left. Each row: an --ink 25% "trained on" bar from the start of the timeline to the cohort year, then a
+           --teal "tested on" bar covering the five years after. Timeline 2000-2026. Positions are percentages of
+           the 26-year span computed inline from the years, nothing else. Rows draw in top to bottom on first view,
+           60ms stagger, 600ms each, --ease. -->
+      <figure class="wf-fig" aria-label="Walk-forward validation: eight entry cohorts from 2014 to 2021, each trained on data up to its cohort year and tested on the five years after, on a timeline from 2000 to 2026">
+        <div class="wf-keys">
+          <span class="wf-key"><i class="wf-swatch wf-swatch-train"></i>Trained on data to here</span>
+          <span class="wf-key"><i class="wf-swatch wf-swatch-test"></i>Tested on the five years after</span>
+        </div>
+        <div class="wf-rows">
+          <!-- one .wf-row per cohort; left = (year-2000)/26, widths = years/26, as % -->
+          <div class="wf-row" data-cohort="2014" style="--i:0"><span class="wf-year mono">2014</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:53.846%"></i><i class="wf-bar wf-bar-test" style="left:53.846%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2015" style="--i:1"><span class="wf-year mono">2015</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:57.692%"></i><i class="wf-bar wf-bar-test" style="left:57.692%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2016" style="--i:2"><span class="wf-year mono">2016</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:61.538%"></i><i class="wf-bar wf-bar-test" style="left:61.538%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2017" style="--i:3"><span class="wf-year mono">2017</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:65.385%"></i><i class="wf-bar wf-bar-test" style="left:65.385%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2018" style="--i:4"><span class="wf-year mono">2018</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:69.231%"></i><i class="wf-bar wf-bar-test" style="left:69.231%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2019" style="--i:5"><span class="wf-year mono">2019</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:73.077%"></i><i class="wf-bar wf-bar-test" style="left:73.077%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2020" style="--i:6"><span class="wf-year mono">2020</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:76.923%"></i><i class="wf-bar wf-bar-test" style="left:76.923%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2021" style="--i:7"><span class="wf-year mono">2021</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:80.769%"></i><i class="wf-bar wf-bar-test" style="left:80.769%;width:19.231%"></i></div></div>
+        </div>
+        <div class="wf-axis">
+          <span class="wf-year mono" aria-hidden="true"></span>
+          <div class="wf-axis-track">
+            <span class="wf-tick" style="left:0%">2000</span>
+            <span class="wf-tick" style="left:19.231%">2005</span>
+            <span class="wf-tick" style="left:38.462%">2010</span>
+            <span class="wf-tick" style="left:57.692%">2015</span>
+            <span class="wf-tick" style="left:76.923%">2020</span>
+            <span class="wf-tick wf-tick-end" style="left:100%">2026</span>
+          </div>
+        </div>
+        <figcaption class="wf-caption">Each prediction uses only data that existed at that point, then is scored against the five years that followed.</figcaption>
+      </figure>
     </div>
     <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
   </section>
@@ -313,6 +372,17 @@
 </footer>
 
 <script src="../shared.js"></script>
+
+<script>
+  // Walk-forward diagram: rows draw in top to bottom (60ms stagger) the first time the figure is 20% in view, once.
+  // Reduced motion / no JS: html.js is absent, so the CSS already shows every bar drawn; this class changes nothing.
+  (function(){
+    var fig = document.querySelector('.wf-fig');
+    if (!fig) return;
+    if (!window.SpotwiseMotion || SpotwiseMotion.reducedMotion) { fig.classList.add('is-live'); return; }
+    SpotwiseMotion.once(fig, 0.2, function(){ fig.classList.add('is-live'); });
+  })();
+</script>
 
 </body>
 </html>
