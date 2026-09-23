@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,37 +33,15 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Legal: editorial document treatment ---------- */
-  .legal-layout{display:grid;grid-template-columns:56px minmax(0,720px);gap:48px;max-width:860px;margin:0 auto;justify-content:center;}
-  .legal-rail{position:sticky;top:120px;align-self:start;display:flex;flex-direction:column;align-items:center;gap:0;height:fit-content;}
-  .legal-rail .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--muted);background:var(--surface);border:1px solid var(--line);transition:color .3s,border-color .3s,box-shadow .3s;}
-  .legal-rail .dot.active{color:var(--teal-bright);border-color:rgba(20,184,166,.45);box-shadow:0 0 16px rgba(45,212,196,.18);}
-  .legal-rail .rail-line{width:1px;height:52px;background:var(--line);}
-  .legal-head{text-align:center;margin-bottom:72px;}
-  .legal-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,50px);letter-spacing:-.03em;line-height:1.1;margin-top:16px;}
-  .legal-head .trail{margin:24px auto 0;}
-  .legal-item{position:relative;padding:0 0 64px;}
-  .legal-item:last-child{padding-bottom:0;}
-  .legal-item .lnum{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(40px,5vw,60px);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(45,212,196,.35);line-height:1;margin-bottom:18px;}
-  .legal-item h3{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(19px,2.4vw,25px);letter-spacing:-.02em;margin-bottom:14px;}
-  /* The 720px column runs ~95 characters per line at 15.5px, well past the
-     ~65-75 where the eye reliably finds the next line. Constrained on the
-     paragraph rather than the column so the numerals and headings keep their
-     full scale, and in ch so it tracks the font rather than a guessed pixel.
-     56ch (not 68) because ch is the width of "0", which is noticeably wider
-     than Inter Tight's average lowercase glyph -- 68ch measured out at 83
-     real characters per line. 56ch lands at 68. */
-  .legal-item p{font-size:15.5px;color:var(--ink-soft);line-height:1.8;max-width:56ch;}
+  /* ---------- Page-local: legal prose runs longer than the .num-rows
+     default 52ch (tuned for short step copy elsewhere) -- widen just here. ---------- */
+  .legal-body .num-row p{max-width:62ch;}
 
-  @media (max-width:760px){
-    .legal-layout{grid-template-columns:1fr;gap:0;}
-    .legal-rail{display:none;}
-  }
   @media (max-width:640px){
-    .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
 </style>
 </head>
@@ -72,25 +50,24 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html">Intelligence</a>
-        <a href="../sample-report/index.html">Sample Report</a>
-        <a href="../reports/index.html">Plans</a>
-        <a href="../team/index.html">Team</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="../faq/index.html">FAQ</a>
-        <a href="../disclaimer/index.html" class="active" aria-current="page">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../sample-report/index.html">Sample Report</a>
+      <a href="../reports/index.html">Plans</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../disclaimer/index.html" class="active" aria-current="page">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program &rarr;</span><span class="nav-cta-short">Join &rarr;</span></a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program</span><span class="nav-cta-short">Join</span></a>
       <div class="nav-sheet">
         <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
           <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -110,57 +87,48 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
 <main>
 
   <!-- DISCLAIMER -->
-  <section class="sec reveal" style="overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="legal-head">
-      <div class="eyebrow">Disclaimer</div>
-      <h2>Read this before you act on anything here.</h2>
-      <div class="trail"></div>
-    </div>
-    <div class="legal-layout">
-      <div class="legal-rail" aria-hidden="true">
-        <div class="dot" data-rail="1">01</div>
-        <div class="rail-line"></div>
-        <div class="dot" data-rail="2">02</div>
-        <div class="rail-line"></div>
-        <div class="dot" data-rail="3">03</div>
-      </div>
-      <div class="legal-body">
-        <article class="legal-item" data-legal="1">
-          <div class="lnum">01</div>
-          <h3>Scores are recalculated as new data is released and can change between updates.</h3>
+  <section class="sec wash-top reveal">
+    <div class="eyebrow">Disclaimer</div>
+    <h1>Read this before you act on anything here.</h1>
+  </section>
+
+  <section class="sec reveal">
+    <div class="legal-body num-rows">
+      <div class="num-row">
+        <div class="n">01</div>
+        <div>
+          <h2>Scores are recalculated as new data is released and can change between updates.</h2>
           <p>The product you're using right now is under active development. The model, our data coverage, our scoring methodology, and the reports themselves are still being built and refined. Scores, tiers, and underlying figures can and will change as we improve the system, and nothing here should be treated as a finished, static product.</p>
-        </article>
-        <article class="legal-item" data-legal="2">
-          <div class="lnum">02</div>
-          <h3>This is market intelligence, not financial advice.</h3>
+        </div>
+      </div>
+      <div class="num-row">
+        <div class="n">02</div>
+        <div>
+          <h2>This is market intelligence, not financial advice.</h2>
           <p>SpotWise provides data-driven market intelligence to inform your own research. It is not financial, investment, legal, or tax advice, and nothing on this site or in a Market Signal Report should be interpreted as a recommendation to buy, sell, or hold any asset. Every investment decision you make, and its outcome, remains your sole responsibility. Consult a licensed financial, legal, or tax professional before acting on anything here.</p>
-        </article>
-        <article class="legal-item" data-legal="3">
-          <div class="lnum">03</div>
-          <h3>Past performance does not guarantee future results.</h3>
+        </div>
+      </div>
+      <div class="num-row">
+        <div class="n">03</div>
+        <div>
+          <h2>Past performance does not guarantee future results.</h2>
           <p>Our reported 77% backtest hit rate (against a 46.3% base rate for all ZIPs) and +14.0% average outperformance reflect embargo-respecting walk-forward testing of top-decile picks against 2014–2021 entry cohorts, replicated across all 10 US regions. These figures reflect post-2013 market conditions. The same signal underperformed in the 2006–2012 downturn era. They describe how the methodology performed on past data, not a guarantee, promise, or prediction of future performance. Real estate markets are volatile and unpredictable, and actual future results may differ materially from historical backtests.</p>
-        </article>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Now that the caveats are clear.</h2>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
-      <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
-    </div>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../sample-report/index.html">See a full sample report</a>
   </section>
 
 </main>
@@ -175,8 +143,8 @@
       <div class="footer-tag-row">
         <div class="footer-tag">Before the market moves.</div>
         <button class="spot-interactive" type="button" aria-label="Say hi to Spot">
-          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" />
-          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" />
+          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" aria-hidden="true" />
+          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" aria-hidden="true" />
         </button>
       </div>
       <div class="footer-contact">Or reach us directly at <a href="../contact/index.html">Contact us</a><span class="emails"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></span></div>
@@ -205,24 +173,6 @@
 </footer>
 
 <script src="../shared.js"></script>
-<script>
-  // Progress rail: highlights the numeral of whichever disclaimer section is
-  // currently in view. Purely decorative. No-ops without IntersectionObserver.
-  (function(){
-    if (!('IntersectionObserver' in window)) return;
-    var items = document.querySelectorAll('.legal-item[data-legal]');
-    var dots = document.querySelectorAll('.legal-rail .dot[data-rail]');
-    if (!items.length || !dots.length) return;
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (!e.isIntersecting) return;
-        var n = e.target.dataset.legal;
-        dots.forEach(function(d){ d.classList.toggle('active', d.dataset.rail === n); });
-      });
-    }, { rootMargin: '-35% 0px -55% 0px' });
-    items.forEach(function(el){ obs.observe(el); });
-  })();
-</script>
 
 </body>
 </html>

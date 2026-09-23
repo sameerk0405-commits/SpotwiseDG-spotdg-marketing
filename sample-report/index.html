@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,173 +33,54 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Sample banner ---------- */
-  .sample-banner{background:rgba(245,158,11,.1);border-bottom:1px solid rgba(245,158,11,.28);color:var(--gold);text-align:center;font-size:13px;font-weight:600;line-height:1.6;padding:12px 20px;}
-  .sample-banner b{font-weight:800;letter-spacing:.04em;}
+  /* ---------- Page-local: small label above a plain list, matching the
+     home page's .list-label recipe (kept local there too -- this is the
+     second page to need it, not yet worth promoting to shared.css). ---------- */
+  .list-label{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);margin-top:24px;margin-bottom:4px;}
 
-  /* ---------- "What a report contains" compact list (copied verbatim from
-     /reports, surfaced above the fold here) ---------- */
-  .contains-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px;}
-  .contains-list{display:grid;gap:10px;max-width:640px;margin:0 auto;text-align:left;}
-  .contains-list li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.5;}
+  /* ---------- Page-local: caption beneath the sample document, reusing
+     .list-label for the heading (already exactly "13px Archivo 500") and a
+     plain 14px paragraph for the sentence. Moved here from an orphan H2
+     section near the bottom of the page -- no words changed. ---------- */
+  .doc-caption{margin-top:16px;}
+  .doc-caption .list-label{margin-top:0;margin-bottom:6px;}
+  .doc-caption p{font-size:14px;color:var(--ink-2);line-height:1.6;max-width:none;}
 
-  /* ---------- Persistent SAMPLE pin: stays visible at the top-left of the
-     report frame while the frame's own internal content scrolls (the frame
-     is the scrollable .demo-card-col, not the page). ---------- */
-  .sample-pin{position:sticky;top:0;left:0;z-index:20;display:inline-flex;align-items:center;
-    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:800;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--gold);background:rgba(245,158,11,.14);
-    border:1px solid rgba(245,158,11,.35);padding:6px 12px;border-radius:100px;margin:0 0 12px;}
-
-  /* ---------- Demo layout: sticky report card + scrolling explainers ---------- */
-  .demo{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);gap:48px;max-width:var(--max);margin:0 auto;align-items:start;padding:0 32px 130px;}
-  /* The card is taller than most viewports. Left uncapped, it sticks with its
-     header above the top of the screen and its footer below the bottom, so
-     parts of it are permanently unreachable while reading the guide beside it.
-     Capping it to the visible area and letting it scroll internally keeps every
-     row reachable; shared.js scrolls the spotlit row into view within it. */
-  .demo-card-col{position:sticky;top:96px;max-height:calc(100vh - 120px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--teal-dim) var(--surface-2);}
-  .demo-card-col::-webkit-scrollbar{width:8px;}
-  .demo-card-col::-webkit-scrollbar-track{background:var(--surface-2);border-radius:8px;}
-  .demo-card-col::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:8px;}
-  .demo-card-col::-webkit-scrollbar-thumb:hover{background:var(--teal);}
-  .demo-card-col .sig-card{max-width:none;}
-  .demo-col{min-width:0;}
-  .demo-col .dsec{margin-bottom:64px;}
-  .demo-col .dsec:last-child{margin-bottom:0;}
-  .demo-col h2{font-family:'Sora',sans-serif;font-weight:800;letter-spacing:-.025em;font-size:clamp(22px,2.6vw,30px);margin-top:14px;}
-  .demo-col .dsec > p{font-size:15px;color:var(--ink-soft);line-height:1.75;margin-top:16px;}
-
-  /* ---------- Tier cards ---------- */
-  .tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px;}
-  .tier-card{padding:24px 22px;border-radius:16px;}
-  .tier-badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:100px;margin-bottom:14px;}
-  .tier-badge.peak{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:var(--gold);}
-  .tier-badge.momentum{background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);}
-  .tier-badge.emerging{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink-soft);}
-  .tier-badge.watch{background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted);}
-  .tier-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
-
-  /* ---------- Ratio explainer cards ---------- */
-  .ratio-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px;}
-  .ratio-explain-card{padding:24px 22px;border-radius:16px;}
-  .ratio-explain-card h3{font-family:'Sora',sans-serif;font-size:15.5px;font-weight:700;margin-bottom:9px;letter-spacing:-.01em;color:var(--teal-bright);}
-  .ratio-explain-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
-
-  /* ---------- Score scale: the 87.3 rendered on its 0–100 range ---------- */
-  .score-scale{position:relative;height:4px;border-radius:4px;background:var(--line);margin:0 0 22px;}
-  .score-scale-fill{position:absolute;left:0;top:0;bottom:0;width:87.3%;border-radius:4px;background:linear-gradient(90deg,var(--teal-dim),var(--teal-bright));box-shadow:0 0 12px rgba(45,212,196,.3);}
-  .score-scale-fill::after{content:"";position:absolute;right:-3px;top:50%;width:8px;height:8px;border-radius:50%;background:var(--teal-bright);transform:translateY(-50%);box-shadow:0 0 10px rgba(45,212,196,.8);}
-  html.js .score-scale-fill{width:0;transition:width 1.2s var(--ease) .25s;}
-  html.js .reveal.is-visible .score-scale-fill{width:87.3%;}
-
-  /* ---------- Metric micro-trends: tiny sparkline beside each value ---------- */
-  .sig-item .v{display:flex;align-items:center;}
-  .vspark{width:44px;height:14px;margin-left:auto;padding-left:8px;flex-shrink:0;overflow:visible;}
-  .vspark path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;opacity:.55;}
-  html.js .vspark path{stroke-dasharray:1;stroke-dashoffset:1;}
-  html.js .reveal.is-visible .vspark path{animation:vsparkDraw .9s var(--ease) .35s forwards;}
-  @keyframes vsparkDraw{to{stroke-dashoffset:0;}}
-
-  /* ---------- Walk-forward validation timeline: trained here -> tested here,
-     window by window. Expanding train window, five-year test window sliding
-     forward: a visual of the sentence above it. ---------- */
-  .wf{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 10px;}
-  .wf-legend{display:flex;align-items:center;gap:6px 18px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
-  .wf-leg{display:inline-flex;align-items:center;gap:8px;}
-  .wf-key{display:inline-block;width:14px;height:8px;border-radius:2px;flex-shrink:0;}
-  .wf-key.train{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);}
-  .wf-key.test{background:var(--teal);}
-  .wf svg{display:block;width:100%;height:auto;}
-  .wf-axis{stroke:var(--line);stroke-width:1;}
-  .wf-year{fill:var(--muted);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;}
-  .wf-lbl{fill:var(--ink-soft);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.08em;}
-  .wf-lbl.test{fill:var(--teal-bright);}
-  html.js .wf .wf-lbl{opacity:0;transition:opacity .4s ease .65s;}
-  html.js .wf.is-visible .wf-lbl{opacity:1;}
-  .wf-train{fill:rgba(255,255,255,.07);stroke:rgba(255,255,255,.13);stroke-width:1;}
-  .wf-test{fill:rgba(20,184,166,.55);}
-  html.js .wf .wf-train,html.js .wf .wf-test{transform-box:fill-box;transform-origin:left;transform:scaleX(0);opacity:0;}
-  html.js .wf.is-visible .wf-train{animation:wfGrow .6s var(--ease) forwards;}
-  html.js .wf.is-visible .wf-test{animation:wfGrow .45s var(--ease) forwards;}
-  html.js .wf.is-visible .wf-train.t2{animation-delay:.18s;}
-  html.js .wf.is-visible .wf-train.t3{animation-delay:.36s;}
-  html.js .wf.is-visible .wf-test.s1{animation-delay:.55s;}
-  html.js .wf.is-visible .wf-test.s2{animation-delay:.73s;}
-  html.js .wf.is-visible .wf-test.s3{animation-delay:.91s;}
-  @keyframes wfGrow{to{transform:scaleX(1);opacity:1;}}
-  .wf-caption{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:12px;}
-
-  /* ---------- Scroll-reveal cascade: each guide block (.dsec) is its own
-     reveal, and its cards arrive in sequence once it enters view. Keyed on
-     the .dsec itself (not the outer .demo reveal) so timing follows the
-     block the reader has actually reached. Backwards-fill animation keeps
-     hover transforms intact; inert without html.js. ---------- */
-  html.js .dsec.reveal:not(.is-visible) :is(.tier-card,.ratio-explain-card){opacity:0;}
-  html.js .dsec.reveal.is-visible :is(.tier-card,.ratio-explain-card){animation:rvIn .6s var(--ease) backwards;}
-  html.js .dsec.reveal.is-visible .tier-card:nth-child(2){animation-delay:.1s;}
-  html.js .dsec.reveal.is-visible .tier-card:nth-child(3){animation-delay:.2s;}
-  html.js .dsec.reveal.is-visible .tier-card:nth-child(4){animation-delay:.3s;}
-  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(2){animation-delay:.08s;}
-  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(3){animation-delay:.16s;}
-  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(4){animation-delay:.24s;}
-  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(5){animation-delay:.32s;}
-  html.js .dsec.reveal.is-visible .ratio-explain-card:nth-child(6){animation-delay:.4s;}
-  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
-
-  /* ---------- Responsive ---------- */
-  /* ---------- Scroll-linked spotlight ----------
-     As you read down the guide, the part of the sticky report being explained
-     lights up, so the explanation and the number it describes are never more
-     than a glance apart. Hovering or focusing an individual ratio card lights
-     that one ratio specifically.
-
-     Emphasis is additive only -- nothing is dimmed. Dimming the rest of the
-     card would push real data below its contrast floor to decorate the bit
-     being read. Outline (not border) so lighting a value never reflows the
-     card. Only active >=1081px, where the card is genuinely sticky beside the
-     text; below that it sits above the guide and lighting it does nothing. */
-  .demo [data-spot]{transition:outline-color .3s var(--ease),background-color .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease);}
-  .demo [data-spot].is-lit{outline:1px solid rgba(45,212,196,.5);outline-offset:7px;border-radius:7px;}
-  .demo .sig-item[data-spot].is-lit{outline-offset:3px;border-color:rgba(45,212,196,.4);background:rgba(20,184,166,.06);}
-  .demo .ratio[data-spot].is-lit .v{color:var(--teal-bright);}
-  .demo .sig-score-row[data-spot].is-lit{outline-offset:4px;}
-  .demo .score-scale[data-spot].is-lit{outline:none;box-shadow:0 0 18px rgba(45,212,196,.35);}
-  .demo .sig-badge[data-spot].is-lit{outline:none;box-shadow:0 0 0 3px rgba(45,212,196,.22),0 0 20px rgba(45,212,196,.3);}
-  .ratio-explain-card[data-lights]{cursor:default;}
-  .ratio-explain-card[data-lights]:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;}
-
-  @media (prefers-reduced-motion:reduce){
-    .demo [data-spot]{transition:none;}
-  }
-
-  @media (max-width:1080px){
-    .demo{grid-template-columns:1fr;gap:56px;}
-    /* Stacked above the guide rather than beside it, so the cap and the inner
-       scroller would just trap the card in a box for no benefit. */
-    .demo-card-col{position:static;max-height:none;overflow:visible;}
-    .demo-card-col .sig-card{max-width:640px;margin:0 auto;}
-  }
   @media (max-width:640px){
-    .wrap,.sec,.demo,footer{padding-left:20px;padding-right:20px;}
-    .demo{gap:44px;}
-    .sig-card{padding:26px 20px;}
-    /* Dense data groups stay 2-col on phones (sig-grid + ratio-row grids come from shared.css) */
-    .compare-table{font-size:13px;}
-    .compare-table th,.compare-table td{padding-top:11px;padding-bottom:11px;}
-    .tier-grid{grid-template-columns:1fr 1fr;gap:12px;}
-    .ratio-grid{grid-template-columns:1fr 1fr;gap:12px;}
-    .vspark{width:36px;padding-left:6px;}
-    .sig-item .v{flex-wrap:wrap;}
-    .wf{padding:14px 14px 8px;}
-    .tier-card,.ratio-explain-card{padding:18px 16px;}
-    .demo-col .dsec{margin-bottom:52px;}
-    .demo-col h2{font-size:clamp(24px,6.5vw,28px);}
-    .demo-col .dsec > p{font-size:15.5px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
+
+  /* ---------- Walk-forward diagram (paper pass two). Timeline + row labels IBM Plex Mono 11px --ink-2; keys
+     Archivo 500 13px --ink-2 with 10px swatches; caption 13px --ink-2. "Trained on" bars and their swatch in
+     --ink-bar (the shared secondary bar tone, the same token the home cohort chart's metro bars use -- see
+     shared.css), "tested on" bars --teal. ---------- */
+  .wf-fig{margin:0;min-width:0;}
+  .wf-keys{display:flex;flex-wrap:wrap;gap:8px 22px;margin-bottom:18px;font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);}
+  .wf-key{display:inline-flex;align-items:center;gap:8px;}
+  .wf-swatch{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  .wf-swatch-train{background:var(--ink-bar);}
+  .wf-swatch-test{background:var(--teal);}
+  .wf-rows{display:flex;flex-direction:column;gap:8px;}
+  .wf-row,.wf-axis{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:12px;}
+  .wf-year{font-family:var(--font-mono);font-size:11px;color:var(--ink-2);line-height:1;}
+  .wf-track{position:relative;height:12px;}
+  .wf-bar{position:absolute;top:0;height:12px;display:block;border-radius:2px;}
+  .wf-bar-train{background:var(--ink-bar);}
+  .wf-bar-test{background:var(--teal);}
+  .wf-axis{margin-top:10px;}
+  .wf-axis-track{position:relative;height:22px;border-top:1px solid var(--ink);}
+  .wf-tick{position:absolute;top:6px;transform:translateX(-50%);font-family:var(--font-mono);font-size:11px;color:var(--ink-2);white-space:nowrap;}
+  .wf-tick:first-child{transform:none;}
+  .wf-tick-end{transform:translateX(-100%);}
+  .wf-caption{margin-top:16px;font-family:var(--font-sans);font-size:13px;line-height:1.6;color:var(--ink-2);}
+  /* Draw-in: under html.js only, each row's two bars start at scaleX(0) from their left edge and draw to full over
+     600ms with --ease once the figure is first 20% in view (.is-live); rows are staggered 60ms top to bottom via
+     the inline --i index. Without JS / reduced motion the bars are simply drawn. */
+  html.js .wf-fig .wf-bar{transform-origin:left center;transition:transform .6s var(--ease);transition-delay:calc(var(--i, 0) * 60ms);}
+  html.js .wf-fig:not(.is-live) .wf-bar{transform:scaleX(0);}
 </style>
 </head>
 <body>
@@ -207,25 +88,24 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html">Intelligence</a>
-        <a href="../sample-report/index.html" class="active" aria-current="page">Sample Report</a>
-        <a href="../reports/index.html">Plans</a>
-        <a href="../team/index.html">Team</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="../faq/index.html">FAQ</a>
-        <a href="../disclaimer/index.html">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../sample-report/index.html" class="active" aria-current="page">Sample Report</a>
+      <a href="../reports/index.html">Plans</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program &rarr;</span><span class="nav-cta-short">Join &rarr;</span></a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program</span><span class="nav-cta-short">Join</span></a>
       <div class="nav-sheet">
         <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
           <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -245,215 +125,210 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
-<div class="sample-banner"><b>PARTIAL EXCERPT</b>: Illustrative data for a fictional zip code, for demonstration purposes only. Not the full report. Actual reports reflect live, current scoring.</div>
-
 <main>
 
-  <section class="sec" style="padding-bottom:56px;overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="sec-head" style="margin-bottom:0;">
-      <div class="eyebrow">Sample Report</div>
-      <h2 style="margin-top:16px;">Sample report for one ZIP.</h2>
-      <p>This excerpt, built on a fictional zip code, shows the <em>structure</em> a real Market Signal Report follows: momentum profile, investor ratios, flagged reasons, and metro comparison. It's a preview of the format, not the full depth of a live report. Actual reports are generated from live, current data and go further than what's shown below.</p>
-      <div class="contains-label">What a report contains</div>
-      <ul class="contains-list">
-        <li><span class="mark check">✓</span>Top-ranked zip codes for your target market or investment thesis</li>
-        <li><span class="mark check">✓</span>Classification by stage: Peak, Momentum, Emerging, Watch</li>
-        <li><span class="mark check">✓</span>Key reasons each zip was flagged</li>
-        <li><span class="mark check">✓</span>Supporting metrics and investor ratios</li>
-        <li><span class="mark check">✓</span>Comparison against the broader metro area</li>
-        <li><span class="mark check">✓</span>Recommended action: Investigate, Monitor, or Avoid</li>
-        <li><span class="mark check">✓</span>Short methodology note</li>
-        <li><span class="mark check">✓</span>Clear disclaimer: market intelligence, not financial advice</li>
-      </ul>
-      <div class="trail"></div>
+  <!-- SAMPLE REPORT: intro + list left (5), document right (7) -->
+  <section class="sec wash-top reveal">
+    <div class="split-5-7">
+      <div>
+        <div class="eyebrow">Sample Report</div>
+        <h1>Sample report for one ZIP.</h1>
+        <p>This excerpt, built on a fictional zip code, shows the <em>structure</em> a real Market Signal Report follows: momentum profile, investor ratios, flagged reasons, and metro comparison. Actual reports are generated from live, current data and go further than what's shown below.</p>
+        <div class="list-label">What a report contains</div>
+        <ul class="rule-list">
+          <li>Top-ranked zip codes for your target market or investment thesis</li>
+          <li>Classification by stage: Peak, Momentum, Emerging, Watch, Pass</li>
+          <li>Key reasons each zip was flagged</li>
+          <li>Supporting metrics and investor ratios</li>
+          <li>Comparison against the broader metro area</li>
+          <li>Recommended action: Investigate, Monitor, or Avoid</li>
+          <li>Short methodology note</li>
+          <li>Clear disclaimer: market intelligence, not financial advice</li>
+        </ul>
+      </div>
+
+      <div>
+      <div class="doc-sample-wrap">
+        <span class="tag-sample">SAMPLE</span>
+        <div class="doc">
+          <div class="doc-head">
+            <div>
+              <div class="doc-eyebrow mono">Market Signal Report · Sample Zip 00000 · Example Market, XX</div>
+              <div class="doc-title">Momentum Profile</div>
+            </div>
+            <div class="doc-tier tier-momentum">Momentum</div>
+          </div>
+
+          <div class="doc-score-row">
+            <div class="doc-score serif mono-num" data-target="87.3">87.3</div>
+            <div class="doc-score-label">Momentum Score<br/>/ 100</div>
+          </div>
+
+          <div class="doc-section">
+            <table class="mono-table">
+              <tbody>
+                <tr><td>Price momentum (3yr)</td><td class="num">+14.6%</td></tr>
+                <tr><td>Income growth (2yr)</td><td class="num">+9.8%</td></tr>
+                <tr><td>Vacancy tightening</td><td class="num">−1.2pp</td></tr>
+                <tr><td>Supply constraint</td><td class="num">Moderate</td></tr>
+                <tr><td>Cap Rate</td><td class="num">5.8%</td></tr>
+                <tr><td>GRM</td><td class="num">12.1x</td></tr>
+                <tr><td>Price / Income</td><td class="num">3.6x</td></tr>
+                <tr><td>Rent Burden</td><td class="num">27%</td></tr>
+                <tr><td>1% Rule</td><td class="num">0.92%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="doc-section">
+            <div class="doc-label">Key reasons this zip was flagged</div>
+            <ul class="rule-list">
+              <li>Price momentum has accelerated for three consecutive years, outpacing the metro average by more than 2x.</li>
+              <li>Local income growth is outpacing the surrounding metro, tightening affordability pressure that has historically preceded price appreciation.</li>
+              <li>Vacancy has declined steadily, signaling tightening rental supply relative to demand.</li>
+            </ul>
+          </div>
+
+          <div class="doc-section">
+            <div class="doc-label">Comparison against broader metro</div>
+            <table class="mono-table">
+              <thead><tr><th>Metric</th><th class="num">Sample Zip 00000</th><th class="num">Example Metro Avg</th></tr></thead>
+              <tbody>
+                <tr><td>Momentum Score</td><td class="num">87.3</td><td class="num">61.4</td></tr>
+                <tr><td>Price momentum (3yr)</td><td class="num">+14.6%</td><td class="num">+7.2%</td></tr>
+                <tr><td>Income growth (2yr)</td><td class="num">+9.8%</td><td class="num">+5.1%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <a class="doc-action" href="../founding-program/index.html">Investigate Further</a>
+          <div class="doc-note">SpotWise provides market intelligence, not financial or investment advice.</div>
+          <div class="doc-foot">
+            <span>Walk-forward validated · 2014–2021 cohorts · Illustrative sample, not live data</span>
+            <span>Sample Zip 00000</span>
+          </div>
+        </div>
+      </div>
+      <div class="doc-caption">
+        <div class="list-label">Key reasons this ZIP was flagged.</div>
+        <p>These are the conditions that moved this ZIP's score most. They are specific to the ZIP and change between updates.</p>
+      </div>
+      </div>
     </div>
   </section>
 
-  <!-- DEMO: sticky sample card + scrolling plain-language guide -->
-  <div class="demo reveal">
-
-    <!-- SAMPLE REPORT CARD (sticky on desktop) -->
-    <div class="demo-card-col">
-      <div class="sample-pin" aria-hidden="true">SAMPLE</div>
-      <div class="sig-card">
-        <div class="sig-head">
-          <div>
-            <div class="sig-head-label">Market Signal Report · Sample Zip 00000 · Example Market, XX</div>
-            <div class="sig-head-title">Momentum Profile</div>
-          </div>
-          <div class="sig-badge" data-spot="tier"><span class="pulse-dot"></span>Momentum</div>
-        </div>
-
-        <div class="sig-score-row" data-spot="score">
-          <div class="sig-score" data-target="87.3">87.3</div>
-          <div class="sig-score-label">Momentum Score<br/>/ 100</div>
-        </div>
-        <div class="score-scale" data-spot="score" aria-hidden="true"><div class="score-scale-fill"></div></div>
-
-        <div class="sig-grid">
-          <div class="sig-item"><div class="k">Price momentum (3yr)</div><div class="v pos">+14.6%<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,12 C12,11 20,9 28,6.5 C34,4.7 40,3 42,2.5"/></svg></div></div>
-          <div class="sig-item"><div class="k">Income growth (2yr)</div><div class="v pos">+9.8%<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,11.5 C12,11 22,9.5 30,8 C36,6.8 40,6 42,5.5"/></svg></div></div>
-          <div class="sig-item"><div class="k">Vacancy tightening</div><div class="v pos">−1.2pp<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,3 C12,4 20,6 28,8.5 C34,10.2 40,11.5 42,12"/></svg></div></div>
-          <div class="sig-item" data-spot="supply"><div class="k">Supply constraint</div><div class="v neg">Moderate<svg class="vspark" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M2,8 C8,6.5 12,9.5 18,8 C24,6.5 28,9.5 34,8 C38,7 40,8 42,7.5"/></svg></div></div>
-        </div>
-
-        <div class="ratio-row">
-          <div class="ratio" data-spot="cap-rate"><div class="k">Cap Rate</div><div class="v">5.8%</div></div>
-          <div class="ratio" data-spot="grm"><div class="k">GRM</div><div class="v">12.1x</div></div>
-          <div class="ratio" data-spot="price-income"><div class="k">Price / Income</div><div class="v">3.6x</div></div>
-          <div class="ratio" data-spot="rent-burden"><div class="k">Rent Burden</div><div class="v">27%</div></div>
-          <div class="ratio" data-spot="one-percent"><div class="k">1% Rule</div><div class="v">0.92%</div></div>
-        </div>
-
-        <div class="sig-reasons">
-          <div class="k-label">Key reasons this zip was flagged</div>
-          <ul>
-            <li><span class="mark check">✓</span>Price momentum has accelerated for three consecutive years, outpacing the metro average by more than 2x.</li>
-            <li><span class="mark check">✓</span>Local income growth is outpacing the surrounding metro, tightening affordability pressure that has historically preceded price appreciation.</li>
-            <li><span class="mark check">✓</span>Vacancy has declined steadily, signaling tightening rental supply relative to demand.</li>
-          </ul>
-        </div>
-
-        <div class="sig-compare">
-          <div class="k-label">Comparison against broader metro</div>
-          <table class="compare-table">
-            <thead>
-              <tr><th>Metric</th><th>Sample Zip 00000</th><th>Example Metro Avg</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Momentum Score</td><td class="zip-val">87.3</td><td>61.4</td></tr>
-              <tr><td>Price momentum (3yr)</td><td class="zip-val">+14.6%</td><td>+7.2%</td></tr>
-              <tr><td>Income growth (2yr)</td><td class="zip-val">+9.8%</td><td>+5.1%</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <a class="action-badge" href="../founding-program/index.html">→ Investigate Further</a>
-        <div class="sig-disclaimer">SpotWise provides market intelligence, not financial or investment advice.</div>
-
-        <div class="sig-footer">
-          <div class="src">Walk-forward validated · 2014–2021 cohorts · Illustrative sample, not live data</div>
-          <div class="ts">Sample Zip 00000</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PLAIN-LANGUAGE GUIDE (scrolls beside the card) -->
-    <div class="demo-col">
-
-      <!-- HOW WE SCORE (merged from standalone /how-we-score page) -->
-      <div class="dsec reveal" id="how-we-score">
-        <div class="eyebrow">How We Score</div>
-        <h2>Plain-language guide to every number above.</h2>
-        <p>Each report reduces a lot of data to a few numbers. This is what each one means. We do not publish the thresholds.</p>
-      </div>
-
-      <!-- MOMENTUM SCORE -->
-      <div class="dsec reveal" data-lights="score">
-        <div class="eyebrow">The Momentum Score</div>
+  <!-- HOW WE SCORE / MOMENTUM SCORE: copy left (5), walk-forward diagram right (7).
+       The "Plain-language guide" section that used to sit above was merged into this one (paper pass two):
+       its heading is now this section's eyebrow and its sentence the lead. -->
+  <section class="sec reveal" id="how-we-score">
+    <div class="split-5-7">
+      <div>
+        <div class="eyebrow">Plain-language guide to every number above.</div>
         <h2>A single number, 0–100.</h2>
+        <p class="lead">Each report reduces a lot of data to a few numbers. This is what each one means. We do not publish the thresholds.</p>
         <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. The score is a percentile rank: a higher score means the model rates that zip above more of the others we score, as entering, or already in, a period of outperformance relative to its metro. A lower score means the signal is weaker or mixed.</p>
-        <p>The model behind it is walk-forward validated with a strict outcome embargo: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro 77% of the time over five years, against a 46.3% base rate for all ZIPs (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
-        <div class="wf reveal">
-          <div class="wf-legend"><span class="wf-leg"><span class="wf-key train"></span>Trained on data to here</span><span class="wf-leg"><span class="wf-key test"></span>Tested on the five years after</span></div>
-          <svg viewBox="0 0 560 122" aria-hidden="true">
-            <rect class="wf-train t1" x="8" y="14" width="180" height="14" rx="3"></rect>
-            <rect class="wf-test s1" x="192" y="14" width="88" height="14" rx="3"></rect>
-            <text class="wf-lbl" x="98" y="25" text-anchor="middle">TRAIN</text>
-            <text class="wf-lbl test" x="290" y="25" text-anchor="start">TEST</text>
-            <rect class="wf-train t2" x="8" y="42" width="262" height="14" rx="3"></rect>
-            <rect class="wf-test s2" x="274" y="42" width="88" height="14" rx="3"></rect>
-            <rect class="wf-train t3" x="8" y="70" width="344" height="14" rx="3"></rect>
-            <rect class="wf-test s3" x="356" y="70" width="88" height="14" rx="3"></rect>
-            <line class="wf-axis" x1="8" y1="98" x2="552" y2="98"></line>
-            <text class="wf-year" x="8" y="116">2000</text>
-            <text class="wf-year" x="552" y="116" text-anchor="end">2026</text>
-          </svg>
-          <div class="wf-caption">Walk-forward validation, window by window: each prediction is made with only the data that existed at that point, then scored against the five years that followed. Entry cohorts tested: 2014–2021, the most recent cohorts with fully realized five-year outcomes.</div>
-        </div>
-        <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
+        <p>The model behind it is walk-forward validated with a strict outcome embargo: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro <span class="num-strong mono-num">77</span>% of the time over five years, against a <span class="num-strong mono-num">46.3</span>% base rate for all ZIPs (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
       </div>
 
-      <!-- TIER SYSTEM -->
-      <div class="dsec reveal" data-lights="tier">
-        <h2>What each tier means.</h2>
-        <p>Every scored zip is classified into one of four tiers based on where its score ranks against every other zip we score.</p>
-        <div class="tier-grid">
-          <div class="tier-card sw-card">
-            <div class="tier-badge peak">Peak Momentum</div>
-            <p>The strongest signal we identify: the top-ranked zips in the scored universe, where the model reads the underlying trends as furthest along.</p>
-          </div>
-          <div class="tier-card sw-card">
-            <div class="tier-badge momentum">Momentum</div>
-            <p>A strong, still-building signal. The zip shows clear upward trends across price and income and warrants a closer look.</p>
-          </div>
-          <div class="tier-card sw-card">
-            <div class="tier-badge emerging">Emerging</div>
-            <p>An early-stage signal. Some positive indicators are appearing, but the trend is less established than Peak or Momentum.</p>
-          </div>
-          <div class="tier-card sw-card">
-            <div class="tier-badge watch">Watch</div>
-            <p>Worth tracking over time. These zips rank in the lower half of the scored universe, the signals are early or mixed rather than clearly established.</p>
+      <!-- Walk-forward diagram. Eight entry cohorts (2014-2021), the same cohorts named in the paragraph to the
+           left. Each row: an --ink-bar "trained on" bar from the start of the timeline to the cohort year, then a
+           --teal "tested on" bar covering the five years after. Timeline 2000-2026. Positions are percentages of
+           the 26-year span computed inline from the years, nothing else. Rows draw in top to bottom on first view,
+           60ms stagger, 600ms each, --ease. -->
+      <figure class="wf-fig" aria-label="Walk-forward validation: eight entry cohorts from 2014 to 2021, each trained on data up to its cohort year and tested on the five years after, on a timeline from 2000 to 2026">
+        <div class="wf-keys">
+          <span class="wf-key"><i class="wf-swatch wf-swatch-train"></i>Trained on data to here</span>
+          <span class="wf-key"><i class="wf-swatch wf-swatch-test"></i>Tested on the five years after</span>
+        </div>
+        <div class="wf-rows">
+          <!-- one .wf-row per cohort; left = (year-2000)/26, widths = years/26, as % -->
+          <div class="wf-row" data-cohort="2014" style="--i:0"><span class="wf-year mono">2014</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:53.846%"></i><i class="wf-bar wf-bar-test" style="left:53.846%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2015" style="--i:1"><span class="wf-year mono">2015</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:57.692%"></i><i class="wf-bar wf-bar-test" style="left:57.692%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2016" style="--i:2"><span class="wf-year mono">2016</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:61.538%"></i><i class="wf-bar wf-bar-test" style="left:61.538%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2017" style="--i:3"><span class="wf-year mono">2017</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:65.385%"></i><i class="wf-bar wf-bar-test" style="left:65.385%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2018" style="--i:4"><span class="wf-year mono">2018</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:69.231%"></i><i class="wf-bar wf-bar-test" style="left:69.231%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2019" style="--i:5"><span class="wf-year mono">2019</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:73.077%"></i><i class="wf-bar wf-bar-test" style="left:73.077%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2020" style="--i:6"><span class="wf-year mono">2020</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:76.923%"></i><i class="wf-bar wf-bar-test" style="left:76.923%;width:19.231%"></i></div></div>
+          <div class="wf-row" data-cohort="2021" style="--i:7"><span class="wf-year mono">2021</span><div class="wf-track"><i class="wf-bar wf-bar-train" style="left:0;width:80.769%"></i><i class="wf-bar wf-bar-test" style="left:80.769%;width:19.231%"></i></div></div>
+        </div>
+        <div class="wf-axis">
+          <span class="wf-year mono" aria-hidden="true"></span>
+          <div class="wf-axis-track">
+            <span class="wf-tick" style="left:0%">2000</span>
+            <span class="wf-tick" style="left:19.231%">2005</span>
+            <span class="wf-tick" style="left:38.462%">2010</span>
+            <span class="wf-tick" style="left:57.692%">2015</span>
+            <span class="wf-tick" style="left:76.923%">2020</span>
+            <span class="wf-tick wf-tick-end" style="left:100%">2026</span>
           </div>
         </div>
-      </div>
-
-      <!-- INVESTOR RATIOS -->
-      <div class="dsec reveal" data-lights="cap-rate grm price-income rent-burden one-percent supply">
-        <h2>The investor ratios, explained.</h2>
-        <p>Every report also includes standard investor metrics, computed for the specific zip so you don't have to.</p>
-        <div class="ratio-grid">
-          <div class="ratio-explain-card sw-card" data-lights="cap-rate" tabindex="0">
-            <h3>Cap Rate</h3>
-            <p>Annual rental income as a percentage of purchase price. Higher generally means more cash flow relative to price paid, though it can also reflect higher risk.</p>
-          </div>
-          <div class="ratio-explain-card sw-card" data-lights="grm" tabindex="0">
-            <h3>GRM (Gross Rent Multiplier)</h3>
-            <p>How many years of gross rent it would take to equal the purchase price. Lower generally means a cheaper entry point relative to rental income.</p>
-          </div>
-          <div class="ratio-explain-card sw-card" data-lights="price-income" tabindex="0">
-            <h3>Price / Income</h3>
-            <p>Median home price relative to median household income in the area. Higher can signal an area becoming less affordable to local wage earners, often a precursor to price pressure.</p>
-          </div>
-          <div class="ratio-explain-card sw-card" data-lights="rent-burden" tabindex="0">
-            <h3>Rent Burden</h3>
-            <p>The share of median household income a median rent payment would consume. Useful for understanding how stretched local renters already are.</p>
-          </div>
-          <div class="ratio-explain-card sw-card" data-lights="one-percent" tabindex="0">
-            <h3>1% Rule</h3>
-            <p>A quick, widely used investor heuristic: whether monthly rent is at least 1% of the purchase price. A rough but common cash-flow screen for rental property.</p>
-          </div>
-          <div class="ratio-explain-card sw-card" data-lights="supply" tabindex="0">
-            <h3>Supply Constraint</h3>
-            <p>How tight new housing supply is relative to demand in the area. Tighter supply generally supports price appreciation.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- KEY REASONS -->
-      <div class="dsec reveal">
-        <h2>Key reasons this ZIP was flagged.</h2>
-        <p>These are the conditions that moved this ZIP's score most. They are specific to the ZIP and change between updates.</p>
-      </div>
-
+        <figcaption class="wf-caption">Each prediction uses only data that existed at that point, then is scored against the five years that followed.</figcaption>
+      </figure>
     </div>
-  </div>
+    <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
+  </section>
+
+  <!-- TIER SYSTEM -->
+  <section class="sec reveal">
+    <div class="sec-head">
+      <h2>What each tier means.</h2>
+      <p>Every scored zip is classified into one of five tiers based on where its score ranks against every other zip we score.</p>
+    </div>
+    <div class="tier-cols">
+      <div>
+        <h3><span class="tier-swatch tier-peak"></span>Peak Momentum</h3>
+        <p>The strongest signal we identify: the top-ranked zips in the scored universe, where the model reads the underlying trends as furthest along.</p>
+      </div>
+      <div>
+        <h3><span class="tier-swatch tier-momentum"></span>Momentum</h3>
+        <p>A strong, still-building signal. The zip shows clear upward trends across price and income and warrants a closer look.</p>
+      </div>
+      <div>
+        <h3><span class="tier-swatch tier-emerging"></span>Emerging</h3>
+        <p>An early-stage signal. Some positive indicators are appearing, but the trend is less established than Peak or Momentum.</p>
+      </div>
+      <div>
+        <h3><span class="tier-swatch tier-watch"></span>Watch</h3>
+        <p>Worth tracking over time. These zips rank in the lower half of the scored universe, the signals are early or mixed rather than clearly established.</p>
+      </div>
+      <div>
+        <h3><span class="tier-swatch tier-pass-explainer"></span>Pass</h3>
+        <p>Score under 40. The model sees no case for this ZIP in the current window.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVESTOR RATIOS -->
+  <section class="sec reveal">
+    <div class="sec-head">
+      <h2>The investor ratios, explained.</h2>
+      <p>Every report also includes standard investor metrics, computed for the specific zip so you don't have to.</p>
+    </div>
+    <dl class="def-grid">
+      <dt>Cap Rate</dt>
+      <dd>Annual rental income as a percentage of purchase price. Higher generally means more cash flow relative to price paid, though it can also reflect higher risk.</dd>
+      <dt>GRM (Gross Rent Multiplier)</dt>
+      <dd>How many years of gross rent it would take to equal the purchase price. Lower generally means a cheaper entry point relative to rental income.</dd>
+      <dt>Price / Income</dt>
+      <dd>Median home price relative to median household income in the area. Higher can signal an area becoming less affordable to local wage earners, often a precursor to price pressure.</dd>
+      <dt>Rent Burden</dt>
+      <dd>The share of median household income a median rent payment would consume. Useful for understanding how stretched local renters already are.</dd>
+      <dt>1% Rule</dt>
+      <dd>A quick, widely used investor heuristic: whether monthly rent is at least 1% of the purchase price. A rough but common cash-flow screen for rental property.</dd>
+      <dt>Supply Constraint</dt>
+      <dd>How tight new housing supply is relative to demand in the area. Tighter supply generally supports price appreciation.</dd>
+    </dl>
+  </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Want this for a real zip code?</h2>
-    <p>The same format applies to your market, scored on current data.</p>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
-      <a class="btn btn-ghost" href="../intelligence/index.html">Read the methodology</a>
-    </div>
+    <p class="lead">The same format applies to your market, scored on current data.</p>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../intelligence/index.html">Read the methodology</a>
   </section>
 
 </main>
@@ -468,8 +343,8 @@
       <div class="footer-tag-row">
         <div class="footer-tag">Before the market moves.</div>
         <button class="spot-interactive" type="button" aria-label="Say hi to Spot">
-          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" />
-          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" />
+          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" aria-hidden="true" />
+          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" aria-hidden="true" />
         </button>
       </div>
       <div class="footer-contact">Or reach us directly at <a href="../contact/index.html">Contact us</a><span class="emails"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></span></div>
@@ -498,31 +373,15 @@
 </footer>
 
 <script src="../shared.js"></script>
+
 <script>
-  // Momentum-score count-up: animates 87.3 from 0 the first time the sample
-  // card scrolls into view. The real value is already the element's text, so
-  // no-JS / reduced-motion / any failure just leaves the correct static number.
+  // Walk-forward diagram: rows draw in top to bottom (60ms stagger) the first time the figure is 20% in view, once.
+  // Reduced motion / no JS: html.js is absent, so the CSS already shows every bar drawn; this class changes nothing.
   (function(){
-    var el = document.querySelector('.sig-score[data-target]');
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    var done = false;
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting && !done) {
-          done = true;
-          var target = parseFloat(el.dataset.target);
-          var start = performance.now();
-          (function step(now){
-            var p = Math.min((now - start) / 1100, 1);
-            var eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = (target * eased).toFixed(1);
-            if (p < 1) requestAnimationFrame(step);
-          })(start);
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.4 });
-    obs.observe(el);
+    var fig = document.querySelector('.wf-fig');
+    if (!fig) return;
+    if (!window.SpotwiseMotion || SpotwiseMotion.reducedMotion) { fig.classList.add('is-live'); return; }
+    SpotwiseMotion.once(fig, 0.2, function(){ fig.classList.add('is-live'); });
   })();
 </script>
 

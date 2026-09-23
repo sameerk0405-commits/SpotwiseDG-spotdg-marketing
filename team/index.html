@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,72 +33,16 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Story: editorial treatment ---------- */
-  /* ---------- Story: editorial two-column ----------
-     Was a centered 760px column, which made this page the same centered stack
-     as every other. Heading holds the left rail while the narrative runs right,
-     so the page opens with a composition rather than another centered block. */
-  .story{max-width:var(--max);margin:0 auto 78px;text-align:left;display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:60px;align-items:start;}
-  .story-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;line-height:1.08;margin-top:16px;}
-  .story-head .trail{margin:24px 0 0;}
-  .story-body p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:22px;}
-  .story-body p:first-of-type{font-family:'Sora',sans-serif;font-size:clamp(17px,1.9vw,20px);font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.6;padding-left:24px;border-left:2px solid var(--teal);margin-top:0;}
+  /* ---------- Page-local: the mono "shipped" line between the story and the
+     roster. The rule above it is the section's own top border (.sec), so this
+     is just the line itself. ---------- */
+  .shipped{font-family:var(--font-mono);font-size:15px;color:var(--ink-2);margin-bottom:40px;}
 
-  /* ---------- Roster heading: label + rule, aligned to the card grid ---------- */
-  .roster-head{display:flex;align-items:center;gap:20px;max-width:var(--max);margin:0 auto 26px;}
-  .roster-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
-
-  /* ---------- Founders: vertical cards ----------
-     Photo anchors the card on top instead of sitting as an 88px accessory
-     inside a mostly-empty horizontal strip. All three people share one card
-     shape; Joseph is distinguished only by role colour and the missing
-     teal ring (see .advisor below), never by a different layout. */
-  .founders-primary{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:var(--max);margin:0 auto 40px;}
-  .founder-card{text-align:center;padding:32px 22px 26px;display:flex;flex-direction:column;align-items:center;}
-  .founder-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.01em;}
-  .founder-card .role{font-size:13px;color:var(--teal);font-weight:600;margin-top:4px;}
-  .founder-card .founder-sub{font-size:13px;color:var(--ink-soft);margin-top:10px;line-height:1.55;}
-
-  /* Joseph: identical card, quieter role colour, no ring -- a muted tier,
-     not a different shape. */
-  .founder-card.advisor .role{color:var(--muted);}
-  .founder-card.advisor .orb::after{display:none;}
-
-  .company-line{text-align:center;font-size:13px;color:var(--muted);font-weight:500;font-family:'JetBrains Mono',monospace;}
-
-  /* ---------- Photo orbs ----------
-     Headshots replace the initials. The morphing blob is right for a monogram
-     and wrong for a face, so photos get a still circle and the ring stays put.
-     Gradient class is kept underneath as the paint-before-load fallback.
-     .orb's own margin:0 auto 18px (shared.css) already centers this above
-     the name, so no override is needed here. */
-  .orb-photo{width:168px;height:168px;padding:0;overflow:hidden;border-radius:50%;animation:none;}
-  .orb-photo::after{border-radius:50%;animation:none;}
-  .orb-photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;}
-
-  /* ---------- Responsive ----------
-     3 columns down to 1280px, then straight to one centred column. A 2-up
-     step would re-narrow each card back into the same too-tight width that
-     motivated this rebuild, and risks Joseph landing alone on the second
-     row -- one column always takes the full (capped) container width, so
-     there's no orphan and no renewed wrap risk either. */
-  @media (max-width:1279px){
-    .founders-primary{grid-template-columns:1fr;justify-items:center;}
-    .founder-card{width:100%;max-width:420px;}
-  }
-  @media (max-width:900px){
-    .story{grid-template-columns:1fr;gap:26px;}
-    .story-body p:first-of-type{margin-top:4px;}
-  }
   @media (max-width:640px){
-    .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
-    .story{margin-bottom:56px;}
-    .story p:first-of-type{font-size:17px;padding-left:20px;}
-    .story p{font-size:15.5px;}
-    .founder-card{padding:30px 22px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
 </style>
 </head>
@@ -107,25 +51,24 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html">Intelligence</a>
-        <a href="../sample-report/index.html">Sample Report</a>
-        <a href="../reports/index.html">Plans</a>
-        <a href="../team/index.html" class="active" aria-current="page">Team</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="../faq/index.html">FAQ</a>
-        <a href="../disclaimer/index.html">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../sample-report/index.html">Sample Report</a>
+      <a href="../reports/index.html">Plans</a>
+      <a href="../team/index.html" class="active" aria-current="page">Team</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program &rarr;</span><span class="nav-cta-short">Join &rarr;</span></a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program</span><span class="nav-cta-short">Join</span></a>
       <div class="nav-sheet">
         <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
           <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -145,64 +88,50 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
 <main>
 
   <!-- FOUNDERS / STORY -->
-  <section class="sec reveal" style="overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="story">
-      <div class="story-head">
-        <div class="eyebrow">Our Story</div>
-        <h2>Three founders, one shared frustration.</h2>
-        <div class="trail"></div>
+  <section class="sec wash-top reveal">
+    <div class="eyebrow">Our Story</div>
+    <h1>Three founders, one shared frustration.</h1>
+    <p class="lead">SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola. They were comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, or a comp sheet that was already a year stale.</p>
+    <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been. It gives a forward-looking edge instead of a guess.</p>
+  </section>
+
+  <!-- ROSTER -->
+  <section class="sec reveal">
+    <div class="shipped">Shipped: 1,213 ZIPs scored &middot; eight scoring batches &middot; a walk-forward validation record we publish</div>
+    <div class="people-grid">
+      <div class="people-card">
+        <img class="people-photo" src="../assets/team/sameer-paper-400.webp" srcset="../assets/team/sameer-paper-400.webp 400w, ../assets/team/sameer-paper-800.webp 800w" sizes="(max-width:800px) 90vw, 360px" width="400" height="400" alt="Sameer Katwala" loading="lazy" decoding="async" />
+        <h2>Sameer Katwala</h2>
+        <div class="people-role">Co-Founder &amp; CEO</div>
+        <p class="people-bio">Built the model, pipeline, and dashboard; leads product. Studied at Rutgers.</p>
       </div>
-      <div class="story-body">
-        <p>SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola. They were comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, or a comp sheet that was already a year stale.</p>
-        <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been. It gives a forward-looking edge instead of a guess.</p>
+      <div class="people-card">
+        <img class="people-photo" src="../assets/team/andrew-paper-400.webp" srcset="../assets/team/andrew-paper-400.webp 400w, ../assets/team/andrew-paper-800.webp 800w" sizes="(max-width:800px) 90vw, 360px" width="400" height="400" alt="Andrew Giacomini" loading="lazy" decoding="async" />
+        <h2>Andrew Giacomini</h2>
+        <div class="people-role">Co-Founder &amp; COO/CFO</div>
+        <p class="people-bio">Runs finance and operations. Studied at Loyola.</p>
       </div>
-    </div>
-    <div class="roster-head">
-      <div class="eyebrow">The Team</div>
-      <div class="roster-rule" aria-hidden="true"></div>
-    </div>
-    <div class="company-line" style="margin-bottom:28px;">What we have shipped: 1,213 ZIPs scored, eight scoring batches, a walk-forward validation record we publish.</div>
-    <div class="founders-primary">
-      <div class="founder-card sw-card">
-        <div class="orb orb-a orb-photo"><img src="../assets/team/sameer-400.webp" srcset="../assets/team/sameer-200.webp 200w, ../assets/team/sameer-400.webp 400w, ../assets/team/sameer-800.webp 800w" sizes="168px" width="168" height="168" alt="Sameer Katwala" loading="lazy" decoding="async" /></div>
-        <h3>Sameer Katwala</h3>
-        <div class="role">Co-Founder &amp; CEO</div>
-        <div class="founder-sub">Built the model, pipeline, and dashboard; leads product. Studied at Rutgers.</div>
-      </div>
-      <div class="founder-card sw-card">
-        <div class="orb orb-b orb-photo"><img src="../assets/team/andrew-400.webp" srcset="../assets/team/andrew-200.webp 200w, ../assets/team/andrew-400.webp 400w, ../assets/team/andrew-800.webp 800w" sizes="168px" width="168" height="168" alt="Andrew Giacomini" loading="lazy" decoding="async" /></div>
-        <h3>Andrew Giacomini</h3>
-        <div class="role">Co-Founder &amp; COO/CFO</div>
-        <div class="founder-sub">Runs finance and operations. Studied at Loyola.</div>
-      </div>
-      <div class="founder-card sw-card advisor">
-        <div class="orb orb-c orb-photo"><img src="../assets/team/joseph-400.webp" srcset="../assets/team/joseph-200.webp 200w, ../assets/team/joseph-400.webp 400w, ../assets/team/joseph-800.webp 800w" sizes="168px" width="168" height="168" alt="Joseph LaMonica" loading="lazy" decoding="async" /></div>
-        <h3>Joseph LaMonica</h3>
-        <div class="role">Technical Advisor</div>
-        <div class="founder-sub">Studied at Emory.</div>
+      <div class="people-card">
+        <img class="people-photo" src="../assets/team/joseph-paper-400.webp" srcset="../assets/team/joseph-paper-400.webp 400w, ../assets/team/joseph-paper-800.webp 800w" sizes="(max-width:800px) 90vw, 360px" width="400" height="400" alt="Joseph LaMonica" loading="lazy" decoding="async" />
+        <h2>Joseph LaMonica</h2>
+        <div class="people-role">Technical Advisor</div>
+        <p class="people-bio">Studied at Emory.</p>
       </div>
     </div>
-    <div class="company-line">SpotWise Data Group LLC · New York Metropolitan Area · 2026</div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Talk to the people who built it.</h2>
-    <p>Founding members work directly with us, not a support queue.</p>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
-      <a class="btn btn-ghost" href="../contact/index.html">Contact the founders</a>
-    </div>
+    <p class="lead">Founding members work directly with us, not a support queue.</p>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../contact/index.html">Contact the founders</a>
   </section>
 
 </main>
@@ -217,8 +146,8 @@
       <div class="footer-tag-row">
         <div class="footer-tag">Before the market moves.</div>
         <button class="spot-interactive" type="button" aria-label="Say hi to Spot">
-          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" />
-          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" />
+          <img class="spot-face spot-face-open" src="../assets/spot-icon.png" alt="" aria-hidden="true" />
+          <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" aria-hidden="true" />
         </button>
       </div>
       <div class="footer-contact">Or reach us directly at <a href="../contact/index.html">Contact us</a><span class="emails"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></span></div>

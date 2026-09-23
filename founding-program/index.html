@@ -9,10 +9,15 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+  }
+</script>
 <title>Founding Program | SpotWise</title>
 <meta name="description" content="Request access to the Founding Market Intelligence Program: a complimentary Market Signal Report in exchange for structured feedback." />
 <meta name="robots" content="index, follow" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -21,65 +26,44 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  header{padding:24px 32px;border-bottom:1px solid var(--line);position:relative;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;}
-  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;color:var(--muted);margin-left:auto;transition:color .2s var(--ease),background-color .2s var(--ease);}
-  .back-link:hover{color:var(--teal-bright);background:var(--surface);}
-  .back-link svg{width:20px;height:20px;}
+  /* ---------- Minimal header: no nav dropdown, no footer, by design -- this
+     is a single-purpose landing page for the form. Wordmark + back link only,
+     retextured to the paper tokens. ---------- */
+  header{padding:20px 24px;border-bottom:1px solid var(--rule);position:relative;background:rgba(245,242,236,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
   header .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;}
-  main{position:relative;padding:64px 20px 100px;min-height:calc(100vh - 88px);overflow:hidden;}
-  main .mesh::before{background:
-    radial-gradient(700px 460px at 50% -10%,rgba(245,158,11,.12) 0%,transparent 60%),
-    radial-gradient(640px 420px at 12% 30%,rgba(20,184,166,.08) 0%,transparent 60%),
-    radial-gradient(720px 480px at 92% 70%,rgba(91,127,232,.07) 0%,transparent 62%);}
-  .form-card{position:relative;max-width:620px;margin:0 auto;background:var(--surface);border:1px solid rgba(245,158,11,.22);border-radius:22px;padding:46px 42px;overflow:hidden;}
-  .form-card::before{content:"";position:absolute;top:0;left:18%;right:18%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.6),transparent);}
-  .form-card h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.03em;margin-top:14px;}
-  .form-card .sub{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
-  .eyebrow.gold{color:var(--gold);}
-  .eyebrow.gold::before{background:linear-gradient(90deg,transparent,var(--gold));}
+  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-btn);border:1px solid var(--rule);color:var(--ink-2);flex-shrink:0;transition:color .2s var(--ease),border-color .2s var(--ease);}
+  .back-link:hover{color:var(--teal);border-color:var(--teal);}
+  .back-link:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+  .back-link svg{width:18px;height:18px;}
+
+  main{padding:48px 24px 100px;}
+  .form-wrap{max-width:560px;margin:0 auto;}
   form{margin-top:32px;}
-  #form-success{display:none;text-align:center;padding:24px 0;}
-  #form-success h2{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--gold);}
-  #form-success p{font-size:14.5px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
-  .note{font-size:12.5px;color:var(--muted);margin-top:16px;text-align:center;}
+  #form-success{display:none;padding:24px 0;}
+  #form-success h2{margin-bottom:8px;}
+  #form-success p{font-size:15px;color:var(--ink-2);line-height:1.6;}
 
-  /* ---------- Form progress ----------
-     Three states per step: pending, active (you're in it), done (every required
-     field in it validates). Done is derived from the fields themselves, not from
-     scroll position, so it can't claim a step is complete when it isn't. */
-  .form-progress{display:flex;align-items:center;gap:10px;margin:0 0 30px;padding:14px 4px 16px;border-bottom:1px solid var(--line);}
-  .fp-step{display:flex;align-items:center;gap:9px;min-width:0;}
-  .fp-dot{position:relative;width:20px;height:20px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--line);background:var(--surface-2);transition:border-color .3s var(--ease),background-color .3s var(--ease),box-shadow .3s var(--ease);}
-  .fp-dot::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--muted);transition:background-color .3s var(--ease),transform .3s var(--ease);}
-  .fp-label{font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap;transition:color .3s var(--ease);}
-  .fp-bar{flex:1;height:1px;background:var(--line);min-width:12px;}
+  /* "Company (optional)": a form affordance, not marketing copy -- de-
+     emphasized by weight only, already inherits --ink-2 from .f-field label. */
+  .f-optional{font-weight:400;}
+  /* Required-field asterisk: teal, not amber -- amber is reserved for the
+     Peak tier everywhere else on the site (see shared.css tier tokens). */
+  .req{color:var(--teal);margin-left:2px;}
 
-  .fp-step.is-active .fp-dot{border-color:rgba(45,212,196,.6);background:rgba(20,184,166,.12);box-shadow:0 0 0 3px rgba(20,184,166,.12);}
-  .fp-step.is-active .fp-dot::after{background:var(--teal-bright);}
-  .fp-step.is-active .fp-label{color:var(--teal-bright);}
+  .f-submit{display:block;width:100%;text-align:center;}
+  .f-legal{font-size:13px;color:var(--ink-2);line-height:1.6;margin-top:24px;padding-top:14px;border-top:1px solid var(--rule);}
+  /* .f-note is a <p>, so it inherits shared.css's global p{max-width:62ch}
+     and wraps narrower than .f-legal (a <div>, not capped) above it, even
+     though both sit in the same 560px .form-wrap -- override back to the
+     form's own width so neither line orphans its last word. */
+  .f-note{font-size:13px;color:var(--ink-2);line-height:1.6;margin-top:16px;max-width:560px;}
 
-  .fp-step.is-done .fp-dot{border-color:rgba(45,212,196,.5);background:var(--teal);}
-  .fp-step.is-done .fp-dot::after{width:9px;height:9px;margin:-5px 0 0 -4px;border-radius:0;background:transparent;
-    border-right:2px solid #041A17;border-bottom:2px solid #041A17;transform:rotate(42deg) translate(-1px,-1px);}
-  .fp-step.is-done .fp-label{color:var(--ink-soft);}
-
-  @media (max-width:560px){
-    .fp-label{display:none;}
-    .form-progress{gap:6px;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .fp-dot,.fp-dot::after,.fp-label{transition:none;}
-  }
   @media (max-width:640px){
-    header{padding:18px 20px;}
-    .back-link{width:44px;height:44px;}
-    main{padding:48px 18px 84px;}
-    .form-card{padding:30px 20px;}
-    .form-card h1{font-size:clamp(26px,7vw,32px);}
-    .form-card .sub{font-size:15px;}
+    header{padding:16px 20px;}
+    main{padding:48px 20px 80px;}
   }
 </style>
 </head>
@@ -88,7 +72,7 @@
 <header>
   <div class="wrap">
     <a class="logo" href="../index.html">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
     <a class="back-link" href="../index.html" aria-label="Back to spotdg.com" title="Back to spotdg.com">
@@ -97,42 +81,31 @@
   </div>
 </header>
 
-<main>
-  <div class="mesh" aria-hidden="true"></div>
-  <div class="form-card">
-    <div class="eyebrow gold">Founding Market Intelligence Program</div>
+<main class="wash-top">
+  <div class="form-wrap reveal">
+    <div class="eyebrow">Founding Market Intelligence Program</div>
     <h1>Request your report.</h1>
-    <p class="sub">A complimentary Market Signal Report for a market you choose, with a walkthrough from our team.</p>
-
-    <!-- Visual mirror of the 01/02 headings below, so progress through a
-         two-part form is legible without scrolling. aria-hidden because the
-         .form-step headings are the real, announced structure -- this would
-         otherwise read the same labels to a screen reader twice. -->
-    <div class="form-progress" aria-hidden="true">
-      <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">About you</span></div>
-      <div class="fp-bar"></div>
-      <div class="fp-step"><span class="fp-dot"></span><span class="fp-label">Your interest</span></div>
-    </div>
+    <p class="lead">A complimentary Market Signal Report for a market you choose, with a walkthrough from our team.</p>
 
     <form id="founding-form">
       <input type="hidden" name="_subject" value="New Founding Program Application" />
 
       <div class="form-step"><span class="num">01</span><span class="lbl">About you</span><span class="rule"></span></div>
-      <div class="field-group">
+      <div class="f-field">
         <label for="name">Name<span class="req">*</span></label>
         <input type="text" id="name" name="name" required />
       </div>
       <div class="field-row">
-        <div class="field-group">
+        <div class="f-field">
           <label for="email">Email<span class="req">*</span></label>
           <input type="email" id="email" name="email" required />
         </div>
-        <div class="field-group">
-          <label for="company">Company</label>
+        <div class="f-field">
+          <label for="company">Company <span class="f-optional">(optional)</span></label>
           <input type="text" id="company" name="company" />
         </div>
       </div>
-      <div class="field-group">
+      <div class="f-field">
         <label for="role">Role</label>
         <select id="role" name="role">
           <option value="">Select your role…</option>
@@ -146,24 +119,24 @@
       </div>
 
       <div class="form-step"><span class="num">02</span><span class="lbl">Your interest</span><span class="rule"></span></div>
-      <div class="field-group">
+      <div class="f-field">
         <label for="geography">Which market do you want scored?</label>
         <input type="text" id="geography" name="geography" placeholder="e.g. Hudson County NJ" />
       </div>
-      <div class="field-group">
+      <div class="f-field">
         <label for="why">Why are you interested?</label>
         <textarea id="why" name="why" placeholder="Tell us a bit about what you're evaluating"></textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14.5px;">Request report →</button>
-      <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
+      <button type="submit" class="btn btn-primary f-submit">Request report</button>
+      <div class="f-legal">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
     </form>
-    <p class="note">We use what you enter here to build your report and to reach you about it. Nothing else.</p>
+    <p class="f-note">We use what you enter here to build your report and to reach you about it. Nothing else.</p>
 
     <div id="form-success">
       <div class="success-icon-wrap">
-        <img class="success-icon success-icon-open" src="../assets/spot-icon.png" alt="" />
-        <img class="success-icon success-icon-blink" src="../assets/spot-icon-blink.png" alt="" />
+        <img class="success-icon success-icon-open" src="../assets/spot-icon.png" alt="" aria-hidden="true" />
+        <img class="success-icon success-icon-blink" src="../assets/spot-icon-blink.png" alt="" aria-hidden="true" />
       </div>
       <h2>Request received.</h2>
       <p>We'll review it and reply within two business days.</p>
@@ -178,7 +151,7 @@
   spotwiseHandleForm(document.getElementById('founding-form'), {
     endpoint: FORM_ENDPOINT,
     subject: 'Founding Market Intelligence Program Application',
-    submitLabel: 'Request report →',
+    submitLabel: 'Request report',
     fields: [
       { name: 'name', label: 'Name' },
       { name: 'email', label: 'Email' },
