@@ -330,6 +330,12 @@
 
     .card-section .sec-head{margin-bottom:28px;}
   }
+  /* Below 480px, two-up (tiles 2 + 3 side by side) squeezed tile 2's
+     caption into many wrapped lines of letterspaced caps. Stack all three
+     full-width instead; 481-640px keeps the two-up layout above. */
+  @media (max-width:479px){
+    .stat-row{grid-template-columns:1fr;}
+  }
   @media (max-width:400px){
     h1{font-size:clamp(36px,11vw,50px);}
     h1 em{font-size:clamp(42px,13vw,58px);}
@@ -457,7 +463,7 @@
               <rect x="86.8" y="3" width="6.5" height="21" rx="1"/>
             </g>
           </svg>
-          <span class="stat-context">and growing</span>
+          <span class="stat-context">New Jersey, New York, Pennsylvania</span>
         </a>
       </div>
       <p class="stat-caveat">Top-decile picks, 2014–2021 entry cohorts, embargo-respecting walk-forward, replicated across all 10 US regions (per-region hit rate 68–88%). These figures reflect post-2013 market conditions. The same signal underperformed in the 2006–2012 downturn era. Past performance does not guarantee future results.</p>
@@ -584,7 +590,7 @@
       <div class="founding-copy">
         <div class="eyebrow">Founding Market Intelligence Program</div>
         <h2>Get a Market Signal Report for your market.</h2>
-        <p>Pick a geography. We send you a full report and walk you through it with our team. No payment, no obligation, and you can stop there. In return, we ask for twenty minutes of your feedback.</p>
+        <p>Pick a market. We send you a full report and walk you through it with our team. No payment, no obligation, and you can stop there. In return, we ask for twenty minutes of your feedback.</p>
         <a class="btn btn-primary" href="founding-program/index.html">Request a report</a>
       </div>
       <div class="founding-terms">
