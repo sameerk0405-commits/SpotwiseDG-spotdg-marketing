@@ -26,6 +26,13 @@
   --teal:#0F7C6E;          /* the one accent: links, key numbers, Momentum
                                tier, hover states */
   --teal-soft:rgba(15,124,110,.10); /* teal wash for subtle backgrounds only */
+  /* Secondary bar tone: the home chart's metro bars, the validation figure's
+     "All ZIPs" bar, the walk-forward "trained on" bars, and their legend
+     swatches. .48 is the lightest --ink alpha that composites over --paper to
+     at least 3:1 (rgb(137,141,136), 3.02:1; the crossover is .479). Raised
+     from .25 (1.68:1) on 2026-09-23, "paper bar contrast". Defined once here
+     so the four pages never carry the value as a literal. */
+  --ink-bar:rgba(20,32,28,.48);
   --amber:#B7791F;         /* Peak tier only -- do not use as a general
                                "attention" color elsewhere on the site */
 

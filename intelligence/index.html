@@ -47,8 +47,9 @@
 
   /* ---------- Validation figure (paper pass two). Type: label Archivo 500 14px --ink, value IBM Plex Mono 13px
      --ink at the bar's end, lift Instrument Serif 64px --ink with an Archivo 15px --ink-2 line beside it, caption
-     13px --ink-2. Bars 28px tall: picks in --teal, all-ZIPs in --ink at 25% (the same value the home cohort chart
-     uses for its metro bars). Width is the value as a percentage of the track, via --val. ---------- */
+     13px --ink-2. Bars 28px tall: picks in --teal, all-ZIPs in --ink-bar (the shared secondary bar tone, the
+     same token the home cohort chart's metro bars use -- see shared.css). Width is the value as a percentage
+     of the track, via --val. ---------- */
   .split-5-7.hero-split{align-items:center;}
   .val-fig{margin:0;min-width:0;scroll-margin-top:96px;}
   .val-lift{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
@@ -59,7 +60,7 @@
   .val-track{display:flex;align-items:center;gap:10px;width:100%;}
   .val-bar{height:28px;width:calc(var(--val) * 1%);flex:0 0 auto;border-radius:var(--radius-btn);}
   .val-bar-picks{background:var(--teal);}
-  .val-bar-base{background:rgba(20,32,28,.25);}
+  .val-bar-base{background:var(--ink-bar);}
   .val-value{font-family:var(--font-mono);font-size:13px;color:var(--ink);white-space:nowrap;}
   .val-caption{margin-top:20px;font-family:var(--font-sans);font-size:13px;line-height:1.6;color:var(--ink-2);}
   /* Grow-in: under the html.js gate only (same gate as .reveal), bars start at zero width and transition to

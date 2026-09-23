@@ -54,20 +54,21 @@
   }
 
   /* ---------- Walk-forward diagram (paper pass two). Timeline + row labels IBM Plex Mono 11px --ink-2; keys
-     Archivo 500 13px --ink-2 with 10px swatches; caption 13px --ink-2. "Trained on" bars --ink at 25% (the same
-     value the home cohort chart uses for metro bars), "tested on" bars --teal. ---------- */
+     Archivo 500 13px --ink-2 with 10px swatches; caption 13px --ink-2. "Trained on" bars and their swatch in
+     --ink-bar (the shared secondary bar tone, the same token the home cohort chart's metro bars use -- see
+     shared.css), "tested on" bars --teal. ---------- */
   .wf-fig{margin:0;min-width:0;}
   .wf-keys{display:flex;flex-wrap:wrap;gap:8px 22px;margin-bottom:18px;font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);}
   .wf-key{display:inline-flex;align-items:center;gap:8px;}
   .wf-swatch{width:10px;height:10px;border-radius:2px;display:inline-block;}
-  .wf-swatch-train{background:rgba(20,32,28,.25);}
+  .wf-swatch-train{background:var(--ink-bar);}
   .wf-swatch-test{background:var(--teal);}
   .wf-rows{display:flex;flex-direction:column;gap:8px;}
   .wf-row,.wf-axis{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:12px;}
   .wf-year{font-family:var(--font-mono);font-size:11px;color:var(--ink-2);line-height:1;}
   .wf-track{position:relative;height:12px;}
   .wf-bar{position:absolute;top:0;height:12px;display:block;border-radius:2px;}
-  .wf-bar-train{background:rgba(20,32,28,.25);}
+  .wf-bar-train{background:var(--ink-bar);}
   .wf-bar-test{background:var(--teal);}
   .wf-axis{margin-top:10px;}
   .wf-axis-track{position:relative;height:22px;border-top:1px solid var(--ink);}
@@ -233,7 +234,7 @@
       </div>
 
       <!-- Walk-forward diagram. Eight entry cohorts (2014-2021), the same cohorts named in the paragraph to the
-           left. Each row: an --ink 25% "trained on" bar from the start of the timeline to the cohort year, then a
+           left. Each row: an --ink-bar "trained on" bar from the start of the timeline to the cohort year, then a
            --teal "tested on" bar covering the five years after. Timeline 2000-2026. Positions are percentages of
            the 26-year span computed inline from the years, nothing else. Rows draw in top to bottom on first view,
            60ms stagger, 600ms each, --ease. -->
