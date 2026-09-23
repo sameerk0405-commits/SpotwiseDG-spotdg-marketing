@@ -316,6 +316,9 @@ header.hdr2 .logo{flex-shrink:0;}
 .doc,.tier-unscored{fill-rule:evenodd;} /* harmless on .doc; real use is the map paths below */
 .doc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--rule);flex-wrap:wrap;}
 .doc-eyebrow{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);}
+/* Record-header variant: a document's own identifying line (zip + market),
+   set in mono like a stamped ID rather than the default sans label. */
+.doc-eyebrow.mono{font-family:var(--font-mono);font-size:12px;letter-spacing:0;}
 .doc-title{font-family:var(--font-sans);font-weight:600;font-size:18px;color:var(--ink);margin-top:4px;}
 .doc-tier{font-family:var(--font-sans);font-weight:600;font-size:14px;white-space:nowrap;}
 /* Tier word color, reusing the same --tier-* tokens as the map/legend
@@ -327,6 +330,12 @@ header.hdr2 .logo{flex-shrink:0;}
 .doc-tier.tier-momentum{color:var(--tier-momentum);}
 .doc-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0;}
 .doc-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
+/* Serif variant: a document's headline score set in Instrument Serif and
+   teal rather than the default mono/ink treatment (e.g. a full sample
+   report, where the score is the page's visual anchor). font-variant-numeric
+   is inherited from .mono-num if paired -- Instrument Serif digits aren't
+   tabular on their own. */
+.doc-score.serif{font-family:var(--font-serif);font-weight:400;color:var(--teal);}
 .doc-score-label{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);line-height:1.4;}
 .doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--rule);}
 .doc-grid .k{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);}
@@ -334,9 +343,20 @@ header.hdr2 .logo{flex-shrink:0;}
 .doc-ratios{display:flex;gap:32px;flex-wrap:wrap;padding:20px 0;border-top:1px solid var(--rule);}
 .doc-ratios .k{font-family:var(--font-sans);font-size:12px;color:var(--ink-2);}
 .doc-ratios .v{font-family:var(--font-mono);font-weight:500;font-size:17px;color:var(--ink);margin-top:4px;}
+/* Generic section wrapper for anything else that needs to sit inside a .doc
+   with the same rhythm as .doc-grid/.doc-ratios (top rule + 20px padding) --
+   e.g. a table or a plain list, where the content itself supplies no border. */
+.doc-section{padding:20px 0;border-top:1px solid var(--rule);}
+.doc-section .mono-table{font-size:14px;}
+.doc-label{font-family:var(--font-sans);font-weight:600;font-size:13px;color:var(--ink-2);margin-bottom:12px;}
 .doc-action{display:block;font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--teal);padding-top:20px;border-top:1px solid var(--rule);}
 .doc-note{font-family:var(--font-sans);font-size:12.5px;color:var(--ink-2);font-style:italic;margin-top:12px;}
 .doc-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);font-family:var(--font-mono);font-size:11px;color:var(--ink-2);}
+/* Pinned "SAMPLE" tag: overlaps the top-left corner of a .doc that shows
+   illustrative, not live, data. Wrap the .doc in .doc-sample-wrap so the tag
+   can be positioned absolutely against it. */
+.doc-sample-wrap{position:relative;}
+.doc-sample-wrap .tag-sample{position:absolute;top:-11px;left:24px;}
 
 /* ---------- Rule list: a plain vertical list, each item separated by a
    hairline instead of a card or bullet. Use for "what you get," feature
@@ -354,8 +374,8 @@ header.hdr2 .logo{flex-shrink:0;}
 /* ---------- Definition grid: label/value pairs in two columns, a rule
    between each row. For methodology/glossary-style content. ---------- */
 .def-grid{display:grid;grid-template-columns:1fr 2fr;column-gap:24px;}
-.def-grid dt{font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--ink-2);padding:16px 0;border-top:1px solid var(--rule);}
-.def-grid dd{font-family:var(--font-sans);font-size:15.5px;color:var(--ink);padding:16px 0;border-top:1px solid var(--rule);}
+.def-grid dt{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--ink);padding:16px 0;border-top:1px solid var(--rule);}
+.def-grid dd{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);padding:16px 0;border-top:1px solid var(--rule);line-height:1.6;}
 @media (max-width:560px){.def-grid{grid-template-columns:1fr;column-gap:0;}
   .def-grid dd{padding-top:4px;padding-bottom:16px;}
   .def-grid dt{padding-bottom:0;}
@@ -393,6 +413,20 @@ header.hdr2 .logo{flex-shrink:0;}
 .mono-table th{text-align:left;font-weight:500;font-size:12px;color:var(--ink-2);padding:0 12px 10px 0;border-bottom:1px solid var(--rule);}
 .mono-table td{padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);color:var(--ink);}
 .mono-table td.num,.mono-table th.num{font-family:var(--font-mono);text-align:right;}
+/* Row-header cells (<th scope="row"> in tbody, e.g. a comparison table's
+   left-hand row labels): match a data row's own box model/weight rather
+   than the small thead-label treatment above, so the label sits on the same
+   baseline as the values beside it instead of looking like a stray heading. */
+.mono-table tbody th{text-align:left;font-family:var(--font-sans);font-weight:500;font-size:14.5px;color:var(--ink);padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);}
+
+/* ---------- Tier columns: four plain columns (Peak/Momentum/Emerging/
+   Watch), a tier swatch before each name, no card chrome. Kept distinct from
+   .type-cols (three-up) since the tier system is fixed at four. ---------- */
+.tier-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+.tier-cols h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;}
+.tier-cols p{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
+@media (max-width:800px){.tier-cols{grid-template-columns:1fr 1fr;gap:24px;}}
+@media (max-width:480px){.tier-cols{grid-template-columns:1fr;}}
 
 /* ---------- Tier swatches: the shared color language for the five score
    tiers (Peak/Momentum/Emerging/Watch/Pass), used on the map legend and
