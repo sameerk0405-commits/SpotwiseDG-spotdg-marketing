@@ -63,7 +63,15 @@
   --max:1200px;   /* 12-column grid max-width */
   --gutter:24px;  /* grid gutter */
 
-  /* ---- Radius: 2px buttons, 4px documents and images, nothing larger ---- */
+  /* ---- Radius (revised 2026-09-23, "paper button shape"): buttons are
+     10px, set directly on .btn/.btn-primary rather than through this token
+     -- --radius-btn stays 2px below because .tier-swatch still keys off it
+     and that swatch is deliberately left alone. Other bordered chrome (the
+     nav-sheet trigger, the founding-program back-link, the boxed textarea,
+     the mail-copy "Copied" tooltip) is 8px or has its border dropped
+     entirely, decided per element. Documents and images stay 4px
+     (--radius-doc), also reused by .tag-sample so the sample tag matches
+     the document it sits on. Tables stay square. ---- */
   --radius-btn:2px;
   --radius-doc:4px;
 
@@ -188,14 +196,17 @@ footer h2 + p,footer p + p,
 .num-strong{font-weight:600;}
 
 /* ---------- Buttons ----------
-   Primary: solid ink, paper text, 2px radius, background shifts to teal on
+   Primary: solid ink, paper text, 10px radius, background shifts to teal on
    hover. Secondary is not a button at all -- it's a text link with an
    underline that changes color on hover. No arrows are added by CSS on
    either; any arrow glyph on the site today lives in existing link copy
-   and is preserved there untouched, not introduced here as decoration. ---------- */
+   and is preserved there untouched, not introduced here as decoration.
+   Radius is set literally here, not via --radius-btn -- that token still
+   drives .tier-swatch, which is not changing shape (see the radius comment
+   in :root). ---------- */
 .btn{
   display:inline-block;font-family:var(--font-sans);font-weight:500;font-size:15px;
-  padding:13px 22px;border-radius:var(--radius-btn);border:none;cursor:pointer;
+  padding:13px 24px;border-radius:10px;border:none;cursor:pointer;
   text-decoration:none;transition:background-color .22s var(--ease),color .22s var(--ease);
   white-space:nowrap;
 }
@@ -268,7 +279,7 @@ header.hdr2 .logo{flex-shrink:0;}
   white-space:nowrap;transition:color .2s var(--ease),text-decoration-color .2s var(--ease);
 }
 .nav-login:hover{color:var(--teal);text-decoration-color:var(--teal);}
-.nav-cta{padding:11px 18px;font-size:14px;}
+.nav-cta{font-size:14px;}
 .nav-cta-short{display:none;}
 
 /* ---------- Sheet (mobile nav, <900px): icon-only trigger, no "Menu" label.
@@ -278,7 +289,7 @@ header.hdr2 .logo{flex-shrink:0;}
 .nav-sheet{display:none;}
 .nav-sheet-trigger{
   display:none;align-items:center;justify-content:center;width:40px;height:40px;
-  border-radius:var(--radius-btn);background:none;border:1px solid var(--rule);
+  border-radius:8px;background:none;border:1px solid var(--rule);
   color:var(--ink);cursor:pointer;font-family:inherit;flex-shrink:0;
   transition:color .2s var(--ease),border-color .2s var(--ease);
 }
@@ -547,7 +558,7 @@ header.hdr2 .logo{flex-shrink:0;}
    text, 11px Archivo 500 uppercase -- the only uppercase text-transform on
    the site besides the nav wordmark (which is naturally-cased, not
    transformed, so in practice this is the only uppercase, full stop). ---------- */
-.tag-sample{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.02em;padding:3px 8px;border-radius:var(--radius-btn);}
+.tag-sample{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.02em;padding:3px 8px;border-radius:var(--radius-doc);}
 
 /* ---------- Form fields: underline inputs, boxed textarea, no pill/rounded
    chrome. Used by the live founding-program form. ---------- */
@@ -558,7 +569,7 @@ header.hdr2 .logo{flex-shrink:0;}
   background:transparent;border-radius:0;font-family:var(--font-sans);font-size:17px;color:var(--ink);
 }
 .f-field textarea{
-  width:100%;padding:12px;border:1px solid var(--rule);border-radius:var(--radius-btn);
+  width:100%;padding:12px;border:1px solid var(--rule);border-radius:8px;
   background:transparent;font-family:var(--font-sans);font-size:17px;color:var(--ink);
   resize:vertical;min-height:110px;
 }
@@ -674,27 +685,30 @@ footer{position:relative;border-top:1px solid var(--rule);padding:76px 24px 40px
 .footer-contact a{color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:text-decoration-color .2s var(--ease);}
 .footer-contact a:hover{text-decoration-color:var(--teal);}
 .footer-contact .emails{display:block;margin-top:6px;font-family:var(--font-mono);font-size:11px;color:var(--ink-2);line-height:2;}
-.footer-contact .emails a{color:var(--ink-2);font-weight:400;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
+.footer-contact .emails a{font-family:var(--font-mono);font-size:13px;color:var(--ink);font-weight:400;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
 .footer-contact .emails a:hover,.footer-contact .emails a:focus-visible{color:var(--teal);text-decoration-color:var(--teal);}
 .footer-contact .emails .sep{display:none;}
 
-.mail-unit{display:inline-flex;align-items:center;gap:7px;max-width:100%;}
+/* Copy chip (Contact + footer): no bordered box -- the address itself
+   carries the affordance (mono, underlined in --rule), and the copy button
+   is just a bare icon that goes teal on hover/copied, no border/background. */
+.mail-unit{display:inline-flex;align-items:center;gap:8px;max-width:100%;}
 .mail-copy{
   display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
-  width:22px;height:22px;padding:0;border-radius:var(--radius-btn);cursor:pointer;
-  background:transparent;border:1px solid var(--rule);color:var(--ink-2);
+  width:22px;height:22px;padding:0;cursor:pointer;
+  background:transparent;border:none;color:var(--ink-2);
   font-family:inherit;position:relative;
-  transition:color .2s var(--ease),border-color .2s var(--ease);
+  transition:color .2s var(--ease);
 }
-.mail-copy svg{width:12px;height:12px;}
-.mail-copy:hover{color:var(--teal);border-color:var(--teal);}
+.mail-copy svg{width:14px;height:14px;}
+.mail-copy:hover{color:var(--teal);}
 .mail-copy:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
-.mail-copy.is-copied{color:var(--teal);border-color:var(--teal);}
+.mail-copy.is-copied{color:var(--teal);}
 .mail-copy.is-copied::after{
   content:"Copied";position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
   font-family:var(--font-mono);font-size:9.5px;font-weight:500;letter-spacing:.06em;
   color:var(--teal);background:var(--paper);
-  border:1px solid var(--rule);border-radius:var(--radius-btn);padding:3px 7px;white-space:nowrap;pointer-events:none;
+  border:1px solid var(--rule);border-radius:8px;padding:3px 7px;white-space:nowrap;pointer-events:none;
 }
 .footer-contact .emails .mail-unit{display:flex;}
 .footer-contact .emails .mail-unit a{min-width:26ch;}
