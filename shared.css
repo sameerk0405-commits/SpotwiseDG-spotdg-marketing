@@ -32,15 +32,20 @@
   /* Tier fills: one definition each, reused as `background` on the legend
      swatches (.tier-swatch) and as `fill` on the map's ZIP paths, so a tier
      color is never written as a literal twice. Five tiers (batch 8 data has
-     Peak/Momentum/Emerging/Watch/Pass -- Sameer's spec named four; Pass is
-     shown as a fifth row, --ink at 5%, between Watch (8%) and unscored land
-     (3%). Flagged for Sameer to confirm/recolor -- see dev report.) */
+     Peak/Momentum/Emerging/Watch/Pass). Pass is confirmed as the fifth,
+     customer-facing tier name (2026-09-23, paper final fixes) and is shown
+     as a fifth row, --ink at 5%, between Watch (8%) and unscored land (3%)
+     everywhere it renders as map/legend data. */
   --tier-peak:var(--amber);
   --tier-momentum:var(--teal);
   --tier-emerging:rgba(15,124,110,.45);
   --tier-watch:rgba(20,32,28,.08);
   --tier-pass:rgba(20,32,28,.05);
   --tier-unscored:rgba(20,32,28,.03);
+  /* Sample-report tier-explainer swatch only (added 2026-09-23, paper final
+     fixes): Sameer specified --ink at 4% for this one column, distinct from
+     the map/legend --tier-pass token above (5%), which stays untouched. */
+  --tier-pass-explainer:rgba(20,32,28,.04);
 
   /* ---- Spacing: 8px base rhythm (renamed values, same token names so
      pages not yet rebuilt on this system keep a sane fallback rather than
@@ -456,10 +461,11 @@ header.hdr2 .logo{flex-shrink:0;}
    header naming a plan/tier (e.g. "Analyst") stays sans, not mono. */
 .mono-table thead th:not(:first-child){text-align:right;}
 
-/* ---------- Tier columns: four plain columns (Peak/Momentum/Emerging/
-   Watch), a tier swatch before each name, no card chrome. Kept distinct from
-   .type-cols (three-up) since the tier system is fixed at four. ---------- */
-.tier-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+/* ---------- Tier columns: five plain columns (Peak/Momentum/Emerging/
+   Watch/Pass, Pass added 2026-09-23 paper final fixes), a tier swatch before
+   each name, no card chrome. Kept distinct from .type-cols (three-up) since
+   the tier system is fixed at five. ---------- */
+.tier-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:28px;}
 .tier-cols h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;}
 .tier-cols p{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
 @media (max-width:800px){.tier-cols{grid-template-columns:1fr 1fr;gap:24px;}}
@@ -502,6 +508,9 @@ header.hdr2 .logo{flex-shrink:0;}
 .tier-swatch.tier-pass{background:var(--tier-pass);}
 /* Map paths (home) reuse the same five tier classes with `fill` instead of
    `background` -- see index.html's local style block. */
+/* Sample-report tier-explainer only (added 2026-09-23, paper final fixes) --
+   4%, not the 5% .tier-pass token used everywhere else. */
+.tier-swatch.tier-pass-explainer{background:var(--tier-pass-explainer);}
 
 /* ---------- People grid: portrait + name + role + bio, three columns. Team's
    primary use; Contact reuses the same shape at a smaller portrait size via

@@ -111,7 +111,7 @@
         <div class="list-label">What a report contains</div>
         <ul class="rule-list">
           <li>Top-ranked zip codes for your target market or investment thesis</li>
-          <li>Classification by stage: Peak, Momentum, Emerging, Watch</li>
+          <li>Classification by stage: Peak, Momentum, Emerging, Watch, Pass</li>
           <li>Key reasons each zip was flagged</li>
           <li>Supporting metrics and investor ratios</li>
           <li>Comparison against the broader metro area</li>
@@ -215,7 +215,7 @@
   <section class="sec reveal">
     <div class="sec-head">
       <h2>What each tier means.</h2>
-      <p>Every scored zip is classified into one of four tiers based on where its score ranks against every other zip we score.</p>
+      <p>Every scored zip is classified into one of five tiers based on where its score ranks against every other zip we score.</p>
     </div>
     <div class="tier-cols">
       <div>
@@ -233,6 +233,10 @@
       <div>
         <h3><span class="tier-swatch tier-watch"></span>Watch</h3>
         <p>Worth tracking over time. These zips rank in the lower half of the scored universe, the signals are early or mixed rather than clearly established.</p>
+      </div>
+      <div>
+        <h3><span class="tier-swatch tier-pass-explainer"></span>Pass</h3>
+        <p>Score under 40. The model sees no case for this ZIP in the current window.</p>
       </div>
     </div>
   </section>

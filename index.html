@@ -74,8 +74,11 @@
      outlines the scored ZIPs sit inside, so the map reads as NJ/NY/PA rather
      than an unlabeled cluster of shapes. Static -- not part of the .is-live
      fill-in, since it's cartographic context, not scored data. Replaces the
-     old merged unscored-ZIP cloud layer (dropped; see tools/build-map.js). */
-  .map-svg-mount .state-outline{fill:var(--ink);fill-opacity:.03;stroke:var(--rule);stroke-width:.75;}
+     old merged unscored-ZIP cloud layer (dropped; see tools/build-map.js).
+     Land fill removed (2026-09-23, paper final fixes) -- outline only, so
+     the state shape reads from its stroke against the paper background, not
+     a tinted fill. */
+  .map-svg-mount .state-outline{fill:none;stroke:var(--rule);stroke-width:.75;}
   /* Fill-in-once: paths start at 0 fill-opacity and animate to full over
      800ms the first time the map is in view (.is-live, added by JS via the
      shared SpotwiseMotion.once helper -- see script at bottom of page).
@@ -118,15 +121,29 @@
 
   /* ---------- Cohort chart: plain, ink axes, no gridlines ---------- */
   .hero-chart{width:100%;}
-  .hero-chart-svg{display:block;width:100%;height:auto;}
+  /* Chart block height cap (added 2026-09-23, paper final fixes): the frame
+     around the <svg> carries the height cap, not .hero-chart itself, so the
+     legend/caption text below stay at their natural size instead of being
+     squeezed into the same box. A definite `height` (not `max-height`) is
+     used deliberately: with only max-height set, a percentage-height child
+     against an otherwise auto-height parent resolves to `auto` per spec
+     (CSS2.1 10.5), so the svg would still render at its full intrinsic
+     ~498px and visibly overflow the capped box rather than shrink into it --
+     verified with CDP before landing on this. The svg fills the frame at
+     width/height 100% and preserveAspectRatio="xMidYMid meet" (unchanged)
+     does the actual fit-without-distortion, letterboxing on the sides once
+     height is the binding constraint at typical section widths. */
+  .hc-chart-frame{width:100%;height:320px;}
+  .hero-chart-svg{display:block;width:100%;height:100%;}
+  @media (max-width:640px){.hc-chart-frame{height:240px;}}
   .hc-axis-line{stroke:var(--ink);stroke-width:1;}
   .hc-axis-label{font-family:var(--font-mono);font-size:11px;fill:var(--ink-2);}
-  .hc-axis-title{font-family:var(--font-mono);font-size:10px;font-weight:500;fill:var(--ink-2);}
+  .hc-axis-title{font-family:var(--font-sans);font-size:13px;font-weight:500;fill:var(--ink-2);}
   .hc-xlabels text{font-family:var(--font-mono);font-size:11px;fill:var(--ink-2);}
   .hc-bar-picks,.hc-bar-metro{transition:height .6s var(--ease),y .6s var(--ease);}
   .hc-bars rect.hc-bar-picks{fill:var(--teal);}
   .hc-bars rect.hc-bar-metro{fill:rgba(20,32,28,.25);}
-  .hc-legend{display:flex;gap:22px;margin-top:14px;font-family:var(--font-sans);font-size:13px;color:var(--ink-2);}
+  .hc-legend{display:flex;gap:22px;margin-top:14px;font-family:var(--font-mono);font-size:11px;color:var(--ink-2);}
   .hc-legend-item{display:inline-flex;align-items:center;gap:8px;}
   .hc-swatch{width:10px;height:10px;border-radius:2px;display:inline-block;}
   .hc-swatch-picks{background:var(--teal);}
@@ -208,6 +225,22 @@
 <!-- MAP_SVG:START -->
 <svg viewBox="0 0 900 684.1" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-tiers-title">
 <title id="map-tiers-title">Tri-state ZIP codes colored by SpotWise momentum tier</title>
+<defs>
+<linearGradient id="edge-fade-y" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#000" stop-opacity="1"/>
+<stop offset="1" stop-color="#000" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="edge-fade-x" x1="0" y1="0" x2="32" y2="0" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#000" stop-opacity="1"/>
+<stop offset="1" stop-color="#000" stop-opacity="0"/>
+</linearGradient>
+<mask id="edge-fade-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="684.1">
+<rect x="0" y="0" width="900" height="684.1" fill="#fff"/>
+<rect x="0" y="0" width="900" height="32" fill="url(#edge-fade-y)"/>
+<rect x="0" y="0" width="32" height="684.1" fill="url(#edge-fade-x)"/>
+</mask>
+</defs>
+<g mask="url(#edge-fade-mask)">
 <g class="map-states">
 <path class="state-outline" data-state="New Jersey" d="M431.9,115 L497.3,151.5 L473.7,226.1 L441.5,242.9 L424.3,282.3 L478,302 L482.3,331.5 L458.7,469.4 L397.5,572 L357.8,601.6 L322.4,666.3 L304.1,624.1 L247.2,603 L177.5,546.7 L173.2,508.8 L172.1,503.1 L182.8,489.1 L201.1,458.1 L253.7,437 L256.9,417.3 L317,375.1 L326.7,352.6 L270.9,300.6 L268.7,268.3 L244,259.8 L241.9,230.3 L271.9,185.3 L255.8,158.6 L305.2,105.1 L315.9,77 L341.7,58.7 L431.9,115 Z"/>
 <path class="state-outline" data-state="New York" d="M606.8,-879.4 L609,-825.9 L598.2,-778.1 L616.5,-731.7 L611.1,-682.5 L588.6,-630.5 L605.7,-560.1 L595,-539 L626.1,-496.8 L619.7,-319.6 L621.8,-297.1 L574.6,-128.4 L578.9,-118.5 L566,75.6 L580,96.7 L531.7,124.8 L545.6,154.3 L629.3,175.4 L646.5,160 L718.4,160 L754.9,151.5 L815,110.7 L819.3,140.3 L850.5,152.9 L778.5,190.9 L627.2,247.2 L563.9,258.4 L522,255.6 L490.9,268.3 L473.7,226.1 L497.3,151.5 L431.9,115 L341.7,58.7 L333.1,40.4 L303.1,39 L267.6,-4.6 L271.9,-42.6 L248.3,-72.1 L233.3,-70.7 L211.8,-105.9 L-651.1,-105.9 L-651.1,-170.6 L-651.1,-174.8 L-530.9,-247.9 L-511.6,-283.1 L-473,-307 L-488,-350.6 L-504.1,-359 L-515.9,-429.3 L-401.1,-458.9 L-299.1,-457.5 L-258.3,-450.4 L-214.3,-422.3 L-186.4,-433.6 L-101.6,-432.1 L-50.1,-450.4 L4.7,-496.8 L40.1,-498.3 L41.2,-568.6 L59.4,-609.4 L15.4,-637.5 L25.1,-669.8 L103.4,-713.4 L132.4,-751.4 L226.8,-837.2 L315.9,-880.8 L449,-873.8 L606.8,-879.4 Z"/>
@@ -1424,6 +1457,7 @@
 <path class="zip tier-peak" data-zip="19153" data-tier="Peak" data-score="99.26" d="M231.5,439.7 L230.8,439.6 L230.6,439.2 L230.3,438.4 L230.9,438 L230.4,437.6 L230.7,437.2 L230.3,436.8 L231.9,434.9 L232.1,433.7 L233,432.5 L232.6,432.2 L233.2,431.6 L232.9,431 L233.8,430.1 L233.8,429.3 L233.7,429.8 L234.2,429.6 L234.5,430.3 L236.5,430 L237.3,431.2 L239.8,426.7 L240.6,427.1 L240.9,427.9 L242.7,428.5 L241.7,430.7 L240.3,430.7 L239.9,431.1 L240.1,433.2 L240.7,434.2 L243.9,435.7 L244,439.4 L243.1,440.5 L240.8,442.1 L239.9,441 L240,439.7 L236.4,439.4 L235.1,440.7 L233.6,439.6 L231.5,439.7 Z"/>
 <path class="zip tier-momentum" data-zip="19121" data-tier="Momentum" data-score="89.28" d="M250.7,415 L247.4,415 L247.1,414.2 L245.7,414.3 L245.5,413.5 L244.3,413.9 L242.7,412.6 L242.4,411.8 L244.7,409 L244.6,409.6 L245.1,409.9 L244.9,410.7 L245.6,410.8 L245.9,410 L248.1,411.1 L248.9,410.5 L249.1,411 L251.6,411.4 L251,415.2 L250.7,415 Z"/>
 </g>
+</g>
 </svg>
 <!-- MAP_SVG:END -->
         </div>
@@ -1473,6 +1507,7 @@
   <!-- COHORT CHART: plain, ink axes, no gridlines. -->
   <section class="sec reveal">
     <div class="hero-chart">
+      <div class="hc-chart-frame">
       <svg class="hero-chart-svg" viewBox="0 0 600 260" width="600" height="260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Top-decile picks versus metro five-year appreciation, by entry cohort 2014 to 2021">
         <g class="hc-axis">
           <text class="hc-axis-title" x="46" y="14" text-anchor="start">Five-year appreciation (%)</text>
@@ -1496,6 +1531,7 @@
           <text x="554" y="226" text-anchor="middle">2021</text>
         </g>
       </svg>
+      </div>
       <div class="hc-legend">
         <span class="hc-legend-item"><i class="hc-swatch hc-swatch-picks"></i>Top-decile picks</span>
         <span class="hc-legend-item"><i class="hc-swatch hc-swatch-metro"></i>Metro average</span>

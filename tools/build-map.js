@@ -352,12 +352,45 @@ function main() {
       '-- base layer will be skipped. See tools/build-map.js header for the fetch/fallback plan.');
   }
 
+  // ---- top/left edge feather (added 2026-09-23, paper final fixes) --------
+  // NY and PA leave the frame at the top and left (the corridor viewBox is a
+  // crop, not the full states), so a 32px feathered edge on those two sides
+  // only reads as "this is a crop of a larger map" rather than a hard
+  // rectangle. Implemented as one <mask> (not a CSS gradient -- the page's
+  // CSS background-image gradient count must stay at 1): a full white base
+  // rect plus two black-to-transparent linearGradient bands, one per edge.
+  // Because SVG mask layers alpha-composite in draw order, the top-left
+  // 32x32 corner where both bands overlap gets their product
+  // (1-a1)*(1-a2), i.e. a natural two-axis feather with no extra math. Right
+  // and bottom edges are untouched -- no band is drawn there.
+  const roundedW = round(width), roundedH = round(height);
+  const FEATHER = 32;
+  const maskDefs =
+    '<defs>\n' +
+    '<linearGradient id="edge-fade-y" x1="0" y1="0" x2="0" y2="' + FEATHER + '" gradientUnits="userSpaceOnUse">\n' +
+    '<stop offset="0" stop-color="#000" stop-opacity="1"/>\n' +
+    '<stop offset="1" stop-color="#000" stop-opacity="0"/>\n' +
+    '</linearGradient>\n' +
+    '<linearGradient id="edge-fade-x" x1="0" y1="0" x2="' + FEATHER + '" y2="0" gradientUnits="userSpaceOnUse">\n' +
+    '<stop offset="0" stop-color="#000" stop-opacity="1"/>\n' +
+    '<stop offset="1" stop-color="#000" stop-opacity="0"/>\n' +
+    '</linearGradient>\n' +
+    '<mask id="edge-fade-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="' + roundedW + '" height="' + roundedH + '">\n' +
+    '<rect x="0" y="0" width="' + roundedW + '" height="' + roundedH + '" fill="#fff"/>\n' +
+    '<rect x="0" y="0" width="' + roundedW + '" height="' + FEATHER + '" fill="url(#edge-fade-y)"/>\n' +
+    '<rect x="0" y="0" width="' + FEATHER + '" height="' + roundedH + '" fill="url(#edge-fade-x)"/>\n' +
+    '</mask>\n' +
+    '</defs>\n';
+
   const svg =
-    '<svg viewBox="0 0 ' + round(width) + ' ' + round(height) + '" ' +
+    '<svg viewBox="0 0 ' + roundedW + ' ' + roundedH + '" ' +
     'xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-tiers-title">\n' +
     '<title id="map-tiers-title">Tri-state ZIP codes colored by SpotWise momentum tier</title>\n' +
+    maskDefs +
+    '<g mask="url(#edge-fade-mask)">\n' +
     '<g class="map-states">\n' + stateOutlinePaths.join('\n') + '\n</g>\n' +
     '<g class="map-scored">\n' + scoredPaths.join('\n') + '\n</g>\n' +
+    '</g>\n' +
     '</svg>\n';
 
   fs.mkdirSync(path.dirname(OUT_SVG), { recursive: true });
