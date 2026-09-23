@@ -33,12 +33,15 @@
  *    mean latitude of the in-scope area -- the region is small enough that a
  *    single cosine correction is a fine approximation for a choropleth
  *    inset, not a navigational map).
- * 4. Simplify every ring with Douglas-Peucker in that projected space (a
- *    tighter tolerance for scored ZIPs, a looser one for unscored context
- *    land), drop rings below a tiny area threshold, round to 1 decimal.
+ * 4. Simplify every scored ZIP's ring with Douglas-Peucker in that projected
+ *    space, drop rings below a tiny area threshold, round to 1 decimal.
  * 5. Emit one <path> per scored ZIP (data-zip/data-tier/data-score, class
- *    "zip tier-<tier>") and merge every unscored polygon's path data into a
- *    single <path class="tier-unscored"> element.
+ *    "zip tier-<tier>"). Unscored tri-state land is no longer drawn (removed
+ *    2026-09-23, final paper polish) -- the base layer is now the three full
+ *    state outlines (tools/data/us-states.json, PublicaMundi/MappingAPI),
+ *    projected into the same frame, so the map reads as NJ/NY/PA rather
+ *    than context shapes with no label. See the "state outline base layer"
+ *    block below for the crop-vs-full-state decision and its fallback.
  */
 
 const fs = require('fs');
@@ -49,12 +52,22 @@ const DATA_DIR = path.join(__dirname, 'data');
 const OUT_SVG = path.join(ROOT, 'assets', 'map-tiers.svg');
 const INDEX_HTML = path.join(ROOT, 'index.html');
 
+// ---- state outline base layer (added 2026-09-23, final paper polish) -----
+// Public US states GeoJSON (PublicaMundi/MappingAPI), fetched once with curl
+// into tools/data/us-states.json (gitignored alongside the ZCTA source
+// files -- see tools/data/.gitignore note in the repo root .gitignore).
+// Fallback per the task spec if that URL/the folium mirror are both
+// unreachable: build state silhouettes from the union-by-fill of all ZIP
+// polygons per state instead. Not implemented here because the primary
+// source was reachable -- see the dev report for the fetch confirmation.
+const STATES_FILE = path.join(DATA_DIR, 'us-states.json');
+const STATE_NAMES = ['New Jersey', 'New York', 'Pennsylvania'];
+
 // ---- tunables -----------------------------------------------------------
 // Douglas-Peucker epsilon, in projected px (see TARGET_WIDTH below for what
 // a "px" is here). Tuned empirically against the ~1.5MB budget -- see the
 // dev report for the sizes each pass produced.
 const SCORED_TOLERANCE = 0.25;
-const UNSCORED_TOLERANCE = 2;
 const MIN_RING_AREA = 3; // px^2 in projected space; smaller rings are dropped
 const TARGET_WIDTH = 900; // projected-space width budget, arbitrary units
 const ROUND_DECIMALS = 1;
@@ -231,19 +244,28 @@ function main() {
   const height = (latMax - latMin) * K;
 
   const scoredPaths = [];
-  const unscoredParts = [];
   const drawnZips = new Set();
   const renderedTierCounts = {};
 
+  // ---- 08032, 08739, 11249, 19481: scored zips with NO polygon in either
+  // source ZCTA file (verified via the "Missing geometry for" log line
+  // below, unchanged by this map-base-layer change). They are simply
+  // absent from the drawing -- there is no shape to draw -- while the
+  // caption/copy everywhere else keeps the true scored count, 1,213. Per
+  // Sameer 2026-09-23: 08032 (NJ, Pass), 08739 (NJ, Momentum),
+  // 11249 (NY, Pass), 19481 (PA, Momentum).
+  const KNOWN_MISSING_GEOMETRY = ['08032', '08739', '11249', '19481'];
+
   for (const { zip, polys } of rawFeatures) {
     const scored = tiers.get(zip);
-    const tolerance = scored ? SCORED_TOLERANCE : UNSCORED_TOLERANCE;
+    if (!scored) continue; // unscored land no longer drawn -- see state outlines below
+    const tolerance = SCORED_TOLERANCE;
     const ringPaths = [];
 
     for (const poly of polys) {
       poly.forEach((ring, ringIdx) => {
         const projected = ring.map(project);
-        const isOuterOfScored = ringIdx === 0 && !!scored;
+        const isOuterOfScored = ringIdx === 0;
         let simplified = simplifyRing(projected, tolerance);
 
         if (isOuterOfScored) {
@@ -274,33 +296,67 @@ function main() {
     if (!ringPaths.length) continue;
     const d = ringPaths.join(' ');
 
-    if (scored) {
-      drawnZips.add(zip);
-      const tierClass = scored.tier.toLowerCase();
-      renderedTierCounts[scored.tier] = (renderedTierCounts[scored.tier] || 0) + 1;
-      scoredPaths.push(
-        '<path class="zip tier-' + tierClass + '" data-zip="' + zip +
-        '" data-tier="' + scored.tier + '" data-score="' + scored.score + '" d="' + d + '"/>'
-      );
-    } else {
-      unscoredParts.push(d);
-    }
+    drawnZips.add(zip);
+    const tierClass = scored.tier.toLowerCase();
+    renderedTierCounts[scored.tier] = (renderedTierCounts[scored.tier] || 0) + 1;
+    scoredPaths.push(
+      '<path class="zip tier-' + tierClass + '" data-zip="' + zip +
+      '" data-tier="' + scored.tier + '" data-score="' + scored.score + '" d="' + d + '"/>'
+    );
   }
 
   const missing = [...tiers.keys()].filter((z) => !drawnZips.has(z)).sort();
   console.log('[build-map] Scored zips drawn:', drawnZips.size, '/', tiers.size);
   console.log('[build-map] Missing geometry for (' + missing.length + '):', missing.join(', '));
   console.log('[build-map] Rendered tier counts:', JSON.stringify(renderedTierCounts));
+  const missingMismatch = missing.length !== KNOWN_MISSING_GEOMETRY.length ||
+    !missing.every((z) => KNOWN_MISSING_GEOMETRY.includes(z));
+  if (missingMismatch) {
+    console.warn('[build-map] WARNING: missing-geometry list no longer matches the documented four zips (' +
+      KNOWN_MISSING_GEOMETRY.join(', ') + ') -- update the KNOWN_MISSING_GEOMETRY comment above.');
+  }
 
-  const unscoredPath = unscoredParts.length
-    ? '<path class="tier-unscored" d="' + unscoredParts.join(' ') + '"/>'
-    : '';
+  // ---- state outline base layer --------------------------------------
+  let stateOutlinePaths = [];
+  if (fs.existsSync(STATES_FILE)) {
+    const statesJson = JSON.parse(fs.readFileSync(STATES_FILE, 'utf8'));
+    for (const stateName of STATE_NAMES) {
+      const feature = statesJson.features.find((f) => f.properties && f.properties.name === stateName);
+      if (!feature) {
+        console.warn('[build-map] WARNING: state outline not found for', stateName);
+        continue;
+      }
+      const polys = geometryToPolys(feature.geometry);
+      const ringPaths = [];
+      for (const poly of polys) {
+        for (const ring of poly) {
+          // Source is already coarse (32-68 pts/state) -- project + round,
+          // no Douglas-Peucker needed. Points outside the tri-state viewBox
+          // (the corridor bbox, see the crop-vs-full-state note in the dev
+          // report) are left as-is; the SVG viewBox clips them, so only the
+          // full NJ outline plus the parts of NY/PA inside the corridor
+          // actually render.
+          const projected = ring.map(project);
+          ringPaths.push(ringToPath(projected));
+        }
+      }
+      if (ringPaths.length) {
+        stateOutlinePaths.push(
+          '<path class="state-outline" data-state="' + stateName + '" d="' + ringPaths.join(' ') + '"/>'
+        );
+      }
+    }
+    console.log('[build-map] State outlines drawn:', stateOutlinePaths.length, '/', STATE_NAMES.length);
+  } else {
+    console.error('[build-map] Missing state outline source:', STATES_FILE,
+      '-- base layer will be skipped. See tools/build-map.js header for the fetch/fallback plan.');
+  }
 
   const svg =
     '<svg viewBox="0 0 ' + round(width) + ' ' + round(height) + '" ' +
     'xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-tiers-title">\n' +
     '<title id="map-tiers-title">Tri-state ZIP codes colored by SpotWise momentum tier</title>\n' +
-    '<g class="map-unscored">' + unscoredPath + '</g>\n' +
+    '<g class="map-states">\n' + stateOutlinePaths.join('\n') + '\n</g>\n' +
     '<g class="map-scored">\n' + scoredPaths.join('\n') + '\n</g>\n' +
     '</svg>\n';
 
@@ -329,7 +385,7 @@ function main() {
   console.log('[build-map] Injected SVG into index.html between MAP_SVG markers.');
 
   if (bytes > 1.5 * 1024 * 1024) {
-    console.warn('[build-map] WARNING: SVG is over the ~1.5MB budget. Increase SCORED_TOLERANCE / UNSCORED_TOLERANCE and re-run.');
+    console.warn('[build-map] WARNING: SVG is over the ~1.5MB budget. Increase SCORED_TOLERANCE and re-run.');
   }
 }
 

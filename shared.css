@@ -337,14 +337,21 @@ header.hdr2 .logo{flex-shrink:0;}
    set in mono like a stamped ID rather than the default sans label. */
 .doc-eyebrow.mono{font-family:var(--font-mono);font-size:12px;letter-spacing:0;}
 .doc-title{font-family:var(--font-sans);font-weight:600;font-size:18px;color:var(--ink);margin-top:4px;}
-.doc-tier{font-family:var(--font-sans);font-weight:600;font-size:14px;white-space:nowrap;}
-/* Tier word color, reusing the same --tier-* tokens as the map/legend
-   swatches so a tier's color is still defined in exactly one place. Peak is
-   the one word that gets --amber; Momentum gets --teal; a doc showing any
-   other tier is intentionally left at the base ink color -- Emerging/Watch/
-   Pass have no assigned text color per spec. */
-.doc-tier.tier-peak{color:var(--tier-peak);}
-.doc-tier.tier-momentum{color:var(--tier-momentum);}
+.doc-tier{font-family:var(--font-sans);font-weight:600;font-size:14px;white-space:nowrap;color:var(--ink);display:inline-flex;align-items:center;}
+/* Tier word treatment (revised 2026-09-23, final paper polish): the word
+   itself is always --ink -- color was never carried in the text, it's
+   carried by a 10px square swatch placed before it, reusing the same
+   --tier-* tokens as the map/legend swatches so a tier's color is still
+   defined in exactly one place. Resolves an AA contrast failure: amber
+   (#B7791F) text on paper (#F5F2EC) is ~3.3:1, below the 4.5:1 body-text
+   floor at 14px; ink (#14201C) on paper is ~15:1. Applies to every
+   standalone tier label at body size, not just Peak. */
+.doc-tier::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;flex-shrink:0;background:var(--ink-2);}
+.doc-tier.tier-peak::before{background:var(--tier-peak);}
+.doc-tier.tier-momentum::before{background:var(--tier-momentum);}
+.doc-tier.tier-emerging::before{background:var(--tier-emerging);}
+.doc-tier.tier-watch::before{background:var(--tier-watch);}
+.doc-tier.tier-pass::before{background:var(--tier-pass);}
 .doc-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0;}
 .doc-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
 /* Serif variant: a document's headline score set in Instrument Serif and
@@ -620,11 +627,6 @@ header.hdr2 .logo{flex-shrink:0;}
 .form-step .num{margin-right:10px;}
 .form-step .rule{display:none;}
 
-.ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--rule);flex-wrap:wrap;}
-.ratio{display:flex;flex-direction:column;gap:4px;}
-.ratio .k{font-size:12px;color:var(--ink-2);font-weight:500;font-family:var(--font-sans);}
-.ratio .v{font-family:var(--font-mono);font-weight:500;font-size:16px;color:var(--ink);}
-.sig-disclaimer{font-size:12px;color:var(--ink-2);margin-top:14px;font-style:italic;}
 
 /* Gradient-orb avatars (Team + Contact), pre-real-headshots. Flattened to a
    plain circle: no gradient, no infinite morph loop, no off-palette hues. */
