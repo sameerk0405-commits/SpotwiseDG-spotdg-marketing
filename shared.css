@@ -136,6 +136,23 @@ section{position:relative;}
    wherever a section opens with a sentence of framing before the detail. */
 .lead{font-size:19px;line-height:1.6;color:var(--ink-2);max-width:62ch;}
 
+/* ---------- Prose rhythm: the gap from a heading to the paragraph beneath
+   it, and between consecutive paragraphs, in plain prose content. h1 is
+   unique per page and never sits inside a managed component below, so its
+   rule needs no exclusion; h2 and p both recur inside components that
+   already set their own internal spacing, so those are excluded below
+   rather than double-spaced. .sec-head/.sec-head-left already set their own
+   h2-to-p gap (16px, same value) and are unaffected either way. ---------- */
+h1 + .lead,h1 + p{margin-top:24px;}
+.lead + p,p + p{margin-top:16px;}
+h2 + p{margin-top:16px;}
+.doc h2 + p,.doc p + p,
+.mono-table h2 + p,.mono-table p + p,
+.num-row h2 + p,.num-row p + p,
+footer h2 + p,footer p + p,
+#founding-form h2 + p,#founding-form p + p,
+.faq-item h2 + p,.faq-item p + p{margin-top:0;}
+
 /* ---------- Note: a small supporting line under a block of prose (e.g. a
    coverage/scope caveat) -- no box, no rule, just smaller type. ---------- */
 .note{font-size:14px;line-height:1.6;color:var(--ink-2);max-width:62ch;margin-top:20px;}
@@ -426,6 +443,11 @@ header.hdr2 .logo{flex-shrink:0;}
    than the small thead-label treatment above, so the label sits on the same
    baseline as the values beside it instead of looking like a stray heading. */
 .mono-table tbody th{text-align:left;font-family:var(--font-sans);font-weight:500;font-size:14.5px;color:var(--ink);padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);}
+/* Column headers align with their own column's values: right for every
+   value column, left for the row-label column (always the first cell).
+   Alignment only -- unlike .num, this doesn't touch font-family, so a
+   header naming a plan/tier (e.g. "Analyst") stays sans, not mono. */
+.mono-table thead th:not(:first-child){text-align:right;}
 
 /* ---------- Tier columns: four plain columns (Peak/Momentum/Emerging/
    Watch), a tier swatch before each name, no card chrome. Kept distinct from
@@ -503,9 +525,7 @@ header.hdr2 .logo{flex-shrink:0;}
 .tag-sample{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.02em;padding:3px 8px;border-radius:var(--radius-btn);}
 
 /* ---------- Form fields: underline inputs, boxed textarea, no pill/rounded
-   chrome. Forward-looking form component for redesigned pages; the live
-   founding-program form keeps using .field-group (retextured below) until
-   that page is rebuilt. ---------- */
+   chrome. Used by the live founding-program form. ---------- */
 .f-field{margin-bottom:24px;}
 .f-field label{display:block;font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);margin-bottom:8px;}
 .f-field input,.f-field select{
@@ -523,6 +543,11 @@ header.hdr2 .logo{flex-shrink:0;}
    offset, no box-shadow. The :focus rule above only removes the outline for
    a mouse/pointer focus; :focus-visible restores it for keyboard nav. */
 .f-field input:focus-visible,.f-field select:focus-visible,.f-field textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+/* Placeholder contrast: the browser default grey is 4.12:1 on paper --
+   readable but well below the rest of the form's text. --ink-2 at full
+   opacity (Firefox default is .54, hence the explicit opacity:1) gets to
+   6.85:1 without making a placeholder look like an already-filled value. */
+.f-field input::placeholder,.f-field textarea::placeholder{color:var(--ink-2);opacity:1;}
 
 /* ---------- FAQ: native <details>/<summary>, no chevron icon -- the
    browser's own marker is suppressed. Questions are not links, so the
@@ -595,48 +620,11 @@ header.hdr2 .logo{flex-shrink:0;}
 .form-step .num{margin-right:10px;}
 .form-step .rule{display:none;}
 
-/* Sample-report style signal card, kept live for /sample-report until that
-   page is rebuilt on .doc. Pills, glow, and the pulse dot are removed per
-   the sitewide audit; the badge becomes a plain word. */
-.sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-doc);padding:32px 34px;}
-.sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--rule);gap:12px;flex-wrap:wrap;}
-.sig-head-label{font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:6px;font-family:var(--font-sans);}
-.sig-head-title{font-family:var(--font-sans);font-weight:600;font-size:18px;}
-.sig-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0 22px;}
-.sig-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
-.sig-score-label{font-size:13px;color:var(--ink-2);font-weight:400;font-family:var(--font-sans);}
-.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
 .ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--rule);flex-wrap:wrap;}
 .ratio{display:flex;flex-direction:column;gap:4px;}
 .ratio .k{font-size:12px;color:var(--ink-2);font-weight:500;font-family:var(--font-sans);}
 .ratio .v{font-family:var(--font-mono);font-weight:500;font-size:16px;color:var(--ink);}
-.sig-reasons{padding:20px 0;border-top:1px solid var(--rule);}
-.sig-reasons .k-label{font-size:12px;color:var(--ink-2);font-weight:600;margin-bottom:12px;font-family:var(--font-sans);}
-.sig-reasons ul{display:flex;flex-direction:column;gap:10px;}
-.sig-reasons li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2);line-height:1.55;}
-.sig-compare{padding:20px 0;border-top:1px solid var(--rule);}
-.sig-compare .k-label{font-size:12px;color:var(--ink-2);font-weight:600;margin-bottom:12px;font-family:var(--font-sans);}
-.compare-table{width:100%;border-collapse:collapse;font-size:13.5px;font-family:var(--font-sans);}
-.compare-table th{text-align:right;color:var(--ink-2);font-weight:500;font-size:12px;padding:0 0 8px;}
-.compare-table th:first-child{text-align:left;}
-.compare-table td{padding:9px 0;border-top:1px solid var(--rule);color:var(--ink-2);}
-.compare-table td:first-child{color:var(--ink);font-weight:600;}
-.compare-table td:not(:first-child){text-align:right;font-family:var(--font-mono);font-weight:500;}
-.compare-table td.zip-val{color:var(--teal);}
-/* Plain text action line, not a pill; arrow characters that already exist
-   in a given page's copy are preserved there, not added here. */
-.action-badge{display:block;font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--teal);padding-top:16px;border-top:1px solid var(--rule);transition:color .2s var(--ease);}
 .sig-disclaimer{font-size:12px;color:var(--ink-2);margin-top:14px;font-style:italic;}
-.sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--rule);flex-wrap:wrap;gap:10px;}
-.sig-footer .src{font-size:11px;color:var(--ink-2);font-weight:500;font-family:var(--font-sans);}
-.sig-footer .ts{font-size:11px;color:var(--ink-2);font-family:var(--font-mono);}
-.blur-val{filter:blur(6px);user-select:none;}
-.sig-score.blur-val{filter:blur(14px);}
-.sig-head-label.blur-val{filter:blur(5px);}
-.sample-overlay{position:absolute;inset:0;background:rgba(245,242,236,.88);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;}
-.sample-overlay-inner{max-width:300px;display:flex;flex-direction:column;align-items:center;gap:16px;}
-.sample-overlay-inner .msg{font-family:var(--font-sans);font-weight:600;font-size:16.5px;line-height:1.4;color:var(--ink);}
-.sample-icon{width:32px;height:32px;object-fit:contain;}
 
 /* Gradient-orb avatars (Team + Contact), pre-real-headshots. Flattened to a
    plain circle: no gradient, no infinite morph loop, no off-palette hues. */
@@ -649,9 +637,6 @@ header.hdr2 .logo{flex-shrink:0;}
    page-specific decision left to whoever rebuilds this page next; the base
    card itself is otherwise neutral ink/paper here. */
 .founding{position:relative;max-width:800px;margin:0 auto;text-align:left;border:1px solid var(--rule);border-radius:var(--radius-doc);padding:52px 48px;}
-.founding h2{margin-top:16px;}
-.founding .sub{font-size:16px;color:var(--ink-2);font-weight:500;margin-top:10px;}
-.founding p{font-size:15px;color:var(--ink-2);line-height:1.7;max-width:60ch;margin-top:18px;}
 .founding .btn{margin-top:28px;}
 .founding .note{font-size:12.5px;color:var(--ink-2);margin-top:16px;}
 
