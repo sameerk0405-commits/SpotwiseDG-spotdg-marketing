@@ -160,22 +160,10 @@ SpotwiseMotion.countUp();
   });
 })();
 
-// FAQ accordion (/contact): same expand/collapse mechanics as the pricing
-// tier accordion, but each question toggles independently since multiple
-// answers may be worth comparing at once. No-ops on pages with no FAQ.
-(function () {
-  var items = document.querySelectorAll('.faq-item[data-faq]');
-  if (!items.length) return;
-
-  items.forEach(function (item) {
-    var trigger = item.querySelector('.faq-trigger');
-    if (!trigger) return;
-    trigger.addEventListener('click', function () {
-      var isOpen = item.classList.toggle('is-open');
-      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  });
-})();
+// FAQ accordion retired 2026-09-23: /faq was the only consumer of the old
+// .faq-item[data-faq]/.faq-trigger JS-driven accordion, and it now uses plain
+// <details open> (see shared.css .faq-item) -- native disclosure handles
+// toggling with no script. No replacement needed.
 
 // Floating CTA pill removed 2026-09-22: it was a second, pill-shaped instance
 // of the nav CTA, and pills are gone sitewide in the paper redesign (see

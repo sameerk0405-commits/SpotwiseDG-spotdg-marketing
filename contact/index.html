@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,39 +33,17 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Contact cards ---------- */
-  /* Widened from 860px: the cards now carry an address pill plus a copy button,
-     and at 860 the pill was squeezed narrow enough that word-break split
-     addresses mid-word ("...spotdg.c / om"). */
-  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;}
-  .contact-card{text-align:center;padding:34px 22px;}
-  .contact-card h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;letter-spacing:-.01em;}
-  .contact-card .role{font-size:12.5px;color:var(--teal);font-weight:600;margin-top:6px;}
-  .contact-card .mail-unit{margin-top:18px;justify-content:center;}
-  /* word-break removed: with the wider grid the address fits on one line, and
-     break-all was what produced the mid-word split. */
-  .contact-card .email-link{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);border:1px solid var(--line);border-radius:100px;padding:8px 14px;white-space:nowrap;transition:color .2s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease);}
-  .contact-card .email-link:hover{color:var(--teal-bright);border-color:rgba(20,184,166,.4);background:rgba(20,184,166,.08);}
+  /* ---------- Page-local: the email line under each name/role, matching
+     home's mono-styled inline links elsewhere. ---------- */
+  .people-email{margin-top:14px;}
+  .people-email .mail-unit a{font-family:var(--font-mono);font-size:12.5px;color:var(--ink-2);}
+  .people-email .mail-unit a:hover{color:var(--teal);}
 
-  /* ---------- Photo orbs ----------
-     Headshots replace the initials. The morphing blob is right for a monogram
-     and wrong for a face, so photos get a still circle and the ring stays put.
-     Gradient class is kept underneath as the paint-before-load fallback. */
-  .orb-photo{width:64px;height:64px;padding:0;overflow:hidden;border-radius:50%;animation:none;}
-  .orb-photo::after{border-radius:50%;animation:none;}
-  .orb-photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;}
-
-  /* ---------- Responsive ---------- */
-  @media (max-width:900px){
-    .contact-grid{grid-template-columns:1fr;max-width:340px;}
-  }
   @media (max-width:640px){
-    .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
-    .contact-card{padding:30px 20px;}
-    .contact-card .email-link{font-size:12px;padding:11px 15px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
 </style>
 </head>
@@ -74,20 +52,19 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html">Intelligence</a>
-        <a href="../sample-report/index.html">Sample Report</a>
-        <a href="../reports/index.html">Plans</a>
-        <a href="../team/index.html">Team</a>
-        <a href="../contact/index.html" class="active" aria-current="page">Contact</a>
-        <a href="../faq/index.html">FAQ</a>
-        <a href="../disclaimer/index.html">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../sample-report/index.html">Sample Report</a>
+      <a href="../reports/index.html">Plans</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../contact/index.html" class="active" aria-current="page">Contact</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
@@ -112,53 +89,47 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
 <main>
 
   <!-- CONTACT -->
-  <section class="sec reveal" style="overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="sec-head">
-      <div class="eyebrow">Contact</div>
-      <h2 style="margin-top:16px;">Talk to the team.</h2>
-      <p>Questions about a report, your market, or the Founding Program: reach out to any of us directly.</p>
-      <div class="trail"></div>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-card sw-card">
-        <div class="orb orb-a orb-photo"><img src="../assets/team/sameer-400.webp" srcset="../assets/team/sameer-200.webp 200w, ../assets/team/sameer-400.webp 400w" sizes="64px" width="64" height="64" alt="Sameer Katwala" loading="lazy" decoding="async" /></div>
+  <section class="sec wash-top reveal">
+    <div class="eyebrow">Contact</div>
+    <h1>Talk to the team.</h1>
+    <p class="lead">Questions about a report, your market, or the Founding Program: reach out to any of us directly.</p>
+  </section>
+
+  <section class="sec reveal">
+    <div class="people-grid people-sm">
+      <div class="people-card">
+        <img class="people-photo" src="../assets/team/sameer-paper-400.webp" srcset="../assets/team/sameer-paper-400.webp 400w, ../assets/team/sameer-paper-800.webp 800w" sizes="64px" width="128" height="128" alt="Sameer Katwala" loading="lazy" decoding="async" />
         <h3>Sameer Katwala</h3>
-        <div class="role">Co-Founder &amp; CEO</div>
-        <span class="mail-unit"><a class="email-link" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span>
+        <div class="people-role">Co-Founder &amp; CEO</div>
+        <div class="people-email"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></div>
       </div>
-      <div class="contact-card sw-card">
-        <div class="orb orb-b orb-photo"><img src="../assets/team/andrew-400.webp" srcset="../assets/team/andrew-200.webp 200w, ../assets/team/andrew-400.webp 400w" sizes="64px" width="64" height="64" alt="Andrew Giacomini" loading="lazy" decoding="async" /></div>
+      <div class="people-card">
+        <img class="people-photo" src="../assets/team/andrew-paper-400.webp" srcset="../assets/team/andrew-paper-400.webp 400w, ../assets/team/andrew-paper-800.webp 800w" sizes="64px" width="128" height="128" alt="Andrew Giacomini" loading="lazy" decoding="async" />
         <h3>Andrew Giacomini</h3>
-        <div class="role">Co-Founder &amp; COO/CFO</div>
-        <span class="mail-unit"><a class="email-link" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span>
+        <div class="people-role">Co-Founder &amp; COO/CFO</div>
+        <div class="people-email"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></div>
       </div>
-      <div class="contact-card sw-card">
-        <div class="orb orb-c orb-photo"><img src="../assets/team/joseph-400.webp" srcset="../assets/team/joseph-200.webp 200w, ../assets/team/joseph-400.webp 400w" sizes="64px" width="64" height="64" alt="Joseph LaMonica" loading="lazy" decoding="async" /></div>
+      <div class="people-card">
+        <img class="people-photo" src="../assets/team/joseph-paper-400.webp" srcset="../assets/team/joseph-paper-400.webp 400w, ../assets/team/joseph-paper-800.webp 800w" sizes="64px" width="128" height="128" alt="Joseph LaMonica" loading="lazy" decoding="async" />
         <h3>Joseph LaMonica</h3>
-        <div class="role">Technical Advisor</div>
-        <span class="mail-unit"><a class="email-link" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span>
+        <div class="people-role">Technical Advisor</div>
+        <div class="people-email"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></div>
       </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Still deciding? Start with the sample.</h2>
-    <p>The full report format is fully visible, with no signup required.</p>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
-      <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
-    </div>
+    <p class="lead">The full report format is fully visible, with no signup required.</p>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../sample-report/index.html">See a full sample report</a>
   </section>
 
 </main>

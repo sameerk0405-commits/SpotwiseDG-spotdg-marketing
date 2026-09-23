@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,36 +33,21 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- FAQ accordion (same multi-open mechanics, refreshed look) ---------- */
-  .faq-list{max-width:760px;margin:0 auto;border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden;}
-  .faq-item{border-top:1px solid var(--line);}
-  .faq-item:first-child{border-top:none;}
-  .faq-trigger{width:100%;display:flex;align-items:center;gap:18px;background:transparent;border:none;padding:22px 26px;text-align:left;font-family:inherit;cursor:pointer;color:inherit;transition:background-color .2s;}
-  .faq-trigger:hover{background:rgba(20,184,166,.03);}
-  .faq-trigger:focus-visible{outline:2px solid var(--teal-bright);outline-offset:-2px;}
-  .faq-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal-dim);flex-shrink:0;transition:color .3s;}
-  .faq-item.is-open .faq-num{color:var(--teal-bright);}
-  .faq-q{flex:1;font-family:'Sora',sans-serif;font-size:15.5px;font-weight:700;letter-spacing:-.01em;color:var(--ink);line-height:1.4;}
-  .faq-ind{position:relative;width:12px;height:12px;flex-shrink:0;}
-  .faq-ind::before,.faq-ind::after{content:"";position:absolute;background:var(--teal);border-radius:2px;transition:transform .35s var(--ease),background-color .3s;}
-  .faq-ind::before{left:0;right:0;top:5px;height:2px;}
-  .faq-ind::after{top:0;bottom:0;left:5px;width:2px;}
-  .faq-item.is-open .faq-ind::after{transform:scaleY(0);}
-  .faq-item.is-open .faq-ind::before{background:var(--teal-bright);}
-  .faq-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease);}
-  .faq-item.is-open .faq-panel{grid-template-rows:1fr;}
-  .faq-panel-inner{overflow:hidden;}
-  .faq-a{font-size:14.5px;color:var(--ink-soft);line-height:1.7;padding:0 26px 24px 55px;max-width:680px;}
+  /* ---------- Page-local: FAQ's numbered-row look, layered on top of the
+     shared .faq-item (details/summary, no chevron -- see shared.css). A
+     48px number column in mono, an Instrument Serif question, the answer
+     indented to match. ---------- */
+  .faq-list{max-width:760px;margin:0 auto;}
+  .faq-row summary{display:grid;grid-template-columns:48px 1fr;align-items:baseline;}
+  .faq-row .faq-n{font-family:var(--font-mono);font-size:13px;color:var(--ink-2);}
+  .faq-row .faq-q{font-family:var(--font-serif);font-weight:400;font-size:24px;}
+  .faq-row p{font-size:16px;color:var(--ink-2);padding-left:56px;max-width:none;}
 
-  /* ---------- Responsive ---------- */
   @media (max-width:640px){
-    .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
-    .faq-trigger{padding:20px 18px;gap:12px;}
-    .faq-q{font-size:15px;}
-    .faq-a{padding:0 18px 22px 41px;font-size:14.5px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
 </style>
 </head>
@@ -71,20 +56,19 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html">Intelligence</a>
-        <a href="../sample-report/index.html">Sample Report</a>
-        <a href="../reports/index.html">Plans</a>
-        <a href="../team/index.html">Team</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="../faq/index.html" class="active" aria-current="page">FAQ</a>
-        <a href="../disclaimer/index.html">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../sample-report/index.html">Sample Report</a>
+      <a href="../reports/index.html">Plans</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="../faq/index.html" class="active" aria-current="page">FAQ</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
@@ -109,120 +93,58 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
 <main>
 
   <!-- FAQ -->
-  <section class="sec reveal" style="overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="sec-head">
-      <div class="eyebrow">FAQ</div>
-      <h2 style="margin-top:16px;">Common questions.</h2>
-      <p>What we hear most from people evaluating SpotWise. Don't see yours? <a href="../contact/index.html">Contact us directly</a>.</p>
-      <div class="trail"></div>
-    </div>
+  <section class="sec wash-top reveal">
+    <div class="eyebrow">FAQ</div>
+    <h1>Common questions.</h1>
+    <p class="lead">What we hear most from people evaluating SpotWise. Don't see yours? <a href="../contact/index.html">Contact us directly</a>.</p>
+  </section>
+
+  <section class="sec reveal">
     <div class="faq-list">
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-1-panel">
-          <span class="faq-num">01</span>
-          <span class="faq-q">What is a Market Signal Report?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-1-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">A decision-ready report scoring a zip code or market on appreciation momentum, backed by our walk-forward validated model: built for investors, lenders, and developers evaluating where to focus next.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-2-panel">
-          <span class="faq-num">02</span>
-          <span class="faq-q">How is the momentum score calculated?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-2-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">We aggregate public real estate, economic, and demographic data into a proprietary model, walk-forward validated with a strict outcome embargo: trained only on data available before each prediction, with outcome labels withheld until fully realized, then tested against real outcomes over five-year holding periods.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-3-panel">
-          <span class="faq-num">03</span>
-          <span class="faq-q">Which markets do you cover?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-3-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">Currently the NJ/NY/PA tri-state region, 1,213 zip codes, with new markets being added as we grow.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-4-panel">
-          <span class="faq-num">04</span>
-          <span class="faq-q">How often is the data updated?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-4-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">Core scores refresh monthly. Supplementary signals (permits, crime, business activity) are checked weekly and updated as new data becomes available.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-5-panel">
-          <span class="faq-num">05</span>
-          <span class="faq-q">Is this financial or investment advice?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-5-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">No. SpotWise provides market intelligence to support your own due diligence. It is not financial or investment advice, and past performance does not guarantee future results.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-6-panel">
-          <span class="faq-num">06</span>
-          <span class="faq-q">What is the Founding Market Intelligence Program?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-6-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">The Founding Market Intelligence Program gives early participants a complimentary Market Signal Report for a market they choose, with a walkthrough from the founders. In return, we ask for a short feedback session so we can improve the report.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item" data-faq>
-        <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-7-panel">
-          <span class="faq-num">07</span>
-          <span class="faq-q">Do you offer a subscription, or is it per-report?</span>
-          <span class="faq-ind" aria-hidden="true"></span>
-        </button>
-        <div class="faq-panel" id="faq-7-panel">
-          <div class="faq-panel-inner">
-            <p class="faq-a">Yes. SpotWise runs on a subscription model. Each tier includes a monthly allotment of Market Signal Reports with the ability to add more as needed; see Reports for what's included in each tier.</p>
-          </div>
-        </div>
-      </div>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">01</span><span class="faq-q">What is a Market Signal Report?</span></summary>
+        <p>A decision-ready report scoring a zip code or market on appreciation momentum, backed by our walk-forward validated model: built for investors, lenders, and developers evaluating where to focus next.</p>
+      </details>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">02</span><span class="faq-q">How is the momentum score calculated?</span></summary>
+        <p>We aggregate public real estate, economic, and demographic data into a proprietary model, walk-forward validated with a strict outcome embargo: trained only on data available before each prediction, with outcome labels withheld until fully realized, then tested against real outcomes over five-year holding periods.</p>
+      </details>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">03</span><span class="faq-q">Which markets do you cover?</span></summary>
+        <p>Currently the NJ/NY/PA tri-state region, 1,213 zip codes, with new markets being added as we grow.</p>
+      </details>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">04</span><span class="faq-q">How often is the data updated?</span></summary>
+        <p>Core scores refresh monthly. Supplementary signals (permits, crime, business activity) are checked weekly and updated as new data becomes available.</p>
+      </details>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">05</span><span class="faq-q">Is this financial or investment advice?</span></summary>
+        <p>No. SpotWise provides market intelligence to support your own due diligence. It is not financial or investment advice, and past performance does not guarantee future results.</p>
+      </details>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">06</span><span class="faq-q">What is the Founding Market Intelligence Program?</span></summary>
+        <p>The Founding Market Intelligence Program gives early participants a complimentary Market Signal Report for a market they choose, with a walkthrough from the founders. In return, we ask for a short feedback session so we can improve the report.</p>
+      </details>
+      <details class="faq-item faq-row" open>
+        <summary><span class="faq-n">07</span><span class="faq-q">Do you offer a subscription, or is it per-report?</span></summary>
+        <p>Yes. SpotWise runs on a subscription model. Each tier includes a monthly allotment of Market Signal Reports with the ability to add more as needed; see Reports for what's included in each tier.</p>
+      </details>
     </div>
     <div class="disclaimer" style="max-width:760px;margin-left:auto;margin-right:auto;">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Still deciding? Start with the sample.</h2>
-    <p>The full report format is fully visible, with no signup required.</p>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
-      <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
-    </div>
+    <p class="lead">The full report format is fully visible, with no signup required.</p>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../sample-report/index.html">See a full sample report</a>
   </section>
 
 </main>
