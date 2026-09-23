@@ -1,87 +1,441 @@
+/* =============================================================================
+   SpotWise Data Group -- shared design system ("paper")
+   Redesign 2026-09-22. Replaces the prior dark "signal" theme in full: every
+   token below is new, and every rule in this file has been re-authored or
+   re-themed against the new token set. No color, font, or radius from the old
+   theme is referenced anywhere past this point.
+
+   Fonts loaded per-page (Google Fonts, display=swap):
+     Instrument Serif 400 + 400 italic  -- h1/h2 only, plus large decorative
+                                            numerals (e.g. numbered-row digits)
+     Archivo 400/500/600                -- everything else: body, nav, labels,
+                                            buttons, headings below h2
+     IBM Plex Mono 400/500              -- numbers in documents, tables, chart
+                                            axes, and the "Shipped:" line only
+   ========================================================================== */
+
 *{box-sizing:border-box;margin:0;padding:0;}
+
 :root{
-  --ink:#EAF4F1; --ink-soft:#B2C8C2; --muted:#6E8B84; --faint:#4A6058;
-  /* --faint is a decorative/dimmed value: on --paper it measures 2.9:1, which
-     fails WCAG AA (4.5:1) for normal text. --legal is the readable equivalent
-     for disclaimer copy -- it clears 4.5:1 on every surface in the palette
-     (paper 6.9:1, surface 6.3:1, surface-2 5.7:1, surface-3 5.0:1) while still
-     reading as secondary to --ink-soft. Use --legal for any text a reader is
-     expected to actually read; keep --faint for decoration. */
-  --legal:#82A099;
-  --paper:#070F0D; --surface:#0D1B17; --surface-2:#12241E; --surface-3:#173029;
-  --line:#1B2E28; --line-bright:rgba(45,212,196,.22);
-  --teal:#14B8A6; --teal-bright:#2DD4C4; --teal-dim:#0D7A72;
-  --gold:#F59E0B;
-  --violet:#5B7FE8; /* background washes and gradient meshes ONLY — never text, buttons, or brand marks */
-  --max:1180px;
-  --s1:8px; --s2:14px; --s3:22px; --s4:36px; --s5:56px; --s6:96px; --s7:140px;
-  --ease:cubic-bezier(.16,1,.3,1);
+  /* ---- Color: paper + ink, one accent, one restricted second accent ---- */
+  --paper:#F5F2EC;         /* page background */
+  --paper-2:#EDE8DF;       /* secondary surface, e.g. subtle fills */
+  --ink:#14201C;           /* primary text, headings, primary button fill */
+  --ink-2:#4A5652;         /* secondary text -- captions, context, labels */
+  --rule:rgba(20,32,28,.14); /* the one hairline/divider color, everywhere */
+  --teal:#0F7C6E;          /* the one accent: links, key numbers, Momentum
+                               tier, hover states */
+  --teal-soft:rgba(15,124,110,.10); /* teal wash for subtle backgrounds only */
+  --amber:#B7791F;         /* Peak tier only -- do not use as a general
+                               "attention" color elsewhere on the site */
+
+  /* Tier fills: one definition each, reused as `background` on the legend
+     swatches (.tier-swatch) and as `fill` on the map's ZIP paths, so a tier
+     color is never written as a literal twice. Five tiers (batch 8 data has
+     Peak/Momentum/Emerging/Watch/Pass -- Sameer's spec named four; Pass is
+     shown as a fifth row, --ink at 5%, between Watch (8%) and unscored land
+     (3%). Flagged for Sameer to confirm/recolor -- see dev report.) */
+  --tier-peak:var(--amber);
+  --tier-momentum:var(--teal);
+  --tier-emerging:rgba(15,124,110,.45);
+  --tier-watch:rgba(20,32,28,.08);
+  --tier-pass:rgba(20,32,28,.05);
+  --tier-unscored:rgba(20,32,28,.03);
+
+  /* ---- Spacing: 8px base rhythm (renamed values, same token names so
+     pages not yet rebuilt on this system keep a sane fallback rather than
+     an unset custom property) ---- */
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
+
+  /* ---- Layout ---- */
+  --max:1200px;   /* 12-column grid max-width */
+  --gutter:24px;  /* grid gutter */
+
+  /* ---- Radius: 2px buttons, 4px documents and images, nothing larger ---- */
+  --radius-btn:2px;
+  --radius-doc:4px;
+
+  /* ---- The one shadow on the entire site, used only on .doc ---- */
+  --shadow-doc:0 24px 48px -32px rgba(20,32,28,.28);
+
+  /* ---- Motion ---- */
+  --ease:cubic-bezier(.2,.7,.2,1);
+
+  /* ---- Type ---- */
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-sans:'Archivo',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
 }
+
 html{scroll-behavior:smooth;}
-body{font-family:'Inter Tight',-apple-system,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden;}
-.display{font-family:'Sora',sans-serif;}
-.mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;}
+body{
+  font-family:var(--font-sans);font-weight:400;font-size:17px;line-height:1.55;
+  background:var(--paper);color:var(--ink);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
 a{color:inherit;text-decoration:none;}
 ul{list-style:none;}
 img{max-width:100%;display:block;}
-::selection{background:rgba(20,184,166,.32);color:var(--ink);}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 32px;}
+::selection{background:rgba(15,124,110,.18);color:var(--ink);}
+
+/* ---------- Headings: Instrument Serif is reserved for h1/h2 only.
+   Everything below h2 (h3, labels, titles) is Archivo -- see individual
+   component rules further down. ---------- */
+h1,h2{font-family:var(--font-serif);font-weight:400;letter-spacing:-.01em;color:var(--ink);}
+h1{font-size:clamp(40px,6vw,84px);line-height:1.02;}
+h2{font-size:clamp(30px,3.4vw,40px);line-height:1.05;}
+/* The one recurring accent move: a single word set in italic teal inside a
+   heading (e.g. home's "outrun"). Wrapping an existing word in <em> changes
+   no copy -- the text content is identical, only the styling scope changes. */
+h1 em,h2 em{font-style:italic;color:var(--teal);}
+
+p{max-width:62ch;}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter);}
 section{position:relative;}
+/* General-purpose 12-column grid, per the spec's stated layout basis. Not
+   every page needs it directly -- most compose with .split-5-7 instead --
+   but it's here for any later section that wants literal column spans. */
+.grid-12{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gutter);max-width:var(--max);margin:0 auto;}
+/* Two-column section pattern used throughout: narrower narrative column
+   first, wider evidence/detail column second. This is "5/7" in the spec. */
+.split-5-7{display:grid;grid-template-columns:5fr 7fr;gap:48px;align-items:start;}
+.split-7-5{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:start;}
+@media (max-width:900px){
+  .split-5-7,.split-7-5{grid-template-columns:1fr;gap:36px;}
+}
 
-/* ---------- Eyebrow: mono "terminal" label with signal trail ---------- */
-.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);}
-/* Momentum mark (mini): flat lead-in that ticks up to a lit inflection node.
-   Recurring motif — see also .trail and .sw-card::before. */
-.eyebrow::before{content:"";display:inline-block;width:28px;height:12px;flex-shrink:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='eg' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%232DD4C4' stop-opacity='0'/%3E%3Cstop offset='.55' stop-color='%230D7A72'/%3E%3Cstop offset='1' stop-color='%232DD4C4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M1 8 L11 8 C16 8 18 3 24 3' stroke='url(%23eg)' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='24.5' cy='3' r='2' fill='%232DD4C4'/%3E%3C/svg%3E") no-repeat center/contain;}
+/* Sections are separated by a hairline rule and 96px, never by a background
+   change or a card. Apply .sec to every section after the hero; the hero
+   itself is exempt (nothing sits above it). */
+.sec{max-width:var(--max);margin:0 auto;padding:var(--s7) var(--gutter);border-top:1px solid var(--rule);}
+.sec:first-of-type{border-top:none;}
 
-/* ---------- Momentum mark (the recurring SpotWise motif) ----------
-   A flat grey metro baseline that the teal signal diverges up from, ending
-   in a lit inflection node — "before the market moves", distilled into one
-   mark. Recurs at section heads/dividers (.trail), section labels
-   (.eyebrow::before), and card top-edges (.sw-card::before). The node's halo
-   gently pulses; static under reduced motion. */
-.trail{position:relative;width:72px;height:20px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='20' viewBox='0 0 72 20' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='tg' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%230D7A72'/%3E%3Cstop offset='1' stop-color='%232DD4C4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M3 15 L69 15' stroke='%236E8B84' stroke-width='1.5' stroke-linecap='round' opacity='.35'/%3E%3Cpath d='M3 15 L26 15 C44 15 50 5 68 4' stroke='url(%23tg)' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='68' cy='4' r='2.4' fill='%232DD4C4'/%3E%3C/svg%3E") no-repeat center/contain;}
-.trail::after{content:"";position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,rgba(45,212,196,.6) 0%,rgba(45,212,196,0) 70%);animation:nodePulse 2.8s ease-in-out infinite;}
-@keyframes nodePulse{0%,100%{opacity:.45;transform:scale(.75);}50%{opacity:1;transform:scale(1.2);}}
-@media (prefers-reduced-motion:reduce){.trail::after{animation:none;opacity:.85;transform:none;}}
+/* One approved gradient sitewide: a soft radial wash in the top-right of a
+   page's opening section. Apply to the hero on every page. Nothing else
+   gets a gradient, a mesh, or a glow. */
+.wash-top{
+  background-image:radial-gradient(circle at 70% 0%, rgba(15,124,110,.07) 0%, transparent 55%);
+  background-repeat:no-repeat;
+}
 
-.mark{flex-shrink:0;width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
-/* Judgment call: this glyph is the "not included" counterpart to .mark.check,
-   so it encodes meaning and shouldn't sit under the 3:1 non-text floor. Moved
-   to --muted, which keeps it clearly quieter than the teal check. */
-.mark.x{background:rgba(255,255,255,.06);color:var(--muted);}
-.mark.check{background:rgba(20,184,166,.16);color:var(--teal-bright);}
-.disclaimer{font-size:12.5px;color:var(--legal);line-height:1.6;border-top:1px solid var(--line);padding-top:14px;margin-top:22px;}
+/* Section head: left-aligned always. Centering is retired sitewide except
+   the footer legal line, so .sec-head and the former .sec-head-left variant
+   are now identical -- kept as two names so existing markup elsewhere on
+   the site keeps working without edits. */
+.sec-head,.sec-head-left{max-width:var(--max);margin:0 auto var(--s5);text-align:left;}
+.sec-head h2,.sec-head-left h2{max-width:20ch;}
+.sec-head p,.sec-head-left p{margin-top:16px;max-width:62ch;font-size:17px;color:var(--ink-2);line-height:1.6;}
 
-/* ---------- Shared card base: one elevation/hover language for every card ---------- */
-.sw-card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;}
-.sw-card::before{content:"";position:absolute;top:0;left:10%;right:10%;height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='12' viewBox='0 0 100 12' preserveAspectRatio='none' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='cg' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%232DD4C4' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%232DD4C4' stop-opacity='.5'/%3E%3Cstop offset='1' stop-color='%232DD4C4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 9 L58 9 C78 9 80 3 100 3' stroke='url(%23cg)' stroke-width='2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") no-repeat center/100% 100%;opacity:0;transform:translateY(-3px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none;}
-.sw-card:hover{transform:translateY(-5px);box-shadow:0 24px 48px -20px rgba(0,0,0,.6),0 0 0 1px rgba(20,184,166,.08);border-color:rgba(20,184,166,.28);}
-.sw-card:hover::before{opacity:1;transform:none;}
-@media (prefers-reduced-motion:reduce){.sw-card,.sw-card::before{transition:none;}.sw-card:hover{transform:none;}}
+/* Lead paragraph: the slightly larger intro line under a heading, used
+   wherever a section opens with a sentence of framing before the detail. */
+.lead{font-size:19px;line-height:1.6;color:var(--ink-2);max-width:62ch;}
 
-/* ---------- Gradient mesh + grain backdrop (heroes, form page) ---------- */
-.mesh{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
-.mesh::before{content:"";position:absolute;inset:-20%;background:
-  radial-gradient(640px 420px at 18% 12%,rgba(20,184,166,.14) 0%,transparent 60%),
-  radial-gradient(720px 480px at 85% 8%,rgba(91,127,232,.10) 0%,transparent 62%),
-  radial-gradient(900px 560px at 50% 110%,rgba(13,122,114,.16) 0%,transparent 65%);}
-.mesh::after{content:"";position:absolute;inset:0;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");}
-.mesh-grid::before{background:
-  radial-gradient(640px 420px at 18% 12%,rgba(20,184,166,.14) 0%,transparent 60%),
-  radial-gradient(720px 480px at 85% 8%,rgba(91,127,232,.10) 0%,transparent 62%),
-  radial-gradient(900px 560px at 50% 110%,rgba(13,122,114,.16) 0%,transparent 65%),
-  repeating-linear-gradient(90deg,rgba(45,212,196,.03) 0 1px,transparent 1px 88px),
-  repeating-linear-gradient(0deg,rgba(45,212,196,.03) 0 1px,transparent 1px 88px);}
+/* ---------- Eyebrow: small section label. Sentence case, no letter-spacing,
+   no decorative line -- the old squiggle-before-eyebrow motif is gone. ---------- */
+.eyebrow{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--teal);}
 
-/* ---------- Logo ---------- */
-.logo{display:flex;align-items:center;gap:11px;}
-.logo-mark{width:38px;height:38px;flex-shrink:0;display:block;object-fit:contain;}
-.logo-text{display:flex;flex-direction:column;line-height:1.15;}
-.logo-text b{font-family:'Sora',sans-serif;font-weight:700;font-size:13.5px;color:var(--ink);letter-spacing:-.01em;}
-.logo-text span{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:2px;white-space:nowrap;}
+/* ---------- Tabular numerals for anything that counts up or sits in a
+   dense number row, without switching the type family away from what the
+   spec assigns that number (Instrument Serif stats still count up; they
+   just also get tabular-nums so digits don't reflow width mid-animation). ---------- */
+.mono,.mono-num{font-variant-numeric:tabular-nums;}
+.mono{font-family:var(--font-mono);}
 
-/* ---------- Mascot: secondary touches ---------- */
+/* ---------- Buttons ----------
+   Primary: solid ink, paper text, 2px radius, background shifts to teal on
+   hover. Secondary is not a button at all -- it's a text link with an
+   underline that changes color on hover. No arrows are added by CSS on
+   either; any arrow glyph on the site today lives in existing link copy
+   and is preserved there untouched, not introduced here as decoration. ---------- */
+.btn{
+  display:inline-block;font-family:var(--font-sans);font-weight:500;font-size:15px;
+  padding:13px 22px;border-radius:var(--radius-btn);border:none;cursor:pointer;
+  text-decoration:none;transition:background-color .22s var(--ease),color .22s var(--ease);
+  white-space:nowrap;
+}
+.btn-primary{background:var(--ink);color:var(--paper);}
+.btn-primary:hover,.btn-primary:focus-visible{background:var(--teal);color:var(--paper);}
+.btn-ghost{
+  display:inline;padding:0;background:none;border-radius:0;
+  font-family:var(--font-sans);font-weight:500;font-size:15px;color:var(--ink);
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule);
+  transition:color .2s var(--ease),text-decoration-color .2s var(--ease);
+}
+.btn-ghost:hover,.btn-ghost:focus-visible{color:var(--teal);text-decoration-color:var(--teal);}
+.btn:focus-visible,.btn-ghost:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
+
+/* Generic text link treatment, for links inside body copy that aren't a
+   .btn-ghost (e.g. a link inline in a paragraph). Same language: underline
+   in --rule, shifts to --teal on hover. */
+.link,p a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
+.link:hover,p a:hover{color:var(--teal);text-decoration-color:var(--teal);}
+
+/* ---------- Logo / wordmark ---------- */
+.logo{display:flex;align-items:center;gap:11px;transition:opacity .2s var(--ease);}
+.logo:hover{opacity:.75;}
+.logo:focus-visible{outline:2px solid var(--teal);outline-offset:4px;border-radius:2px;}
+.logo-mark{width:32px;height:32px;flex-shrink:0;display:block;object-fit:contain;}
+.logo-text{display:flex;align-items:baseline;gap:7px;white-space:nowrap;}
+.logo-text b{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);letter-spacing:-.01em;}
+.logo-text span{font-family:var(--font-sans);font-weight:400;font-size:13px;color:var(--ink-2);white-space:nowrap;}
+
+/* ---------- Nav (shared across every page) ----------
+   Sticky, paper at 92% opacity, blurred backdrop, one hairline rule under
+   the bar. No scroll-condense state, no sliding indicator -- the current
+   page is marked with a plain underline. Class names kept from the prior
+   nav build (header.hdr2, .nav-tabs, .nav-sheet, etc.) so every page's
+   identical nav markup inherits this styling with no markup changes. ---------- */
+header.hdr2{
+  position:sticky;top:0;z-index:100;
+  background:rgba(245,242,236,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+header.hdr2 nav{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;
+  max-width:var(--max);margin:0 auto;padding:20px 24px;
+}
+header.hdr2 .logo{flex-shrink:0;}
+
+.nav-tabs{position:relative;display:flex;align-items:center;gap:26px;justify-self:center;}
+.nav-tabs a{
+  font-family:var(--font-sans);font-weight:400;font-size:15px;color:var(--ink);
+  padding-bottom:3px;border-bottom:1px solid transparent;
+  transition:color .2s var(--ease),border-color .2s var(--ease);
+}
+.nav-tabs a:hover{color:var(--teal);}
+.nav-tabs a.active{color:var(--teal);border-bottom-color:var(--teal);}
+.nav-tabs a:focus-visible{outline:2px solid var(--teal);outline-offset:4px;}
+/* Superseded by the plain underline above -- kept as an inert, hidden
+   element (rather than removed from every page's markup) since it carries
+   no id and no content without the old JS that no longer runs. */
+.nav-rail{display:none;}
+/* Superseded -- no scroll-condense state in the new nav, so this never
+   receives an "on" class. Hidden outright rather than left as a stray
+   full-width absolutely-positioned strip. */
+.nav-progress{display:none;}
+
+.nav-actions{display:flex;align-items:center;gap:20px;justify-self:end;}
+.nav-login{
+  font-family:var(--font-sans);font-weight:400;font-size:15px;color:var(--ink);
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule);
+  white-space:nowrap;transition:color .2s var(--ease),text-decoration-color .2s var(--ease);
+}
+.nav-login:hover{color:var(--teal);text-decoration-color:var(--teal);}
+.nav-cta{padding:11px 18px;font-size:14px;}
+.nav-cta-short{display:none;}
+
+/* ---------- Sheet (mobile nav, <900px): icon-only trigger, no "Menu" label.
+   Same interaction contract as before (click toggles; outside click and
+   Escape close; Escape returns focus; arrow keys move between items) --
+   only the visual language changes. ---------- */
+.nav-sheet{display:none;}
+.nav-sheet-trigger{
+  display:none;align-items:center;justify-content:center;width:40px;height:40px;
+  border-radius:var(--radius-btn);background:none;border:1px solid var(--rule);
+  color:var(--ink);cursor:pointer;font-family:inherit;flex-shrink:0;
+  transition:color .2s var(--ease),border-color .2s var(--ease);
+}
+.nav-sheet-trigger:hover{color:var(--teal);border-color:var(--teal);}
+.nav-sheet-trigger:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+.nav-sheet-trigger .bars{position:relative;width:17px;height:12px;}
+.nav-sheet-trigger .bars i{
+  position:absolute;left:0;right:0;height:1.5px;background:currentColor;
+  transition:transform .3s var(--ease),opacity .2s var(--ease);
+}
+.nav-sheet-trigger .bars i:nth-child(1){top:0;}
+.nav-sheet-trigger .bars i:nth-child(2){top:5.2px;}
+.nav-sheet-trigger .bars i:nth-child(3){top:10.4px;}
+.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(1){transform:translateY(5.2px) rotate(45deg);}
+.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(2){opacity:0;}
+.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(3){transform:translateY(-5.2px) rotate(-45deg);}
+
+.nav-sheet-panel{
+  position:absolute;top:100%;left:0;right:0;
+  background:rgba(245,242,236,.98);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s;
+}
+.nav-sheet.is-open .nav-sheet-panel{opacity:1;visibility:visible;transform:none;}
+.nav-sheet-inner{max-width:var(--max);margin:0 auto;padding:8px 24px 20px;display:flex;flex-direction:column;}
+.nav-sheet-inner a{
+  font-family:var(--font-sans);font-weight:500;font-size:17px;color:var(--ink);
+  padding:15px 0;border-bottom:1px solid var(--rule);
+  transition:color .2s var(--ease);
+}
+.nav-sheet-inner a:last-of-type{border-bottom:none;}
+.nav-sheet-inner a:hover,.nav-sheet-inner a.active{color:var(--teal);}
+.nav-sheet-inner a:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+.nav-sheet-login{margin-top:14px;font-family:var(--font-sans);font-size:14px;color:var(--ink-2);}
+
+@media (max-width:1099px){
+  .nav-tabs{display:none;}
+  .nav-sheet{display:block;}
+  .nav-sheet-trigger{display:inline-flex;}
+  header.hdr2 nav{grid-template-columns:auto auto;justify-content:space-between;}
+  .nav-actions .nav-login{display:none;}
+}
+@media (max-width:640px){
+  header.hdr2 nav{padding:16px;}
+  .nav-cta-full{display:none;}
+  .nav-cta-short{display:inline;}
+  .nav-cta{padding:10px 14px;font-size:13px;}
+}
+
+/* =============================================================================
+   NEW GENERAL COMPONENTS
+   Added for the redesign; the home page does not use every one of these, but
+   later pages (intelligence, sample report, plans, team, founding program,
+   FAQ/contact/disclaimer) are built from this vocabulary rather than one-off
+   per-page CSS. Each is documented in place.
+   ========================================================================== */
+
+/* ---------- Document (.doc): the card language for real report data --
+   home's 10462 example today, the full sample report later. Paper surface
+   (not a different fill -- distinguished only by the rule and the shadow),
+   1px rule, 4px radius, and the one shadow used anywhere on the site. ---------- */
+.doc{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-doc);box-shadow:var(--shadow-doc);padding:32px;}
+.doc,.tier-unscored{fill-rule:evenodd;} /* harmless on .doc; real use is the map paths below */
+.doc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--rule);flex-wrap:wrap;}
+.doc-eyebrow{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);}
+.doc-title{font-family:var(--font-sans);font-weight:600;font-size:18px;color:var(--ink);margin-top:4px;}
+.doc-tier{font-family:var(--font-sans);font-weight:600;font-size:14px;white-space:nowrap;}
+.doc-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0;}
+.doc-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
+.doc-score-label{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);line-height:1.4;}
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--rule);}
+.doc-grid .k{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);}
+.doc-grid .v{font-family:var(--font-mono);font-weight:500;font-size:16px;color:var(--ink);margin-top:4px;}
+.doc-ratios{display:flex;gap:32px;flex-wrap:wrap;padding:20px 0;border-top:1px solid var(--rule);}
+.doc-ratios .k{font-family:var(--font-sans);font-size:12px;color:var(--ink-2);}
+.doc-ratios .v{font-family:var(--font-mono);font-weight:500;font-size:17px;color:var(--ink);margin-top:4px;}
+.doc-action{display:block;font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--teal);padding-top:20px;border-top:1px solid var(--rule);}
+.doc-note{font-family:var(--font-sans);font-size:12.5px;color:var(--ink-2);font-style:italic;margin-top:12px;}
+.doc-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);font-family:var(--font-mono);font-size:11px;color:var(--ink-2);}
+
+/* ---------- Rule list: a plain vertical list, each item separated by a
+   hairline instead of a card or bullet. Use for "what you get," feature
+   lists, anywhere a card grid would otherwise be reached for. ---------- */
+.rule-list{display:flex;flex-direction:column;}
+.rule-list li{padding:18px 0;border-top:1px solid var(--rule);font-size:15.5px;color:var(--ink-2);line-height:1.6;}
+.rule-list li:last-child{border-bottom:1px solid var(--rule);}
+
+/* ---------- Definition grid: label/value pairs in two columns, a rule
+   between each row. For methodology/glossary-style content. ---------- */
+.def-grid{display:grid;grid-template-columns:1fr 2fr;column-gap:24px;}
+.def-grid dt{font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--ink-2);padding:16px 0;border-top:1px solid var(--rule);}
+.def-grid dd{font-family:var(--font-sans);font-size:15.5px;color:var(--ink);padding:16px 0;border-top:1px solid var(--rule);}
+@media (max-width:560px){.def-grid{grid-template-columns:1fr;column-gap:0;}
+  .def-grid dd{padding-top:4px;padding-bottom:16px;}
+  .def-grid dt{padding-bottom:0;}
+}
+
+/* ---------- Numbered rows: a step/stage sequence as rows, not cards. The
+   number column is a fixed width so titles line up regardless of digit
+   count. Number is the one place outside h1/h2 that uses Instrument Serif,
+   per spec. ---------- */
+.num-rows{display:flex;flex-direction:column;}
+.num-row{display:grid;grid-template-columns:72px 1fr;gap:20px;padding:28px 0;border-top:1px solid var(--rule);}
+.num-rows .num-row:first-child{border-top:1px solid var(--rule);}
+.num-row .n{font-family:var(--font-serif);font-size:28px;color:var(--ink-2);line-height:1;}
+.num-row h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:8px;}
+.num-row p{font-family:var(--font-sans);font-size:15.5px;color:var(--ink-2);line-height:1.6;max-width:52ch;}
+@media (max-width:480px){.num-row{grid-template-columns:44px 1fr;gap:14px;}}
+
+/* ---------- Three-column type block: plain text columns, no card chrome.
+   For team bios, feature summaries, anywhere three short blurbs sit side
+   by side. ---------- */
+.type-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+.type-cols h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:8px;}
+.type-cols p{font-family:var(--font-sans);font-size:15px;color:var(--ink-2);line-height:1.6;}
+@media (max-width:800px){.type-cols{grid-template-columns:1fr;gap:28px;}}
+
+/* ---------- Mono table: comparison/data tables. Numbers in mono, rules
+   instead of cell borders/zebra striping. ---------- */
+.mono-table{width:100%;border-collapse:collapse;font-family:var(--font-sans);font-size:14.5px;}
+.mono-table th{text-align:left;font-weight:500;font-size:12px;color:var(--ink-2);padding:0 12px 10px 0;border-bottom:1px solid var(--rule);}
+.mono-table td{padding:12px 12px 12px 0;border-bottom:1px solid var(--rule);color:var(--ink);}
+.mono-table td.num,.mono-table th.num{font-family:var(--font-mono);text-align:right;}
+
+/* ---------- Tier swatches: the shared color language for the five score
+   tiers (Peak/Momentum/Emerging/Watch/Pass), used on the map legend and
+   anywhere a tier needs a color key. Amber is reserved for Peak only --
+   nowhere else on the site should reach for --amber. ---------- */
+.tier-swatch{display:inline-block;width:12px;height:12px;border-radius:var(--radius-btn);margin-right:8px;vertical-align:middle;}
+.tier-swatch.tier-peak{background:var(--tier-peak);}
+.tier-swatch.tier-momentum{background:var(--tier-momentum);}
+.tier-swatch.tier-emerging{background:var(--tier-emerging);}
+.tier-swatch.tier-watch{background:var(--tier-watch);}
+.tier-swatch.tier-pass{background:var(--tier-pass);}
+/* Map paths (home) reuse the same five tier classes with `fill` instead of
+   `background` -- see index.html's local style block. */
+
+/* ---------- SAMPLE tag: marks preview/non-live data. Ink background, paper
+   text, 11px Archivo 500 uppercase -- the only uppercase text-transform on
+   the site besides the nav wordmark (which is naturally-cased, not
+   transformed, so in practice this is the only uppercase, full stop). ---------- */
+.tag-sample{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.02em;padding:3px 8px;border-radius:var(--radius-btn);}
+
+/* ---------- Form fields: underline inputs, boxed textarea, no pill/rounded
+   chrome. Forward-looking form component for redesigned pages; the live
+   founding-program form keeps using .field-group (retextured below) until
+   that page is rebuilt. ---------- */
+.f-field{margin-bottom:24px;}
+.f-field label{display:block;font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);margin-bottom:8px;}
+.f-field input,.f-field select{
+  width:100%;height:40px;padding:0 2px;border:none;border-bottom:1px solid var(--ink);
+  background:transparent;border-radius:0;font-family:var(--font-sans);font-size:17px;color:var(--ink);
+}
+.f-field textarea{
+  width:100%;padding:12px;border:1px solid var(--rule);border-radius:var(--radius-btn);
+  background:transparent;font-family:var(--font-sans);font-size:17px;color:var(--ink);
+  resize:vertical;min-height:110px;
+}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{outline:none;border-color:var(--teal);}
+
+/* ---------- FAQ: native <details>/<summary>, no chevron icon -- the
+   browser's own marker is suppressed and a rule + color change on open is
+   the only affordance. ---------- */
+.faq-item{border-top:1px solid var(--rule);}
+.faq-item:last-child{border-bottom:1px solid var(--rule);}
+.faq-item summary{list-style:none;cursor:pointer;padding:20px 0;font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--ink);}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::marker{content:'';}
+.faq-item[open] summary{color:var(--teal);}
+.faq-item p{padding:0 0 20px;max-width:62ch;font-size:15.5px;color:var(--ink-2);line-height:1.6;}
+
+/* ---------- Closing section: H2, lead, primary button, secondary link --
+   the pattern most pages end on before the footer. ---------- */
+.closing h2{margin-bottom:16px;}
+.closing .lead{margin-bottom:28px;}
+.closing .btn-primary{margin-right:24px;}
+
+/* =============================================================================
+   RETHEMED SHARED COMPONENTS
+   Used by pages not yet rebuilt (sample-report, founding-program, team,
+   contact, reports). Retextured to the new tokens/fonts and stripped of
+   infinite-loop motion, pills, and box-shadows per the sitewide audit; not
+   restructured -- that is each page's own rebuild, not this pass.
+   ========================================================================== */
+
+.disclaimer{font-size:12.5px;color:var(--ink-2);line-height:1.6;border-top:1px solid var(--rule);padding-top:14px;margin-top:22px;}
+
+/* Shared card base (kept for any page still using it) -- flat, bordered,
+   no lift/shadow/scale on hover per the new motion rules. */
+.sw-card{position:relative;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-doc);overflow:hidden;transition:border-color .2s var(--ease);}
+.sw-card:hover{border-color:var(--teal);}
+
+/* Retired: gradient mesh + grain backdrop. No replacement -- the one
+   sanctioned gradient is .wash-top above. */
+.mesh,.mesh::before,.mesh::after,.mesh-grid::before{display:none;}
+
+/* Success icon (founding-program submit confirmation): one-shot, non-
+   looping animation, unaffected by the palette change beyond inherited
+   currentColor -- left in place. */
 .success-icon-wrap{position:relative;width:52px;height:52px;margin:0 auto 14px;}
 .success-icon{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
 .success-icon-blink{opacity:0;}
@@ -93,265 +447,164 @@ section{position:relative;}
   65%{transform:scale(1) rotate(4deg);}
   100%{opacity:1;transform:scale(1) rotate(0deg);}
 }
-@keyframes successBlink{
-  0%,55%{opacity:0;}
-  65%{opacity:1;}
-  80%{opacity:1;}
-  92%,100%{opacity:0;}
-}
+@keyframes successBlink{0%,55%{opacity:0;}65%{opacity:1;}80%{opacity:1;}92%,100%{opacity:0;}}
 @media (prefers-reduced-motion:reduce){
   .success-icon-wrap.celebrate{animation:none;opacity:1;transform:none;}
   .success-icon-wrap.celebrate .success-icon-blink{animation:none;opacity:0;}
 }
 
-/* ---------- Buttons ---------- */
-.btn{position:relative;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;padding:12px 22px;border-radius:100px;transition:background-color .2s,color .2s,border-color .2s,box-shadow .2s,transform .12s var(--ease);white-space:nowrap;cursor:pointer;font-family:inherit;border:none;overflow:hidden;}
-.btn-primary{background:var(--teal);color:#031A17;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 20px rgba(20,184,166,.3);}
-.btn-primary::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg);transition:left .5s var(--ease);}
-.btn-primary:hover{background:var(--teal-bright);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 6px 26px rgba(20,184,166,.44);transform:translateY(-1px);}
-.btn-primary:hover::after{left:120%;}
-.btn-primary:active{transform:scale(.97) translateY(0);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 2px 12px rgba(20,184,166,.35);}
-.btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line);}
-.btn-ghost:hover{border-color:var(--teal-dim);color:var(--teal-bright);background:rgba(20,184,166,.05);}
-.btn-ghost:active{transform:scale(.97);}
-.btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
-.btn:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
-@media (prefers-reduced-motion:reduce){.btn-primary::after{display:none;}}
-
-/* ---------- Floating CTA pill (injected by shared.js on pages with a .nav-cta) ---------- */
-.float-cta{position:fixed;right:22px;bottom:22px;z-index:90;display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#031A17;font-family:'Inter Tight',sans-serif;font-weight:800;font-size:13px;letter-spacing:.01em;padding:13px 22px;border-radius:100px;box-shadow:0 8px 30px rgba(20,184,166,.35),inset 0 1px 0 rgba(255,255,255,.25);opacity:0;transform:translateY(16px) scale(.95);pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease),background-color .2s;}
-.float-cta.is-on{opacity:1;transform:none;pointer-events:auto;}
-.float-cta:hover{background:var(--teal-bright);}
-.float-cta:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
-@media (max-width:719px){.float-cta{display:none;}}
-@media (prefers-reduced-motion:reduce){.float-cta{transition:opacity .2s;transform:none;}}
-
-/* ---------- Form fields (shared by /founding-program) ---------- */
+/* Form fields (legacy, live on /founding-program): retextured, kept boxed
+   rather than migrated to the new underline .f-field -- that migration is
+   this page's own rebuild, not part of this pass. */
 .field-group{margin-bottom:20px;text-align:left;}
-.field-group label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:8px;}
-.field-group label .req{color:var(--gold);margin-left:3px;}
+.field-group label{display:block;font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:8px;font-family:var(--font-sans);}
+.field-group label .req{color:var(--amber);margin-left:3px;}
 .field-group input,
 .field-group select,
 .field-group textarea{
-  width:100%;padding:13px 15px;border-radius:10px;border:1px solid var(--line);
-  background:var(--surface-2);color:var(--ink);font-size:14.5px;font-family:'Inter Tight',sans-serif;
-  transition:border-color .15s,box-shadow .15s;
+  width:100%;padding:13px 15px;border-radius:var(--radius-btn);border:1px solid var(--rule);
+  background:var(--paper-2);color:var(--ink);font-size:14.5px;font-family:var(--font-sans);
+  transition:border-color .15s;
 }
 .field-group textarea{resize:vertical;min-height:96px;}
 .field-group input:focus,
 .field-group select:focus,
-.field-group textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(20,184,166,.16);}
-.field-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236E8B84' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:36px;}
+.field-group textarea:focus{outline:none;border-color:var(--teal);}
+.field-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A5652' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:36px;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media (max-width:560px){.field-row{grid-template-columns:1fr;}}
 
-/* ---------- Form section rhythm (visual grouping, still one form) ---------- */
 .form-step{display:flex;align-items:center;gap:14px;margin:34px 0 18px;}
 .form-step:first-of-type{margin-top:0;}
-.form-step .num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;}
-.form-step .lbl{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ink);text-transform:uppercase;}
-.form-step .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+.form-step .num{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--teal);}
+.form-step .lbl{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);}
+.form-step .rule{flex:1;height:1px;background:var(--rule);}
 
-/* ---------- NDA acknowledgment (shared by /founding-program) ---------- */
-.nda-block{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:20px 20px 18px;margin-bottom:20px;}
-.nda-heading{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-bottom:6px;}
-.nda-note{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
-.nda-scroll{max-height:260px;overflow-y:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:16px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--teal-dim) var(--surface-2);}
+.nda-block{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-doc);padding:20px 20px 18px;margin-bottom:20px;}
+.nda-heading{font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.nda-note{font-size:12px;color:var(--ink-2);margin-bottom:14px;line-height:1.5;}
+.nda-scroll{max-height:260px;overflow-y:auto;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-btn);padding:16px 18px;margin-bottom:16px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--teal) var(--paper-2);}
 .nda-scroll::-webkit-scrollbar{width:8px;}
-.nda-scroll::-webkit-scrollbar-track{background:var(--surface-2);border-radius:8px;}
-.nda-scroll::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:8px;}
-.nda-scroll::-webkit-scrollbar-thumb:hover{background:var(--teal);}
-.nda-scroll p{font-size:12.5px;color:var(--ink-soft);line-height:1.65;margin:0 0 12px;}
+.nda-scroll::-webkit-scrollbar-track{background:var(--paper-2);}
+.nda-scroll::-webkit-scrollbar-thumb{background:var(--teal);border-radius:var(--radius-btn);}
+.nda-scroll p{font-size:12.5px;color:var(--ink-2);line-height:1.65;margin:0 0 12px;}
 .nda-scroll p:last-child{margin-bottom:0;}
 .nda-scroll strong{color:var(--ink);}
-.nda-date-line{font-family:'JetBrains Mono',monospace;color:var(--teal-bright);font-size:12px;}
-.nda-checkbox{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--ink-soft);font-weight:500;cursor:pointer;}
+.nda-date-line{font-family:var(--font-mono);color:var(--teal);font-size:12px;}
+.nda-checkbox{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--ink-2);font-weight:500;cursor:pointer;}
 .nda-checkbox input[type="checkbox"]{width:auto;flex-shrink:0;margin-top:3px;accent-color:var(--teal);cursor:pointer;}
-.nda-checkbox input[type="checkbox"]:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;border-radius:3px;}
-.nda-checkbox .req{color:var(--gold);margin-left:3px;}
+.nda-checkbox input[type="checkbox"]:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+.nda-checkbox .req{color:var(--amber);margin-left:3px;}
 
-/* ---------- Nav (shared across all top-level pages) ---------- */
-header{position:sticky;top:0;z-index:100;background:rgba(7,15,13,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:2px solid var(--teal);border-bottom:1px solid var(--line);}
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:var(--max);margin:0 auto;position:relative;}
-
-.nav-login{font-size:13.5px;font-weight:600;color:var(--ink-soft);white-space:nowrap;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
-.nav-login:hover{color:var(--teal-bright);background-size:100% 1px;}
-.nav-cta{padding:10px 18px;font-size:13px;}
-.nav-cta-short{display:none;}
-
-/* ---------- Motion: scroll reveal (progressive enhancement, see html.js head script) ---------- */
-html.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
-html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
-
-/* ---------- Generic section shell ---------- */
-.sec{padding:var(--s7) 32px;}
-.sec-alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-.sec-head{max-width:720px;margin:0 auto var(--s5);text-align:center;}
-.sec-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(30px,4.4vw,50px);letter-spacing:-.03em;line-height:1.1;}
-.sec-head p{font-size:16.5px;color:var(--ink-soft);margin-top:18px;line-height:1.65;}
-.sec-head .trail{margin:22px auto 0;}
-
-/* ---------- Left-anchored section head ----------
-   Every section on the site used to be a centered head over a grid, which gave
-   the whole page one repeated shape and no cadence. Centered is now reserved
-   for a page's opening thesis and its closing CTA; the argument sections in
-   between run left, so scrolling alternates instead of repeating. */
-/* Width is the full content container, NOT a narrow box pinned left: the head
-   has to share a left edge with the grid beneath it. Pinning it to the section
-   padding instead leaves the head hanging ~150px left of the cards at wide
-   viewports. The measure is constrained on the children, not the container. */
-.sec-head-left{max-width:var(--max);margin-left:auto;margin-right:auto;text-align:left;}
-.sec-head-left h2{max-width:18ch;}
-.sec-head-left p{margin-top:16px;max-width:62ch;}
-.sec-head-left .trail{margin:22px 0 0;}
-@media (max-width:900px){
-  .sec-head-left h2{max-width:none;}
-}
-
-/* ---------- Signal Card (shared: blurred teaser on Home, full sample on /sample-report) ---------- */
-.sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:20px;padding:32px 34px;box-shadow:0 30px 80px -20px rgba(0,0,0,.6),0 0 0 1px rgba(20,184,166,.05);transition:border-color .25s,box-shadow .25s var(--ease);}
-.sig-card:hover{border-color:rgba(20,184,166,.3);box-shadow:0 30px 80px -20px rgba(0,0,0,.6),0 0 0 1px rgba(20,184,166,.12),0 0 40px rgba(20,184,166,.08);}
-.sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap;}
-.sig-head-label{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace;}
-.sig-head-title{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;}
-.sig-badge{display:flex;align-items:center;gap:7px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:var(--gold);font-size:11.5px;font-weight:700;padding:7px 13px;border-radius:100px;flex-shrink:0;white-space:nowrap;}
-.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(245,158,11,.6);animation:pulse 2s infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(245,158,11,.55);}70%{box-shadow:0 0 0 7px rgba(245,158,11,0);}100%{box-shadow:0 0 0 0 rgba(245,158,11,0);}}
-@media (prefers-reduced-motion:reduce){.pulse-dot{animation:none;}}
+/* Sample-report style signal card, kept live for /sample-report until that
+   page is rebuilt on .doc. Pills, glow, and the pulse dot are removed per
+   the sitewide audit; the badge becomes a plain word. */
+.sig-card{position:relative;overflow:hidden;max-width:640px;margin:0 auto;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-doc);padding:32px 34px;}
+.sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--rule);gap:12px;flex-wrap:wrap;}
+.sig-head-label{font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:6px;font-family:var(--font-sans);}
+.sig-head-title{font-family:var(--font-sans);font-weight:600;font-size:18px;}
+.sig-badge{font-family:var(--font-sans);font-weight:600;font-size:14px;color:var(--amber);}
 .sig-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0 22px;}
-.sig-score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:56px;color:var(--teal-bright);letter-spacing:-.02em;text-shadow:0 0 34px rgba(45,212,196,.35);}
-.sig-score-label{font-size:12.5px;color:var(--muted);font-weight:600;}
+.sig-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
+.sig-score-label{font-size:13px;color:var(--ink-2);font-weight:400;font-family:var(--font-sans);}
 .sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
-.sig-item{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
-.sig-item .k{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px;}
-.sig-item .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15.5px;color:var(--ink);}
-.sig-item .v.pos{color:var(--teal-bright);}
-.sig-item .v.neg{color:var(--gold);}
-.ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--line);flex-wrap:wrap;}
+.sig-item{border:1px solid var(--rule);border-radius:var(--radius-btn);padding:12px 14px;}
+.sig-item .k{font-size:12px;color:var(--ink-2);font-weight:500;margin-bottom:5px;font-family:var(--font-sans);}
+.sig-item .v{font-family:var(--font-mono);font-weight:500;font-size:15.5px;color:var(--ink);}
+.sig-item .v.pos{color:var(--teal);}
+.sig-item .v.neg{color:var(--amber);}
+.ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--rule);flex-wrap:wrap;}
 .ratio{display:flex;flex-direction:column;gap:4px;}
-.ratio .k{font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
-.ratio .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;}
-.sig-reasons{padding:20px 0;border-top:1px solid var(--line);}
-.sig-reasons .k-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+.ratio .k{font-size:12px;color:var(--ink-2);font-weight:500;font-family:var(--font-sans);}
+.ratio .v{font-family:var(--font-mono);font-weight:500;font-size:16px;color:var(--ink);}
+.sig-reasons{padding:20px 0;border-top:1px solid var(--rule);}
+.sig-reasons .k-label{font-size:12px;color:var(--ink-2);font-weight:600;margin-bottom:12px;font-family:var(--font-sans);}
 .sig-reasons ul{display:flex;flex-direction:column;gap:10px;}
-.sig-reasons li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.55;}
-.sig-compare{padding:20px 0;border-top:1px solid var(--line);}
-.sig-compare .k-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
-.compare-table{width:100%;border-collapse:collapse;font-size:13.5px;}
-.compare-table th{text-align:right;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:0 0 8px;}
+.sig-reasons li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2);line-height:1.55;}
+.sig-compare{padding:20px 0;border-top:1px solid var(--rule);}
+.sig-compare .k-label{font-size:12px;color:var(--ink-2);font-weight:600;margin-bottom:12px;font-family:var(--font-sans);}
+.compare-table{width:100%;border-collapse:collapse;font-size:13.5px;font-family:var(--font-sans);}
+.compare-table th{text-align:right;color:var(--ink-2);font-weight:500;font-size:12px;padding:0 0 8px;}
 .compare-table th:first-child{text-align:left;}
-.compare-table td{padding:9px 0;border-top:1px solid var(--line);color:var(--ink-soft);}
+.compare-table td{padding:9px 0;border-top:1px solid var(--rule);color:var(--ink-2);}
 .compare-table td:first-child{color:var(--ink);font-weight:600;}
-.compare-table td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;}
-.compare-table td.zip-val{color:var(--teal-bright);}
-.action-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.28);color:var(--teal-bright);font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:100px;margin-top:20px;transition:background-color .2s,border-color .2s,transform .12s var(--ease);}
-a.action-badge:hover{background:rgba(20,184,166,.18);border-color:rgba(20,184,166,.45);transform:translateX(3px);}
-a.action-badge:active{transform:scale(.97);}
-.sig-disclaimer{font-size:11.5px;color:var(--legal);margin-top:14px;font-style:italic;}
-.sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap;gap:10px;}
-/* These sit at the bottom of .sig-card's surface -> surface-2 gradient, where
-   --muted only reaches 4.39:1. --legal clears it at 5.74:1. */
-.sig-footer .src{font-size:11px;color:var(--legal);font-weight:500;}
-.sig-footer .ts{font-size:11px;color:var(--legal);font-family:'JetBrains Mono',monospace;}
+.compare-table td:not(:first-child){text-align:right;font-family:var(--font-mono);font-weight:500;}
+.compare-table td.zip-val{color:var(--teal);}
+/* Plain text action line, not a pill; arrow characters that already exist
+   in a given page's copy are preserved there, not added here. */
+.action-badge{display:block;font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--teal);padding-top:16px;border-top:1px solid var(--rule);transition:color .2s var(--ease);}
+.sig-disclaimer{font-size:12px;color:var(--ink-2);margin-top:14px;font-style:italic;}
+.sig-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--rule);flex-wrap:wrap;gap:10px;}
+.sig-footer .src{font-size:11px;color:var(--ink-2);font-weight:500;font-family:var(--font-sans);}
+.sig-footer .ts{font-size:11px;color:var(--ink-2);font-family:var(--font-mono);}
 .blur-val{filter:blur(6px);user-select:none;}
 .sig-score.blur-val{filter:blur(14px);}
 .sig-head-label.blur-val{filter:blur(5px);}
-.sample-overlay{position:absolute;inset:0;background:rgba(6,13,11,.62);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;}
+.sample-overlay{position:absolute;inset:0;background:rgba(245,242,236,.88);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;}
 .sample-overlay-inner{max-width:300px;display:flex;flex-direction:column;align-items:center;gap:16px;}
-.sample-overlay-inner .msg{font-family:'Sora',sans-serif;font-weight:700;font-size:16.5px;letter-spacing:-.01em;line-height:1.4;color:var(--ink);}
+.sample-overlay-inner .msg{font-family:var(--font-sans);font-weight:600;font-size:16.5px;line-height:1.4;color:var(--ink);}
 .sample-icon{width:32px;height:32px;object-fit:contain;}
 
-/* ---------- Gradient-orb avatars (Team + Contact) ---------- */
-.orb{position:relative;width:64px;height:64px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:19px;color:var(--ink);border-radius:38% 62% 55% 45%/48% 42% 58% 52%;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 8px 28px rgba(0,0,0,.45);animation:orbMorph 9s ease-in-out infinite alternate;}
-.orb::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:1px solid rgba(45,212,196,.18);animation:orbMorph 9s ease-in-out infinite alternate-reverse;pointer-events:none;}
-.orb.orb-a{background:radial-gradient(circle at 30% 25%,rgba(45,212,196,.85),rgba(13,122,114,.9) 55%,#0A2622 100%);}
-.orb.orb-b{background:radial-gradient(circle at 68% 22%,rgba(245,158,11,.55),rgba(13,122,114,.85) 58%,#0A2622 100%);}
-.orb.orb-c{background:radial-gradient(circle at 40% 70%,rgba(91,127,232,.5),rgba(13,122,114,.85) 55%,#0A2622 100%);}
-@keyframes orbMorph{
-  0%{border-radius:38% 62% 55% 45%/48% 42% 58% 52%;}
-  50%{border-radius:56% 44% 42% 58%/42% 60% 40% 58%;}
-  100%{border-radius:45% 55% 62% 38%/58% 45% 55% 42%;}
-}
-@media (prefers-reduced-motion:reduce){.orb,.orb::after{animation:none;}}
+/* Gradient-orb avatars (Team + Contact), pre-real-headshots. Flattened to a
+   plain circle: no gradient, no infinite morph loop, no off-palette hues. */
+.orb{position:relative;width:64px;height:64px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:600;font-size:19px;color:var(--ink);background:var(--paper-2);border:1px solid var(--rule);border-radius:50%;}
+.orb::after{display:none;}
 
-/* ---------- Founding program callout (gold = limited/urgent, exclusively) ---------- */
-.founding{position:relative;max-width:800px;margin:0 auto;text-align:center;background:linear-gradient(180deg,rgba(245,158,11,.07) 0%,rgba(245,158,11,.015) 100%);border:1px solid rgba(245,158,11,.22);border-radius:22px;padding:60px 48px;overflow:hidden;}
-.founding::before{content:"";position:absolute;top:0;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.6),transparent);}
-.founding .eyebrow{color:var(--gold);}
-.founding .eyebrow::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F59E0B' stop-opacity='0'/%3E%3Cstop offset='.55' stop-color='%23D97706'/%3E%3Cstop offset='1' stop-color='%23F59E0B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M1 8 L11 8 C16 8 18 3 24 3' stroke='url(%23fg)' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='24.5' cy='3' r='2' fill='%23FBBF24'/%3E%3C/svg%3E") no-repeat center/contain;}
-.founding h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.025em;margin-top:16px;}
-.founding .sub{font-size:16px;color:var(--gold);font-weight:600;margin-top:10px;}
-.founding p{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:560px;margin:22px auto 0;}
+/* Founding-program callout (base; home's own split layout re-declares its
+   own two-column arrangement locally). Amber reserved for Peak elsewhere,
+   but the founding "limited program" framing predates that rule and is a
+   page-specific decision left to whoever rebuilds this page next; the base
+   card itself is otherwise neutral ink/paper here. */
+.founding{position:relative;max-width:800px;margin:0 auto;text-align:left;border:1px solid var(--rule);border-radius:var(--radius-doc);padding:52px 48px;}
+.founding h2{margin-top:16px;}
+.founding .sub{font-size:16px;color:var(--ink-2);font-weight:500;margin-top:10px;}
+.founding p{font-size:15px;color:var(--ink-2);line-height:1.7;max-width:60ch;margin-top:18px;}
 .founding .btn{margin-top:28px;}
-.founding .note{font-size:12.5px;color:var(--muted);margin-top:16px;}
+.founding .note{font-size:12.5px;color:var(--ink-2);margin-top:16px;}
 
-/* ---------- Final CTA (shared, near the bottom of every page) ---------- */
-.final-cta{text-align:center;background:radial-gradient(900px 420px at 50% 120%,rgba(20,184,166,.16) 0%,var(--paper) 65%);}
-.final-cta h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(30px,4.8vw,52px);letter-spacing:-.03em;max-width:800px;margin:0 auto;line-height:1.12;}
-.final-cta p{font-size:16px;color:var(--ink-soft);margin-top:18px;}
-.final-cta .trail{margin:0 auto 26px;}
-.final-ctas{display:flex;gap:16px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
-.final-ctas .btn{padding:15px 26px;font-size:14.5px;}
+.final-cta{text-align:left;}
+.final-cta h2{max-width:800px;}
+.final-cta p{font-size:16px;color:var(--ink-2);margin-top:18px;}
+.final-ctas{display:flex;gap:24px;align-items:center;margin-top:34px;flex-wrap:wrap;}
 
-/* ---------- Footer (shared across all top-level pages) ---------- */
-footer{position:relative;border-top:1px solid rgba(20,184,166,.16);padding:76px 32px 40px;background:var(--surface);overflow:hidden;}
-footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;background:linear-gradient(90deg,transparent,rgba(45,212,196,.5),transparent);}
+/* ---------- Footer (shared across every page) ---------- */
+footer{position:relative;border-top:1px solid var(--rule);padding:76px 24px 40px;background:var(--paper);}
 .footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;}
 .footer-tag-row{display:flex;align-items:center;gap:9px;margin-top:14px;max-width:240px;}
-.footer-tag{font-size:13.5px;color:var(--muted);line-height:1.6;}
-.footer-contact{font-size:12.5px;color:var(--muted);margin-top:14px;max-width:280px;line-height:1.7;}
-.footer-contact a{color:var(--teal-bright);font-weight:600;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:background-size .28s var(--ease);}
-.footer-contact a:hover{background-size:100% 1px;}
-.footer-contact .emails{display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);line-height:2;}
-/* Each address is its own single-recipient mailto. A comma-separated
-   multi-address mailto is what made the old footer link appear dead: handlers
-   treat it inconsistently, and it does nothing at all without a desktop mail
-   client. Kept visually quieter than the "Contact us" link above so the
-   primary path still reads as primary. */
-.footer-contact .emails a{color:var(--muted);background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
-.footer-contact .emails a:hover,.footer-contact .emails a:focus-visible{color:var(--teal-bright);background-size:100% 1px;}
+.footer-tag{font-size:13.5px;color:var(--ink-2);line-height:1.6;font-family:var(--font-sans);}
+.footer-contact{font-size:13px;color:var(--ink-2);margin-top:14px;max-width:280px;line-height:1.7;font-family:var(--font-sans);}
+.footer-contact a{color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:text-decoration-color .2s var(--ease);}
+.footer-contact a:hover{text-decoration-color:var(--teal);}
+.footer-contact .emails{display:block;margin-top:6px;font-family:var(--font-mono);font-size:11px;color:var(--ink-2);line-height:2;}
+.footer-contact .emails a{color:var(--ink-2);font-weight:400;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
+.footer-contact .emails a:hover,.footer-contact .emails a:focus-visible{color:var(--teal);text-decoration-color:var(--teal);}
 .footer-contact .emails .sep{display:none;}
 
-/* ---------- Mail unit: compose link + copy button ----------
-   mailto: only fires if the visitor has a desktop mail client registered as
-   the system handler. Anyone on webmail clicks it and nothing happens, which
-   is exactly what made these look broken. The address now opens Gmail's
-   compose window; the copy button covers everyone Gmail doesn't fit. */
 .mail-unit{display:inline-flex;align-items:center;gap:7px;max-width:100%;}
 .mail-copy{
   display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
-  width:22px;height:22px;padding:0;border-radius:6px;cursor:pointer;
-  background:transparent;border:1px solid var(--line);color:var(--muted);
+  width:22px;height:22px;padding:0;border-radius:var(--radius-btn);cursor:pointer;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-2);
   font-family:inherit;position:relative;
-  transition:color .2s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease);
+  transition:color .2s var(--ease),border-color .2s var(--ease);
 }
 .mail-copy svg{width:12px;height:12px;}
-.mail-copy:hover{color:var(--teal-bright);border-color:rgba(20,184,166,.4);background:rgba(20,184,166,.08);}
-.mail-copy:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
-.mail-copy.is-copied{color:var(--teal-bright);border-color:rgba(20,184,166,.5);background:rgba(20,184,166,.12);}
+.mail-copy:hover{color:var(--teal);border-color:var(--teal);}
+.mail-copy:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+.mail-copy.is-copied{color:var(--teal);border-color:var(--teal);}
 .mail-copy.is-copied::after{
   content:"Copied";position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
-  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal-bright);background:var(--surface-2);
-  border:1px solid rgba(20,184,166,.35);border-radius:5px;padding:3px 7px;white-space:nowrap;pointer-events:none;
+  font-family:var(--font-mono);font-size:9.5px;font-weight:500;letter-spacing:.06em;
+  color:var(--teal);background:var(--paper);
+  border:1px solid var(--rule);border-radius:var(--radius-btn);padding:3px 7px;white-space:nowrap;pointer-events:none;
 }
 .footer-contact .emails .mail-unit{display:flex;}
-/* The addresses differ in length, so without a floor the copy buttons stagger.
-   26ch is the longest address and ch is exact in a monospace face, so this
-   lines the buttons up in a column. */
 .footer-contact .emails .mail-unit a{min-width:26ch;}
 @media (max-width:420px){.footer-contact .emails .mail-unit a{min-width:0;}}
-@media (prefers-reduced-motion:reduce){.mail-copy{transition:none;}}
 
-/* ---------- Logo reads as the home link at every width ----------
-   Below 900px the tab rail is behind the sheet trigger, so the logo is the
-   only always-visible way home. It needs to look like a control. */
-.logo{transition:opacity .2s var(--ease);}
-.logo:hover{opacity:.82;}
-.logo:focus-visible{outline:2px solid var(--teal-bright);outline-offset:4px;border-radius:8px;}
 .spot-interactive{position:relative;width:26px;height:26px;flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
 .spot-interactive:hover{transform:rotate(-14deg) scale(1.12);}
-.spot-interactive:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:50%;}
+.spot-interactive:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:50%;}
 .spot-face{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .16s ease;}
 .spot-face-blink{opacity:0;}
 .spot-interactive:hover .spot-face-open,.spot-interactive.blinking .spot-face-open{opacity:0;}
@@ -361,249 +614,33 @@ footer::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;
 @media (prefers-reduced-motion:reduce){
   .spot-interactive,.spot-interactive.wagging{animation:none;transition:none;}
   .spot-interactive:hover{transform:none;}
-  a.action-badge:hover{transform:none;}
 }
+
 .footer-cols{display:flex;gap:64px;flex-wrap:wrap;}
 .footer-col{display:flex;flex-direction:column;gap:12px;min-width:130px;}
-.footer-col .fc-h{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
-.footer-col a{font-size:13.5px;color:var(--ink-soft);font-weight:600;width:fit-content;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
-.footer-col a:hover{color:var(--teal-bright);background-size:100% 1px;}
+.footer-col .fc-h{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.footer-col a{font-size:13.5px;color:var(--ink-2);font-weight:400;width:fit-content;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
+.footer-col a:hover{color:var(--teal);text-decoration-color:var(--teal);}
 .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
-.footer-links a{font-size:13.5px;color:var(--ink-soft);font-weight:600;background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-position:0 100%;background-size:0% 1px;transition:color .2s var(--ease),background-size .28s var(--ease);}
-.footer-links a:hover{color:var(--teal-bright);background-size:100% 1px;}
-/* Carries the same "not financial advice / past performance" line as
-   .disclaimer, so it gets the same readable treatment. */
-.footer-bottom{max-width:var(--max);margin:44px auto 0;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--legal);line-height:1.7;}
+.footer-links a{font-size:13.5px;color:var(--ink-2);font-weight:400;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule);transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
+.footer-links a:hover{color:var(--teal);text-decoration-color:var(--teal);}
+/* The one exception to "nothing is centered": handled per-page on the
+   actual legal line, not here -- this rule only sets type/rule/color. */
+.footer-bottom{max-width:var(--max);margin:44px auto 0;padding-top:24px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-2);line-height:1.7;font-family:var(--font-sans);}
 
-/* ---------- Responsive: nav + footer + sections (shared) ---------- */
+/* ---------- Motion: scroll reveal. Each section rises 12px and fades in
+   over 500ms the first time 15% of it is visible; runs once, honors
+   reduced motion (see html.js gate in each page's head script). ---------- */
+html.js .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
+html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+/* ---------- Responsive: footer + sections (shared) ---------- */
 @media (max-width:900px){
-  .sec{padding:var(--s6) 32px;}
+  .sec{padding:var(--s6) var(--gutter);}
   .footer-inner{flex-direction:column;}
   .footer-cols{gap:40px;}
 }
-@media (max-width:640px){
-  nav{padding:14px 16px;}
-  .nav-cta-full{display:none;}
-  .nav-cta-short{display:inline;}
-  .nav-cta{padding:9px 14px;font-size:12.5px;}
-  .nav-login{font-size:12.5px;}
-}
-@media (max-width:380px){
-  nav{padding:12px;}
-  .nav-cta{padding:8px 11px;font-size:11.5px;}
-  .nav-login{font-size:11.5px;}
-}
-
-/* ===================================================================
-   MOBILE HARDENING & VISUAL RETHINK  —  2026-07-10
-   Every rule below is scoped inside a max-width media query, so it
-   applies to phones ONLY. Any viewport >= 641px receives none of these
-   rules and desktop rendering is provably unchanged (verified by
-   pixel-diffing 1440px before/after screenshots). This block is placed
-   last so it wins source-order ties over the mobile rules above.
-   =================================================================== */
-@media (max-width:640px){
-  /* ---- Touch targets: 44x44 minimum (WCAG 2.5.5 target size) ---- */
-  .logo{min-height:44px;}
-  .nav-login{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;}
-  .btn{min-height:44px;}
-  .nav-cta{padding-top:0;padding-bottom:0;}
-  .action-badge{min-height:44px;}
-  a.email-link{min-height:44px;}
-  .footer-col{gap:2px;}
-  .footer-col a,.footer-links a{display:inline-flex;align-items:center;min-height:44px;}
-  .footer-contact a{display:inline-flex;align-items:center;min-height:36px;}
-  .spot-interactive{width:44px;height:44px;}
-
-  /* ---- iOS Safari zooms the page when an input < 16px is focused ---- */
-  .field-group input,
-  .field-group select,
-  .field-group textarea{font-size:16px;padding:14px 15px;}
-  .nda-checkbox{gap:12px;align-items:center;}
-  .nda-checkbox input[type="checkbox"]{width:22px;height:22px;margin-top:0;}
-
-  /* ---- Breathing room + 2-col density: shared signal card ----
-     Dense data groups keep a multi-column grid on phones (like desktop)
-     instead of collapsing to one sparse column. Text sizes unchanged. */
-  .sig-card{padding:26px 20px;}
-  .sig-score{font-size:54px;}
-  .sig-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .sig-item{padding:13px 12px;}
-  .ratio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px;}
-  .ratio .v{font-size:17px;}
-  .sec-head p{font-size:16px;}
-  .final-ctas .btn{width:100%;justify-content:center;}
-}
-@media (max-width:400px){
-  .nav-cta{padding-left:13px;padding-right:13px;}
-}
-
-/* ============================================================================
-   NAV v2 — exposed tab rail (replaces the "Menu" dropdown)
-   ============================================================================
-   Scoped under `header.hdr2` / the `.nav-tabs` family. Every page is on this
-   now and the old dropdown's rules have been removed. Three tiers, with the
-   breakpoints derived from measured element widths (logo 118px, 6 tabs @13.5px
-   with 30px gaps = 504px, "Log in" 36px, "Join the Program" CTA 153px):
-
-     >= 1080px  full rail      — 7 tabs, 13.5px, 30px gaps, full CTA label
-     900–1079px condensed rail — 7 tabs, 12.5px, 18px gaps, short CTA label
-     <  900px   sheet          — icon-only trigger, tabs slide down
-
-   The natural width requirement at tier 1 is 887px of content, i.e. it would
-   only collide at a 951px viewport — so tier 2 takes over with ~50px of
-   headroom rather than at the failure point.
-   ---------------------------------------------------------------------- */
-
-header.hdr2{
-  transition:background-color .3s var(--ease),backdrop-filter .3s var(--ease),box-shadow .3s var(--ease);
-}
-header.hdr2 nav{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;
-  padding:16px 32px;transition:padding .28s var(--ease);
-}
-header.hdr2 .logo{flex-shrink:0;}
-/* The second logo line is what wraps first as width drops, so it's the first
-   thing surrendered — both on scroll-condense and at the tier-2 breakpoint. */
-header.hdr2 .logo-text span{
-  overflow:hidden;max-height:14px;opacity:1;
-  transition:max-height .28s var(--ease),opacity .2s var(--ease);
-}
-
-/* ---------- Scroll-condensed state (set by shared.js past 80px) ---------- */
-header.hdr2.is-condensed nav{padding:9px 32px;}
-header.hdr2.is-condensed .logo-text span{max-height:0;opacity:0;}
-header.hdr2.is-condensed{background:rgba(7,15,13,.9);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 8px 30px -12px rgba(0,0,0,.7);}
-header.hdr2 .logo-mark{transition:width .28s var(--ease),height .28s var(--ease);}
-header.hdr2.is-condensed .logo-mark{width:32px;height:32px;}
-
-/* ---------- Scroll-depth bar along the header's bottom edge ---------- */
-.nav-progress{
-  position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:0 50%;
-  transform:scaleX(0);pointer-events:none;
-  background:linear-gradient(90deg,var(--teal-dim),var(--teal-bright));
-  box-shadow:0 0 10px rgba(45,212,196,.5);opacity:0;transition:opacity .3s var(--ease);
-}
-header.hdr2.is-condensed .nav-progress{opacity:1;}
-
-/* ---------- The tab rail ---------- */
-.nav-tabs{position:relative;display:flex;align-items:center;gap:30px;justify-self:center;}
-.nav-tabs a{
-  position:relative;display:inline-flex;align-items:center;
-  font-size:13.5px;font-weight:600;color:var(--ink-soft);white-space:nowrap;
-  padding:4px 0;transition:color .22s var(--ease);
-}
-.nav-tabs a:hover{color:var(--teal-bright);}
-.nav-tabs a.active{color:var(--teal-bright);}
-.nav-tabs a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:4px;border-radius:3px;}
-
-/* Signal Rail: ONE element that slides + resizes to the hovered tab, drawn as
-   the site's momentum mark (flat grey lead-in ticking up into a lit node), so
-   the indicator is the brand motif rather than a generic underline. Position
-   and width are set by shared.js; only transform/width animate. */
-.nav-rail{
-  position:absolute;left:0;bottom:-9px;height:9px;width:0;
-  pointer-events:none;opacity:0;
-  transition:transform .38s var(--ease),width .38s var(--ease),opacity .25s var(--ease);
-}
-.nav-rail.is-on{opacity:1;}
-.nav-rail svg{display:block;width:100%;height:100%;overflow:visible;}
-.nav-rail .rail-line{stroke:var(--teal-bright);stroke-width:1.6;stroke-linecap:round;fill:none;}
-.nav-rail .rail-base{stroke:var(--muted);stroke-width:1.4;stroke-linecap:round;fill:none;opacity:.3;}
-.nav-rail .rail-node{fill:var(--teal-bright);}
-.nav-rail .rail-halo{fill:var(--teal-bright);opacity:.25;}
-
-/* ---------- Right-hand actions ---------- */
-.nav-actions{display:flex;align-items:center;gap:22px;justify-self:end;}
-header.hdr2 .nav-cta{padding:10px 18px;font-size:13px;}
-.hdr2 .nav-cta-short{display:none;}
-
-/* ---------- Sheet trigger (icon only — no "Menu" label anywhere) ---------- */
-.nav-sheet-trigger{
-  display:none;align-items:center;justify-content:center;width:40px;height:40px;
-  border-radius:11px;background:rgba(255,255,255,.02);border:1px solid var(--line);
-  color:var(--ink-soft);cursor:pointer;font-family:inherit;flex-shrink:0;
-  transition:color .25s var(--ease),background-color .25s var(--ease),border-color .25s var(--ease);
-}
-.nav-sheet-trigger:hover{color:var(--teal-bright);background:rgba(20,184,166,.08);border-color:rgba(20,184,166,.35);}
-.nav-sheet-trigger:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;}
-.nav-sheet-trigger .bars{position:relative;width:17px;height:12px;}
-.nav-sheet-trigger .bars i{
-  position:absolute;left:0;right:0;height:1.7px;border-radius:2px;background:currentColor;
-  transition:transform .32s var(--ease),opacity .2s var(--ease);
-}
-.nav-sheet-trigger .bars i:nth-child(1){top:0;}
-.nav-sheet-trigger .bars i:nth-child(2){top:5.2px;}
-.nav-sheet-trigger .bars i:nth-child(3){top:10.4px;}
-.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(1){transform:translateY(5.2px) rotate(45deg);}
-.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(2){opacity:0;}
-.nav-sheet.is-open .nav-sheet-trigger .bars i:nth-child(3){transform:translateY(-5.2px) rotate(-45deg);}
-
-/* ---------- Sheet panel ---------- */
-.nav-sheet{display:none;}
-.nav-sheet-panel{
-  position:absolute;top:100%;left:0;right:0;
-  background:rgba(9,19,16,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--line);
-  opacity:0;visibility:hidden;transform:translateY(-10px);
-  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s;
-}
-.nav-sheet-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal-bright),transparent);opacity:.55;}
-.nav-sheet.is-open .nav-sheet-panel{opacity:1;visibility:visible;transform:none;}
-.nav-sheet-inner{max-width:var(--max);margin:0 auto;padding:14px 32px 22px;display:flex;flex-direction:column;}
-.nav-sheet-inner a{
-  display:flex;align-items:center;justify-content:space-between;
-  font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:var(--ink);
-  padding:15px 2px;border-bottom:1px solid var(--line);
-  opacity:0;transform:translateY(-6px);
-  transition:opacity .3s var(--ease),transform .3s var(--ease),color .2s var(--ease);
-}
-.nav-sheet-inner a:last-of-type{border-bottom:none;}
-.nav-sheet-inner a:hover,.nav-sheet-inner a.active{color:var(--teal-bright);}
-.nav-sheet-inner a::after{content:"\2192";color:var(--teal-dim);font-size:14px;}
-.nav-sheet-inner a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:2px;border-radius:4px;}
-.nav-sheet.is-open .nav-sheet-inner a{opacity:1;transform:none;}
-.nav-sheet.is-open .nav-sheet-inner a:nth-child(2){transition-delay:.04s;}
-.nav-sheet.is-open .nav-sheet-inner a:nth-child(3){transition-delay:.08s;}
-.nav-sheet.is-open .nav-sheet-inner a:nth-child(4){transition-delay:.12s;}
-.nav-sheet.is-open .nav-sheet-inner a:nth-child(5){transition-delay:.16s;}
-.nav-sheet.is-open .nav-sheet-inner a:nth-child(6){transition-delay:.2s;}
-.nav-sheet-login{
-  margin-top:18px;display:inline-flex;align-items:center;gap:8px;
-  font-size:13.5px;font-weight:600;color:var(--ink-soft);
-}
-
-/* ---------- Tier 2: condensed rail (900–1079px) ---------- */
-@media (max-width:1079px){
-  header.hdr2 nav{gap:20px;padding-left:24px;padding-right:24px;}
-  .nav-tabs{gap:18px;}
-  .nav-tabs a{font-size:12.5px;}
-  .nav-actions{gap:16px;}
-  header.hdr2 .logo-text span{max-height:0;opacity:0;}
-  .hdr2 .nav-cta-full{display:none;}
-  .hdr2 .nav-cta-short{display:inline;}
-}
-
-/* ---------- Tier 3: sheet (<900px) ---------- */
-@media (max-width:899px){
-  header.hdr2 nav{grid-template-columns:auto auto;justify-content:space-between;gap:14px;}
-  .nav-tabs{display:none;}
-  .nav-sheet{display:block;}
-  .nav-sheet-trigger{display:inline-flex;}
-  .nav-actions{gap:12px;}
-  .nav-actions .nav-login{display:none;}
-  header.hdr2 .logo-text span{max-height:14px;opacity:1;}
-  header.hdr2.is-condensed .logo-text span{max-height:0;opacity:0;}
-}
-@media (max-width:420px){
-  header.hdr2 nav{padding-left:18px;padding-right:18px;}
-  .nav-sheet-inner{padding-left:18px;padding-right:18px;}
-  header.hdr2 .nav-cta{padding:9px 14px;font-size:12.5px;}
-}
-
-/* ---------- Reduced motion: keep every state, drop the travel ---------- */
 @media (prefers-reduced-motion:reduce){
-  header.hdr2 nav,header.hdr2 .logo-text span,header.hdr2 .logo-mark,
-  .nav-rail,.nav-progress,.nav-sheet-panel,.nav-sheet-inner a,
-  .nav-sheet-trigger .bars i{transition:none;}
+  header.hdr2 nav,.nav-sheet-panel,.nav-sheet-inner a,.nav-sheet-trigger .bars i,
+  html.js .reveal{transition:none;}
 }

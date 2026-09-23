@@ -58,12 +58,66 @@ function spotwiseHandleForm(form, opts) {
   });
 }
 
-// Fades/slides in each major section once as it scrolls into view. Safe by
-// construction: the CSS that hides .reveal elements is scoped under html.js
-// (added by a capability-check script in each page's <head>), which is only
-// ever added when prefers-reduced-motion is off AND IntersectionObserver
-// exists -- so this either runs correctly, or the elements were never
-// hidden in the first place. No-ops on pages with no .reveal elements.
+// ---------------------------------------------------------------------------
+// Motion module (paper redesign, 2026-09-22). Every effect here honors
+// prefers-reduced-motion (skipped outright -- the real value is already the
+// element's rendered content/state, so nothing is left blank) and runs once
+// per element, never in a loop. `SpotwiseMotion.once` is the shared "observe
+// until first intersection, then disconnect" primitive that count-up below,
+// and the page-specific chart/map setup in index.html, both build on.
+// ---------------------------------------------------------------------------
+var SpotwiseMotion = (function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function once(el, threshold, fn) {
+    if (!el || reduced) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { fn(); obs.disconnect(); }
+      });
+    }, { threshold: threshold });
+    obs.observe(el);
+  }
+
+  // Number count-up: any element with data-target counts from 0 to that
+  // value over 900ms the first time it's 40% in view. Optional data-prefix /
+  // data-suffix / data-format="comma". Digits are tabular-nums via the
+  // .mono-num CSS class, not set here. Reused by the home stat row and the
+  // sample document's score -- any future number just needs the attribute.
+  function countUp(root) {
+    (root || document).querySelectorAll('[data-target]').forEach(function (el) {
+      var target = parseFloat(el.dataset.target);
+      if (isNaN(target) || reduced) return; // real value already sits in the markup
+      once(el, 0.4, function () {
+        var start = performance.now(), dur = 900;
+        var prefix = el.dataset.prefix || '', suffix = el.dataset.suffix || '';
+        function fmt(v) {
+          var n = el.dataset.format === 'comma' ? Math.round(v).toLocaleString('en-US') : v.toFixed(1);
+          return prefix + n + suffix;
+        }
+        function step(now) {
+          var p = Math.min((now - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * eased);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    });
+  }
+
+  return { once: once, countUp: countUp, reducedMotion: reduced };
+})();
+SpotwiseMotion.countUp();
+
+// Fades/slides in each major section once as it scrolls into view, when 15%
+// of it has entered the viewport (12px rise, not the old 28px -- see
+// shared.css .reveal). Safe by construction: the CSS that hides .reveal
+// elements is scoped under html.js (added by a capability-check script in
+// each page's <head>), which is only ever added when prefers-reduced-motion
+// is off AND IntersectionObserver exists -- so this either runs correctly,
+// or the elements were never hidden in the first place. No-ops on pages
+// with no .reveal elements.
 (function () {
   if (!document.documentElement.classList.contains('js')) return;
   var els = document.querySelectorAll('.reveal');
@@ -75,7 +129,7 @@ function spotwiseHandleForm(form, opts) {
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.15 });
   els.forEach(function (el) { obs.observe(el); });
 })();
 
@@ -123,31 +177,10 @@ function spotwiseHandleForm(form, opts) {
   });
 })();
 
-// Floating CTA pill: a second *instance* of the site's single call-to-action
-// (Join the Program -> founding-program page), injected on every page that has
-// the nav CTA and shown once the visitor scrolls past the hero. Reads its href
-// from the existing .nav-cta so relative paths stay correct per page, and
-// naturally no-ops on /founding-program (which has no nav CTA — you're already
-// there). Never introduces a second CTA destination.
-(function () {
-  var navCta = document.querySelector('.nav-cta');
-  if (!navCta) return;
-  var pill = document.createElement('a');
-  pill.className = 'float-cta';
-  pill.href = navCta.getAttribute('href');
-  pill.textContent = 'Join the Program →';
-  document.body.appendChild(pill);
-  var ticking = false;
-  function update() {
-    ticking = false;
-    if (window.scrollY > 560) pill.classList.add('is-on');
-    else pill.classList.remove('is-on');
-  }
-  window.addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
-  }, { passive: true });
-  update();
-})();
+// Floating CTA pill removed 2026-09-22: it was a second, pill-shaped instance
+// of the nav CTA, and pills are gone sitewide in the paper redesign (see
+// shared.css). The nav CTA and each page's in-page CTAs are the only calls
+// to action now; no replacement was added.
 
 // Footer mascot: wag + blink on click, plus an ambient idle blink so it reads as
 // alive rather than purely reactive. No-ops on pages with no footer.
@@ -184,97 +217,19 @@ function spotwiseHandleForm(form, opts) {
 })();
 
 // ---------------------------------------------------------------------------
-// Nav v2: exposed tab rail. Three independent pieces, each a no-op on pages
-// that don't carry the v2 markup -- which now means only /founding-program,
-// whose stripped header is deliberate. The old dropdown module is gone.
+// Nav (paper redesign, 2026-09-22): the current-page indicator is now a
+// plain CSS underline (.nav-tabs a.active in shared.css) and the header is a
+// static sticky style with no scroll-condense state, so the two modules that
+// used to live here -- a sliding "signal rail" indicator, and a condense/
+// scroll-depth-bar toggle -- were removed rather than re-themed. The one
+// piece still needed below 1100px is the sheet (icon-only trigger, tabs
+// slide down), unchanged from before.
 // ---------------------------------------------------------------------------
 
-// 1. Signal Rail -- one indicator that slides and resizes to the hovered tab,
-// resting under the current page's tab (or hidden, on pages with no tab of
-// their own, e.g. the homepage). Only transform/width animate, so this stays
-// on the compositor. Under prefers-reduced-motion the CSS drops the transition
-// but the rail still tracks correctly -- it just moves instantly.
-(function () {
-  var tabs = document.querySelector('.nav-tabs');
-  if (!tabs) return;
-  var rail = tabs.querySelector('.nav-rail');
-  if (!rail) return;
-  var links = Array.prototype.slice.call(tabs.querySelectorAll('a'));
-  if (!links.length) return;
-  var active = tabs.querySelector('a.active');
-
-  rail.innerHTML =
-    '<svg viewBox="0 0 100 9" preserveAspectRatio="none" aria-hidden="true">' +
-    '<path class="rail-base" d="M1 7 L99 7" vector-effect="non-scaling-stroke"/>' +
-    '<path class="rail-line" d="M1 7 L42 7 C64 7 70 2.4 97 2" vector-effect="non-scaling-stroke"/>' +
-    '<circle class="rail-halo" cx="97" cy="2" r="3.4" vector-effect="non-scaling-stroke"/>' +
-    '<circle class="rail-node" cx="97" cy="2" r="1.9" vector-effect="non-scaling-stroke"/>' +
-    '</svg>';
-
-  function moveTo(el, show) {
-    if (!el) {
-      rail.classList.remove('is-on');
-      return;
-    }
-    rail.style.width = el.offsetWidth + 'px';
-    rail.style.transform = 'translateX(' + el.offsetLeft + 'px)';
-    if (show !== false) rail.classList.add('is-on');
-  }
-  function rest() { moveTo(active, !!active); }
-
-  links.forEach(function (a) {
-    a.addEventListener('mouseenter', function () { moveTo(a); });
-    a.addEventListener('focus', function () { moveTo(a); });
-  });
-  tabs.addEventListener('mouseleave', rest);
-  tabs.addEventListener('focusout', function (e) {
-    if (!tabs.contains(e.relatedTarget)) rest();
-  });
-
-  // Fonts land after first paint and change tab widths, so re-measure once
-  // they're ready as well as on resize.
-  rest();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(rest);
-  var rafId = null;
-  window.addEventListener('resize', function () {
-    if (rafId) return;
-    rafId = requestAnimationFrame(function () { rafId = null; rest(); });
-  });
-})();
-
-// 2. Condensing header + scroll-depth bar. One class toggle drives every
-// condensed-state property in CSS; the depth bar is a scaleX transform so it
-// never triggers layout. Hysteresis (80 down / 40 up) keeps the header from
-// flickering when a scroll lands right on the threshold.
-(function () {
-  var header = document.querySelector('header.hdr2');
-  if (!header) return;
-  var bar = header.querySelector('.nav-progress');
-  var ticking = false;
-  var condensed = false;
-
-  function update() {
-    ticking = false;
-    var y = window.scrollY || document.documentElement.scrollTop;
-    if (!condensed && y > 80) { condensed = true; header.classList.add('is-condensed'); }
-    else if (condensed && y < 40) { condensed = false; header.classList.remove('is-condensed'); }
-    if (bar) {
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      var p = max > 0 ? Math.min(y / max, 1) : 0;
-      bar.style.transform = 'scaleX(' + p + ')';
-    }
-  }
-  window.addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
-  }, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  update();
-})();
-
-// 3. Sheet (below 900px): icon-only trigger, no "Menu" label anywhere. Same
-// interaction contract the old dropdown had -- click toggles, outside click
-// and Escape close, Escape returns focus to the trigger, arrow keys move
-// between items -- so nothing a returning visitor knew has been taken away.
+// Sheet: icon-only trigger, no "Menu" label anywhere. Same interaction
+// contract the old dropdown had -- click toggles, outside click and Escape
+// close, Escape returns focus to the trigger, arrow keys move between items
+// -- so nothing a returning visitor knew has been taken away.
 (function () {
   var sheet = document.querySelector('.nav-sheet');
   if (!sheet) return;
