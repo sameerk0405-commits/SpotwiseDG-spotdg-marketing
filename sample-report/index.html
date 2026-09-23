@@ -40,6 +40,20 @@
   .sample-banner{background:rgba(245,158,11,.1);border-bottom:1px solid rgba(245,158,11,.28);color:var(--gold);text-align:center;font-size:13px;font-weight:600;line-height:1.6;padding:12px 20px;}
   .sample-banner b{font-weight:800;letter-spacing:.04em;}
 
+  /* ---------- "What a report contains" compact list (copied verbatim from
+     /reports, surfaced above the fold here) ---------- */
+  .contains-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px;}
+  .contains-list{display:grid;gap:10px;max-width:640px;margin:0 auto;text-align:left;}
+  .contains-list li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.5;}
+
+  /* ---------- Persistent SAMPLE pin: stays visible at the top-left of the
+     report frame while the frame's own internal content scrolls (the frame
+     is the scrollable .demo-card-col, not the page). ---------- */
+  .sample-pin{position:sticky;top:0;left:0;z-index:20;display:inline-flex;align-items:center;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:800;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);background:rgba(245,158,11,.14);
+    border:1px solid rgba(245,158,11,.35);padding:6px 12px;border-radius:100px;margin:0 0 12px;}
+
   /* ---------- Demo layout: sticky report card + scrolling explainers ---------- */
   .demo{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%);gap:48px;max-width:var(--max);margin:0 auto;align-items:start;padding:0 32px 130px;}
   /* The card is taller than most viewports. Left uncapped, it sticks with its
@@ -201,7 +215,7 @@
       <a href="../index.html" data-home-tab>Home</a>
         <a href="../intelligence/index.html">Intelligence</a>
         <a href="../sample-report/index.html" class="active" aria-current="page">Sample Report</a>
-        <a href="../reports/index.html">Reports</a>
+        <a href="../reports/index.html">Plans</a>
         <a href="../team/index.html">Team</a>
         <a href="../contact/index.html">Contact</a>
         <a href="../faq/index.html">FAQ</a>
@@ -221,7 +235,7 @@
             <a href="../index.html" data-home-sheet>Home</a>
             <a href="../intelligence/index.html">Intelligence</a>
             <a href="../sample-report/index.html" class="active" aria-current="page">Sample Report</a>
-            <a href="../reports/index.html">Reports</a>
+            <a href="../reports/index.html">Plans</a>
             <a href="../team/index.html">Team</a>
             <a href="../contact/index.html">Contact</a>
             <a href="../faq/index.html">FAQ</a>
@@ -244,8 +258,19 @@
     <div class="mesh" aria-hidden="true"></div>
     <div class="sec-head" style="margin-bottom:0;">
       <div class="eyebrow">Sample Report</div>
-      <h2 style="margin-top:16px;">A preview of the format, not the full report.</h2>
+      <h2 style="margin-top:16px;">Sample report for one ZIP.</h2>
       <p>This excerpt, built on a fictional zip code, shows the <em>structure</em> a real Market Signal Report follows: momentum profile, investor ratios, flagged reasons, and metro comparison. It's a preview of the format, not the full depth of a live report. Actual reports are generated from live, current data and go further than what's shown below.</p>
+      <div class="contains-label">What a report contains</div>
+      <ul class="contains-list">
+        <li><span class="mark check">✓</span>Top-ranked zip codes for your target geography or investment thesis</li>
+        <li><span class="mark check">✓</span>Classification by stage: Peak, Momentum, Emerging, Watch</li>
+        <li><span class="mark check">✓</span>Key reasons each zip was flagged</li>
+        <li><span class="mark check">✓</span>Supporting metrics and investor ratios</li>
+        <li><span class="mark check">✓</span>Comparison against the broader metro area</li>
+        <li><span class="mark check">✓</span>Recommended action: Investigate, Monitor, or Avoid</li>
+        <li><span class="mark check">✓</span>Short methodology note</li>
+        <li><span class="mark check">✓</span>Clear disclaimer: market intelligence, not financial advice</li>
+      </ul>
       <div class="trail"></div>
     </div>
   </section>
@@ -255,6 +280,7 @@
 
     <!-- SAMPLE REPORT CARD (sticky on desktop) -->
     <div class="demo-card-col">
+      <div class="sample-pin" aria-hidden="true">SAMPLE</div>
       <div class="sig-card">
         <div class="sig-head">
           <div>
@@ -325,7 +351,7 @@
       <div class="dsec reveal" id="how-we-score">
         <div class="eyebrow">How We Score</div>
         <h2>Plain-language guide to every number above.</h2>
-        <p>Every Market Signal Report boils a lot of data down to a handful of numbers. Here's what each one means and why it matters, without the algorithm or exact thresholds behind it.</p>
+        <p>Each report reduces a lot of data to a few numbers. This is what each one means. We do not publish the thresholds.</p>
       </div>
 
       <!-- MOMENTUM SCORE -->
@@ -333,7 +359,7 @@
         <div class="eyebrow">The Momentum Score</div>
         <h2>A single number, 0–100.</h2>
         <p>The momentum score summarizes how strongly a zip code's price trends, income growth, and other underlying indicators point toward an upcoming appreciation window. The score is a percentile rank: a higher score means the model rates that zip above more of the others we score, as entering, or already in, a period of outperformance relative to its metro. A lower score means the signal is weaker or mixed.</p>
-        <p>The model behind it is walk-forward validated with a strict outcome embargo: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro 77% of the time over five years (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
+        <p>The model behind it is walk-forward validated with a strict outcome embargo: trained only on data available before each prediction point, with outcome labels withheld until their five-year results are fully realized, then tested against real outcomes. Top-decile picks beat their own metro 77% of the time over five years, against a 46.3% base rate for all ZIPs (2014–2021 entry cohorts, replicated across all 10 US regions; figures reflect post-2013 market conditions).</p>
         <div class="wf reveal">
           <div class="wf-legend"><span class="wf-leg"><span class="wf-key train"></span>Trained on data to here</span><span class="wf-leg"><span class="wf-key test"></span>Tested on the five years after</span></div>
           <svg viewBox="0 0 560 122" aria-hidden="true">
@@ -410,6 +436,12 @@
         </div>
       </div>
 
+      <!-- KEY REASONS -->
+      <div class="dsec reveal">
+        <h2>Key reasons this ZIP was flagged.</h2>
+        <p>These are the conditions that moved this ZIP's score most. They are specific to the ZIP and change between updates.</p>
+      </div>
+
     </div>
   </div>
 
@@ -417,7 +449,7 @@
   <section class="sec final-cta reveal">
     <div class="trail"></div>
     <h2>Want this for a real zip code?</h2>
-    <p>Same format, your geography, scored on current data.</p>
+    <p>The same format applies to your geography, scored on current data.</p>
     <div class="final-ctas">
       <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
       <a class="btn btn-ghost" href="../intelligence/index.html">Read the methodology</a>
@@ -448,7 +480,7 @@
         <a href="../intelligence/index.html">Intelligence</a>
         <a href="../sample-report/index.html">Sample Report</a>
         <a href="#how-we-score">How We Score</a>
-        <a href="../reports/index.html">Reports</a>
+        <a href="../reports/index.html">Plans</a>
       </div>
       <div class="footer-col">
         <div class="fc-h">Company</div>
