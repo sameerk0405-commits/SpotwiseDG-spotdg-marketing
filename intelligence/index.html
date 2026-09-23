@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,105 +33,16 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Section rail ----------
-     Anchored to the content column, not the window edge: left is computed as
-     the page gutter -- half the viewport minus half the 1180px container,
-     minus the rail's own width and a 40px standoff. That keeps a consistent
-     optical margin to the text at every width instead of drifting as the
-     window resizes. Labels are always visible (the hover-to-reveal version
-     read as a row of unexplained dots); the active row is the only one that
-     brightens. A continuous hairline connects the marks so it reads as one
-     object rather than three loose dots. */
-  .sec-rail{position:fixed;left:calc(50% - 590px - 148px);top:50%;transform:translateY(-50%);
-    z-index:60;display:none;flex-direction:column;gap:2px;width:132px;}
-  .sec-rail::before{content:"";position:absolute;left:4.5px;top:14px;bottom:14px;width:1px;background:var(--line);}
-  .sec-rail a{position:relative;display:flex;align-items:center;gap:14px;color:var(--muted);padding:9px 0;}
-  .sec-rail .sr-dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--surface-3);
-    box-shadow:0 0 0 3px var(--paper);transition:background-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
-  .sec-rail .sr-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;
-    text-transform:uppercase;white-space:nowrap;line-height:1;
-    transition:color .28s var(--ease),opacity .28s var(--ease);opacity:.55;}
-  .sec-rail a:hover .sr-label{opacity:1;color:var(--ink-soft);}
-  .sec-rail a:hover .sr-dot{background:var(--teal-dim);}
-  .sec-rail a.active .sr-dot{background:var(--teal-bright);transform:scale(1.2);box-shadow:0 0 0 3px var(--paper),0 0 12px rgba(45,212,196,.5);}
-  .sec-rail a.active .sr-label{color:var(--teal-bright);opacity:1;}
-  .sec-rail a:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:4px;}
-  /* 1180 container + 2x(148 rail standoff) = 1476 before the rail would start
-     overlapping the text, so it only appears once there is genuinely room. */
-  @media (min-width:1480px){.sec-rail{display:flex;}}
-  @media (prefers-reduced-motion:reduce){
-    .sec-rail .sr-dot,.sec-rail .sr-label{transition:none;}
-  }
+  /* ---------- Page-local: the market/SpotWise comparison list headings.
+     .split-6-6 is generic (shared.css); these h3s are specific to this
+     pairing, so they stay local rather than becoming a shared selector. ---------- */
+  .split-6-6 h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:16px;}
 
-  /* ---------- Methodology: editorial lede treatment ---------- */
-  .method{position:relative;max-width:760px;margin:0 auto;}
-  .method .method-head{text-align:center;margin-bottom:44px;}
-  .method .trail{margin:24px auto 0;}
-  .method .lede{font-family:'Sora',sans-serif;font-size:clamp(18px,2.2vw,23px);font-weight:600;letter-spacing:-.015em;color:var(--ink);line-height:1.55;padding-left:24px;border-left:2px solid var(--teal);}
-  .method p{font-size:16px;color:var(--ink-soft);line-height:1.75;margin-top:22px;}
-  .method .coverage{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--teal-dim);border-radius:12px;padding:20px 24px;font-size:15px;color:var(--ink-soft);line-height:1.7;}
-
-  /* ---------- Problem: split-screen instinct vs. data ---------- */
-  .versus{position:relative;display:grid;grid-template-columns:1fr 1fr;max-width:var(--max);margin:0 auto;border:1px solid var(--line);border-radius:22px;overflow:hidden;}
-  .versus-half{padding:44px 40px;}
-  .versus-half.bad{background:rgba(255,255,255,.012);}
-  .versus-half.good{background:linear-gradient(160deg,rgba(20,184,166,.1) 0%,rgba(20,184,166,.02) 70%);box-shadow:inset 1px 0 0 rgba(20,184,166,.25);}
-  .versus-half h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;margin-bottom:22px;letter-spacing:-.01em;}
-  .versus-half.bad h3{color:var(--muted);}
-  .versus-half.good h3{color:var(--teal-bright);}
-  .versus-half li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;padding:12px 0;border-top:1px solid var(--line);line-height:1.55;}
-  .versus-half li:first-of-type{border-top:none;}
-  .versus-half.bad li{color:var(--muted);}
-  .versus-half.good li{color:var(--ink-soft);}
-  .versus-chip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--surface-2);border:1px solid var(--line-bright);border-radius:50%;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--teal-bright);box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 20px rgba(45,212,196,.12);}
-
-  /* ---------- Who it's for ---------- */
-  .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:var(--max);margin:0 auto;}
-  .aud-card{padding:32px 28px;}
-  .aud-card .ai{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(20,184,166,.1);color:var(--teal-bright);margin-bottom:18px;}
-  .aud-card .ai svg{width:19px;height:19px;}
-  .aud-card .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
-  .aud-card h3{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em;}
-  .aud-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
-
-  /* ---------- Scroll-reveal cascade: children of each revealed section arrive
-     in sequence. Hidden state is scoped to .reveal:not(.is-visible) and the
-     entrance uses a backwards-fill animation, so once it finishes elements
-     return to their natural styles (hover transforms stay intact). Inert
-     without html.js (no-JS / reduced-motion get the static page). ---------- */
-  html.js .reveal:not(.is-visible) :is(.sec-head>*,.method-head,.method .lede,.method p:not(.lede),.method .coverage,.method .disclaimer,.versus-half,.aud-card){opacity:0;}
-  html.js .reveal.is-visible :is(.sec-head>*,.method-head,.method .lede,.method p:not(.lede),.method .coverage,.method .disclaimer,.versus-half,.aud-card){animation:rvIn .6s var(--ease) backwards;}
-  html.js .reveal.is-visible .sec-head>*:nth-child(2){animation-delay:.08s;}
-  html.js .reveal.is-visible .sec-head>*:nth-child(3){animation-delay:.16s;}
-  html.js .reveal.is-visible .method .lede{animation-delay:.12s;}
-  html.js .reveal.is-visible .method p:not(.lede){animation-delay:.2s;}
-  html.js .reveal.is-visible .method .coverage{animation-delay:.28s;}
-  html.js .reveal.is-visible .method .disclaimer{animation-delay:.34s;}
-  html.js .reveal.is-visible .versus-half.good{animation-delay:.16s;}
-  html.js .reveal.is-visible .aud-card:nth-child(2){animation-delay:.12s;}
-  html.js .reveal.is-visible .aud-card:nth-child(3){animation-delay:.24s;}
-  html.js .reveal:not(.is-visible) .versus-chip{opacity:0;}
-  html.js .reveal.is-visible .versus-chip{animation:rvFade .5s ease .4s backwards;}
-  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
-  @keyframes rvFade{from{opacity:0;}to{opacity:1;}}
-
-  /* ---------- Responsive ---------- */
-  @media (max-width:900px){
-    .versus{grid-template-columns:1fr;}
-    .versus-half.good{box-shadow:inset 0 1px 0 rgba(20,184,166,.25);}
-    .versus-chip{display:none;}
-    .audience-grid{grid-template-columns:1fr;}
-  }
   @media (max-width:640px){
-    .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
-    .versus-half{padding:30px 22px;}
-    .versus-half li{font-size:15px;}
-    .method .lede{padding-left:20px;}
-    .method p,.method .coverage{font-size:15.5px;}
-    .aud-card{padding:28px 24px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
 </style>
 </head>
@@ -140,25 +51,24 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html" class="active" aria-current="page">Intelligence</a>
-        <a href="../sample-report/index.html">Sample Report</a>
-        <a href="../reports/index.html">Plans</a>
-        <a href="../team/index.html">Team</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="../faq/index.html">FAQ</a>
-        <a href="../disclaimer/index.html">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html" class="active" aria-current="page">Intelligence</a>
+      <a href="../sample-report/index.html">Sample Report</a>
+      <a href="../reports/index.html">Plans</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program &rarr;</span><span class="nav-cta-short">Join &rarr;</span></a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program</span><span class="nav-cta-short">Join</span></a>
       <div class="nav-sheet">
         <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
           <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -178,103 +88,78 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
 <main>
 
-  <!-- Section rail: unnumbered on purpose. These three are distinct topics,
-       not an ordered sequence, so numbering them would assert a progression
-       that doesn't exist. Dots mark position; labels name the destination. -->
-  <nav class="sec-rail" aria-label="Sections on this page">
-    <a href="#method"><span class="sr-dot"></span><span class="sr-label">Method</span></a>
-    <a href="#problem"><span class="sr-dot"></span><span class="sr-label">The problem</span></a>
-    <a href="#audience"><span class="sr-dot"></span><span class="sr-label">Who it's for</span></a>
-  </nav>
-
   <!-- METHODOLOGY -->
-  <section id="method" class="sec reveal" style="overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="method">
-      <div class="method-head">
-        <div class="eyebrow">Intelligence</div>
-        <h2 class="display" style="font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.03em;margin-top:16px;">How we build the signal.</h2>
-        <div class="trail"></div>
-      </div>
-      <p class="lede" id="validation">SpotWise's momentum score is generated by a machine learning model trained on a range of economic and real estate indicators measured at the zip code level. For every cohort year we score, the model sees only data that existed before that year. Outcomes stay sealed until the score is locked. We report the hit rate against the base rate for all ZIPs so the lift is visible, not just the headline. Top-decile picks beat their own metro's five-year appreciation 77% of the time, against a 46.3% base rate for all ZIPs (1.67x). 2014-2021 entry cohorts. The same signal underperformed in 2006-2012, and we say so.</p>
-      <p>The dashboard also includes a buyer-adjustable weighting tool that lets investors re-rank zip codes by their own priorities: cash flow, appreciation, or a balanced view. This is a filtering layer on top of the base score, not a separate model: the underlying momentum score is fixed and validated; the re-ranking simply reorders results to match how a specific buyer evaluates deals.</p>
-      <div class="coverage"><strong style="color:var(--ink);">Coverage today:</strong> residential and small multifamily properties (1–4 units) across the New York, New Jersey, and Pennsylvania tri-state area, not large multifamily, commercial, or industrial assets.</div>
-      <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
-    </div>
+  <section id="validation" class="sec wash-top reveal">
+    <div class="eyebrow">Intelligence</div>
+    <h1>How we build the signal.</h1>
+    <p class="lead">SpotWise's momentum score is generated by a machine learning model trained on a range of economic and real estate indicators measured at the zip code level. For every cohort year we score, the model sees only data that existed before that year. Outcomes stay sealed until the score is locked. We report the hit rate against the base rate for all ZIPs so the lift is visible, not just the headline. Top-decile picks beat their own metro's five-year appreciation <span class="num-strong mono-num">77</span>% of the time, against a <span class="num-strong mono-num">46.3</span>% base rate for all ZIPs (1.67x). 2014-2021 entry cohorts. The same signal underperformed in 2006-2012, and we say so.</p>
+    <p>The dashboard also includes a buyer-adjustable weighting tool that lets investors re-rank zip codes by their own priorities: cash flow, appreciation, or a balanced view. This is a filtering layer on top of the base score, not a separate model: the underlying momentum score is fixed and validated; the re-ranking simply reorders results to match how a specific buyer evaluates deals.</p>
+    <p class="note"><strong>Coverage today:</strong> residential and small multifamily properties (1–4 units) across the New York, New Jersey, and Pennsylvania tri-state area, not large multifamily, commercial, or industrial assets.</p>
+    <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
   </section>
 
   <!-- PROBLEM -->
-  <section id="problem" class="sec sec-alt reveal">
+  <section class="sec reveal">
     <div class="sec-head">
       <h2>Real estate decisions are made on instinct and lagging data.</h2>
     </div>
-    <div class="versus">
-      <div class="versus-half bad">
+    <div class="split-6-6">
+      <div>
         <h3>What the market gives you</h3>
-        <ul>
-          <li><span class="mark x">✕</span>Zillow comps trailing 90 days</li>
-          <li><span class="mark x">✕</span>Gut feel on neighborhoods</li>
-          <li><span class="mark x">✕</span>Manual research taking weeks</li>
-          <li><span class="mark x">✕</span>Metro-level trends that miss the zip</li>
+        <ul class="rule-list dash">
+          <li>Zillow comps trailing 90 days</li>
+          <li>Gut feel on neighborhoods</li>
+          <li>Manual research taking weeks</li>
+          <li>Metro-level trends that miss the zip</li>
         </ul>
       </div>
-      <div class="versus-half good">
+      <div>
         <h3>What SpotWise gives you</h3>
-        <ul>
-          <li><span class="mark check">✓</span>Forward-looking zip-level momentum scores</li>
-          <li><span class="mark check">✓</span>Walk-forward validated signal (77% hit rate vs. 46.3% base rate, 2014-2021 cohorts, post-2013 conditions)</li>
-          <li><span class="mark check">✓</span>Packaged intelligence ready for decision-making</li>
-          <li><span class="mark check">✓</span>Neighborhood-level precision across 1,213 zips</li>
+        <ul class="rule-list plus">
+          <li>Forward-looking zip-level momentum scores</li>
+          <li>Walk-forward validated signal (77% hit rate vs. 46.3% base rate, 2014-2021 cohorts, post-2013 conditions)</li>
+          <li>Packaged intelligence ready for decision-making</li>
+          <li>Neighborhood-level precision across 1,213 zips</li>
         </ul>
       </div>
-      <div class="versus-chip" aria-hidden="true">VS</div>
     </div>
   </section>
 
   <!-- WHO IT'S FOR -->
-  <section id="audience" class="sec reveal">
-    <div class="sec-head sec-head-left">
+  <section class="sec reveal">
+    <div class="sec-head">
       <h2>Built for operators making real capital decisions.</h2>
-      <div class="trail"></div>
     </div>
-    <div class="audience-grid">
-      <div class="aud-card sw-card">
-        <div class="ai"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 1.5l7 3v5c0 4.2-2.9 7.2-7 8.5-4.1-1.3-7-4.3-7-8.5v-5l7-3z"/><path d="M7 10l2 2 4-4"/></svg></div>
-        <div class="tag">Hard Money Lenders</div>
-        <h3>Underwrite with confidence</h3>
+    <div class="type-cols">
+      <div>
+        <div class="kicker">Hard Money Lenders</div>
+        <h3 class="col-title">Underwrite with confidence</h3>
         <p>Underwrite loans with confidence in neighborhood trajectory. Know which collateral is in an appreciation window before you close.</p>
       </div>
-      <div class="aud-card sw-card">
-        <div class="ai"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17.5h16"/><path d="M4 17.5V8l6-4.5L16 8v9.5"/><path d="M8 17.5v-4h4v4"/></svg></div>
-        <div class="tag">Private Equity Real Estate</div>
-        <h3>Source before the market prices it in</h3>
+      <div>
+        <div class="kicker">Private Equity Real Estate</div>
+        <h3 class="col-title">Source before the market prices it in</h3>
         <p>Identify emerging markets before they're priced in. Source and prioritize acquisitions using forward-looking momentum signals.</p>
       </div>
-      <div class="aud-card sw-card">
-        <div class="ai"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h16"/><path d="M3.5 18V9.5h4V18"/><path d="M12.5 18V4.5h4V18"/><path d="M8 18v-5.5h4V18"/></svg></div>
-        <div class="tag">Regional Developers</div>
-        <h3>Evaluate market entry with precision</h3>
+      <div>
+        <div class="kicker">Regional Developers</div>
+        <h3 class="col-title">Evaluate market entry with precision</h3>
         <p>Evaluate market entry decisions with zip-level intelligence on supply, demand, and appreciation potential across our footprint, expanding every month.</p>
       </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Now see it applied to a real zip code.</h2>
-    <p>The methodology above, rendered as a report you can act on.</p>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
-      <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
-    </div>
+    <p class="lead">The methodology above, rendered as a report you can act on.</p>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../sample-report/index.html">See a full sample report</a>
   </section>
 
 </main>

@@ -103,8 +103,11 @@ section{position:relative;}
    first, wider evidence/detail column second. This is "5/7" in the spec. */
 .split-5-7{display:grid;grid-template-columns:5fr 7fr;gap:48px;align-items:start;}
 .split-7-5{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:start;}
+/* Even split -- two lists/columns of equal weight (e.g. intelligence's
+   market-vs-SpotWise comparison, or a plan row's two detail columns). */
+.split-6-6{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
 @media (max-width:900px){
-  .split-5-7,.split-7-5{grid-template-columns:1fr;gap:36px;}
+  .split-5-7,.split-7-5,.split-6-6{grid-template-columns:1fr;gap:36px;}
 }
 
 /* Sections are separated by a hairline rule and 96px, never by a background
@@ -133,6 +136,11 @@ section{position:relative;}
    wherever a section opens with a sentence of framing before the detail. */
 .lead{font-size:19px;line-height:1.6;color:var(--ink-2);max-width:62ch;}
 
+/* ---------- Note: a small supporting line under a block of prose (e.g. a
+   coverage/scope caveat) -- no box, no rule, just smaller type. ---------- */
+.note{font-size:14px;line-height:1.6;color:var(--ink-2);max-width:62ch;margin-top:20px;}
+.note strong{color:var(--ink);font-weight:600;}
+
 /* ---------- Eyebrow: small section label. Sentence case, no letter-spacing,
    no decorative line -- the old squiggle-before-eyebrow motif is gone. ---------- */
 .eyebrow{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--teal);}
@@ -143,6 +151,12 @@ section{position:relative;}
    just also get tabular-nums so digits don't reflow width mid-animation). ---------- */
 .mono,.mono-num{font-variant-numeric:tabular-nums;}
 .mono{font-family:var(--font-mono);}
+/* Inline emphasized number within a sentence of prose (e.g. "77% ... 46.3%
+   base rate") -- weight only, no color/size change, so it sits inside a
+   paragraph rather than becoming its own stat block. Pair with .mono-num
+   when the surrounding font isn't already mono, so the digits stay
+   tabular-nums too. */
+.num-strong{font-weight:600;}
 
 /* ---------- Buttons ----------
    Primary: solid ink, paper text, 2px radius, background shifts to teal on
@@ -304,6 +318,13 @@ header.hdr2 .logo{flex-shrink:0;}
 .doc-eyebrow{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);}
 .doc-title{font-family:var(--font-sans);font-weight:600;font-size:18px;color:var(--ink);margin-top:4px;}
 .doc-tier{font-family:var(--font-sans);font-weight:600;font-size:14px;white-space:nowrap;}
+/* Tier word color, reusing the same --tier-* tokens as the map/legend
+   swatches so a tier's color is still defined in exactly one place. Peak is
+   the one word that gets --amber; Momentum gets --teal; a doc showing any
+   other tier is intentionally left at the base ink color -- Emerging/Watch/
+   Pass have no assigned text color per spec. */
+.doc-tier.tier-peak{color:var(--tier-peak);}
+.doc-tier.tier-momentum{color:var(--tier-momentum);}
 .doc-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0;}
 .doc-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
 .doc-score-label{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);line-height:1.4;}
@@ -323,6 +344,12 @@ header.hdr2 .logo{flex-shrink:0;}
 .rule-list{display:flex;flex-direction:column;}
 .rule-list li{padding:18px 0;border-top:1px solid var(--rule);font-size:15.5px;color:var(--ink-2);line-height:1.6;}
 .rule-list li:last-child{border-bottom:1px solid var(--rule);}
+/* Prefix variants: a plain character in place of a bullet, for a two-list
+   comparison (what you get elsewhere vs. what SpotWise gives you). The
+   character is CSS content, not a text node, so it never shows up as added
+   copy. */
+.rule-list.dash li::before{content:"\2013\0020";}
+.rule-list.plus li::before{content:"+\0020";color:var(--teal);}
 
 /* ---------- Definition grid: label/value pairs in two columns, a rule
    between each row. For methodology/glossary-style content. ---------- */
@@ -352,6 +379,12 @@ header.hdr2 .logo{flex-shrink:0;}
 .type-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
 .type-cols h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:8px;}
 .type-cols p{font-family:var(--font-sans);font-size:15px;color:var(--ink-2);line-height:1.6;}
+/* Richer variant: a small kicker above an Instrument Serif title, for
+   columns that need more presence than the default h3/p pair (e.g.
+   intelligence's "who it's for" audience columns). Additive -- .type-cols
+   h3/p above is untouched for columns that don't use these. */
+.type-cols .kicker{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);margin-bottom:10px;}
+.type-cols .col-title{font-family:var(--font-serif);font-weight:400;font-size:26px;color:var(--ink);margin-bottom:10px;line-height:1.15;}
 @media (max-width:800px){.type-cols{grid-template-columns:1fr;gap:28px;}}
 
 /* ---------- Mono table: comparison/data tables. Numbers in mono, rules
