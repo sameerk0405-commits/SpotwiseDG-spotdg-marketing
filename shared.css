@@ -389,7 +389,15 @@ header.hdr2 .logo{flex-shrink:0;}
 .num-row{display:grid;grid-template-columns:72px 1fr;gap:20px;padding:28px 0;border-top:1px solid var(--rule);}
 .num-rows .num-row:first-child{border-top:1px solid var(--rule);}
 .num-row .n{font-family:var(--font-serif);font-size:28px;color:var(--ink-2);line-height:1;}
-.num-row h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:8px;}
+/* h2 covers /disclaimer's three legal-item headings (promoted from h3 so the
+   page doesn't skip a level under its own h1); h3 stays for index.html's
+   "Four stages" num-rows, which is unrelated to this pass. Same declarations
+   either way -- this rule sets visual size/weight/color, not the tag. Explicit
+   line-height:1.55 (the site's body value, what h3 got here for free via
+   inheritance) blocks the generic h2{line-height:1.05} "serif scale" rule
+   from applying now that the tag is h2 -- without it the box height still
+   shifts even though font-size/family/weight/color don't. */
+.num-row h3,.num-row h2{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:8px;line-height:1.55;}
 .num-row p{font-family:var(--font-sans);font-size:15.5px;color:var(--ink-2);line-height:1.6;max-width:52ch;}
 @media (max-width:480px){.num-row{grid-template-columns:44px 1fr;gap:14px;}}
 
@@ -443,7 +451,12 @@ header.hdr2 .logo{flex-shrink:0;}
 .plan-rows .plan-row:first-child{border-top:1px solid var(--rule);}
 .plan-rows .plan-row:last-child{border-bottom:1px solid var(--rule);}
 .plan-head{margin-bottom:24px;}
-.plan-head h3{font-family:var(--font-serif);font-weight:400;font-size:28px;color:var(--ink);}
+/* Promoted from h3 to h2 (reports/index.html's four plan names) so the page
+   doesn't skip a level under its own h1. Selector renamed, not duplicated --
+   .plan-head only ever wraps one heading tag, unlike .num-row below. Explicit
+   line-height:1.55 blocks the generic h2{line-height:1.05} "serif scale"
+   rule now that the tag is h2 -- h3 got 1.55 for free via inheritance. */
+.plan-head h2{font-family:var(--font-serif);font-weight:400;font-size:28px;color:var(--ink);line-height:1.55;}
 .plan-audience{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);margin-top:6px;}
 .plan-label{font-family:var(--font-sans);font-weight:600;font-size:13px;color:var(--ink-2);margin-bottom:8px;}
 .plan-cols p{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
@@ -467,7 +480,12 @@ header.hdr2 .logo{flex-shrink:0;}
 .people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
 .people-card{display:flex;flex-direction:column;}
 .people-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--radius-doc);margin-bottom:16px;}
-.people-card h3{font-family:var(--font-serif);font-weight:400;font-size:24px;color:var(--ink);margin-bottom:4px;}
+/* Promoted from h3 to h2 (team's and contact's founder names) so neither page
+   skips a level under its own h1. Selector renamed, not duplicated -- every
+   .people-card heading on the site is part of this change. Explicit
+   line-height:1.55 blocks the generic h2{line-height:1.05} "serif scale"
+   rule now that the tag is h2 -- h3 got 1.55 for free via inheritance. */
+.people-card h2{font-family:var(--font-serif);font-weight:400;font-size:24px;color:var(--ink);margin-bottom:4px;line-height:1.55;}
 .people-role{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--teal);margin-bottom:10px;}
 .people-bio{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
 @media (max-width:800px){.people-grid{grid-template-columns:1fr;gap:28px;}}
@@ -500,16 +518,24 @@ header.hdr2 .logo{flex-shrink:0;}
   resize:vertical;min-height:110px;
 }
 .f-field input:focus,.f-field select:focus,.f-field textarea:focus{outline:none;border-color:var(--teal);}
+/* Keyboard-focus visibility, matching the outline language used everywhere
+   else on the site (.btn, .nav-tabs a, .logo, etc): 2px solid teal, 2px
+   offset, no box-shadow. The :focus rule above only removes the outline for
+   a mouse/pointer focus; :focus-visible restores it for keyboard nav. */
+.f-field input:focus-visible,.f-field select:focus-visible,.f-field textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
 
 /* ---------- FAQ: native <details>/<summary>, no chevron icon -- the
-   browser's own marker is suppressed and a rule + color change on open is
-   the only affordance. ---------- */
+   browser's own marker is suppressed. Questions are not links, so the
+   resting color is --ink at all times (including [open], since every item
+   ships open by default); teal only shows up as an interactive affordance
+   on hover/focus, same underline-on-hover language as .link/p a. ---------- */
 .faq-item{border-top:1px solid var(--rule);}
 .faq-item:last-child{border-bottom:1px solid var(--rule);}
-.faq-item summary{list-style:none;cursor:pointer;padding:20px 0;font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--ink);}
+.faq-item summary{list-style:none;cursor:pointer;padding:20px 0;font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:transparent;transition:color .2s var(--ease),text-decoration-color .2s var(--ease);}
 .faq-item summary::-webkit-details-marker{display:none;}
 .faq-item summary::marker{content:'';}
-.faq-item[open] summary{color:var(--teal);}
+.faq-item summary:hover{color:var(--teal);text-decoration-color:var(--teal);}
+.faq-item summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
 .faq-item p{padding:0 0 20px;max-width:62ch;font-size:15.5px;color:var(--ink-2);line-height:1.6;}
 
 /* ---------- Closing section: H2, lead, primary button, secondary link --
@@ -557,24 +583,6 @@ header.hdr2 .logo{flex-shrink:0;}
   .success-icon-wrap.celebrate .success-icon-blink{animation:none;opacity:0;}
 }
 
-/* Form fields (legacy, live on /founding-program): retextured, kept boxed
-   rather than migrated to the new underline .f-field -- that migration is
-   this page's own rebuild, not part of this pass. */
-.field-group{margin-bottom:20px;text-align:left;}
-.field-group label{display:block;font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:8px;font-family:var(--font-sans);}
-.field-group label .req{color:var(--amber);margin-left:3px;}
-.field-group input,
-.field-group select,
-.field-group textarea{
-  width:100%;padding:13px 15px;border-radius:var(--radius-btn);border:1px solid var(--rule);
-  background:var(--paper-2);color:var(--ink);font-size:14.5px;font-family:var(--font-sans);
-  transition:border-color .15s;
-}
-.field-group textarea{resize:vertical;min-height:96px;}
-.field-group input:focus,
-.field-group select:focus,
-.field-group textarea:focus{outline:none;border-color:var(--teal);}
-.field-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A5652' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:36px;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media (max-width:560px){.field-row{grid-template-columns:1fr;}}
 
@@ -587,22 +595,6 @@ header.hdr2 .logo{flex-shrink:0;}
 .form-step .num{margin-right:10px;}
 .form-step .rule{display:none;}
 
-.nda-block{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-doc);padding:20px 20px 18px;margin-bottom:20px;}
-.nda-heading{font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.nda-note{font-size:12px;color:var(--ink-2);margin-bottom:14px;line-height:1.5;}
-.nda-scroll{max-height:260px;overflow-y:auto;background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-btn);padding:16px 18px;margin-bottom:16px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--teal) var(--paper-2);}
-.nda-scroll::-webkit-scrollbar{width:8px;}
-.nda-scroll::-webkit-scrollbar-track{background:var(--paper-2);}
-.nda-scroll::-webkit-scrollbar-thumb{background:var(--teal);border-radius:var(--radius-btn);}
-.nda-scroll p{font-size:12.5px;color:var(--ink-2);line-height:1.65;margin:0 0 12px;}
-.nda-scroll p:last-child{margin-bottom:0;}
-.nda-scroll strong{color:var(--ink);}
-.nda-date-line{font-family:var(--font-mono);color:var(--teal);font-size:12px;}
-.nda-checkbox{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--ink-2);font-weight:500;cursor:pointer;}
-.nda-checkbox input[type="checkbox"]{width:auto;flex-shrink:0;margin-top:3px;accent-color:var(--teal);cursor:pointer;}
-.nda-checkbox input[type="checkbox"]:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
-.nda-checkbox .req{color:var(--amber);margin-left:3px;}
-
 /* Sample-report style signal card, kept live for /sample-report until that
    page is rebuilt on .doc. Pills, glow, and the pulse dot are removed per
    the sitewide audit; the badge becomes a plain word. */
@@ -610,16 +602,10 @@ header.hdr2 .logo{flex-shrink:0;}
 .sig-head{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--rule);gap:12px;flex-wrap:wrap;}
 .sig-head-label{font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:6px;font-family:var(--font-sans);}
 .sig-head-title{font-family:var(--font-sans);font-weight:600;font-size:18px;}
-.sig-badge{font-family:var(--font-sans);font-weight:600;font-size:14px;color:var(--amber);}
 .sig-score-row{display:flex;align-items:baseline;gap:14px;padding:24px 0 22px;}
 .sig-score{font-family:var(--font-mono);font-weight:500;font-size:56px;color:var(--ink);letter-spacing:-.02em;}
 .sig-score-label{font-size:13px;color:var(--ink-2);font-weight:400;font-family:var(--font-sans);}
 .sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
-.sig-item{border:1px solid var(--rule);border-radius:var(--radius-btn);padding:12px 14px;}
-.sig-item .k{font-size:12px;color:var(--ink-2);font-weight:500;margin-bottom:5px;font-family:var(--font-sans);}
-.sig-item .v{font-family:var(--font-mono);font-weight:500;font-size:15.5px;color:var(--ink);}
-.sig-item .v.pos{color:var(--teal);}
-.sig-item .v.neg{color:var(--amber);}
 .ratio-row{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--rule);flex-wrap:wrap;}
 .ratio{display:flex;flex-direction:column;gap:4px;}
 .ratio .k{font-size:12px;color:var(--ink-2);font-weight:500;font-family:var(--font-sans);}

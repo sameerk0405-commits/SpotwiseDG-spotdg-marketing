@@ -55,7 +55,11 @@
 
   .f-submit{display:block;width:100%;text-align:center;}
   .f-legal{font-size:13px;color:var(--ink-2);line-height:1.6;margin-top:24px;padding-top:14px;border-top:1px solid var(--rule);}
-  .f-note{font-size:13px;color:var(--ink-2);line-height:1.6;margin-top:16px;}
+  /* .f-note is a <p>, so it inherits shared.css's global p{max-width:62ch}
+     and wraps narrower than .f-legal (a <div>, not capped) above it, even
+     though both sit in the same 560px .form-wrap -- override back to the
+     form's own width so neither line orphans its last word. */
+  .f-note{font-size:13px;color:var(--ink-2);line-height:1.6;margin-top:16px;max-width:560px;}
 
   @media (max-width:640px){
     header{padding:16px 20px;}
