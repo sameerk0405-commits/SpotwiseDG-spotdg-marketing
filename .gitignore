@@ -20,3 +20,10 @@ npm-debug.log*
 
 # Misc local
 *.local
+
+# Map build source data: ~95MB of full-state ZCTA GeoJSON (OpenDataDE),
+# regenerable/re-fetchable, not something to carry in git history. Only the
+# CSV, tools/build-map.js, and the built assets/map-tiers.svg are committed.
+# See tools/build-map.js for how to regenerate assets/map-tiers.svg from
+# these once they're back in place locally.
+tools/data/*.json
