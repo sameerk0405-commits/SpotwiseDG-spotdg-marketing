@@ -461,6 +461,23 @@ header.hdr2 .logo{flex-shrink:0;}
 /* Map paths (home) reuse the same five tier classes with `fill` instead of
    `background` -- see index.html's local style block. */
 
+/* ---------- People grid: portrait + name + role + bio, three columns. Team's
+   primary use; Contact reuses the same shape at a smaller portrait size via
+   the .people-sm modifier (identity list, no bio). ---------- */
+.people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+.people-card{display:flex;flex-direction:column;}
+.people-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--radius-doc);margin-bottom:16px;}
+.people-card h3{font-family:var(--font-serif);font-weight:400;font-size:24px;color:var(--ink);margin-bottom:4px;}
+.people-role{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--teal);margin-bottom:10px;}
+.people-bio{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
+@media (max-width:800px){.people-grid{grid-template-columns:1fr;gap:28px;}}
+
+/* Small modifier: a plain identity list (photo optional), not a portrait
+   showcase -- fixed circular thumbnail beside the name instead of a
+   full-width 1:1 card image. */
+.people-grid.people-sm .people-photo{width:64px;height:64px;border-radius:50%;margin-bottom:14px;}
+@media (max-width:700px){.people-grid.people-sm{grid-template-columns:1fr;}}
+
 /* ---------- SAMPLE tag: marks preview/non-live data. Ink background, paper
    text, 11px Archivo 500 uppercase -- the only uppercase text-transform on
    the site besides the nav wordmark (which is naturally-cased, not
