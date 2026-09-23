@@ -428,6 +428,26 @@ header.hdr2 .logo{flex-shrink:0;}
 @media (max-width:800px){.tier-cols{grid-template-columns:1fr 1fr;gap:24px;}}
 @media (max-width:480px){.tier-cols{grid-template-columns:1fr;}}
 
+/* Emphasized header rule: the header row's bottom border is --ink instead of
+   the default soft --rule, for a table whose header needs to read as a
+   firmer division (e.g. a plans comparison table). Scoped to thead only --
+   tbody's row-header th cells (above) keep the plain --rule border like
+   every other row. */
+.mono-table.head-ink thead th{border-bottom:1px solid var(--ink);}
+
+/* ---------- Plan rows: each plan (Analyst/Pro/Enterprise/Lender Scale) as a
+   row separated by a hairline, not a card -- name + one-line audience, then
+   a two-column detail split (reuses .split-6-6). ---------- */
+.plan-rows{display:flex;flex-direction:column;}
+.plan-row{padding:40px 0;border-top:1px solid var(--rule);}
+.plan-rows .plan-row:first-child{border-top:1px solid var(--rule);}
+.plan-rows .plan-row:last-child{border-bottom:1px solid var(--rule);}
+.plan-head{margin-bottom:24px;}
+.plan-head h3{font-family:var(--font-serif);font-weight:400;font-size:28px;color:var(--ink);}
+.plan-audience{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);margin-top:6px;}
+.plan-label{font-family:var(--font-sans);font-weight:600;font-size:13px;color:var(--ink-2);margin-bottom:8px;}
+.plan-cols p{font-family:var(--font-sans);font-size:14.5px;color:var(--ink-2);line-height:1.6;}
+
 /* ---------- Tier swatches: the shared color language for the five score
    tiers (Peak/Momentum/Emerging/Watch/Pass), used on the map legend and
    anywhere a tier needs a color key. Amber is reserved for Peak only --

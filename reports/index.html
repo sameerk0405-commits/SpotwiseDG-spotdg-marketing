@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#0A1512" />
+<meta name="theme-color" content="#F5F2EC" />
 <link rel="icon" href="../assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" href="../assets/favicon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="../assets/favicon-64.png" sizes="64x64" />
@@ -33,93 +33,16 @@
 <link rel="apple-touch-icon" href="../assets/favicon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link href="../shared.css" rel="stylesheet" />
 <style>
-  /* ---------- Report contents: two-column checklist ---------- */
-  .report-list{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;max-width:860px;margin:0 auto 56px;}
-  .report-list li{display:flex;gap:13px;align-items:flex-start;font-size:15px;color:var(--ink-soft);padding:14px 0;border-top:1px solid var(--line);line-height:1.55;}
-  .report-list li:nth-child(-n+2){border-top:none;}
+  /* ---------- Page-local: comparison table scrolls horizontally on narrow
+     screens rather than compressing four value columns illegibly. ---------- */
+  .plan-compare-wrap{overflow-x:auto;}
+  .plan-compare-wrap .mono-table{min-width:640px;}
 
-  /* ---------- Pricing cards ---------- */
-  .pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:var(--max);margin:0 auto;align-items:start;}
-  .price-card{background:linear-gradient(180deg,rgba(255,255,255,.025) 0%,var(--surface-2) 42%);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;position:relative;overflow:visible;transition:border-color .25s,transform .25s var(--ease),box-shadow .25s var(--ease);}
-  .price-card.feat{border-color:rgba(20,184,166,.4);background:linear-gradient(180deg,rgba(20,184,166,.07) 0%,var(--surface-2) 60%);}
-  .price-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -16px rgba(0,0,0,.5);border-color:rgba(20,184,166,.3);}
-  .price-card.feat:hover{box-shadow:0 16px 44px -14px rgba(20,184,166,.28),0 16px 40px -16px rgba(0,0,0,.4);border-color:rgba(20,184,166,.55);}
-  .price-card.is-open{transform:none;border-color:rgba(20,184,166,.45);}
-  .price-tag{position:absolute;top:-11px;left:26px;background:var(--teal);color:#031A17;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:100px;z-index:1;box-shadow:0 4px 14px rgba(20,184,166,.4);}
-  .price-card h3{font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em;}
-  .price-card .count{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:14px;}
-  .price-card .price-line{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:var(--teal-bright);background:rgba(20,184,166,.08);border:1px solid rgba(20,184,166,.2);border-radius:8px;padding:9px 13px;margin-bottom:16px;width:fit-content;}
-  .price-card .best{font-size:13.5px;color:var(--ink-soft);line-height:1.55;flex:1;}
-
-  /* ---------- Pricing accordion ---------- */
-  .price-card-trigger{width:100%;text-align:left;background:transparent;border:none;padding:30px 26px;display:flex;flex-direction:column;font-family:inherit;cursor:pointer;color:inherit;border-radius:18px;}
-  .price-card-trigger:focus-visible{outline:2px solid var(--teal-bright);outline-offset:-2px;}
-  .price-card-more{display:flex;align-items:center;gap:6px;margin-top:18px;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--teal);transition:color .2s var(--ease);}
-  .price-card-trigger:hover .price-card-more{color:var(--teal-bright);}
-  .price-card-more .chev{width:9px;height:9px;flex-shrink:0;transition:transform .4s var(--ease);}
-  .price-card.is-open .price-card-more .chev{transform:rotate(180deg);}
-  .price-card-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease);}
-  .price-card.is-open .price-card-panel{grid-template-rows:1fr;}
-  .price-card-panel-inner{overflow:hidden;}
-  .price-card-detail{padding:0 26px 28px;border-top:1px solid var(--line);margin-top:2px;}
-  .price-card-detail-block{padding-top:18px;}
-  .price-card-detail-label{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;font-family:'JetBrains Mono',monospace;}
-  .price-card-detail-block p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
-
-  /* ---------- Tier comparison table (alternate view of the same three tiers) ---------- */
-  .tier-table-wrap{max-width:var(--max);margin:0 auto;overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface);}
-  .tier-table{width:100%;border-collapse:collapse;min-width:760px;}
-  .tier-table th,.tier-table td{padding:18px 22px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
-  .tier-table thead th{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.01em;background:rgba(255,255,255,.015);}
-  .tier-table thead th:first-child{width:150px;}
-  .tier-table thead th .tt-pop{display:inline-block;margin-left:8px;font-family:'Inter Tight',sans-serif;background:var(--teal);color:#031A17;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:100px;vertical-align:middle;}
-  .tier-table tbody th{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
-  .tier-table td{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
-  .tier-table td.tt-mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ink);}
-  .tier-table td.tt-price{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:var(--teal-bright);}
-  .tier-table tr:last-child th,.tier-table tr:last-child td{border-bottom:none;}
-  .tier-table td.tt-feat{background:rgba(20,184,166,.045);}
-
-  /* ---------- Scroll-reveal cascade: children of each revealed section arrive
-     in sequence. Hidden state is scoped to .reveal:not(.is-visible) and the
-     entrance uses a backwards-fill animation, so once it finishes elements
-     return to their natural styles (hover/accordion transforms stay intact).
-     Inert without html.js (no-JS / reduced-motion get the static page). ---------- */
-  html.js .reveal:not(.is-visible) :is(.sec-head>*,.report-list li,.price-card){opacity:0;}
-  html.js .reveal.is-visible :is(.sec-head>*,.report-list li,.price-card){animation:rvIn .6s var(--ease) backwards;}
-  html.js .reveal.is-visible .sec-head>*:nth-child(2){animation-delay:.08s;}
-  html.js .reveal.is-visible .sec-head>*:nth-child(3){animation-delay:.16s;}
-  html.js .reveal.is-visible .sec-head>*:nth-child(4){animation-delay:.24s;}
-  html.js .reveal.is-visible .report-list li:nth-child(2){animation-delay:.05s;}
-  html.js .reveal.is-visible .report-list li:nth-child(3){animation-delay:.1s;}
-  html.js .reveal.is-visible .report-list li:nth-child(4){animation-delay:.15s;}
-  html.js .reveal.is-visible .report-list li:nth-child(5){animation-delay:.2s;}
-  html.js .reveal.is-visible .report-list li:nth-child(6){animation-delay:.25s;}
-  html.js .reveal.is-visible .report-list li:nth-child(7){animation-delay:.3s;}
-  html.js .reveal.is-visible .report-list li:nth-child(8){animation-delay:.35s;}
-  html.js .reveal.is-visible .price-card:nth-child(1){animation-delay:.16s;}
-  html.js .reveal.is-visible .price-card:nth-child(2){animation-delay:.28s;}
-  html.js .reveal.is-visible .price-card:nth-child(3){animation-delay:.4s;}
-  html.js .reveal.is-visible .price-card:nth-child(4){animation-delay:.52s;}
-  @keyframes rvIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
-
-  /* ---------- Responsive ---------- */
-  @media (max-width:900px){
-    .pricing-grid{grid-template-columns:1fr;}
-    .report-list{grid-template-columns:1fr;}
-    .report-list li:nth-child(2){border-top:1px solid var(--line);}
-  }
   @media (max-width:640px){
-    .wrap,.sec,footer{padding-left:20px;padding-right:20px;}
-    /* Roomier tier cards */
-    .price-card-trigger{padding:28px 22px;}
-    .price-card h3{font-size:20px;}
-    .price-card .best{font-size:14px;}
-    .price-card-detail{padding:0 22px 26px;}
-    .price-card-detail-block p{font-size:14px;}
+    .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
 </style>
 </head>
@@ -128,25 +51,24 @@
 <header class="hdr2">
   <nav>
     <a href="../index.html" class="logo">
-      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="38" height="38" />
+      <img class="logo-mark" src="../assets/spot-icon.png" alt="SpotWise Data Group" width="32" height="32" />
       <div class="logo-text"><b>SpotWise</b><span>Data Group</span></div>
     </a>
 
     <div class="nav-tabs">
       <a href="../index.html" data-home-tab>Home</a>
-        <a href="../intelligence/index.html">Intelligence</a>
-        <a href="../sample-report/index.html">Sample Report</a>
-        <a href="../reports/index.html" class="active" aria-current="page">Plans</a>
-        <a href="../team/index.html">Team</a>
-        <a href="../contact/index.html">Contact</a>
-        <a href="../faq/index.html">FAQ</a>
-        <a href="../disclaimer/index.html">Disclaimer</a>
-      <span class="nav-rail" aria-hidden="true"></span>
+      <a href="../intelligence/index.html">Intelligence</a>
+      <a href="../sample-report/index.html">Sample Report</a>
+      <a href="../reports/index.html" class="active" aria-current="page">Plans</a>
+      <a href="../team/index.html">Team</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../disclaimer/index.html">Disclaimer</a>
     </div>
 
     <div class="nav-actions">
       <a class="nav-login" href="https://app.spotdg.com" target="_blank" rel="noopener noreferrer">Log in</a>
-      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program &rarr;</span><span class="nav-cta-short">Join &rarr;</span></a>
+      <a class="btn btn-primary nav-cta" href="../founding-program/index.html"><span class="nav-cta-full">Join the Program</span><span class="nav-cta-short">Join</span></a>
       <div class="nav-sheet">
         <button class="nav-sheet-trigger" type="button" aria-expanded="false" aria-controls="nav-sheet-panel" aria-label="Open navigation">
           <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -166,164 +88,96 @@
         </div>
       </div>
     </div>
-
-    <div class="nav-progress" aria-hidden="true"></div>
   </nav>
 </header>
 
 <main>
 
-  <!-- MARKET SIGNAL REPORT -->
-  <section class="sec reveal" style="overflow:hidden;">
-    <div class="mesh" aria-hidden="true"></div>
-    <div class="sec-head">
-      <div class="eyebrow">The Market Signal Report</div>
-      <h2 style="margin-top:16px;">Decision intelligence, packaged for action.</h2>
-      <p>Lead with the answer. Then provide the analytics.</p>
-      <div class="trail"></div>
-    </div>
-    <ul class="report-list">
-      <li><span class="mark check">✓</span>Top-ranked zip codes for your target market or investment thesis</li>
-      <li><span class="mark check">✓</span>Classification by stage: Peak, Momentum, Emerging, Watch</li>
-      <li><span class="mark check">✓</span>Key reasons each zip was flagged</li>
-      <li><span class="mark check">✓</span>Supporting metrics and investor ratios</li>
-      <li><span class="mark check">✓</span>Comparison against the broader metro area</li>
-      <li><span class="mark check">✓</span>Recommended action: Investigate, Monitor, or Avoid</li>
-      <li><span class="mark check">✓</span>Short methodology note</li>
-      <li><span class="mark check">✓</span>Clear disclaimer: market intelligence, not financial advice</li>
-    </ul>
-    <div style="text-align:center;">
-      <a class="btn btn-ghost" href="../sample-report/index.html">See a sample report →</a>
-    </div>
+  <!-- PLANS -->
+  <section class="sec wash-top reveal">
+    <div class="eyebrow">Plans</div>
+    <h1>Four ways to engage.</h1>
   </section>
 
-  <!-- PACKAGE TIERS -->
-  <section class="sec sec-alt reveal">
-    <div class="sec-head sec-head-left">
-      <div class="eyebrow">Plans</div>
-      <h2 style="margin-top:16px;">Four ways to engage.</h2>
-      <div class="trail"></div>
-    </div>
-
-    <div class="pricing-grid" id="tier-cards">
-      <div class="price-card" data-tier>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-analyst-panel">
+  <!-- PLAN ROWS -->
+  <section class="sec reveal">
+    <div class="plan-rows">
+      <div class="plan-row">
+        <div class="plan-head">
           <h3>SpotWise Analyst</h3>
-          <div class="count">For solo deal flow</div>
-          <div class="price-line">Available upon request</div>
-          <div class="best">Best for independent flippers and local wholesalers evaluating deals zip by zip.</div>
-          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
-        </button>
-        <div class="price-card-panel" id="tier-analyst-panel">
-          <div class="price-card-panel-inner">
-            <div class="price-card-detail">
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">What's included</div>
-                <p>Monthly access to a set number of zip-level Market Signal Reports, with the ability to add more as needed. Each report includes the momentum score, tier classification, top signals, and investor ratios for a single zip or market of your choosing.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Who it's for</div>
-                <p>Independent flippers and local wholesalers who move on one opportunity at a time and want a fast, data-backed read on a zip before committing capital or a contract.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Pro</div>
-                <p>Pro raises the monthly allotment and adds side-by-side comparison across multiple geographies, built for evaluating several deals in parallel rather than one at a time.</p>
-              </div>
-            </div>
+          <div class="plan-audience">For solo deal flow</div>
+        </div>
+        <div class="split-6-6 plan-cols">
+          <div>
+            <div class="plan-label">What's included</div>
+            <p>Monthly access to a set number of zip-level Market Signal Reports, with the ability to add more as needed. Each report includes the momentum score, tier classification, top signals, and investor ratios for a single zip or market of your choosing.</p>
+          </div>
+          <div>
+            <div class="plan-label">Who it's for</div>
+            <p>Independent flippers and local wholesalers who move on one opportunity at a time and want a fast, data-backed read on a zip before committing capital or a contract.</p>
           </div>
         </div>
       </div>
-      <div class="price-card feat" data-tier>
-        <div class="price-tag">Most Popular</div>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-pro-panel">
+
+      <div class="plan-row">
+        <div class="plan-head">
           <h3>SpotWise Pro</h3>
-          <div class="count">For active deal teams</div>
-          <div class="price-line">Available upon request</div>
-          <div class="best">Best for active investment syndicates and professional flippers running multiple deals at once.</div>
-          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
-        </button>
-        <div class="price-card-panel" id="tier-pro-panel">
-          <div class="price-card-panel-inner">
-            <div class="price-card-detail">
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">What's included</div>
-                <p>A larger monthly allotment of Market Signal Reports, plus side-by-side comparison and ranking across the geographies you're evaluating, with the ability to add more as your pipeline grows.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Who it's for</div>
-                <p>Investment syndicates and professional flippers actively sourcing and underwriting several opportunities in parallel need the numbers ranked next to each other, not read one report at a time.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Analyst / Enterprise</div>
-                <p>A meaningfully larger allotment and comparison tooling beyond Analyst's single-deal use; Enterprise scales further still, built around a lending or fund operation rather than an individual investor's pipeline.</p>
-              </div>
-            </div>
+          <div class="plan-audience">For active deal teams</div>
+        </div>
+        <div class="split-6-6 plan-cols">
+          <div>
+            <div class="plan-label">What's included</div>
+            <p>A larger monthly allotment of Market Signal Reports, plus side-by-side comparison and ranking across the geographies you're evaluating, with the ability to add more as your pipeline grows.</p>
+          </div>
+          <div>
+            <div class="plan-label">Who it's for</div>
+            <p>Investment syndicates and professional flippers actively sourcing and underwriting several opportunities in parallel need the numbers ranked next to each other, not read one report at a time.</p>
           </div>
         </div>
       </div>
-      <div class="price-card" data-tier>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-enterprise-panel">
+
+      <div class="plan-row">
+        <div class="plan-head">
           <h3>SpotWise Enterprise</h3>
-          <div class="count">For lending &amp; fund operations</div>
-          <div class="price-line">Available upon request</div>
-          <div class="best">Best for regional hard money lenders and micro-funds underwriting collateral across a portfolio.</div>
-          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
-        </button>
-        <div class="price-card-panel" id="tier-enterprise-panel">
-          <div class="price-card-panel-inner">
-            <div class="price-card-detail">
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">What's included</div>
-                <p>A monthly report allotment sized for underwriting volume, team-wide access so your whole lending or fund operation works from the same signal, and the ability to add capacity as deal flow picks up.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Who it's for</div>
-                <p>Regional hard money lenders and micro-funds that need to underwrite collateral across a steady flow of deals, not a single transaction, want momentum data built into how their team evaluates risk.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Pro / Lender Scale</div>
-                <p>A materially higher allotment and team access beyond what a single investment team needs; Lender Scale removes the cap entirely for underwriting at institutional volume.</p>
-              </div>
-            </div>
+          <div class="plan-audience">For lending &amp; fund operations</div>
+        </div>
+        <div class="split-6-6 plan-cols">
+          <div>
+            <div class="plan-label">What's included</div>
+            <p>A monthly report allotment sized for underwriting volume, team-wide access so your whole lending or fund operation works from the same signal, and the ability to add capacity as deal flow picks up.</p>
+          </div>
+          <div>
+            <div class="plan-label">Who it's for</div>
+            <p>Regional hard money lenders and micro-funds that need to underwrite collateral across a steady flow of deals, not a single transaction, want momentum data built into how their team evaluates risk.</p>
           </div>
         </div>
       </div>
-      <div class="price-card" data-tier>
-        <button type="button" class="price-card-trigger" aria-expanded="false" aria-controls="tier-lenderscale-panel">
+
+      <div class="plan-row">
+        <div class="plan-head">
           <h3>SpotWise Lender Scale</h3>
-          <div class="count">For institutional underwriting</div>
-          <div class="price-line">Available upon request</div>
-          <div class="best">Best for institutional fund underwriters and large credit pools underwriting at scale.</div>
-          <span class="price-card-more">Details <svg class="chev" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>
-        </button>
-        <div class="price-card-panel" id="tier-lenderscale-panel">
-          <div class="price-card-panel-inner">
-            <div class="price-card-detail">
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">What's included</div>
-                <p>Unlimited query access for underwriting at scale, so momentum data sits inside your underwriting workflow without a monthly ceiling, built for teams evaluating collateral continuously across a large book.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Who it's for</div>
-                <p>Institutional fund underwriters and large credit pools where deal volume is constant and a capped monthly allotment would be a bottleneck, not a convenience.</p>
-              </div>
-              <div class="price-card-detail-block">
-                <div class="price-card-detail-label">Vs. Enterprise</div>
-                <p>Enterprise is sized for regional/micro-fund volume with a generous but capped allotment; Lender Scale removes the cap for continuous, institutional-scale underwriting.</p>
-              </div>
-            </div>
+          <div class="plan-audience">For institutional underwriting</div>
+        </div>
+        <div class="split-6-6 plan-cols">
+          <div>
+            <div class="plan-label">What's included</div>
+            <p>Unlimited query access for underwriting at scale, so momentum data sits inside your underwriting workflow without a monthly ceiling, built for teams evaluating collateral continuously across a large book.</p>
+          </div>
+          <div>
+            <div class="plan-label">Who it's for</div>
+            <p>Institutional fund underwriters and large credit pools where deal volume is constant and a capped monthly allotment would be a bottleneck, not a convenience.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="tier-table-wrap" id="tier-table">
-      <table class="tier-table">
+    <div class="plan-compare-wrap">
+      <table class="mono-table head-ink">
         <thead>
           <tr>
             <th></th>
             <th>Analyst</th>
-            <th>Pro<span class="tt-pop">Most Popular</span></th>
+            <th>Pro</th>
             <th>Enterprise</th>
             <th>Lender Scale</th>
           </tr>
@@ -331,41 +185,30 @@
         <tbody>
           <tr>
             <th scope="row">Report volume</th>
-            <td class="tt-mono">Standard</td>
-            <td class="tt-mono tt-feat">Expanded</td>
-            <td class="tt-mono">High-volume</td>
-            <td class="tt-mono">Unlimited</td>
+            <td class="num">Standard</td>
+            <td class="num">Expanded</td>
+            <td class="num">High-volume</td>
+            <td class="num">Unlimited</td>
           </tr>
           <tr>
             <th scope="row">Pricing</th>
-            <td class="tt-price">Available upon request</td>
-            <td class="tt-price tt-feat">Available upon request</td>
-            <td class="tt-price">Available upon request</td>
-            <td class="tt-price">Available upon request</td>
-          </tr>
-          <tr>
-            <th scope="row">Best for</th>
-            <td>Independent flippers &amp; local wholesalers</td>
-            <td class="tt-feat">Active investment syndicates &amp; professional flippers</td>
-            <td>Regional hard money lenders &amp; micro-funds</td>
-            <td>Institutional fund underwriters &amp; large credit pools</td>
+            <td class="num">Available upon request</td>
+            <td class="num">Available upon request</td>
+            <td class="num">Available upon request</td>
+            <td class="num">Available upon request</td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <div class="disclaimer" style="max-width:var(--max);margin-left:auto;margin-right:auto;">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
+    <div class="disclaimer">SpotWise provides market intelligence, not financial or investment advice. Past performance does not guarantee future results.</div>
   </section>
 
   <!-- FINAL CTA -->
-  <section class="sec final-cta reveal">
-    <div class="trail"></div>
+  <section class="sec closing reveal">
     <h2>Ready to see your zip codes?</h2>
-    <p>Founding members get a complimentary report before tiers begin.</p>
-    <div class="final-ctas">
-      <a class="btn btn-primary" href="../founding-program/index.html">Join the Program &rarr;</a>
-      <a class="btn btn-ghost" href="../sample-report/index.html">See a full sample report</a>
-    </div>
+    <p class="lead">Founding members get a complimentary report before tiers begin.</p>
+    <a class="btn btn-primary" href="../founding-program/index.html">Join the Program</a>
+    <a class="btn-ghost" href="../sample-report/index.html">See a full sample report</a>
   </section>
 
 </main>
