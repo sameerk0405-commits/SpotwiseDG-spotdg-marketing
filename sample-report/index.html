@@ -45,6 +45,14 @@
      second page to need it, not yet worth promoting to shared.css). ---------- */
   .list-label{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--ink-2);margin-top:24px;margin-bottom:4px;}
 
+  /* ---------- Page-local: caption beneath the sample document, reusing
+     .list-label for the heading (already exactly "13px Archivo 500") and a
+     plain 14px paragraph for the sentence. Moved here from an orphan H2
+     section near the bottom of the page -- no words changed. ---------- */
+  .doc-caption{margin-top:16px;}
+  .doc-caption .list-label{margin-top:0;margin-bottom:6px;}
+  .doc-caption p{font-size:14px;color:var(--ink-2);line-height:1.6;max-width:none;}
+
   @media (max-width:640px){
     .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
@@ -105,7 +113,7 @@
       <div>
         <div class="eyebrow">Sample Report</div>
         <h1>Sample report for one ZIP.</h1>
-        <p>This excerpt, built on a fictional zip code, shows the <em>structure</em> a real Market Signal Report follows: momentum profile, investor ratios, flagged reasons, and metro comparison. It's a preview of the format, not the full depth of a live report. Actual reports are generated from live, current data and go further than what's shown below.</p>
+        <p>This excerpt, built on a fictional zip code, shows the <em>structure</em> a real Market Signal Report follows: momentum profile, investor ratios, flagged reasons, and metro comparison. Actual reports are generated from live, current data and go further than what's shown below.</p>
         <div class="list-label">What a report contains</div>
         <ul class="rule-list">
           <li>Top-ranked zip codes for your target market or investment thesis</li>
@@ -119,6 +127,7 @@
         </ul>
       </div>
 
+      <div>
       <div class="doc-sample-wrap">
         <span class="tag-sample">SAMPLE</span>
         <div class="doc">
@@ -179,6 +188,11 @@
             <span>Sample Zip 00000</span>
           </div>
         </div>
+      </div>
+      <div class="doc-caption">
+        <div class="list-label">Key reasons this ZIP was flagged.</div>
+        <p>These are the conditions that moved this ZIP's score most. They are specific to the ZIP and change between updates.</p>
+      </div>
       </div>
     </div>
   </section>
@@ -249,14 +263,6 @@
       <dt>Supply Constraint</dt>
       <dd>How tight new housing supply is relative to demand in the area. Tighter supply generally supports price appreciation.</dd>
     </dl>
-  </section>
-
-  <!-- KEY REASONS -->
-  <section class="sec reveal">
-    <div class="sec-head">
-      <h2>Key reasons this ZIP was flagged.</h2>
-      <p>These are the conditions that moved this ZIP's score most. They are specific to the ZIP and change between updates.</p>
-    </div>
   </section>
 
   <!-- FINAL CTA -->
