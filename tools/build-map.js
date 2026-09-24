@@ -5,9 +5,9 @@
  * Builds assets/map-tiers.svg from tools/data/batch8-tiers.csv plus the three
  * OpenDataDE tri-state ZCTA GeoJSON files, then injects the same SVG markup
  * into index.html between the <!-- MAP_SVG:START/END --> markers so the page
- * carries the map inline (needed for CSS hover/JS tooltip access into the
- * SVG's own paths -- an <img> can't be reached that way, and fetch() of a
- * local file fails under file:// with no server). Re-running this script
+ * carries the map inline (so the page CSS and JS can reach the SVG's own
+ * paths for the fill-in animation -- an <img> can't be reached that way, and
+ * fetch() of a local file fails under file:// with no server). Re-running this script
  * regenerates both the standalone asset and the inlined copy from one source
  * of truth, so they can't drift apart.
  *
@@ -35,7 +35,7 @@
  *    inset, not a navigational map).
  * 4. Simplify every scored ZIP's ring with Douglas-Peucker in that projected
  *    space, drop rings below a tiny area threshold, round to 1 decimal.
- * 5. Emit one <path> per scored ZIP (data-zip/data-tier/data-score, class
+ * 5. Emit one <path> per scored ZIP (data-zip/data-tier, no score, class
  *    "zip tier-<tier>"). Unscored tri-state land is no longer drawn (removed
  *    2026-09-23, final paper polish) -- the base layer is now the three full
  *    state outlines (tools/data/us-states.json, PublicaMundi/MappingAPI),
@@ -301,7 +301,7 @@ function main() {
     renderedTierCounts[scored.tier] = (renderedTierCounts[scored.tier] || 0) + 1;
     scoredPaths.push(
       '<path class="zip tier-' + tierClass + '" data-zip="' + zip +
-      '" data-tier="' + scored.tier + '" data-score="' + scored.score + '" d="' + d + '"/>'
+      '" data-tier="' + scored.tier + '" d="' + d + '"/>'
     );
   }
 
@@ -399,8 +399,8 @@ function main() {
   console.log('[build-map] Wrote', OUT_SVG, '(' + (bytes / 1024 / 1024).toFixed(3) + ' MB)');
 
   // Inject the same markup into index.html between the marker comments, so
-  // the page carries it inline (see file header for why: hover/tooltip need
-  // DOM access into the SVG's own paths).
+  // the page carries it inline (see file header for why). No data-score:
+  // per-ZIP scores are not published on the public site (2026-09-24).
   const html = fs.readFileSync(INDEX_HTML, 'utf8');
   const startMarker = '<!-- MAP_SVG:START -->';
   const endMarker = '<!-- MAP_SVG:END -->';
