@@ -124,7 +124,7 @@ SpotwiseMotion.countUp();
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0, rootMargin: "0px 0px -6% 0px" });
   els.forEach(function (el) { obs.observe(el); });
 })();
 
