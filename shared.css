@@ -207,11 +207,13 @@ footer h2 + p,footer p + p,
 .btn{
   display:inline-block;font-family:var(--font-sans);font-weight:500;font-size:15px;
   padding:13px 24px;border-radius:10px;border:none;cursor:pointer;
-  text-decoration:none;transition:background-color .22s var(--ease),color .22s var(--ease);
+  text-decoration:none;
+  transition:background-color .22s var(--ease),color .22s var(--ease),transform .22s var(--ease),box-shadow .22s var(--ease);
   white-space:nowrap;
 }
 .btn-primary{background:var(--ink);color:var(--paper);}
-.btn-primary:hover,.btn-primary:focus-visible{background:var(--teal);color:var(--paper);}
+.btn-primary:hover,.btn-primary:focus-visible{background:var(--teal);color:var(--paper);transform:translateY(-1px);box-shadow:0 8px 20px -10px rgba(15,124,110,.55);}
+.btn-primary:active{transform:translateY(0);box-shadow:0 2px 6px -4px rgba(15,124,110,.5);transition-duration:.1s;}
 .btn-ghost{
   display:inline;padding:0;background:none;border-radius:0;
   font-family:var(--font-sans);font-weight:500;font-size:15px;color:var(--ink);
@@ -247,22 +249,44 @@ header.hdr2{
   position:sticky;top:0;z-index:100;
   background:rgba(245,242,236,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border-bottom:1px solid var(--rule);
+  transition:box-shadow .3s var(--ease);
 }
+/* Scrolled state (added 2026-09-24, nav polish): once the page has moved
+   past the top the bar tightens by 8px each side and gains a soft shadow so
+   it reads as a surface over the content rather than a stripe of it.
+   Toggled by shared.js (.is-scrolled at scrollY > 8). */
+header.hdr2.is-scrolled{box-shadow:0 10px 30px -22px rgba(20,32,28,.35);}
 header.hdr2 nav{
   display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;
   max-width:var(--max);margin:0 auto;padding:20px 24px;
+  transition:padding .3s var(--ease);
 }
+header.hdr2.is-scrolled nav{padding:12px 24px;}
 header.hdr2 .logo{flex-shrink:0;}
 
-.nav-tabs{position:relative;display:flex;align-items:center;gap:26px;justify-self:center;}
+/* Tabs (polished 2026-09-24): rest in --ink-2, ink on hover. The indicator
+   is a 1.5px teal line drawn by ::after -- it grows in from the left on
+   hover and retreats to the right on leave (transform-origin swaps), and
+   stays fully drawn on the current page. Each tab carries its own 8px/10px
+   padding so the hit target is a comfortable pill even though nothing pill-
+   shaped is painted; the 6px gap keeps the visual rhythm of the old 26px. */
+.nav-tabs{position:relative;display:flex;align-items:center;gap:6px;justify-self:center;}
 .nav-tabs a{
-  font-family:var(--font-sans);font-weight:400;font-size:15px;color:var(--ink);
-  padding-bottom:3px;border-bottom:1px solid transparent;
-  transition:color .2s var(--ease),border-color .2s var(--ease);
+  position:relative;display:inline-block;
+  font-family:var(--font-sans);font-weight:500;font-size:14.5px;letter-spacing:-.005em;
+  color:var(--ink-2);padding:8px 10px;border-radius:6px;border-bottom:none;
+  transition:color .2s var(--ease);
 }
-.nav-tabs a:hover{color:var(--teal);}
-.nav-tabs a.active{color:var(--teal);border-bottom-color:var(--teal);}
-.nav-tabs a:focus-visible{outline:2px solid var(--teal);outline-offset:4px;}
+.nav-tabs a::after{
+  content:"";position:absolute;left:10px;right:10px;bottom:4px;height:1.5px;border-radius:1px;
+  background:var(--teal);transform:scaleX(0);transform-origin:right center;
+  transition:transform .28s var(--ease);
+}
+.nav-tabs a:hover{color:var(--ink);}
+.nav-tabs a:hover::after{transform:scaleX(1);transform-origin:left center;}
+.nav-tabs a.active{color:var(--ink);}
+.nav-tabs a.active::after{transform:scaleX(1);transform-origin:left center;}
+.nav-tabs a:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
 /* Superseded by the plain underline above -- kept as an inert, hidden
    element (rather than removed from every page's markup) since it carries
    no id and no content without the old JS that no longer runs. */
@@ -274,11 +298,12 @@ header.hdr2 .logo{flex-shrink:0;}
 
 .nav-actions{display:flex;align-items:center;gap:20px;justify-self:end;}
 .nav-login{
-  font-family:var(--font-sans);font-weight:400;font-size:15px;color:var(--ink);
-  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule);
+  font-family:var(--font-sans);font-weight:500;font-size:14.5px;letter-spacing:-.005em;color:var(--ink-2);
+  text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;text-decoration-color:var(--rule);
   white-space:nowrap;transition:color .2s var(--ease),text-decoration-color .2s var(--ease);
 }
-.nav-login:hover{color:var(--teal);text-decoration-color:var(--teal);}
+.nav-login:hover{color:var(--ink);text-decoration-color:var(--teal);}
+.nav-login:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px;}
 .nav-cta{font-size:14px;}
 .nav-cta-short{display:none;}
 
@@ -322,7 +347,8 @@ header.hdr2 .logo{flex-shrink:0;}
   transition:color .2s var(--ease);
 }
 .nav-sheet-inner a:last-of-type{border-bottom:none;}
-.nav-sheet-inner a:hover,.nav-sheet-inner a.active{color:var(--teal);}
+.nav-sheet-inner a:hover,.nav-sheet-inner a.active{color:var(--ink);}
+.nav-sheet-inner a:hover{padding-left:6px;}
 .nav-sheet-inner a:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
 .nav-sheet-login{margin-top:14px;font-family:var(--font-sans);font-size:14px;color:var(--ink-2);}
 
@@ -754,6 +780,6 @@ html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
   .footer-cols{gap:40px;}
 }
 @media (prefers-reduced-motion:reduce){
-  header.hdr2 nav,.nav-sheet-panel,.nav-sheet-inner a,.nav-sheet-trigger .bars i,
+  header.hdr2,header.hdr2 nav,.nav-tabs a,.nav-tabs a::after,.nav-login,.btn,.nav-sheet-panel,.nav-sheet-inner a,.nav-sheet-trigger .bars i,
   html.js .reveal{transition:none;}
 }

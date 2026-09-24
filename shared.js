@@ -182,6 +182,26 @@ SpotwiseMotion.countUp();
 // slide down), unchanged from before.
 // ---------------------------------------------------------------------------
 
+// Header scrolled state (added 2026-09-24): .is-scrolled on header.hdr2
+// once the page has moved past the top; shared.css tightens the bar and
+// adds a soft shadow. Passive listener, rAF-coalesced, no layout reads
+// beyond scrollY. Reduced motion still gets the class -- the CSS simply
+// has no transition for it.
+(function () {
+  var hdr = document.querySelector('header.hdr2');
+  if (!hdr) return;
+  var ticking = false, on = false;
+  function update() {
+    ticking = false;
+    var next = window.scrollY > 8;
+    if (next !== on) { on = next; hdr.classList.toggle('is-scrolled', on); }
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+
 // Sheet: icon-only trigger, no "Menu" label anywhere. Same interaction
 // contract the old dropdown had -- click toggles, outside click and Escape
 // close, Escape returns focus to the trigger, arrow keys move between items
