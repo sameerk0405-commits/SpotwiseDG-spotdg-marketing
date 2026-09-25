@@ -105,27 +105,10 @@
           <input type="text" id="company" name="company" />
         </div>
       </div>
-      <div class="f-field">
-        <label for="role">Role</label>
-        <select id="role" name="role">
-          <option value="">Select your role…</option>
-          <option value="Hard Money Lender">Hard Money Lender</option>
-          <option value="PE Real Estate">PE Real Estate</option>
-          <option value="Developer">Developer</option>
-          <option value="Broker">Broker</option>
-          <option value="Acquisitions">Acquisitions</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
       <div class="form-step"><span class="num">02</span><span class="lbl">Your interest</span><span class="rule"></span></div>
       <div class="f-field">
-        <label for="geography">Which market do you want scored?</label>
-        <input type="text" id="geography" name="geography" placeholder="e.g. Hudson County NJ" />
-      </div>
-      <div class="f-field">
-        <label for="why">Why are you interested?</label>
-        <textarea id="why" name="why" placeholder="Tell us a bit about what you're evaluating"></textarea>
+        <label for="geography">Which market do you want scored?<span class="req">*</span></label>
+        <input type="text" id="geography" name="geography" placeholder="e.g. Hudson County NJ" required />
       </div>
 
       <button type="submit" class="btn btn-primary f-submit">Request report</button>
@@ -156,9 +139,7 @@
       { name: 'name', label: 'Name' },
       { name: 'email', label: 'Email' },
       { name: 'company', label: 'Company' },
-      { name: 'role', label: 'Role' },
-      { name: 'geography', label: "Which market do you want scored?" },
-      { name: 'why', label: 'Why are you interested?' }
+      { name: 'geography', label: "Which market do you want scored?" }
     ]
   });
 </script>

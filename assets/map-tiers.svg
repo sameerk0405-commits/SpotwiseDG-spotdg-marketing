@@ -1,5 +1,16 @@
 <svg viewBox="0 0 900 684.1" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-tiers-title">
 <title id="map-tiers-title">Tri-state ZIP codes colored by SpotWise momentum tier</title>
+<style>
+.state-outline{fill:none;stroke:rgba(20,32,28,.14);stroke-width:.75;}
+.zip{stroke:rgba(20,32,28,.14);stroke-width:.75;animation:fillin .8s cubic-bezier(.2,.7,.2,1) both;}
+.tier-peak{fill:#B7791F;}
+.tier-momentum{fill:#0F7C6E;}
+.tier-emerging{fill:rgba(15,124,110,.45);}
+.tier-watch{fill:rgba(20,32,28,.08);}
+.tier-pass{fill:rgba(20,32,28,.05);}
+@keyframes fillin{from{fill-opacity:0;}to{fill-opacity:1;}}
+@media (prefers-reduced-motion:reduce){.zip{animation:none;}}
+</style>
 <defs>
 <linearGradient id="edge-fade-y" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
 <stop offset="0" stop-color="#000" stop-opacity="1"/>

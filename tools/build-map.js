@@ -4,10 +4,11 @@
  *
  * Builds assets/map-tiers.svg from tools/data/batch8-tiers.csv plus the three
  * OpenDataDE tri-state ZCTA GeoJSON files, then injects the same SVG markup
- * into index.html between the <!-- MAP_SVG:START/END --> markers so the page
- * carries the map inline (so the page CSS and JS can reach the SVG's own
- * paths for the fill-in animation -- an <img> can't be reached that way, and
- * fetch() of a local file fails under file:// with no server). Re-running this script
+ * and (since 2026-09-24) writes the legend tier totals and the signal-card
+ * values into index.html. The map itself is referenced as a plain <img>
+ * with its colors and fill-in animation embedded in the SVG's own <style>
+ * (SVG_STYLE below) -- inlining 1,209 paths cost 678KB of HTML per visit
+ * and was only ever needed for the hover tooltip, which is gone. Re-running this script
  * regenerates both the standalone asset and the inlined copy from one source
  * of truth, so they can't drift apart.
  *
@@ -51,6 +52,25 @@ const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.join(__dirname, 'data');
 const OUT_SVG = path.join(ROOT, 'assets', 'map-tiers.svg');
 const INDEX_HTML = path.join(ROOT, 'index.html');
+const SIGNAL_CARD = path.join(DATA_DIR, 'signal-card.json');
+
+// ---- colors embedded in the SVG (2026-09-24). The map is now served as a
+// plain <img> (index.html no longer inlines it -- 678KB of HTML was the
+// single biggest cost on the home page), and an <img> cannot see the page's
+// stylesheet, so the tier fills and rule stroke are written into the SVG's
+// own <style>. These MUST stay in sync with shared.css :root: --amber,
+// --teal, --tier-emerging/-watch/-pass, --rule, --ease. ----
+const SVG_STYLE = [
+  '.state-outline{fill:none;stroke:rgba(20,32,28,.14);stroke-width:.75;}',
+  '.zip{stroke:rgba(20,32,28,.14);stroke-width:.75;animation:fillin .8s cubic-bezier(.2,.7,.2,1) both;}',
+  '.tier-peak{fill:#B7791F;}',
+  '.tier-momentum{fill:#0F7C6E;}',
+  '.tier-emerging{fill:rgba(15,124,110,.45);}',
+  '.tier-watch{fill:rgba(20,32,28,.08);}',
+  '.tier-pass{fill:rgba(20,32,28,.05);}',
+  '@keyframes fillin{from{fill-opacity:0;}to{fill-opacity:1;}}',
+  '@media (prefers-reduced-motion:reduce){.zip{animation:none;}}',
+].join('\n');
 
 // ---- state outline base layer (added 2026-09-23, final paper polish) -----
 // Public US states GeoJSON (PublicaMundi/MappingAPI), fetched once with curl
@@ -121,6 +141,52 @@ function loadTiers() {
     map.set(zip, { tier: r[idx.tier].trim(), score: r[idx.score].trim() });
   }
   return map;
+}
+
+// Legend counts are the batch's tier totals (every scored zip, 1,213 for
+// batch 8), not the number drawn -- the four zips with no polygon are still
+// scored and still counted. Injected into index.html by injectLegend().
+function tierTotals(tiers) {
+  const t = {};
+  for (const v of tiers.values()) t[v.tier] = (t[v.tier] || 0) + 1;
+  return t;
+}
+
+const TIER_ORDER = ['Peak', 'Momentum', 'Emerging', 'Watch', 'Pass'];
+
+function injectLegend(html, totals) {
+  let n = 0;
+  for (const tier of TIER_ORDER) {
+    const re = new RegExp('(<span class="tier-swatch tier-' + tier.toLowerCase() +
+      '"></span>' + tier + '<span class="map-legend-count">)[0-9,]*(</span>)');
+    if (!re.test(html)) { console.warn('[build-map] WARNING: legend row for', tier, 'not found in index.html'); continue; }
+    html = html.replace(re, '$1' + (totals[tier] || 0).toLocaleString('en-US') + '$2');
+    n++;
+  }
+  console.log('[build-map] Legend counts injected for', n, 'tiers:', JSON.stringify(totals));
+  return html;
+}
+
+// Signal card: every batch-tied value on the home card is marked with a
+// data-sc="<key>" attribute; its text content is replaced from
+// tools/data/signal-card.json so the October rescore is one JSON edit plus
+// this script, not a hunt through index.html.
+function injectSignalCard(html) {
+  if (!fs.existsSync(SIGNAL_CARD)) { console.warn('[build-map] No signal-card.json -- card left as is.'); return html; }
+  const card = JSON.parse(fs.readFileSync(SIGNAL_CARD, 'utf8'));
+  let n = 0;
+  for (const key of Object.keys(card)) {
+    if (key.startsWith('_')) continue;
+    const re = new RegExp('(<[^>]*\\bdata-sc="' + key + '"[^>]*>)[^<]*(<)', 'g');
+    if (!re.test(html)) { console.warn('[build-map] WARNING: no data-sc="' + key + '" element in index.html'); continue; }
+    re.lastIndex = 0;
+    html = html.replace(re, '$1' + card[key] + '$2');
+    n++;
+  }
+  // The count-up target on the score tile.
+  html = html.replace(/(<div class="doc-score" data-target=")[0-9.]*(" data-sc="score">)/, '$1' + card.score + '$2');
+  console.log('[build-map] Signal card values injected:', n, 'keys');
+  return html;
 }
 
 // ---- geometry helpers ------------------------------------------------------
@@ -386,6 +452,7 @@ function main() {
     '<svg viewBox="0 0 ' + roundedW + ' ' + roundedH + '" ' +
     'xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-tiers-title">\n' +
     '<title id="map-tiers-title">Tri-state ZIP codes colored by SpotWise momentum tier</title>\n' +
+    '<style>\n' + SVG_STYLE + '\n</style>\n' +
     maskDefs +
     '<g mask="url(#edge-fade-mask)">\n' +
     '<g class="map-states">\n' + stateOutlinePaths.join('\n') + '\n</g>\n' +
@@ -398,24 +465,20 @@ function main() {
   const bytes = fs.statSync(OUT_SVG).size;
   console.log('[build-map] Wrote', OUT_SVG, '(' + (bytes / 1024 / 1024).toFixed(3) + ' MB)');
 
-  // Inject the same markup into index.html between the marker comments, so
-  // the page carries it inline (see file header for why). No data-score:
-  // per-ZIP scores are not published on the public site (2026-09-24).
-  const html = fs.readFileSync(INDEX_HTML, 'utf8');
-  const startMarker = '<!-- MAP_SVG:START -->';
-  const endMarker = '<!-- MAP_SVG:END -->';
-  const startIdx = html.indexOf(startMarker);
-  const endIdx = html.indexOf(endMarker);
-  if (startIdx === -1 || endIdx === -1 || endIdx < startIdx) {
-    console.error('[build-map] Could not find MAP_SVG markers in index.html -- not injected.');
+  // index.html no longer carries the SVG inline (2026-09-24): the hero
+  // references assets/map-tiers.svg as an <img>. What this script still
+  // writes into the page is the legend's tier totals and the signal-card
+  // values, so every batch-tied number on the home page comes from
+  // tools/data/ and not from hand edits.
+  let html = fs.readFileSync(INDEX_HTML, 'utf8');
+  if (html.indexOf('<!-- MAP_SVG:START -->') !== -1) {
+    console.error('[build-map] index.html still has MAP_SVG markers -- the inline-map era markup should be gone.');
     process.exit(1);
   }
-  const newHtml =
-    html.slice(0, startIdx + startMarker.length) +
-    '\n' + svg +
-    html.slice(endIdx);
-  fs.writeFileSync(INDEX_HTML, newHtml, 'utf8');
-  console.log('[build-map] Injected SVG into index.html between MAP_SVG markers.');
+  html = injectLegend(html, tierTotals(tiers));
+  html = injectSignalCard(html);
+  fs.writeFileSync(INDEX_HTML, html, 'utf8');
+  console.log('[build-map] index.html updated (legend + signal card).');
 
   if (bytes > 1.5 * 1024 * 1024) {
     console.warn('[build-map] WARNING: SVG is over the ~1.5MB budget. Increase SCORED_TOLERANCE and re-run.');
