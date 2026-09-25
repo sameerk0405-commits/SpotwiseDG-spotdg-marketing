@@ -59,18 +59,19 @@ const SIGNAL_CARD = path.join(DATA_DIR, 'signal-card.json');
 // single biggest cost on the home page), and an <img> cannot see the page's
 // stylesheet, so the tier fills and rule stroke are written into the SVG's
 // own <style>. These MUST stay in sync with shared.css :root: --amber,
-// --teal, --tier-emerging/-watch/-pass, --rule, --ease. ----
+// --teal, --tier-emerging/-watch/-pass, --rule. ----
 const SVG_STYLE = [
   '.state-outline{fill:none;stroke:rgba(20,32,28,.14);stroke-width:.75;}',
-  '.zip{stroke:rgba(20,32,28,.14);stroke-width:.75;animation:fillin .8s cubic-bezier(.2,.7,.2,1) both;}',
+  '.zip{stroke:rgba(20,32,28,.14);stroke-width:.75;}',
   '.tier-peak{fill:#B7791F;}',
   '.tier-momentum{fill:#0F7C6E;}',
   '.tier-emerging{fill:rgba(15,124,110,.45);}',
   '.tier-watch{fill:rgba(20,32,28,.08);}',
   '.tier-pass{fill:rgba(20,32,28,.05);}',
-  '@keyframes fillin{from{fill-opacity:0;}to{fill-opacity:1;}}',
-  '@media (prefers-reduced-motion:reduce){.zip{animation:none;}}',
 ].join('\n');
+// No animation inside the SVG: Chrome does not reliably run CSS animations
+// in an <img>-loaded SVG (it can snapshot frame 0), so the entrance effect
+// is the page-side fade of the <img> in index.html, not a fill-in here.
 
 // ---- state outline base layer (added 2026-09-23, final paper polish) -----
 // Public US states GeoJSON (PublicaMundi/MappingAPI), fetched once with curl

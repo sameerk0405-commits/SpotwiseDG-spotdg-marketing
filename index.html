@@ -60,12 +60,13 @@
   /* ---------- Hero: map column ---------- */
   .hero-map{min-width:0;}
   /* The map is a plain <img> of assets/map-tiers.svg (2026-09-24). Its tier
-     fills, rule stroke and the one-time fill-in animation live inside the
-     SVG's own <style> (see tools/build-map.js SVG_STYLE, kept in sync with
-     the --tier-* tokens in shared.css), because an <img> cannot see this
-     stylesheet. The page only sizes it and fades it in once loaded. */
+     fills and rule stroke live inside the SVG's own <style> (see
+     tools/build-map.js SVG_STYLE, kept in sync with the --tier-* tokens in
+     shared.css), because an <img> cannot see this stylesheet. The entrance
+     is a page-side fade of the whole image once it has loaded; there is no
+     animation inside the SVG (Chrome can snapshot frame 0 of an <img> SVG). */
   .map-svg-mount{width:100%;}
-  .map-svg-mount img{display:block;width:100%;height:auto;opacity:0;transition:opacity .6s var(--ease);}
+  .map-svg-mount img{display:block;width:100%;height:auto;opacity:0;transition:opacity .9s var(--ease);}
   .map-svg-mount img.is-loaded{opacity:1;}
   html:not(.js) .map-svg-mount img{opacity:1;transition:none;}
 

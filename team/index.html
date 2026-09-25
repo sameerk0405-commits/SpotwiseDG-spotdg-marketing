@@ -41,6 +41,19 @@
      is just the line itself. ---------- */
   .shipped{font-family:var(--font-mono);font-size:15px;color:var(--ink-2);margin-bottom:40px;}
 
+  /* ---------- Page-local: mission and vision (added 2026-09-24, Sameer's
+     wording). Two serif sentences set apart from the story above by a
+     hairline rule, so they read as the page's thesis rather than more body
+     copy. Sit only here; the footer tagline stays the sitewide short mark. ---------- */
+  .mission{margin-top:44px;padding-top:32px;border-top:1px solid var(--rule);max-width:62ch;}
+  .mission .eyebrow{margin-bottom:12px;}
+  .mission .mission-eyebrow-2{margin-top:36px;}
+  .mission-line{font-family:var(--font-serif);font-size:34px;line-height:1.22;letter-spacing:-.01em;color:var(--ink);margin:0;}
+  @media (max-width:640px){
+    .mission{margin-top:32px;padding-top:24px;}
+    .mission-line{font-size:27px;}
+  }
+
   @media (max-width:640px){
     .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
@@ -99,6 +112,12 @@
     <h1>Three founders, one shared frustration.</h1>
     <p class="lead">SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola. They were comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, or a comp sheet that was already a year stale.</p>
     <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been. It gives a forward-looking edge instead of a guess.</p>
+    <div class="mission">
+      <div class="eyebrow">Our mission</div>
+      <p class="mission-line">We turn real estate appreciation into something you can see coming, not something you find out about after it's priced in.</p>
+      <div class="eyebrow mission-eyebrow-2">Our vision</div>
+      <p class="mission-line">To be the standard first check before any real estate capital moves in the Northeast, and then everywhere else.</p>
+    </div>
   </section>
 
   <!-- ROSTER -->
