@@ -41,6 +41,19 @@
      is just the line itself. ---------- */
   .shipped{font-family:var(--font-mono);font-size:15px;color:var(--ink-2);margin-bottom:40px;}
 
+  /* ---------- Page-local: mission and vision (added 2026-09-24, Sameer's
+     wording). Two serif sentences set apart from the story above by a
+     hairline rule, so they read as the page's thesis rather than more body
+     copy. Sit only here; the footer tagline stays the sitewide short mark. ---------- */
+  .mission{margin-top:44px;padding-top:32px;border-top:1px solid var(--rule);max-width:62ch;}
+  .mission .eyebrow{margin-bottom:12px;}
+  .mission .mission-eyebrow-2{margin-top:36px;}
+  .mission-line{font-family:var(--font-serif);font-size:34px;line-height:1.22;letter-spacing:-.01em;color:var(--ink);margin:0;}
+  @media (max-width:640px){
+    .mission{margin-top:32px;padding-top:24px;}
+    .mission-line{font-size:27px;}
+  }
+
   @media (max-width:640px){
     .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
@@ -99,6 +112,12 @@
     <h1>Three founders, one shared frustration.</h1>
     <p class="lead">SpotWise started with Sameer at Rutgers, Joe at Emory, and Andrew at Loyola. They were comparing notes on how real estate investment decisions actually get made. Too often, it wasn't data. It was a broker's gut feeling, or a comp sheet that was already a year stale.</p>
     <p>We thought investors, lenders, and developers deserved better than a rearview mirror. So we built the tool we wished existed: a walk-forward validated model that tells you where a neighborhood is headed, not just where it's been. It gives a forward-looking edge instead of a guess.</p>
+    <div class="mission">
+      <div class="eyebrow">Our mission</div>
+      <p class="mission-line">We turn real estate appreciation into something you can see coming, not something you find out about after it's priced in.</p>
+      <div class="eyebrow mission-eyebrow-2">Our vision</div>
+      <p class="mission-line">To be the standard first check before any real estate capital moves in the Northeast, and then everywhere else.</p>
+    </div>
   </section>
 
   <!-- ROSTER -->
@@ -121,7 +140,7 @@
         <img class="people-photo" src="../assets/team/joseph-paper-400.webp" srcset="../assets/team/joseph-paper-400.webp 400w, ../assets/team/joseph-paper-800.webp 800w" sizes="(max-width:800px) 90vw, 360px" width="400" height="400" alt="Joseph LaMonica" loading="lazy" decoding="async" />
         <h2>Joseph LaMonica</h2>
         <div class="people-role">Technical Advisor</div>
-        <p class="people-bio">Studied at Emory.</p>
+        <p class="people-bio">Advises on the model and data architecture.</p>
       </div>
     </div>
   </section>
@@ -150,7 +169,7 @@
           <img class="spot-face spot-face-blink" src="../assets/spot-icon-blink.png" alt="" aria-hidden="true" />
         </button>
       </div>
-      <div class="footer-contact">Or reach us directly at <a href="../contact/index.html">Contact us</a><span class="emails"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.6"/><path d="M10.5 5.5V4a1.5 1.5 0 0 0-1.5-1.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5"/></svg></button></span></span></div>
+      <div class="footer-contact">Or reach us directly at <a href="../contact/index.html">Contact us</a><span class="emails"><span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sameerkatwala@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to sameerkatwala@spotdg.com in Gmail">sameerkatwala@spotdg.com</a><button type="button" class="mail-copy" data-copy="sameerkatwala@spotdg.com" aria-label="Copy sameerkatwala@spotdg.com to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=josephlamonica@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to josephlamonica@spotdg.com in Gmail">josephlamonica@spotdg.com</a><button type="button" class="mail-copy" data-copy="josephlamonica@spotdg.com" aria-label="Copy josephlamonica@spotdg.com to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button></span> <span class="sep">&middot;</span> <span class="mail-unit"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andrewgiacomini@spotdg.com" target="_blank" rel="noopener noreferrer" title="Compose to andrewgiacomini@spotdg.com in Gmail">andrewgiacomini@spotdg.com</a><button type="button" class="mail-copy" data-copy="andrewgiacomini@spotdg.com" aria-label="Copy andrewgiacomini@spotdg.com to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button></span></span></div>
     </div>
     <div class="footer-cols">
       <div class="footer-col">

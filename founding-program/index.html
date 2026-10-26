@@ -34,7 +34,7 @@
      retextured to the paper tokens. ---------- */
   header{padding:20px 24px;border-bottom:1px solid var(--rule);position:relative;background:rgba(245,242,236,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
   header .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;}
-  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--radius-btn);border:1px solid var(--rule);color:var(--ink-2);flex-shrink:0;transition:color .2s var(--ease),border-color .2s var(--ease);}
+  .back-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:8px;border:1px solid var(--rule);color:var(--ink-2);flex-shrink:0;transition:color .2s var(--ease),border-color .2s var(--ease);}
   .back-link:hover{color:var(--teal);border-color:var(--teal);}
   .back-link:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
   .back-link svg{width:18px;height:18px;}
@@ -105,27 +105,10 @@
           <input type="text" id="company" name="company" />
         </div>
       </div>
-      <div class="f-field">
-        <label for="role">Role</label>
-        <select id="role" name="role">
-          <option value="">Select your role…</option>
-          <option value="Hard Money Lender">Hard Money Lender</option>
-          <option value="PE Real Estate">PE Real Estate</option>
-          <option value="Developer">Developer</option>
-          <option value="Broker">Broker</option>
-          <option value="Acquisitions">Acquisitions</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-
       <div class="form-step"><span class="num">02</span><span class="lbl">Your interest</span><span class="rule"></span></div>
       <div class="f-field">
-        <label for="geography">Which market do you want scored?</label>
-        <input type="text" id="geography" name="geography" placeholder="e.g. Hudson County NJ" />
-      </div>
-      <div class="f-field">
-        <label for="why">Why are you interested?</label>
-        <textarea id="why" name="why" placeholder="Tell us a bit about what you're evaluating"></textarea>
+        <label for="geography">Which market do you want scored?<span class="req">*</span></label>
+        <input type="text" id="geography" name="geography" placeholder="e.g. Hudson County NJ" required />
       </div>
 
       <button type="submit" class="btn btn-primary f-submit">Request report</button>
@@ -156,9 +139,7 @@
       { name: 'name', label: 'Name' },
       { name: 'email', label: 'Email' },
       { name: 'company', label: 'Company' },
-      { name: 'role', label: 'Role' },
-      { name: 'geography', label: "Which market do you want scored?" },
-      { name: 'why', label: 'Why are you interested?' }
+      { name: 'geography', label: "Which market do you want scored?" }
     ]
   });
 </script>
