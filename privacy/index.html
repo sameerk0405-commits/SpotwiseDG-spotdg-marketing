@@ -52,6 +52,16 @@
   .policy strong{color:var(--ink);font-weight:600;}
   .policy a{color:var(--teal);text-decoration:underline;text-underline-offset:2px;}
 
+
+  /* Tab bar: Privacy Policy / Service providers. Page-local; uses only existing tokens. */
+  .policy-tabs{display:flex;gap:24px;border-bottom:1px solid var(--rule);margin-bottom:32px;}
+  .policy-tabs a{font-family:var(--font-sans);font-weight:500;font-size:15px;line-height:1.4;color:var(--ink-2);text-decoration:none;padding:10px 0;margin-bottom:-1px;border-bottom:2px solid transparent;}
+  .policy-tabs a:hover{color:var(--ink);}
+  .policy-tabs a[aria-current="page"]{color:var(--ink);font-weight:600;border-bottom-color:var(--teal);}
+  .policy-tabs a:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+  .policy .policy-tabs a{color:var(--ink-2);text-decoration:none;}
+  .policy .policy-tabs a[aria-current="page"]{color:var(--ink);}
+
   @media (max-width:640px){
     .wrap,.sec{padding-left:20px;padding-right:20px;}
   }
@@ -107,6 +117,10 @@
   <!-- PRIVACY POLICY -->
   <section class="sec wash-top reveal">
     <div class="policy">
+    <nav class="policy-tabs" aria-label="Privacy sections">
+      <a href="index.html" aria-current="page">Privacy Policy</a>
+      <a href="providers/index.html">Service providers</a>
+    </nav>
     <h1>Privacy Policy</h1>
       <p class="updated">Last updated: 2026-11-02</p>
       <p>This policy explains what personal information SpotWise Data Group LLC, a New Jersey limited liability company ("SpotWise", "we", "us"), collects through the dashboard at app.spotdg.com and the website at spotdg.com, why we collect it, who sees it, and what you can ask us to do with it. The dashboard is in Beta.</p>
@@ -152,7 +166,7 @@
         <li><strong>Website analytics:</strong> kept in aggregate form only. There is no personal profile to delete.</li>
       </ul>
       <h2>5. Who we share it with</h2>
-      <p>We do not sell personal data. We share it only with the companies that help us run the Service, and only for that purpose:</p>
+      <p>We do not sell personal data. We share it only with the companies that help us run the Service, and only for that purpose. <!-- PLACEHOLDER, final text pending: the sentence after this comment; the final section 5 removes the company names below --> The current list of these providers is on the <a href="providers/index.html">Service providers</a> tab.</p>
       <ul>
         <li>Google, for sign-in.</li>
         <li>Supabase, which hosts our database in the United States.</li>
