@@ -83,7 +83,6 @@
   .stat:not(:first-child){border-left:1px solid var(--rule);}
   .stat-header{display:block;font-family:var(--font-sans);font-weight:500;font-size:15px;color:var(--ink);}
   .stat b{display:block;margin-top:12px;font-family:var(--font-serif);font-weight:400;font-size:68px;line-height:1;letter-spacing:-.01em;color:var(--ink);font-variant-numeric:tabular-nums;}
-  .stat-outperf b{color:var(--teal);}
   .stat-context{display:block;margin-top:12px;font-family:var(--font-sans);font-size:13px;color:var(--ink-2);line-height:1.5;}
   .stat-caveat{margin-top:40px;font-family:var(--font-sans);font-size:13px;line-height:1.7;color:var(--ink-2);max-width:96ch;}
   @media (max-width:720px){
@@ -211,7 +210,7 @@
              group, so it is shown as its own row (--ink at 5% on the map)
              rather than folded into Watch or unscored land. See the dev
              report for the full reasoning; recolor/merge if you'd rather. -->
-        <p class="map-caption">1,213 ZIP codes, scored September 2026. Colored by tier.</p>
+        <p class="map-caption">1,213 ZIP codes, scored October 2026. Colored by tier.</p>
       </div>
     </div>
   </section>
@@ -219,11 +218,6 @@
   <!-- STATS: a row of type, not tiles. -->
   <section class="sec reveal">
     <div class="stat-row" id="stat-row">
-      <a class="stat stat-outperf" href="intelligence/index.html#validation">
-        <span class="stat-header">Average outperformance</span>
-        <b data-target="14.0" data-prefix="+" data-suffix="%">+14.0%</b>
-        <span class="stat-context">top-decile picks vs their metro, five-year horizon</span>
-      </a>
       <a class="stat" href="intelligence/index.html#validation">
         <span class="stat-header">Five-year hit rate</span>
         <!-- data-format="comma" routes this through the integer formatter; without
@@ -238,7 +232,7 @@
         <span class="stat-context">New Jersey, New York, Pennsylvania</span>
       </a>
     </div>
-    <p class="stat-caveat">Top-decile picks, 2014–2021 entry cohorts, embargo-respecting walk-forward, replicated across all 10 US regions (per-region hit rate 68–88%). These figures reflect post-2013 market conditions. The same signal underperformed in the 2006–2012 downturn era. Past performance does not guarantee future results.</p>
+    <p class="stat-caveat">77% of the top tenth of zips by price position relative to their metro beat their metro over the five years that followed (2014 to 2021 entry years); base rate 46.3%, lift 1.67×. The size of the edge was largest for entry years 2014 to 2017 and has been smaller since; for the most recent entry year measured, 2021, it was close to zero. These results reflect post-2013 market conditions; the same signal underperformed in the 2006–2012 downturn era. Past results do not guarantee future returns.</p>
   </section>
 
   <!-- COHORT CHART: plain, ink axes, no gridlines. -->
@@ -308,7 +302,7 @@
         </div>
         <div class="doc-action" data-sc="action">Investigate Further</div>
         <div class="doc-note">SpotWise provides market intelligence, not financial or investment advice.</div>
-        <div class="doc-foot"><span>Walk-forward validated · 2014–2021 cohorts · <span data-sc="batch_label">Batch 2026-09</span></span></div>
+        <div class="doc-foot"><span>Walk-forward validated · 2014–2021 cohorts · <span data-sc="batch_label">Batch 2026-10</span></span></div>
       </div>
     </div>
   </section>
@@ -395,6 +389,7 @@
         <a href="contact/index.html">Contact</a>
         <a href="faq/index.html">FAQ</a>
         <a href="disclaimer/index.html">Disclaimer</a>
+        <a href="privacy/index.html">Privacy</a>
       </div>
     </div>
   </div>

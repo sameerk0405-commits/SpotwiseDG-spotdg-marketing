@@ -2,7 +2,7 @@
 /**
  * tools/build-map.js
  *
- * Builds assets/map-tiers.svg from tools/data/batch8-tiers.csv plus the three
+ * Builds assets/map-tiers.svg from tools/data/batch9-tiers.csv plus the three
  * OpenDataDE tri-state ZCTA GeoJSON files, then injects the same SVG markup
  * and (since 2026-09-24) writes the legend tier totals and the signal-card
  * values into index.html. The map itself is referenced as a plain <img>
@@ -22,7 +22,7 @@
  * See tools/data/.gitignore.
  *
  * ---- Method ----
- * 1. Load batch8-tiers.csv (zip -> tier/score).
+ * 1. Load batch9-tiers.csv (zip -> tier/score).
  * 2. Load the 3 GeoJSON files, keep only features whose ZCTA5CE10 falls in
  *    the same tri-state prefix range score_zips.py scores (NJ 07/08, NY
  *    10/11, PA 19 excluding 197-199 DE-adjacent). This is both the
@@ -129,7 +129,7 @@ function parseCSV(text) {
 }
 
 function loadTiers() {
-  const text = fs.readFileSync(path.join(DATA_DIR, 'batch8-tiers.csv'), 'utf8');
+  const text = fs.readFileSync(path.join(DATA_DIR, 'batch9-tiers.csv'), 'utf8');
   const rows = parseCSV(text);
   const header = rows[0];
   const idx = {};
